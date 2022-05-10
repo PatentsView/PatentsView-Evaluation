@@ -1,0 +1,21 @@
+# Development environment for PatentsView-Evaluation
+
+name: pv-evaluation
+
+dependencies:
+  - python=3.7
+  - pip
+  - ipython
+  - ipykernel
+  - jupyter
+  - numpy
+  - pandas
+  - dask
+  - fastparquet
+  - matplotlib
+  - seaborn
+  - plotly
+  - autopep8
+  - pip:
+    - wget
+    - black
