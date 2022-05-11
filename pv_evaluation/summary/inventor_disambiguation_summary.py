@@ -1,6 +1,5 @@
 import dask.dataframe as dd
 import dask.array as da
-import pandas as pd
 import numpy as np
 import os
 import tempfile
@@ -113,3 +112,23 @@ class InventorDisambiguationSummary:
             DataFrame containing the sorted top n most prolific inventors.
         """
         return self.get_cluster_sizes_dd().sort_values(by="Number of patents", ascending=False).head(n)
+
+    def entropy_curve(self, q_range=np.linspace(0,2)):
+        data = self.get_cluster_size_distribution()
+        data["Number of inventors"] = data["Number of inventors"]/sum(data["Number of inventors"])
+
+        def hill_number(arr, q):
+            if q == 1:
+                I = arr > 0
+                return da.exp(- da.sum(arr[I] * da.log(arr[I])))
+            elif q == 0:
+                return da.sum(arr > 0)
+            else:
+                return da.sum(arr**(q))**(1/(1-q))
+            
+        return [hill_number(data["Number of inventors"], q).compute() for q in q_range], q_range
+
+    def plot_entropy_curve(self, q_range=np.linspace(0,2)):
+        ent, q = self.entropy_curve(q_range)
+        return px.line(x=q, y=ent, title="Hill Numbers entropy curve", labels={"x":"q", "y":"Entropy"})
+
