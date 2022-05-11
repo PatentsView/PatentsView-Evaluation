@@ -72,7 +72,7 @@ class InventorDisambiguationSummary:
                 .compute()
             )
 
-        return self._cluster_size_distribution
+        return self._cluster_size_distribution.copy()
 
     def get_cluster_sizes_dd(self):
         """Return the number of patents per disambiguated inventor as a Dask DataFrame.
