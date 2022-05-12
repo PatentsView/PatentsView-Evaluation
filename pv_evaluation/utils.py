@@ -12,5 +12,6 @@ def compare_plots(*figs):
         combined.add_traces(fig.data)
 
         combined.update_xaxes(range=fig.layout.xaxis.range)
+        combined.update_yaxes(range=fig.layout.yaxes.rage)
 
     return combined
