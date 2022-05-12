@@ -202,7 +202,7 @@ class InventorDisambiguationSummary:
             )
 
             dat = dat.assign(shared_name_prop=da.where(dat["Shared name"].values > 1, 1, 0))
-            result = dat.groupby("patent_id").agg({"shared_name_prop":"mean", "inventor_id2":"count"})#["shared_name_prop"].agg(np.mean)
+            result = dat.groupby("patent_id")["shared_name_prop"].agg(np.mean)
 
             self._homonymy_rate_distribution = (
                 result.compute()
