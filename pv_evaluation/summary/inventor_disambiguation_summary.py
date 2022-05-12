@@ -26,7 +26,7 @@ class InventorDisambiguationSummary:
 
         Args:
             datapath (str): Path to the inventor disambiguation data (csv, tsv or parquet format).
-                The data should have four columns: "uuid", "inventor_id", "name_first", and "name_last".
+                The data should have four columns: "patent_id", "inventor_id", "name_first", and "name_last".
             processed_data_dir (str, optional): Path to a directory where to store processed data.
                 Data from past runs will be re-used if it is found in this directory.
                 Defaults to None for a temporary directory.
@@ -56,7 +56,7 @@ class InventorDisambiguationSummary:
         self._homonymy_rate_distribution = None
 
     def _validate_data(self):
-        for col in ["uuid", "inventor_id", "name_first", "name_last"]:
+        for col in ["patent_id", "inventor_id", "name_first", "name_last"]:
             assert (col in self._data.columns) or (col in [self._data.index.name]), f"{col} is not in the data columns."
 
     def __del__(self):
