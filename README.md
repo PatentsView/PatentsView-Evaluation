@@ -2,7 +2,7 @@
 
 # PatentsView-Evaluation
 
-**pv_evaluation** is a Python package under development for the evaluation and benchmarking of PatentsView disambiguation algorithms.
+**pv_evaluation** is a Python package for the evaluation and benchmarking of PatentsView disambiguation algorithms.
 
 Currently, **pv_evaluation** has the following two submodules:
 - **summary**: provides disambiguation summary statistics.

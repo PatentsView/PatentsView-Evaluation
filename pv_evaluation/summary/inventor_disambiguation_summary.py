@@ -193,8 +193,7 @@ class InventorDisambiguationSummary:
                 data.join(
                     data.groupby("homophones")["inventor_id2"]
                     .apply(lambda x: len(set(x)) > 1)
-                    .rename("Shared name")
-                    .persist(),
+                    .rename("Shared name"),
                     on="homophones",
                 )[["Shared name", "inventor_id2", "patent_id"]]
                 .groupby("inventor_id2")
