@@ -1,3 +1,5 @@
+[![Python package](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg)](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml)
+
 # PatentsView-Evaluation
 
 **pv_evaluation** is a Python package under development for the evaluation and benchmarking of PatentsView disambiguation algorithms.
