@@ -12,4 +12,5 @@ if __name__ == "__main__":
         include_package_data=True,
         packages=find_packages(),
         install_requires=["pandas", "dask", "matplotlib", "fastparquet", "numpy", "plotly"],
+        extra_require={"test":["sklearn", "jupyter", "pytest", "testbook", "ipykernel"]}
     )
