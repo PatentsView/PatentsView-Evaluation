@@ -102,10 +102,7 @@ class InventorDisambiguationSummary:
         """
         data = self.get_cluster_size_distribution().reset_index()
         fig = px.bar(
-            data,
-            x="Number of patents",
-            y="Number of inventors",
-            title="Distribution of the number of patents per inventor",
+            data, x="Number of patents", y="Number of inventors", title="Distribution of the number of patents per inventor",
         )
         fig.update_xaxes(range=range)
 
@@ -191,9 +188,7 @@ class InventorDisambiguationSummary:
 
             dat = (
                 data.join(
-                    data.groupby("homophones")["inventor_id2"]
-                    .apply(lambda x: len(set(x)) > 1)
-                    .rename("Shared name"),
+                    data.groupby("homophones")["inventor_id2"].apply(lambda x: len(set(x)) > 1).rename("Shared name"),
                     on="homophones",
                 )[["Shared name", "inventor_id2", "patent_id"]]
                 .groupby("inventor_id2")
@@ -217,12 +212,7 @@ class InventorDisambiguationSummary:
         The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.
         """
         data = self.get_homonymy_rate_distribution().reset_index()
-        fig = px.bar(
-            data,
-            x="Number of patents",
-            y="Homonymy rate",
-            title="Homonymy rate by cluster size",
-        )
+        fig = px.bar(data, x="Number of patents", y="Homonymy rate", title="Homonymy rate by cluster size",)
         fig.update_xaxes(range=range)
 
         ylim = max(data["Homonymy rate"][data["Number of patents"].between(range[0], range[1])])
