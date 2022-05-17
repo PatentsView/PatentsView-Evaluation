@@ -19,7 +19,7 @@ jobs:
         python-version: ${{ matrix.python }}
     - name: Install and load
       run: |
-        pip install -e .[tests]
+        pip install -e .
         python -c "import pv_evaluation"
     - name: Lint with flake8
       run: |
@@ -28,4 +28,5 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest .
+        pip install pytest testbook ipykernel jupyter
+        pytest
