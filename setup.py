@@ -11,6 +11,6 @@ if __name__ == "__main__":
         url="https://github.com/OlivierBinette/PatentsView-Evaluation",
         include_package_data=True,
         packages=find_packages(),
-        install_requires=["pandas", "dask", "matplotlib", "fastparquet", "numpy", "plotly"],
-        extra_require={"test":["sklearn", "jupyter", "pytest", "testbook", "ipykernel"]}
+        install_requires=["pandas", "dask", "matplotlib", "fastparquet", "numpy", "plotly", "sklearn"],
+        extra_require={"test":["pytest", "testbook", "ipykernel", "jupyter"]}
     )
