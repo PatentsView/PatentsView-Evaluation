@@ -19,7 +19,7 @@ jobs:
         python-version: ${{ matrix.python }}
     - name: Install and load
       run: |
-        pip install -e .[test]
+        pip install -e .[tests]
         python -c "import pv_evaluation"
     - name: Lint with flake8
       run: |
