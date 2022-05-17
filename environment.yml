@@ -20,3 +20,6 @@ dependencies:
     - wget
     - black
     - kaleido
+    - sklearn
+    - testbook
+    - pytest
