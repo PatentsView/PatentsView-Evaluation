@@ -2,6 +2,8 @@
 *.csv
 *.tsv
 *.parquet
+*.zip
+data-raw/
 
 .~lock.*
 dask-worker-space/*
