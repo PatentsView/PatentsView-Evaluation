@@ -58,6 +58,10 @@ def cluster_recall(prediction, reference):
     """
     return cluster_precision(reference, prediction)
 
+def cluster_precision_recall(prediction, reference):
+    """TODO
+    """
+    return (cluster_precision(prediction, reference), cluster_recall(prediction, reference))
 
 def cluster_fscore(prediction, reference, beta=1.0):
     """F-score between cluster precision and cluster recall.
