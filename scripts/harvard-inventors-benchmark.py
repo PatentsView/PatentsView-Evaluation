@@ -10,7 +10,7 @@ data["name"] = data.RawNames.str.split(",")
 data["invseq"] = data.ManualIDs.apply(lambda x: range(len(x)))
 data = data.explode(["ManualIDs", "name", "invseq"])
 
-data["mention-id"] = data.Pub_number + "-" + data.invseq.astype(str)
+data["mention-id"] = "US" + data.Pub_number.astype(str).map(lambda x:x.lstrip('US0')) + "-" + data.invseq.astype(str)
 data["unique-id"] = data["ManualIDs"]
 
 data[["mention-id","unique-id","name"]].to_csv("pv_evaluation/data/inventor/harvard-inventors-benchmark.csv", index=False)
