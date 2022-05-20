@@ -14,6 +14,8 @@ def load_unique_id_series(module, filename):
 def load_harvard_inventors_benchmark():
     """TODO: Document this dataset.
     """
+    # TODO: Fix inventor mention order in this dataset. Right now inventor sequence numbers are mixed up.
+    pass
     return load_unique_id_series(INVENTOR_DATA_MODULE, "harvard-inventors-benchmark.csv")
         
 def load_israeli_inventors_benchmark():

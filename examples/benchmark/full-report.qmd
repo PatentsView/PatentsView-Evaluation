@@ -1,0 +1,107 @@
+---
+title: Inventor Disambiguation Report
+format:
+    html:
+        theme: cosmo
+        code-fold: true
+        code-tools: true
+        code-block-border-left: true
+        code-copy: true
+        code-block-border-left: "#31BAE9"
+jupyter: python3
+---
+
+## Data Preparation
+
+First, we prepare the disambiguation result data to evaluate. We consider the current PatentsView disambiguation, obtained from the `rawinventor.tsv` data file, as well as one trivial disambiguation where all inventor mentions are clustered together.
+
+The code below reads the disambiguation result from `rawinventor.tsv`. A disambiguation result is defined as a pandas Series with an index representing mention IDs and values representing cluster assignement.
+
+Mention IDs are standardized to be of the form `<OFFICE><PATENT_NUMBER>-<INVENTOR_SEQUENCE>`, where OFFICE is the patent issuer office abbreviation (e.g. "US" or "EPO"), PATENT_NUMBER is the standard patent number form, and INVENTOR_SEQUENCE is the inventor's position on the given patent, starting from 0. For example, the mention ID
+> US5811073-0
+represents the first listed inventor on US patent number 5811073.
+
+```{python}
+#| label: data-prep
+#| code-fold: true
+import pandas as pd
+
+import wget
+import zipfile
+import os
+
+import plotly.io as pio
+pio.templates.default = "plotly_white" # Set plotly theme
+
+if not os.path.isfile("rawinventor.tsv"):
+    wget.download("https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip")
+    with zipfile.ZipFile("rawinventor.tsv.zip", 'r') as zip_ref:
+        zip_ref.extractall(".")
+    os.remove("rawinventor.tsv.zip")
+
+if not os.path.isfile("disambiguation.tsv"):
+    rawinventor = pd.read_csv("rawinventor.tsv", sep="\t")
+    rawinventor["mention-id"] = "US" + rawinventor.patent_id.astype(str) + "-" + rawinventor.sequence.astype(str)
+    rawinventor[["mention-id", "inventor_id"]].to_csv("disambiguation.tsv", sep="\t", index=False)
+    del(rawinventor)
+
+data = pd.read_csv("disambiguation.tsv", sep="\t")
+data.set_index("mention-id", inplace=True)
+current_disambiguation = data["inventor_id"]
+```
+
+Next, we define a dictionary describing the two disambiguations to compare, i.e. the "current" disambiguation and the "one cluster" trivial disambiguation.
+
+```{python}
+#| label: disambiguations
+#| code-fold: false
+
+disambiguations = {
+    "current": current_disambiguation,
+    "one cluster": 0*current_disambiguation
+}
+```
+
+
+We can now generate the disambiguation report using `disambiguations` and `rawinventor.tsv` as the input.
+
+## Summary Statistics
+
+```{python}
+#| label: imports
+
+import wget
+import zipfile
+import os
+
+import plotly.io as pio
+pio.templates.default = "plotly_white" # Set plotly theme
+
+from pv_evaluation.summary import InventorDisambiguationSummary
+
+summarizer = InventorDisambiguationSummary("rawinventor.tsv", processed_data_dir=".", name="current disambiguation")
+```
+
+```{python}
+summarizer.plot_cluster_size_distribution(range=(0.5,10.5))
+```
+
+```{python}
+summarizer.get_top_inventors()
+```
+
+```{python}
+summarizer.plot_entropy_curve()
+```
+
+```{python}
+summarizer.plot_cluster_unique_name_distribution(range=(0, 100))
+```
+
+```{python}
+summarizer.plot_homonymy_rate_distribution()
+```
+
+## Benchmark Evaluation
+
+
