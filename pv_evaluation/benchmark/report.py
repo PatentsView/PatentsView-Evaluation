@@ -58,7 +58,7 @@ def inventor_benchmark_plot(disambiguations, **kwargs):
     return px.bar(computed_metrics, y="value", x="metric", color="algorithm", facet_col="benchmark", barmode='group', **kwargs)
 
 
-def inspect_clusters_to_split(disambiguation, benchmark):
+def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
     data = pd.concat({"prediction":disambiguation, "reference":benchmark}, axis=1, join="inner")
     clusters_to_split = (
         data.join(
@@ -71,10 +71,17 @@ def inspect_clusters_to_split(disambiguation, benchmark):
         .sort_values("prediction")
         .drop("ref_count", axis=1)    
     )
-
-    return clusters_to_split
-
-def inspect_clusters_to_merge(disambiguation, benchmark):
-    table = inspect_clusters_to_split(benchmark, disambiguation)
     
-    return table.rename(columns={"prediction":"reference", "reference":"prediction"})
+    if join_with is not None:
+        return clusters_to_split.join(join_with, rsuffix="_joined")
+    else:
+        return clusters_to_split
+
+def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None):
+    clusters_to_merge = inspect_clusters_to_split(benchmark, disambiguation)
+    clusters_to_merge.rename(columns={"prediction":"reference", "reference":"prediction"}, inplace=True)
+    
+    if join_with is not None:
+        return clusters_to_merge.join(join_with, rsuffix="_joined")
+    else:
+        return clusters_to_merge

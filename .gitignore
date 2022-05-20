@@ -5,6 +5,11 @@
 *.zip
 data-raw/
 
+*.html
+*.css 
+*.js 
+*.woff 
+
 .~lock.*
 dask-worker-space/*
 

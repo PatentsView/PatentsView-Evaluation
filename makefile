@@ -24,7 +24,6 @@ black:
 	black . --line-length=127
 
 data: \
-	pv_evaluation/data/inventor/harvard-inventors-benchmark.csv\
 	pv_evaluation/data/inventor/israeli-inventors-benchmark.csv\
 	pv_evaluation/data/inventor/patentsview-inventors-benchmark.csv
 
