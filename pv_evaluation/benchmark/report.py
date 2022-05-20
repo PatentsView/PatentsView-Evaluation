@@ -11,7 +11,6 @@ from pv_evaluation.metrics import (
     cluster_fscore,
 )
 from pv_evaluation.benchmark import (
-    load_harvard_inventors_benchmark,
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark
 )
@@ -20,7 +19,6 @@ from pv_evaluation.benchmark import (
 benchmarks = {
     "patentsview-inventors": load_patentsview_inventors_benchmark,
     "israeli-inventors": load_israeli_inventors_benchmark,
-    "harvard-inventors": load_harvard_inventors_benchmark
 }
 metrics = {
     #"pairwise precision": pairwise_precision,
@@ -57,6 +55,20 @@ def inventor_benchmark_plot(disambiguations, **kwargs):
     computed_metrics = inventor_benchmark_table(disambiguations)
     return px.bar(computed_metrics, y="value", x="metric", color="algorithm", facet_col="benchmark", barmode='group', **kwargs)
 
+def style_cluster_inspection(table):
+    def format_color_groups(df):
+        # From https://datascientyst.com/pandas-dataframe-background-color-based-condition-value-alternate-row-color-based-group/
+        colors = ['white', 'lightblue']
+        x = df.copy()
+        factors = list(x['prediction'].unique())
+        i = 0
+        for factor in factors:
+            style = f'background-color: {colors[i]}'
+            x.loc[x['prediction'] == factor, :] = style
+            i = not i
+        return x
+        
+    return table.style.apply(format_color_groups, axis=None)
 
 def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
     data = pd.concat({"prediction":disambiguation, "reference":benchmark}, axis=1, join="inner")
@@ -68,12 +80,13 @@ def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
             .rename("ref_count"), 
         on="prediction")
         .query("ref_count > 1")
+        .sort_values("reference")
         .sort_values("prediction")
         .drop("ref_count", axis=1)    
     )
     
     if join_with is not None:
-        return clusters_to_split.join(join_with, rsuffix="_joined")
+        clusters_to_split = clusters_to_split.join(join_with, rsuffix="_joined")
     else:
         return clusters_to_split
 

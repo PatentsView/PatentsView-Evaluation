@@ -9,6 +9,7 @@ from .report import (
     inventor_benchmark_plot,
     inspect_clusters_to_split,
     inspect_clusters_to_merge,
+    style_cluster_inspection,
 )
 
 __all__ = [
@@ -19,4 +20,5 @@ __all__ = [
     "inventor_benchmark_plot",
     "inspect_clusters_to_split",
     "inspect_clusters_to_merge",
+    "style_cluster_inspection",
 ]
