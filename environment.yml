@@ -25,3 +25,4 @@ dependencies:
     - pytest
     - testbook
     - openpyxl
+    - jupyter-cache

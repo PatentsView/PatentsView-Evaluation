@@ -8,9 +8,17 @@ format:
         code-block-border-left: true
         code-copy: true
         code-block-border-left: "#31BAE9"
+        echo: false
+        include-in-header: header.html
+        include-after-body: footer.html
+execute:
+  cache: true
+  warning: false
+  message: false
 jupyter: python3
 ---
 
+<!--
 ## Data Preparation
 
 First, we prepare the disambiguation result data to evaluate. We consider the current PatentsView disambiguation, obtained from the `rawinventor.tsv` data file, as well as one trivial disambiguation where all inventor mentions are clustered together.
@@ -20,7 +28,7 @@ The code below reads the disambiguation result from `rawinventor.tsv`. A disambi
 Mention IDs are standardized to be of the form `<OFFICE><PATENT_NUMBER>-<INVENTOR_SEQUENCE>`, where OFFICE is the patent issuer office abbreviation (e.g. "US" or "EPO"), PATENT_NUMBER is the standard patent number form, and INVENTOR_SEQUENCE is the inventor's position on the given patent, starting from 0. For example, the mention ID
 > US5811073-0
 represents the first listed inventor on US patent number 5811073.
-
+-->
 ```{python}
 #| label: data-prep
 #| code-fold: true
@@ -50,7 +58,8 @@ data.set_index("mention-id", inplace=True)
 current_disambiguation = data["inventor_id"]
 ```
 
-Next, we define a dictionary describing the two disambiguations to compare, i.e. the "current" disambiguation and the "one cluster" trivial disambiguation.
+<!--
+Next, we define a dictionary describing the two disambiguations to compare, i.e. the "current" disambiguation and the "one cluster" trivial disambiguation.-->
 
 ```{python}
 #| label: disambiguations
@@ -62,8 +71,9 @@ disambiguations = {
 }
 ```
 
-
+<!--
 We can now generate the disambiguation report using `disambiguations` and `rawinventor.tsv` as the input.
+-->
 
 ## Summary Statistics
 
@@ -78,30 +88,108 @@ import plotly.io as pio
 pio.templates.default = "plotly_white" # Set plotly theme
 
 from pv_evaluation.summary import InventorDisambiguationSummary
+from pv_evaluation.benchmark import inventor_benchmark_plot
 
 summarizer = InventorDisambiguationSummary("rawinventor.tsv", processed_data_dir=".", name="current disambiguation")
 ```
+
+::: {.panel-tabset}
+
+### Cluster Sizes
 
 ```{python}
 summarizer.plot_cluster_size_distribution(range=(0.5,10.5))
 ```
 
+### Top Inventors
+
 ```{python}
 summarizer.get_top_inventors()
 ```
+
+### Entropy Curve
 
 ```{python}
 summarizer.plot_entropy_curve()
 ```
 
+### Cluster Homogeneity
+
+
 ```{python}
 summarizer.plot_cluster_unique_name_distribution(range=(0, 100))
 ```
+
+### Cluster Separation
 
 ```{python}
 summarizer.plot_homonymy_rate_distribution()
 ```
 
+:::
+
 ## Benchmark Evaluation
+
+::: {.panel-tabset}
+
+### Evaluation Results
+
+```{python}
+inventor_benchmark_plot(disambiguations)
+```
+
+### Predicted Cluster Errors
+
+::: {.panel-tabset}
+
+#### Israeli Inventors
+
+```{python}
+#| column: page
+from pv_evaluation.benchmark import (
+    load_israeli_inventors_benchmark,
+    load_patentsview_inventors_benchmark,
+    inspect_clusters_to_split,
+    inspect_clusters_to_merge
+)
+
+inspect_clusters_to_split(disambiguations["current"], load_israeli_inventors_benchmark()).to_html()
+```
+
+
+#### PatentsView Inventors
+
+```{python}
+#| column: page
+inspect_clusters_to_split(disambiguations["current"], load_patentsview_inventors_benchmark()).to_html()
+```
+
+:::
+
+### Reference Cluster Errors
+
+::: {.panel-tabset}
+
+#### Israeli Inventors
+
+```{python}
+#| column: page
+inspect_clusters_to_merge(disambiguations["current"], load_israeli_inventors_benchmark()).to_html()
+```
+
+
+#### PatentsView Inventors
+
+```{python}
+#| column: page
+inspect_clusters_to_merge(disambiguations["current"], load_patentsview_inventors_benchmark()).to_html()
+``` 
+
+:::
+
+:::
+
+## Representative Performance Estimates
+
 
 
