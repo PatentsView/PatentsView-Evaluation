@@ -55,16 +55,16 @@ def inventor_benchmark_plot(disambiguations, **kwargs):
     computed_metrics = inventor_benchmark_table(disambiguations)
     return px.bar(computed_metrics, y="value", x="metric", color="algorithm", facet_col="benchmark", barmode='group', **kwargs)
 
-def style_cluster_inspection(table):
+def style_cluster_inspection(table, by="prediction"):
     def format_color_groups(df):
         # From https://datascientyst.com/pandas-dataframe-background-color-based-condition-value-alternate-row-color-based-group/
-        colors = ['white', 'lightblue']
+        colors = ['white', '#c5dcf5']
         x = df.copy()
-        factors = list(x['prediction'].unique())
+        factors = list(x[by].unique())
         i = 0
         for factor in factors:
             style = f'background-color: {colors[i]}'
-            x.loc[x['prediction'] == factor, :] = style
+            x.loc[x[by] == factor, :] = style
             i = not i
         return x
         
@@ -82,7 +82,7 @@ def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
         .query("ref_count > 1")
         .sort_values("reference")
         .sort_values("prediction")
-        .drop("ref_count", axis=1)    
+        .drop("ref_count", axis=1)
     )
     
     if join_with is not None:
