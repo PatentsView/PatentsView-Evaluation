@@ -90,7 +90,7 @@ pio.templates.default = "plotly_white" # Set plotly theme
 from pv_evaluation.summary import InventorDisambiguationSummary
 from pv_evaluation.benchmark import inventor_benchmark_plot
 
-#summarizer = InventorDisambiguationSummary("rawinventor.tsv", processed_data_dir=".", name="current disambiguation")
+summarizer = InventorDisambiguationSummary("rawinventor.tsv", processed_data_dir=".", name="current disambiguation")
 ```
 
 ::: {.panel-tabset}
@@ -98,19 +98,19 @@ from pv_evaluation.benchmark import inventor_benchmark_plot
 ### Cluster Sizes
 
 ```{python}
-#summarizer.plot_cluster_size_distribution(range=(0.5,10.5))
+summarizer.plot_cluster_size_distribution(range=(0.5,10.5))
 ```
 
 ### Top Inventors
 
 ```{python}
-#summarizer.get_top_inventors()
+summarizer.get_top_inventors()
 ```
 
 ### Entropy Curve
 
 ```{python}
-#summarizer.plot_entropy_curve()
+summarizer.plot_entropy_curve()
 ```
 
 ### Cluster Homogeneity
@@ -123,7 +123,7 @@ from pv_evaluation.benchmark import inventor_benchmark_plot
 ### Cluster Separation
 
 ```{python}
-#summarizer.plot_homonymy_rate_distribution()
+summarizer.plot_homonymy_rate_distribution()
 ```
 
 :::
@@ -135,7 +135,7 @@ from pv_evaluation.benchmark import inventor_benchmark_plot
 ### Evaluation Results
 
 ```{python}
-#inventor_benchmark_plot(disambiguations)
+inventor_benchmark_plot(disambiguations)
 ```
 
 ### Predicted Cluster Errors
@@ -145,9 +145,10 @@ from pv_evaluation.benchmark import inventor_benchmark_plot
 #### Israeli Inventors
 
 ```{python}
+#| column: page
+
 from IPython.core.display import display, HTML
 
-#| column: page
 from pv_evaluation.benchmark import (
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark,
