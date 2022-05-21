@@ -4,6 +4,7 @@
 *.parquet
 *.zip
 data-raw/
+.jupyter_cache/
 
 *.html
 *.css 

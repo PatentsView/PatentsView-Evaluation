@@ -90,7 +90,7 @@ pio.templates.default = "plotly_white" # Set plotly theme
 from pv_evaluation.summary import InventorDisambiguationSummary
 from pv_evaluation.benchmark import inventor_benchmark_plot
 
-summarizer = InventorDisambiguationSummary("rawinventor.tsv", processed_data_dir=".", name="current disambiguation")
+#summarizer = InventorDisambiguationSummary("rawinventor.tsv", processed_data_dir=".", name="current disambiguation")
 ```
 
 ::: {.panel-tabset}
@@ -98,32 +98,32 @@ summarizer = InventorDisambiguationSummary("rawinventor.tsv", processed_data_dir
 ### Cluster Sizes
 
 ```{python}
-summarizer.plot_cluster_size_distribution(range=(0.5,10.5))
+#summarizer.plot_cluster_size_distribution(range=(0.5,10.5))
 ```
 
 ### Top Inventors
 
 ```{python}
-summarizer.get_top_inventors()
+#summarizer.get_top_inventors()
 ```
 
 ### Entropy Curve
 
 ```{python}
-summarizer.plot_entropy_curve()
+#summarizer.plot_entropy_curve()
 ```
 
 ### Cluster Homogeneity
 
 
 ```{python}
-summarizer.plot_cluster_unique_name_distribution(range=(0, 100))
+#summarizer.plot_cluster_unique_name_distribution(range=(0, 100))
 ```
 
 ### Cluster Separation
 
 ```{python}
-summarizer.plot_homonymy_rate_distribution()
+#summarizer.plot_homonymy_rate_distribution()
 ```
 
 :::
@@ -135,7 +135,7 @@ summarizer.plot_homonymy_rate_distribution()
 ### Evaluation Results
 
 ```{python}
-inventor_benchmark_plot(disambiguations)
+#inventor_benchmark_plot(disambiguations)
 ```
 
 ### Predicted Cluster Errors
@@ -145,15 +145,21 @@ inventor_benchmark_plot(disambiguations)
 #### Israeli Inventors
 
 ```{python}
+from IPython.core.display import display, HTML
+
 #| column: page
 from pv_evaluation.benchmark import (
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark,
     inspect_clusters_to_split,
-    inspect_clusters_to_merge
+    inspect_clusters_to_merge,
+    style_cluster_inspection,
 )
 
-inspect_clusters_to_split(disambiguations["current"], load_israeli_inventors_benchmark()).to_html()
+def style_and_display(table, by="prediction"):
+    return display(HTML(style_cluster_inspection(table.reset_index(), by=by).hide_index().to_html()))
+
+style_and_display(inspect_clusters_to_split(disambiguations["current"], load_israeli_inventors_benchmark()), by="prediction")
 ```
 
 
@@ -161,7 +167,7 @@ inspect_clusters_to_split(disambiguations["current"], load_israeli_inventors_ben
 
 ```{python}
 #| column: page
-inspect_clusters_to_split(disambiguations["current"], load_patentsview_inventors_benchmark()).to_html()
+style_and_display(inspect_clusters_to_split(disambiguations["current"], load_patentsview_inventors_benchmark()), by="prediction")
 ```
 
 :::
@@ -174,7 +180,7 @@ inspect_clusters_to_split(disambiguations["current"], load_patentsview_inventors
 
 ```{python}
 #| column: page
-inspect_clusters_to_merge(disambiguations["current"], load_israeli_inventors_benchmark()).to_html()
+style_and_display(inspect_clusters_to_merge(disambiguations["current"], load_israeli_inventors_benchmark()), by="reference")
 ```
 
 
@@ -182,7 +188,7 @@ inspect_clusters_to_merge(disambiguations["current"], load_israeli_inventors_ben
 
 ```{python}
 #| column: page
-inspect_clusters_to_merge(disambiguations["current"], load_patentsview_inventors_benchmark()).to_html()
+style_and_display(inspect_clusters_to_merge(disambiguations["current"], load_patentsview_inventors_benchmark()), by="reference")
 ``` 
 
 :::
