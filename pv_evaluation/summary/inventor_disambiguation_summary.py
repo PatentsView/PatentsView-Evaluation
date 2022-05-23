@@ -21,7 +21,7 @@ def read_auto(datapath) -> dd.DataFrame:
 
 
 class InventorDisambiguationSummary:
-    def __init__(self, datapath, processed_data_dir=None, name=""):
+    def __init__(self, datapath, processed_data_dir=None, name=None):
         """Report inventor disambiguation summaries. Object instanciation is used to manage data pre-processing and speed up some of the computations.
 
         Args:
@@ -32,7 +32,10 @@ class InventorDisambiguationSummary:
                 Defaults to None for a temporary directory.
             name (str): Name of the disambiguation algorithm to show in plots.
         """
-        self.name = name
+        if name is None:
+            self.name = datapath
+        else:
+            self.name = name
 
         if processed_data_dir is None:
             processed_data_dir = tempfile.mkdtemp()
