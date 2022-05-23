@@ -1,0 +1,29 @@
+---
+title: Inventor Disambiguation Report
+date: today
+author: PatentsView-Evaluation
+toc: true
+toc-location: left
+toc-depth: 3
+format:
+    html:
+        self-contained: true
+        theme: cosmo
+        echo: false
+        fig-cap-location: margin
+        code-fold: true
+        code-tools: true
+        code-line-numbers: true
+        code-block-border-left: true
+        code-copy: true
+        code-block-border-left: "#31BAE9"
+        code-link: true
+        include-in-header: header.html
+        include-after-body: footer.html
+execute:
+  cache: true
+  freeze: auto
+  warning: false
+  message: false
+jupyter: python3
+---

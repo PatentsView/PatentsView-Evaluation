@@ -1,0 +1,32 @@
+:::{.callout-tip collapse="true"}
+
+## Detailed Explanation (click to expand)
+
+The Hill Numbers entropy curve is a characterization of the cluster sizes distribution.
+
+It is based on [Hill Numbers](https://en.wikipedia.org/wiki/Diversity_index) of order $q$, which are exponentiated Rényi $q$-entropy. That is, for a given $q > 0$ and for $p_i$ the proportion of inventors with $i$ authored patents, the corresponding Hills Number is defined as 
+$$
+    H_q = \left ( \sum_{i=1}^{\infty} p_i^{q}\right )^{1/(1-q)}
+$$
+The Hill Numbers entropy curve is the plot of Hill Numbers as a function of $q > 0$.
+
+For $q=0$, the Hill Number is defined as the number of indices $i$ such that $p_i > 0$. This is the size of the support of the cluster sizes distribution
+$$
+    H_0 = \# \left\{ i > 0 \,:\, p_i > 0  \right\}.
+$$
+
+For $q=1$, the Hill Number is defined as the exponentiated Shannon entropy
+$$
+    H_1 = \exp \left ( - \sum_{i=1}^{\infty} p_i \log p_i \right ).
+$$
+
+For $q=2$, the Hill number is the probability that two randomly sampled inventors have the same number of authored patents:
+$$
+    H_2 = \sum_{i=1}^{\infty} p_i^2.
+$$
+
+When comparing disambiguation results, look for major relative differences between entropy curves. These represent differences in the cluster sizes distribution which can be further investigated using the cluster sizes distribution plot.
+
+Higher Hill Numbers represent a more spread out cluster sizes distribution, while lower values represent more peaked distributions. The order $q$ of the Hill Numbers represent how the cluster sizes proportions $p_i > 0$ are accounted for. At $q = 0$, we have the number of possible cluster sizes in the data. As $q \rightarrow \infty$, the Hill Number tends to the proportion of inventors with the most common cluster size.
+
+:::

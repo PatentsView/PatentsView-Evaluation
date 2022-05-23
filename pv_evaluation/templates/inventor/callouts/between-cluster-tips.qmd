@@ -1,0 +1,11 @@
+:::{.callout-tip collapse="true"}
+
+## Detailed Explanation (click to expand)
+
+Between-cluster similarity is the level of similarity between different clusters. For inventor disambiguation, this is about different inventors that have similar representations on some patents, such as having the same names.
+
+Here we look at between-cluster similarity from a binary perspective -- whether or not an inventor's name is shared with another inventor. The proportion of inventors sharing their name with someone else is our metric of between-cluster similarity which we call the **homonymy rate**.
+
+In the plot below, the homonymy rate is plotted as a function of cluster sizes.
+
+:::
