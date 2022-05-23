@@ -1,0 +1,13 @@
+:::{.callout-tip collapse="true"}
+
+## Detailed Explanation (click to expand)
+
+Cluster homogeneity is the level similarity of among a cluster's elements. For inventor disambiguation, this is about the variation between the way that an inventor is represented on its patents (e.g., different name spellings).
+
+Here we look at cluster homogeneity from a binary perspective -- whether or not there is variation, within a cluster, in how an inventor's name is spelled. The proportion of inventors with a unique name (no name variation within its cluster) is our metric of cluster homogeneity called the **homogeneity rate**.
+
+In the plot below, the homogeneity rate (i.e., clusters with no name variation) is plotted as a function of cluster size. For inventors with a single patent, the proportion of homogeneous clusters is trivially 1. For inventors with two patents, we can read off the proportion of them with no name variation, and so forth.
+
+When comparing two disambiguation results, look for changes in the homogeneity rate across cluster sizes. A higher homogeneity rate means possibly smaller, more robust clusters. On the other hand, lower homogeneity rates may be associated with an increased error probability.
+
+:::

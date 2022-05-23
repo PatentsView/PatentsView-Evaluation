@@ -41,6 +41,11 @@ pv_evaluation/data/inventor/%.csv: scripts/%.py data-raw/.tag
 quarto:
 	conda run -v --live-stream -n pv-evaluation quarto render examples/benchmark/full-report.qmd --to html
 
+.PHONY: test
+test:
+	conda run -v --live-stream -n pv-evaluation quarto render pv_evaluation/templates/test.qmd --to html
+
+
 clean:
 	rm -r data-raw
 	rm data-raw.zip

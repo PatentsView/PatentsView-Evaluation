@@ -1,0 +1,11 @@
+:::{.callout-tip collapse="true"}
+
+## Detailed Explanation (click to expand)
+
+The plot below provides the number of inventors with a given number of (co-)authored patents. 
+
+We can read from the plot the number of inventors with a single authored patent, with exactly two authored patents, and so forth. This distribution of the number of authored patents patents per inventor is called the **cluster sizes distribution** of the disambiguation.
+
+When comparing disambiguation results, look for shifts in shape of the cluster sizes distribution. Is one of the distribution more skewed to the left than another? This could indicate that one of the disambiguation favors smaller clusters, possibly resulting in higher precision but lower recall.
+
+:::

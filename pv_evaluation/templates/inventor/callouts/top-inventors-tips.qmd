@@ -1,0 +1,11 @@
+:::{.callout-tip collapse="true"}
+
+## Detailed Explanation (click to expand)
+
+The table below provides the inventors with the largest number of authored patents. 
+
+Make sure to sort the table by number of patents.
+
+When comparing disambiguation results, look for large changes in the ranking of inventors. Large changes in the estimated numbers of authored patents may also warrant the need to investigate the behavior of the disambiguation for these prolific inventors. 
+
+:::

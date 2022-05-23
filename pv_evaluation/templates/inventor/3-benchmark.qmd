@@ -1,0 +1,109 @@
+```{python}
+import pandas as pd
+import os
+
+def read_disambiguation(filename):
+    _, ext = os.path.splitext(filename)
+
+    if ext == ".csv":
+        df = pd.read_csv(filename)
+    elif ext == ".tsv":
+        df = pd.read_csv(filename, sep="\t")
+    elif ext in [".parquet", ".pq", ".parq"]:
+        df = pd.read_parquet(filename)
+    else:
+        raise Exception("Unsupported file type. Should be one of csv, tsv, or parquet.")
+
+    df.set_index("mention-id", inplace=True)
+    
+    return df[df.columns[0]]
+
+disambiguations = {filename: read_disambiguation(filename) for filename in {{ disambiguation_files }} }
+```
+
+# Benchmark Evaluation
+
+::: {.panel-tabset}
+
+## Evaluation Results
+
+```{python}
+inventor_benchmark_plot(disambiguations)
+```
+
+## Predicted Cluster Errors
+
+```{python}
+from IPython.core.display import display, HTML
+
+from pv_evaluation.benchmark import (
+    load_israeli_inventors_benchmark,
+    load_patentsview_inventors_benchmark,
+    inspect_clusters_to_split,
+    inspect_clusters_to_merge,
+    style_cluster_inspection,
+)
+
+def style_and_display(table, by="prediction"):
+    return display(HTML(style_cluster_inspection(table.reset_index(), by=by).hide_index().to_html()))
+```
+
+::: {.panel-tabset}
+
+{% for filename in disambiguation_files%}
+
+### {{filename}}
+
+::: {.panel-tabset}
+
+#### Israeli Inventors
+
+```{python}
+#| column: page
+style_and_display(inspect_clusters_to_split(disambiguations["{{ filename }}"], load_israeli_inventors_benchmark()), by="prediction")
+```
+
+#### PatentsView Inventors
+
+```{python}
+#| column: page
+style_and_display(inspect_clusters_to_split(disambiguations["{{ filename }}"], load_patentsview_inventors_benchmark()), by="prediction")
+```
+
+:::
+
+{% endfor %}
+
+:::
+
+## Reference Cluster Errors
+
+::: {.panel-tabset}
+
+{% for filename in disambiguation_files %}
+
+### {{filename}}
+
+::: {.panel-tabset}
+
+#### Israeli Inventors
+
+```{python}
+#| column: page
+style_and_display(inspect_clusters_to_merge(disambiguations["{{ filename }}"], load_israeli_inventors_benchmark()), by="reference")
+```
+
+#### PatentsView Inventors
+
+```{python}
+#| column: page
+style_and_display(inspect_clusters_to_merge(disambiguations["{{ filename }}"], load_patentsview_inventors_benchmark()), by="reference")
+``` 
+
+:::
+
+{% endfor %}
+
+:::
+
+:::
