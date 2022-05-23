@@ -116,11 +116,11 @@ summarizer.plot_cluster_size_distribution(range=(0.5,10.5))
 
 ## Detailed Explanation (click to expand)
 
-The above plot provides information about the number of inventors with a given number of (co-)authored patents. 
+The above plot provides the number of inventors with a given number of (co-)authored patents. 
 
-We can read from the plot the number of inventors with a single (co-)authored patent, with exactly two (co-)authored patents, and so forth. This distribution of the number of (co-)authored patents patents per inventor is equivalently called the **cluster sizes distribution** of the disambiguation.
+We can read from the plot the number of inventors with a single authored patent, with exactly two authored patents, and so forth. This distribution of the number of authored patents patents per inventor is called the **cluster sizes distribution** of the disambiguation.
 
-When comparing disambiguation results, look for major shifts in the cluster size distribution. Is one of the distribution more skewed to the left than another? This could indicate that one of the disambiguation favors smaller clusters, possibly resulting in higher precision but lower recall. 
+When comparing disambiguation results, look for shifts in shape of the cluster sizes distribution. Is one of the distribution more skewed to the left than another? This could indicate that one of the disambiguation favors smaller clusters, possibly resulting in higher precision but lower recall.
 
 :::
 
