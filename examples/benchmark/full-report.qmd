@@ -6,7 +6,7 @@ toc: true
 toc-location: left
 format:
     html:
-        theme: cosmo
+        #theme: cosmo
         echo: false
         fig-cap-location: margin
         code-fold: true
