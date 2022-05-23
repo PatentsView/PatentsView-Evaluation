@@ -1,18 +1,26 @@
 ---
 title: Inventor Disambiguation Report
+date: today
+author: PatentsView-Evaluation
+toc: true
+toc-location: left
 format:
     html:
         theme: cosmo
+        echo: false
+        fig-cap-location: margin
         code-fold: true
         code-tools: true
+        code-line-numbers: true
         code-block-border-left: true
         code-copy: true
         code-block-border-left: "#31BAE9"
-        echo: false
+        code-link: true
         include-in-header: header.html
         include-after-body: footer.html
 execute:
   cache: true
+  freeze: true
   warning: false
   message: false
 jupyter: python3
@@ -98,19 +106,34 @@ summarizer = InventorDisambiguationSummary("rawinventor.tsv", processed_data_dir
 ### Cluster Sizes
 
 ```{python}
+#| label: cluster-size-distribution-plot
+#| fig-cap: This is a test caption
+#| cap-location: margin
 summarizer.plot_cluster_size_distribution(range=(0.5,10.5))
 ```
+
+:::{.callout-tip collapse="true"}
+
+## Detailed Explanation (click to expand)
+
+The above plot provides information about the number of inventors with a given number of (co-)authored patents. 
+
+We can read from the plot the number of inventors with a single (co-)authored patent, with exactly two (co-)authored patents, and so forth. This distribution of the number of (co-)authored patents patents per inventor is equivalently called the **cluster sizes distribution** of the disambiguation.
+
+When comparing disambiguation results, look for major shifts in the cluster size distribution. Is one of the distribution more skewed to the left than another? This could indicate that one of the disambiguation favors smaller clusters, possibly resulting in higher precision but lower recall. 
+
+:::
 
 ### Top Inventors
 
 ```{python}
-summarizer.get_top_inventors()
+#summarizer.get_top_inventors()
 ```
 
 ### Entropy Curve
 
 ```{python}
-summarizer.plot_entropy_curve()
+#summarizer.plot_entropy_curve()
 ```
 
 ### Cluster Homogeneity
@@ -123,7 +146,7 @@ summarizer.plot_entropy_curve()
 ### Cluster Separation
 
 ```{python}
-summarizer.plot_homonymy_rate_distribution()
+#summarizer.plot_homonymy_rate_distribution()
 ```
 
 :::
