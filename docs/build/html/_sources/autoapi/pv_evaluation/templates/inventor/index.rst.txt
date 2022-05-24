@@ -1,0 +1,15 @@
+:py:mod:`pv_evaluation.templates.inventor`
+==========================================
+
+.. py:module:: pv_evaluation.templates.inventor
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   callouts/index.rst
+
+

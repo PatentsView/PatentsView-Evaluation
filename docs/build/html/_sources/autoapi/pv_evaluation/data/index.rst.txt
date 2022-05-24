@@ -1,0 +1,15 @@
+:py:mod:`pv_evaluation.data`
+============================
+
+.. py:module:: pv_evaluation.data
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   inventor/index.rst
+
+

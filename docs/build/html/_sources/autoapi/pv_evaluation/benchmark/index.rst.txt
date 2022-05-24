@@ -1,0 +1,53 @@
+:py:mod:`pv_evaluation.benchmark`
+=================================
+
+.. py:module:: pv_evaluation.benchmark
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   data/index.rst
+   report/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pv_evaluation.benchmark.load_israeli_inventors_benchmark
+   pv_evaluation.benchmark.load_harvard_inventors_benchmark
+   pv_evaluation.benchmark.load_patentsview_inventors_benchmark
+
+
+
+.. py:function:: load_israeli_inventors_benchmark()
+
+   TODO: Document this dataset.
+
+   :returns: _description_
+   :rtype: _type_
+
+
+.. py:function:: load_harvard_inventors_benchmark()
+
+   TODO: Document this dataset.
+
+
+
+.. py:function:: load_patentsview_inventors_benchmark()
+
+   TODO: Document dataset.
+
+   :returns: _description_
+   :rtype: _type_
+
+

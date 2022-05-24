@@ -1,0 +1,28 @@
+:py:mod:`pv_evaluation`
+=======================
+
+.. py:module:: pv_evaluation
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   benchmark/index.rst
+   data/index.rst
+   metrics/index.rst
+   summary/index.rst
+   templates/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   utils/index.rst
+
+

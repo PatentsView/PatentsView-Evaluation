@@ -1,0 +1,102 @@
+:py:mod:`pv_evaluation.summary`
+===============================
+
+.. py:module:: pv_evaluation.summary
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   inventor_disambiguation_summary/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pv_evaluation.summary.InventorDisambiguationSummary
+
+
+
+
+.. py:class:: InventorDisambiguationSummary(datapath, processed_data_dir=None, name=None)
+
+   .. py:method:: _validate_data(self)
+
+
+   .. py:method:: __del__(self)
+
+
+   .. py:method:: get_cluster_size_distribution(self)
+
+      Get the cluster size distribution summary.
+
+      :returns: Series of cluster sizes value counts
+      :rtype: Series
+
+
+   .. py:method:: get_cluster_sizes_dd(self)
+
+      Return the number of patents per disambiguated inventor as a Dask DataFrame.
+
+      The mode of the inventor's first name and last name are kept in the resulting dataframe.
+
+
+   .. py:method:: plot_cluster_size_distribution(self, range=(0, 20))
+
+      Plot the distribution of the number of patents per inventor
+
+      :param range: x-axis limits (inclusive range for the number of patents by inventor). Defaults to (1, 10).
+      :type range: tuple, optional
+
+      :returns: Plotly graph object.
+
+
+   .. py:method:: get_top_inventors(self, n=10)
+
+      Get DataFrame of n most prolific inventors
+
+      :param n: Number of inventors to return. Defaults to 10.
+      :type n: int, optional
+
+      :returns: DataFrame containing the sorted top n most prolific inventors.
+
+
+   .. py:method:: entropy_curve(self, q_range=np.linspace(0, 2))
+
+
+   .. py:method:: plot_entropy_curve(self, q_range=np.linspace(0, 2))
+
+
+   .. py:method:: get_cluster_unique_name_distribution(self)
+
+      Get the proportion of homogeneous clusters (no name variation) by cluster size.
+
+
+   .. py:method:: plot_cluster_unique_name_distribution(self, range=(0, 100))
+
+      Plot the proportion of homogeneous clusters (no name variation) by cluster size.
+
+
+   .. py:method:: get_homonymy_rate_distribution(self)
+
+      Get homonymy rates by cluster size.
+
+      The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.
+
+
+   .. py:method:: plot_homonymy_rate_distribution(self, range=(0, 100))
+
+      Plot homonymy rate by cluster size.
+
+      The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.
+
+
+

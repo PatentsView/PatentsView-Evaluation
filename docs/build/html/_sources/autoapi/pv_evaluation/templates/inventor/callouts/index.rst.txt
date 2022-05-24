@@ -1,0 +1,6 @@
+:py:mod:`pv_evaluation.templates.inventor.callouts`
+===================================================
+
+.. py:module:: pv_evaluation.templates.inventor.callouts
+
+

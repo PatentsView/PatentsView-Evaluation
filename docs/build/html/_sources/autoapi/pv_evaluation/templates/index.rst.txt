@@ -1,0 +1,51 @@
+:py:mod:`pv_evaluation.templates`
+=================================
+
+.. py:module:: pv_evaluation.templates
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   inventor/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   render/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pv_evaluation.templates.render_inventor_disambiguation_report
+
+
+
+.. py:function:: render_inventor_disambiguation_report(outdir, disambiguation_files, summary_table_files, cache=True, **kwargs)
+
+   Create html report based on disambiguation results.
+
+   :param outdir: Directory where to output html files.
+   :type outdir: str
+   :param disambiguation_files: List of paths to disambiguation results (tables with two columns, one of them named "mention-id" and the other representing cluster assignment).
+   :type disambiguation_files: list
+   :param summary_table_files: List of paths to disambiguation table files (tables with columns "patent_id", "inventor_id", "name_first", and "name_last").
+   :type summary_table_files: list
+   :param cache: Whether or not to cache jupyter chunk execution between runs. Defaults to True.
+   :type cache: bool, optional
+
+
