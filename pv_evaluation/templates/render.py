@@ -18,4 +18,7 @@ def render_inventor_disambiguation_report(outdir, disambiguation_files, summary_
     with open(qmdpath, "w+") as file:
         file.write(template.render(disambiguation_files=disambiguation_files, summary_table_files=summary_table_files))
     
+    if quarto.path() is None:
+        raise Exception("Could not find quarto. Is quarto (quarto.org) installed?")
+
     quarto.render(qmdpath, output_format = "html", output_file = htmlpath, execute = execute, cache = cache, **kwargs)

@@ -19,7 +19,9 @@ from .cluster import (
     cluster_fowlkes_mallows,
     cluster_homogeneity,
     cluster_completeness,
-    cluster_v_measure
+    cluster_v_measure,
+    rand_score,
+    adjusted_rand_score,
 )
 
 __all__ = [
@@ -40,5 +42,8 @@ __all__ = [
     "cluster_fowlkes_mallows",
     "cluster_homogeneity",
     "cluster_completeness",
-    "cluster_v_measure"
+    "cluster_v_measure",
+    "rand_score",
+    "adjusted_rand_score",
+
 ]
