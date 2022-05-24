@@ -5,7 +5,15 @@ import shutil
 from pkg_resources import resource_filename
 
 
-def render_inventor_disambiguation_report(outdir, disambiguation_files, summary_table_files, execute=True, cache=True, **kwargs):
+def render_inventor_disambiguation_report(outdir, disambiguation_files, summary_table_files, cache=True, **kwargs):
+    """Create html report based on disambiguation results.
+
+    Args:
+        outdir (str): Directory where to output html files.
+        disambiguation_files (list): List of paths to disambiguation results (tables with two columns, one of them named "mention-id" and the other representing cluster assignment).
+        summary_table_files (list): List of paths to disambiguation table files (tables with columns "patent_id", "inventor_id", "name_first", and "name_last").
+        cache (bool, optional): Whether or not to cache jupyter chunk execution between runs. Defaults to True.
+    """
     env = Environment(loader=PackageLoader("pv_evaluation", package_path="templates"))
     template = env.get_template("inventor/0-report.qmd")
 
@@ -21,4 +29,4 @@ def render_inventor_disambiguation_report(outdir, disambiguation_files, summary_
     if quarto.path() is None:
         raise Exception("Could not find quarto. Is quarto (quarto.org) installed?")
 
-    quarto.render(qmdpath, output_format = "html", output_file = htmlpath, execute = execute, cache = cache, **kwargs)
+    quarto.render(qmdpath, output_format = "html", output_file = htmlpath, execute = True, cache = cache, **kwargs)

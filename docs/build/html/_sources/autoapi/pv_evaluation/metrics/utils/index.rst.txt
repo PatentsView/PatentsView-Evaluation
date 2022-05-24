@@ -1,0 +1,26 @@
+:py:mod:`pv_evaluation.metrics.utils`
+=====================================
+
+.. py:module:: pv_evaluation.metrics.utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pv_evaluation.metrics.utils.validate_membership
+
+
+
+.. py:function:: validate_membership(membership_vect)
+
+   Validate membership vector
+
+   Membership vector should be a pandas Series with no NA values and no duplicated index values.
+
+

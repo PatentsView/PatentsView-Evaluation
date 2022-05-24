@@ -30,3 +30,4 @@ dependencies:
     - sphinx-autoapi
     - Sphinx
     - myst_parser
+    - sphinx-rtd-theme
