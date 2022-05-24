@@ -1,3 +1,6 @@
+"""Cluster performance metrics.
+"""
+
 from textwrap import wrap
 import numpy as np
 from scipy.special import comb

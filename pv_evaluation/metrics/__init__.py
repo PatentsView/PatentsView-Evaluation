@@ -1,3 +1,6 @@
+"""Performance evaluation metrics.
+"""
+
 from .pairwise import (
     cluster_sizes,
     links_count,
