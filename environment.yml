@@ -27,6 +27,6 @@ dependencies:
     - openpyxl
     - jupyter-cache
     - quarto
-    - autoapi
+    - sphinx-autoapi
     - Sphinx
     - myst_parser
