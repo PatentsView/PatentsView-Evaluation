@@ -16,9 +16,9 @@ def read_disambiguation(filename):
 
     df.set_index("mention-id", inplace=True)
     
-    return df[df.columns[0]]
+    return df["patent_id"]
 
-disambiguations = {filename: read_disambiguation(filename) for filename in {{ disambiguation_files }} }
+disambiguations = {filename: read_disambiguation(filename) for filename in {{ summary_table_files }} }
 ```
 
 # Benchmark Evaluation
@@ -50,7 +50,7 @@ def style_and_display(table, by="prediction"):
 
 ::: {.panel-tabset}
 
-{% for filename in disambiguation_files%}
+{% for filename in summary_table_files %}
 
 ### {{filename}}
 
@@ -80,7 +80,7 @@ style_and_display(inspect_clusters_to_split(disambiguations["{{ filename }}"], l
 
 ::: {.panel-tabset}
 
-{% for filename in disambiguation_files %}
+{% for filename in summary_table_files %}
 
 ### {{filename}}
 

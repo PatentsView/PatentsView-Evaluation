@@ -94,7 +94,7 @@ class InventorDisambiguationSummary:
             .rename(columns={"patent_id": "Number of patents"})
         )
 
-    def plot_cluster_size_distribution(self, range=(0, 10)):
+    def plot_cluster_size_distribution(self, range=(0, 20)):
         """Plot the distribution of the number of patents per inventor
 
         Args:
@@ -164,7 +164,7 @@ class InventorDisambiguationSummary:
 
         return self._cluster_unique_name_distribution.copy()
 
-    def plot_cluster_unique_name_distribution(self, range=(0, 200)):
+    def plot_cluster_unique_name_distribution(self, range=(0, 100)):
         """Plot the proportion of homogeneous clusters (no name variation) by cluster size."""
         data = self.get_cluster_unique_name_distribution()
         fig = px.bar(
@@ -178,6 +178,7 @@ class InventorDisambiguationSummary:
         ylim = max(data["Proportion of unique name"][data["Number of patents"].between(range[0], range[1])])
         fig.update_yaxes(range=(0, ylim), autorange=False)
 
+        fig.update_traces(name=self.name)
         return fig
 
     def get_homonymy_rate_distribution(self):
@@ -209,7 +210,7 @@ class InventorDisambiguationSummary:
 
         return self._homonymy_rate_distribution.copy()
 
-    def plot_homonymy_rate_distribution(self, range=(0, 10)):
+    def plot_homonymy_rate_distribution(self, range=(0, 100)):
         """Plot homonymy rate by cluster size.
 
         The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.

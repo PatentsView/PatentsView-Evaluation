@@ -4,6 +4,15 @@ import pandas as pd
 INVENTOR_DATA_MODULE = "pv_evaluation.data.inventor"
 
 def load_unique_id_series(module, filename):
+    """Load disambiguation series from csv file with columns "unique-id" and "mention-id".
+
+    Args:
+        module (str): module where file is located.
+        filename (str): csv filename.
+
+    Returns:
+        Series: pandas series named "unique-id" and with "mention-id" as an index.
+    """
     with resources.open_text(module, filename) as f:
         data = pd.read_csv(f)
     
