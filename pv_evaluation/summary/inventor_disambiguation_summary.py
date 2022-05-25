@@ -21,36 +21,17 @@ def read_auto(datapath) -> dd.DataFrame:
 
 
 class InventorDisambiguationSummary:
-    def __init__(self, datapath, processed_data_dir=None, name=None):
-        """Report inventor disambiguation summaries. Object instanciation is used to manage data pre-processing and speed up some of the computations.
+    def __init__(self, datapath, name=None):
+        """Report inventor disambiguation summaries.
 
         Args:
             datapath (str): Path to the inventor disambiguation data (csv, tsv or parquet format).
                 The data should have four columns: "patent_id", "inventor_id", "name_first", and "name_last".
-            processed_data_dir (str, optional): Path to a directory where to store processed data.
-                Data from past runs will be re-used if it is found in this directory.
-                Defaults to None for a temporary directory.
-            name (str): Name of the disambiguation algorithm to show in plots.
+            name (str): Name of the disambiguation algorithm to show in plots. Defaults to the provided datapath.
         """
-        if name is None:
-            self.name = datapath
-        else:
-            self.name = name
+        self.name = datapath if name is None else name
 
-        if processed_data_dir is None:
-            processed_data_dir = tempfile.mkdtemp()
-            self.tempdir = processed_data_dir
-
-        self._parquet_datapath = os.path.join(processed_data_dir, "processed_inventor_disambiguation_data.parquet")
-        if os.path.exists(self._parquet_datapath):
-            self._data = dd.read_parquet(self._parquet_datapath)
-        else:
-            self._data = read_auto(datapath)
-
-            # Save indexed data as a parquet file.
-            self._data.set_index("inventor_id").to_parquet(self._parquet_datapath)
-            self._data = dd.read_parquet(self._parquet_datapath)
-
+        self._data = read_auto(datapath)
         self._validate_data()
 
         # Lazy initialization
