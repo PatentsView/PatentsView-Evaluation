@@ -12,7 +12,7 @@
 
 DATA_RAW_S3_URL=https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip
 
-.PHONY: help env docs black data clean
+.PHONY: help env black data clean
 
 help: makefile
 	@sed -n "s/^##//p" $<
@@ -20,9 +20,6 @@ help: makefile
 env: environment.yml
 	@(echo "Creating pv-evaluation environment..."; conda env create -f $<) \
 	|| (echo "Updating pv-evaluation environment...\n"; conda env update -f $<)
-
-docs:
-	$(MAKE) -C docs/ html
 
 black:
 	black . --line-length=127
