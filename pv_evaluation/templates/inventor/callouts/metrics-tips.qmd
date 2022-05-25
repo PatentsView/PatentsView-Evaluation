@@ -1,0 +1,18 @@
+:::{.callout-tip collapse="true"}
+
+## Detailed Explanation (click to expand)
+
+Performance evaluation metrics compare predicted clusters to a reference clustering from benchmark datasets.
+
+Note that to compute performance evaluation metrics, predicted clusters are first restricted to mentions which appear in the reference data. Performance evaluation metrics on benchmark datasets are not at all representative of performance on the full data.
+
+Commonly used metrics are defined below.
+
+- **Pairwise precision:** Proportion of predicted links (pairs of mentions in the same predicted cluster) which are also linked under the reference clustering.
+- **Pairwise recall:** Proportion of links in the reference clustering (pairs of mentions in the same reference cluster) which are also linked under the predicted clustering.
+- **Pairwise f-score:** Harmonic mean between pairwise precision and pairwise recall.
+- **Cluster precision:** Proportion of predicted clusters which are entirely contained within a single reference cluster. That is, cluster precision is the proportion of predicted clusters which are not split up in the reference clustering.
+- **Cluster recall:** Proportion of reference clusters which are entirely contained within a single predicted cluster. That is, cluster recall is the proportion of reference clusters which are not split up in the predicted clusters.
+- **Cluster f-score:** Harmonic mean between pairwise precision and pairwise recall.
+
+:::
