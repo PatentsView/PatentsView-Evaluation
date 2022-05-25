@@ -6,6 +6,7 @@
 ## Targets:
 ## 		help:		Show this help message.
 ##		env: 		Create or update conda environment "pv-evaluation"
+##		docs:		Make Sphinx documentation.
 ## 		black:		Format Python files.
 ##		data:		Make processed data folder.
 
@@ -36,15 +37,6 @@ data-raw/.tag: data-raw.zip
 
 pv_evaluation/data/inventor/%.csv: scripts/%.py data-raw/.tag
 	python3 $<
-
-.PHONY: quarto
-quarto:
-	conda run -v --live-stream -n pv-evaluation quarto render examples/benchmark/full-report.qmd --to html
-
-.PHONY: test
-test:
-	conda run -v --live-stream -n pv-evaluation quarto render pv_evaluation/templates/test.qmd --to html
-
 
 clean:
 	rm -r data-raw

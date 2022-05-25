@@ -5,16 +5,45 @@
 **pv_evaluation** is a Python package for the evaluation and benchmarking of PatentsView disambiguation algorithms.
 
 Currently, **pv_evaluation** has the following submodules:
-- **summary**: provides disambiguation summary statistics.
-- **metrics**: provides implementations of performance metrics (pairwise metrics and cluster metrics).
-- **benchmark**: access to benchmark and evaluation datasets and standardized comparison benchmarks. 
+- **summary**: Disambiguation summary statistics.
+- **metrics**: Implementation of performance evaluation metrics such as precision and recall.
+- **benchmark**: Access to evaluation datasets and standardized comparison benchmarks. 
 - **data**: Processed data used in this package. Use `make data` to re-generate processed data from original datasets.
+- **templates**: Quarto report templates.
 
 The following submodules are planned:
 - **estimators**: performance metric *estimators* to estimate full-data performance from biased samples.
 
 The `examples` folder provides real-world examples of the use of **pv_evaluation** submodules.
 
+## Installation
+
+Install **pv_evaluation** in editable mode using
+```shell
+git clone https://github.com/PatentsView/PatentsView-Evaluation.git
+cd PatentsView-Evaluation
+pip install -e .
+```
+
+Rendering reports requires the installation of quarto from [quarto.org](https://quarto.org/docs/get-started/).
+
+## Contributing
+
+### Contribute code and documentation
+
+Look through the [GitHub issues](https://github.com/PatentsView/PatentsView-Evaluation/issues) for bugs and feature requests. To contribute to this package:
+
+1. Fork this repository
+2. Make your changes and update CHANGELOG.md
+3. Submit a pull request
+
+A conda environment is provided for development convenience. To create or update this environment, make sure you have conda installed and then run `make env`. You can then activate the development environment using `conda activate pv-evaluation`.
+
+The makefile provides other development utilities such as `make black` to format Python files and `make data` to re-generate benchmark datasets from raw data located on AWS S3.
+
+### Report bugs and submit feedback
+
+Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Evaluation/issues.
 
 ## References
 

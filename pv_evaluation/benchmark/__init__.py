@@ -1,3 +1,6 @@
+"""Evaluation datasets and standardized benchmarks.
+"""
+
 from .data import (
     load_israeli_inventors_benchmark,
     load_harvard_inventors_benchmark,

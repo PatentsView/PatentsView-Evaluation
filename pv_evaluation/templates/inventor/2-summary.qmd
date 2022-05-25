@@ -21,7 +21,7 @@ summarizers = {filename: InventorDisambiguationSummary(filename, processed_data_
 {% include 'inventor/callouts/cluster-sizes-tips.qmd' %}
 
 ```{python}
-compare_plots(*[s.plot_cluster_size_distribution(range=(0.5,10.5)) for s in summarizers.values()])
+compare_plots(*[s.plot_cluster_size_distribution() for s in summarizers.values()])
 ```
 
 ## Top Inventors
@@ -55,7 +55,7 @@ compare_plots(*[s.plot_entropy_curve() for s in summarizers.values()])
 {% include 'inventor/callouts/cluster-homogeneity-tips.qmd' %}
 
 ```{python}
-compare_plots(*[s.plot_cluster_unique_name_distribution(range=(0, 100)) for s in summarizers.values()])
+compare_plots(*[s.plot_cluster_unique_name_distribution() for s in summarizers.values()])
 ```
 
 ## Between-cluster similarity

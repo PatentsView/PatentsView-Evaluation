@@ -1,3 +1,6 @@
+"""Pairwise link-based classification metrics.
+"""
+
 import numpy as np
 from scipy.special import comb
 import pandas as pd
