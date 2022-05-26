@@ -49,6 +49,7 @@ Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Ev
 
 ### Methodology
 
+- Menestrina, D., Whang, S. E., & Garciamolina, H. (2010). Evaluating entity resolution results. Proceedings of the VLDB Endowment, 3(1), 208–219. https://doi.org/10.14778/1920841.1920871
 - Ferreira, A. A., Gonçalves, M. A., & Laender, A. H. (2012). A brief survey of automatic methods for author name disambiguation. Acm Sigmod Record, 41(2), 15-26. [[link]](https://s3.amazonaws.com/data.patentsview.org/USPTO_Entity_Resolution_Symposium/Ferreira+et+al_2012_A+Brief+Survey+of+Automatic+Methods+for+Author+Name+Disambiguation.pdf)
 - Pfitzner, D., Leibbrandt, R., & Powers, D. (2009). Characterization and evaluation of similarity measures for pairs of clusterings. Knowledge and Information Systems, 19(3), 361-394. [[link]](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.214.7233&rep=rep1&type=pdf)
 - Barnes, M. (2015). A Practioner’s Guide to Evaluating Entity Resolution Results. 1–6. http://arxiv.org/abs/1509.04238
