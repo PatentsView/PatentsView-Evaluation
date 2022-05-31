@@ -5,7 +5,7 @@ from scipy.special import comb
 from .metrics.utils import validate_membership
 
 def pairwise_precision_estimator(prediction, reference, sampling_type=["record", "cluster", "single_block"], weights=["uniform", "cluster_size"]):
-    """Pairwise precision estimates.
+    """Pairwise precision estimates for small non-replacement samples.
     
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
@@ -43,4 +43,4 @@ def pairwise_precision_estimator(prediction, reference, sampling_type=["record",
         P_block_plus = np.sum(comb(prediction[I].value_counts(sort=False).values, 2))
         return 2 * TP_block / (P_block + P_block_plus)
     else:
-        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', or 'block'")
+        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', or 'single_block'")
