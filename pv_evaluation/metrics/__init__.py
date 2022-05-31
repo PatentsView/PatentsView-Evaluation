@@ -48,5 +48,4 @@ __all__ = [
     "cluster_v_measure",
     "rand_score",
     "adjusted_rand_score",
-
 ]
