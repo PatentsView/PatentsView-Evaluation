@@ -34,10 +34,6 @@ This is report has been automatically generated for the following data sources:
 
     - rawinventor.tsv
 
-- **Disambiguation results:**
-
-    - disambiguation.tsv
-
 
 For more information, please refer to the [PatentsView-Evaluation project homepage](https://github.com/PatentsView/PatentsView-Evaluation/) or to the report [source code](index.qmd).
 
@@ -74,7 +70,7 @@ When comparing disambiguation results, look for shifts in shape of the cluster s
 :::
 
 ```{python}
-compare_plots(*[s.plot_cluster_size_distribution(range=(0.5,10.5)) for s in summarizers.values()])
+compare_plots(*[s.plot_cluster_size_distribution() for s in summarizers.values()])
 ```
 
 ## Top Inventors
@@ -161,7 +157,7 @@ When comparing two disambiguation results, look for changes in the homogeneity r
 :::
 
 ```{python}
-compare_plots(*[s.plot_cluster_unique_name_distribution(range=(0, 100)) for s in summarizers.values()])
+compare_plots(*[s.plot_cluster_unique_name_distribution() for s in summarizers.values()])
 ```
 
 ## Between-cluster similarity
@@ -202,9 +198,9 @@ def read_disambiguation(filename):
 
     df.set_index("mention-id", inplace=True)
     
-    return df[df.columns[0]]
+    return df["patent_id"]
 
-disambiguations = {filename: read_disambiguation(filename) for filename in ['disambiguation.tsv'] }
+disambiguations = {filename: read_disambiguation(filename) for filename in ['rawinventor.tsv'] }
 ```
 
 # Benchmark Evaluation
@@ -238,7 +234,7 @@ def style_and_display(table, by="prediction"):
 
 
 
-### disambiguation.tsv
+### rawinventor.tsv
 
 ::: {.panel-tabset}
 
@@ -246,14 +242,14 @@ def style_and_display(table, by="prediction"):
 
 ```{python}
 #| column: page
-style_and_display(inspect_clusters_to_split(disambiguations["disambiguation.tsv"], load_israeli_inventors_benchmark()), by="prediction")
+style_and_display(inspect_clusters_to_split(disambiguations["rawinventor.tsv"], load_israeli_inventors_benchmark()), by="prediction")
 ```
 
 #### PatentsView Inventors
 
 ```{python}
 #| column: page
-style_and_display(inspect_clusters_to_split(disambiguations["disambiguation.tsv"], load_patentsview_inventors_benchmark()), by="prediction")
+style_and_display(inspect_clusters_to_split(disambiguations["rawinventor.tsv"], load_patentsview_inventors_benchmark()), by="prediction")
 ```
 
 :::
@@ -268,7 +264,7 @@ style_and_display(inspect_clusters_to_split(disambiguations["disambiguation.tsv"
 
 
 
-### disambiguation.tsv
+### rawinventor.tsv
 
 ::: {.panel-tabset}
 
@@ -276,14 +272,14 @@ style_and_display(inspect_clusters_to_split(disambiguations["disambiguation.tsv"
 
 ```{python}
 #| column: page
-style_and_display(inspect_clusters_to_merge(disambiguations["disambiguation.tsv"], load_israeli_inventors_benchmark()), by="reference")
+style_and_display(inspect_clusters_to_merge(disambiguations["rawinventor.tsv"], load_israeli_inventors_benchmark()), by="reference")
 ```
 
 #### PatentsView Inventors
 
 ```{python}
 #| column: page
-style_and_display(inspect_clusters_to_merge(disambiguations["disambiguation.tsv"], load_patentsview_inventors_benchmark()), by="reference")
+style_and_display(inspect_clusters_to_merge(disambiguations["rawinventor.tsv"], load_patentsview_inventors_benchmark()), by="reference")
 ``` 
 
 :::

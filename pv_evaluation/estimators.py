@@ -23,7 +23,7 @@ def pairwise_precision_estimator(prediction, reference, sampling_type=["record",
     inner = pd.concat({"prediction":prediction, "reference":reference}, axis=1, join="inner", copy=False)
     vals = inner.groupby(["prediction", "reference"]).size()
     f_sum = vals.to_frame().assign(cmb=comb(vals.values, 2)).groupby("reference").sum().cmb
-    cluster_sizes = reference.value_counts(sort=False).values
+    cluster_sizes = inner.reference.value_counts(sort=False).values
     P = np.sum(comb(prediction.value_counts(sort=False).values, 2))
 
     if sampling_type == "record":
@@ -39,7 +39,7 @@ def pairwise_precision_estimator(prediction, reference, sampling_type=["record",
     elif sampling_type == "single_block":
         TP_block = np.sum(comb(vals.values, 2))
         P_block = np.sum(comb(inner.prediction.value_counts(sort=False).values, 2))
-        I = [i for i in prediction.index if prediction[i] in inner.prediction.values]
+        I = prediction.isin(inner.prediction)
         P_block_plus = np.sum(comb(prediction[I].value_counts(sort=False).values, 2))
         return 2 * TP_block / (P_block + P_block_plus)
     else:
