@@ -11,7 +11,7 @@ from pv_evaluation.benchmark import inventor_benchmark_plot
 # Summary Statistics
 
 ```{python}
-summarizers = {filename: InventorDisambiguationSummary(filename, processed_data_dir=".") for filename in {{ summary_table_files }} }
+summarizers = {filename: InventorDisambiguationSummary(filename) for filename in {{ summary_table_files }} }
 ```
 
 ::: {.panel-tabset}
