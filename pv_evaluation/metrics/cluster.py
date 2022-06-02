@@ -20,7 +20,7 @@ def clusters_count(membership_vect):
         int: number of clusters
     """
     validate_membership(membership_vect)
-    
+
     return membership_vect.nunique()
 
 
@@ -41,7 +41,7 @@ def cluster_precision(prediction, reference):
     validate_membership(prediction)
     validate_membership(reference)
 
-    data = pd.concat({"prediction":prediction, "reference":reference}, axis=1, join="inner", copy=False)
+    data = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
     n_correct_clusters = np.sum(data.groupby(["prediction"]).nunique()["reference"].values == 1)
 
     return n_correct_clusters / clusters_count(prediction)
@@ -61,10 +61,12 @@ def cluster_recall(prediction, reference):
     """
     return cluster_precision(reference, prediction)
 
+
 def cluster_precision_recall(prediction, reference):
     """TODO
     """
     return (cluster_precision(prediction, reference), cluster_recall(prediction, reference))
+
 
 def cluster_fscore(prediction, reference, beta=1.0):
     """F-score between cluster precision and cluster recall.
@@ -82,7 +84,7 @@ def cluster_fscore(prediction, reference, beta=1.0):
     Returns:
         float: f-score
     """
-    
+
     P = cluster_precision(prediction, reference)
     R = cluster_recall(prediction, reference)
 
@@ -113,17 +115,19 @@ def wrap_sklearn_metric(sklearn_metric):
     Args:
         sklearn_metric (function): cluster metric to wrap.
     """
+
     def func(prediction, reference, **kw):
         validate_membership(prediction)
         validate_membership(reference)
 
-        data = pd.concat({"prediction":prediction, "reference":reference}, axis=1, join="inner", copy=False)
+        data = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
         prediction_codes = pd.Categorical(data.prediction).codes.astype(np.int64)
         reference_codes = pd.Categorical(data.reference).codes.astype(np.int64)
 
         return sklearn_metric(reference_codes, prediction_codes, **kw)
 
     return func
+
 
 def cluster_homogeneity(prediction, reference):
     """Cluster homogeneity score (based on conditional entropy).
@@ -139,6 +143,7 @@ def cluster_homogeneity(prediction, reference):
     """
     return wrap_sklearn_metric(sm.homogeneity_score)(prediction, reference)
 
+
 def cluster_completeness(prediction, reference):
     """Cluster completeness score (based on conditional entropy)
 
@@ -153,8 +158,10 @@ def cluster_completeness(prediction, reference):
     """
     return wrap_sklearn_metric(sm.completeness_score)(prediction, reference)
 
+
 def cluster_v_measure(prediction, reference, beta=1.0):
     return wrap_sklearn_metric(sm.v_measure_score)(prediction, reference, beta=beta)
+
 
 def rand_score(prediction, reference):
     """Compute the Rand index.
@@ -169,6 +176,7 @@ def rand_score(prediction, reference):
         float: rand index
     """
     return wrap_sklearn_metric(sm.rand_score)(prediction, reference)
+
 
 def adjusted_rand_score(prediction, reference):
     return wrap_sklearn_metric(sm.adjusted_rand_score)(prediction, reference)
