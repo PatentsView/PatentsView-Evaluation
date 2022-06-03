@@ -25,20 +25,24 @@ def pairwise_precision_estimator(
 
     inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
     vals = inner.groupby(["prediction", "reference"]).size()
-    f_sum = vals.to_frame().assign(cmb=comb(vals.values, 2)).groupby("reference").sum().cmb
-    cluster_sizes = inner.reference.value_counts(sort=False).values
+    f_sum = vals.to_frame().assign(cmb=comb(vals.values, 2)).groupby("reference").sum().cmb.sort_index().values
+    cluster_sizes = inner.reference.value_counts(sort=False).sort_index().values
     P = np.sum(comb(prediction.value_counts(sort=False).values, 2))
 
     if sampling_type == "record":
         if weights == "uniform":
             return len(prediction) * np.mean(f_sum / cluster_sizes) / P
-        if weights == "cluster_size":
+        elif weights == "cluster_size":
             raise Exception("'cluster_size' weights are not used with 'record' sampling type.")
+        else:
+            raise Exception("Unrecognized 'weight' option. Should be one of 'uniform' or 'cluster_size'.")
     elif sampling_type == "cluster":
         if weights == "uniform":
-            return len(prediction) * np.mean(f_sum) / np.mean(cluster_sizes) / P
+            return len(prediction) * np.mean(f_sum) / (np.mean(cluster_sizes) * P)
         elif weights == "cluster_size":
             return len(prediction) * np.mean(f_sum / cluster_sizes) / P
+        else:
+            raise Exception("Unrecognized 'weight' option. Should be one of 'uniform' or 'cluster_size'.")
     elif sampling_type == "single_block":
         TP_block = np.sum(comb(vals.values, 2))
         P_block = np.sum(comb(inner.prediction.value_counts(sort=False).values, 2))
