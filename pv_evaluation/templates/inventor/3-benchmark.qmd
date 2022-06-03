@@ -27,11 +27,15 @@ disambiguations = {filename: read_disambiguation(filename) for filename in {{ su
 
 ## Evaluation Results
 
+{% include 'inventor/callouts/metrics-tips.qmd' %}
+
 ```{python}
 inventor_benchmark_plot(disambiguations)
 ```
 
 ## Predicted Cluster Errors
+
+{% include 'inventor/callouts/cluster-errors-tips.qmd' %}
 
 ```{python}
 from IPython.core.display import display, HTML
@@ -77,6 +81,8 @@ style_and_display(inspect_clusters_to_split(disambiguations["{{ filename }}"], l
 :::
 
 ## Reference Cluster Errors
+
+{% include 'inventor/callouts/cluster-errors-tips.qmd' %}
 
 ::: {.panel-tabset}
 
