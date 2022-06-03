@@ -52,7 +52,6 @@ def pairwise_precision_estimator(
     elif sampling_type == "cluster":
         if weights == "uniform":
             return len(prediction) * ratio_estimator(f_sum, cluster_sizes) / P
-            return len(prediction) * np.mean(f_sum) / (np.mean(cluster_sizes) * P)
         elif weights == "cluster_size":
             return len(prediction) * np.mean(f_sum / cluster_sizes) / P
         else:
