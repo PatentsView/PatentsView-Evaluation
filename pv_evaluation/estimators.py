@@ -5,6 +5,19 @@ from scipy.special import comb
 from .metrics.utils import validate_membership
 
 
+def ratio_estimator(B, A):
+    """Ratio estimator for mean(B)/mean(A)
+    """
+    assert len(A) == len(B)
+
+    A_mean = np.mean(A)
+    B_mean = np.mean(B)
+    n = len(A)
+
+    adj = 1 + ((n-1)*A_mean)**(-1) * np.mean(A*(B/B_mean - A/A_mean))
+
+    return adj * B_mean / A_mean
+
 def pairwise_precision_estimator(
     prediction, reference, sampling_type=["record", "cluster", "single_block"], weights=["uniform", "cluster_size"]
 ):
@@ -38,6 +51,7 @@ def pairwise_precision_estimator(
             raise Exception("Unrecognized 'weight' option. Should be one of 'uniform' or 'cluster_size'.")
     elif sampling_type == "cluster":
         if weights == "uniform":
+            return len(prediction) * ratio_estimator(f_sum, cluster_sizes) / P
             return len(prediction) * np.mean(f_sum) / (np.mean(cluster_sizes) * P)
         elif weights == "cluster_size":
             return len(prediction) * np.mean(f_sum / cluster_sizes) / P
