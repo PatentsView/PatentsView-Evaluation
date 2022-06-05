@@ -16,7 +16,7 @@ def read_disambiguation(filename):
 
     df.set_index("mention-id", inplace=True)
     
-    return df["patent_id"]
+    return df["inventor_id"]
 
 disambiguations = {filename: read_disambiguation(filename) for filename in {{ summary_table_files }} }
 ```
