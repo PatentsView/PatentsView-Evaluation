@@ -79,7 +79,14 @@ def pairwise_precision(prediction, reference):
     Returns:
         float: pairwise precision
     """
-    return true_positives_count(prediction, reference) / links_count(prediction)
+
+    inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
+
+    P = links_count(inner.prediction)
+    if P == 0:
+        return 1.0
+    else:
+        return true_positives_count(inner.prediction, inner.reference) / P
 
 
 def pairwise_recall(prediction, reference):
