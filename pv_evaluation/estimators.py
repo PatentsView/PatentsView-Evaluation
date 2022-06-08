@@ -58,8 +58,25 @@ def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
         TP_block = np.sum(comb(vals.values, 2))
         P_block = np.sum(comb(inner.prediction.value_counts(sort=False).values, 2))
         I = prediction.isin(inner.prediction)
-        P_block_plus = np.sum(comb(prediction[I].value_counts(sort=False).values, 2))
-        return 2 * TP_block / (P_block + P_block_plus)
+        A = inner.prediction.value_counts(sort=False).sort_index().values
+        B = prediction[I].value_counts(sort=False).sort_index().values
+        P_block_minus = np.sum(A*(B-A))
+        return TP_block / (P_block + 0.5 * P_block_minus)
+    elif sampling_type == "cluster_block":
+        if weights == "uniform":
+            raise NotImplementedError()
+        elif weights == "cluster_size":
+            N = f_sum / cluster_sizes
+            K = prediction.isin(inner.prediction)
+            def lambd(x):
+                I = inner.prediction.index.isin(x.index)
+                J = prediction[K].isin(inner.prediction[I])
+                A = inner.prediction[I].value_counts(sort=False).sort_index().values
+                B = prediction[K][J].value_counts(sort=False).sort_index().values
+                return np.sum(A*(B-A))
+            P_minus = inner.groupby("reference").apply(lambd)
+            D = (f_sum + 0.5 * P_minus) / cluster_sizes
+            return ratio_estimator(N, D)
     else:
         raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', or 'single_block'")
 

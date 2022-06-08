@@ -1,3 +1,5 @@
+import pandas as pd
+import itertools
 import plotly.graph_objects as go
 
 
@@ -15,3 +17,8 @@ def compare_plots(*figs):
         combined.update_yaxes(range=fig.layout.yaxis.range)
 
     return combined
+
+def expand_grid(**kwargs):
+    return pd.DataFrame.from_records(
+            itertools.product(*kwargs.values()), columns=kwargs.keys()
+        )
