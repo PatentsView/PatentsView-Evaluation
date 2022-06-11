@@ -49,7 +49,7 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
         Args:
             distance_metric (DistanceMetric): An object representing the type of distance measure to use to calculate distance. (Euclidean or Correlation). Default: Euclidean
         """
-        for idx, cluster_name in self._data.cluster_label.unique().iteritems():
+        for cluster_name in self._data.cluster_label.unique():
             mention_names = self._data[self._data.cluster_label == cluster_name].data_label
             points_generator = combinations(mention_names, r=2)
             try:
@@ -89,8 +89,8 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
         """
         silhouette_scores = {}
         for record_idx in self._data.index:
-            record_cluster_label = self._data.loc[record_idx, "cluster_label"].values[0]
-            record_label = self._data.loc[record_idx, "data_label"].values[0]
+            record_cluster_label = self._data.loc[record_idx, "cluster_label"]
+            record_label = self._data.loc[record_idx, "data_label"]
             current_cluster_distances = self.intra_cluster_distances[record_cluster_label]
             # s(i) = 0 if |C] =1
             if current_cluster_distances is None:
@@ -103,8 +103,7 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
         # Update the _data variable with calculated scores
         silhouette_series = pd.DataFrame(silhouette_scores.values(), index=silhouette_scores.keys())
         silhouette_series.rename({0: 'sihouette_score'}, axis=1, inplace=True)
-        silhouette_dd = dd.from_pandas(silhouette_series, npartitions=1)
-        self._data = self._data.merge(silhouette_dd)
+        self._data = self._data.join(silhouette_series)
 
 
 if __name__ == '__main__':

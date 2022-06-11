@@ -1,20 +1,19 @@
 import math
 import os
 
-import dask.dataframe as dd
 import editdistance
 import pandas as pd
 
 
-def read_auto(datapath) -> dd.DataFrame:
+def read_auto(datapath) -> pd.DataFrame:
     _, ext = os.path.splitext(datapath)
 
     if ext == ".csv":
-        return dd.read_csv(datapath)
+        return pd.read_csv(datapath)
     elif ext == ".tsv":
-        return dd.read_csv(datapath, sep="\t")
+        return pd.read_csv(datapath, sep="\t")
     elif ext in [".parquet", ".pq", ".parq"]:
-        return dd.read_parquet(datapath)
+        return pd.read_parquet(datapath)
     else:
         raise Exception("Unsupported file type. Should be one of csv, tsv, or parquet.")
 
