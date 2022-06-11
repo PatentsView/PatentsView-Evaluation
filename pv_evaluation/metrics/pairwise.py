@@ -6,6 +6,7 @@ from scipy.special import comb
 import pandas as pd
 from .utils import validate_membership
 
+
 def cluster_sizes(membership_vect):
     """Get cluster sizes for a given membership vector.
 
@@ -16,7 +17,7 @@ def cluster_sizes(membership_vect):
         Series: cluster sizes
     """
     validate_membership(membership_vect)
-    
+
     return membership_vect.value_counts(sort=False).values
 
 
@@ -30,7 +31,7 @@ def links_count(membership_vect):
         
     Returns:
         int: number of links
-    """    
+    """
     return np.sum(comb(cluster_sizes(membership_vect), 2))
 
 
@@ -47,8 +48,8 @@ def true_positives_count(prediction, reference):
     """
     validate_membership(prediction)
     validate_membership(reference)
-    
-    data = pd.concat({"prediction":prediction, "reference":reference}, axis=1, join="inner", copy=False)
+
+    data = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
     TP_cluster_sizes = data.groupby(["prediction", "reference"]).size().values
 
     return np.sum(comb(TP_cluster_sizes, 2))
@@ -78,7 +79,14 @@ def pairwise_precision(prediction, reference):
     Returns:
         float: pairwise precision
     """
-    return true_positives_count(prediction, reference) / links_count(prediction)
+
+    inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
+
+    P = links_count(inner.prediction)
+    if P == 0:
+        return 1.0
+    else:
+        return true_positives_count(inner.prediction, inner.reference) / P
 
 
 def pairwise_recall(prediction, reference):

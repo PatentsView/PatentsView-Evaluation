@@ -1,11 +1,20 @@
-import dask.dataframe as dd
-import dask.array as da
 import numpy as np
+import pandas as pd
 import os
-import tempfile
-import shutil
 import plotly.express as px
-from .utils import read_auto
+
+
+def read_auto(datapath):
+    _, ext = os.path.splitext(datapath)
+
+    if ext == ".csv":
+        return pd.read_csv(datapath)
+    elif ext == ".tsv":
+        return pd.read_csv(datapath, sep="\t")
+    elif ext in [".parquet", ".pq", ".parq"]:
+        return pd.read_parquet(datapath)
+    else:
+        raise Exception("Unsupported file type. Should be one of csv, tsv, or parquet.")
 
 
 class InventorDisambiguationSummary:
@@ -31,10 +40,6 @@ class InventorDisambiguationSummary:
         for col in ["patent_id", "inventor_id", "name_first", "name_last"]:
             assert (col in self._data.columns) or (col in [self._data.index.name]), f"{col} is not in the data columns."
 
-    def __del__(self):
-        if hasattr(self, "tempdir"):
-            shutil.rmtree(self.tempdir)
-
     def get_cluster_size_distribution(self):
         """Get the cluster size distribution summary.
 
@@ -44,10 +49,9 @@ class InventorDisambiguationSummary:
         if self._cluster_size_distribution is None:
             self._cluster_size_distribution = (
                 self.get_cluster_sizes_dd()["Number of patents"]
-                    .value_counts()
-                    .reset_index()
-                    .rename(columns={"Number of patents": "Number of inventors", "index": "Number of patents"})
-                    .compute()
+                .value_counts()
+                .reset_index()
+                .rename(columns={"Number of patents": "Number of inventors", "index": "Number of patents"})
             )
 
         return self._cluster_size_distribution.copy()
@@ -59,8 +63,8 @@ class InventorDisambiguationSummary:
         """
         return (
             self._data.groupby("inventor_id")
-                .agg({"patent_id": "count", "name_first": "first", "name_last": "first"})
-                .rename(columns={"patent_id": "Number of patents"})
+            .agg({"patent_id": "count", "name_first": "first", "name_last": "first"})
+            .rename(columns={"patent_id": "Number of patents"})
         )
 
     def plot_cluster_size_distribution(self, range=(0, 20)):
@@ -74,8 +78,7 @@ class InventorDisambiguationSummary:
         """
         data = self.get_cluster_size_distribution().reset_index()
         fig = px.bar(
-            data, x="Number of patents", y="Number of inventors",
-            title="Distribution of the number of patents per inventor",
+            data, x="Number of patents", y="Number of inventors", title="Distribution of the number of patents per inventor",
         )
         fig.update_xaxes(range=range)
 
@@ -103,13 +106,13 @@ class InventorDisambiguationSummary:
         def hill_number(arr, q):
             if q == 1:
                 I = arr > 0
-                return da.exp(-da.sum(arr[I] * da.log(arr[I])))
+                return np.exp(-np.sum(arr[I] * np.log(arr[I])))
             elif q == 0:
-                return da.sum(arr > 0)
+                return np.sum(arr > 0)
             else:
-                return da.sum(arr ** (q)) ** (1 / (1 - q))
+                return np.sum(arr ** (q)) ** (1 / (1 - q))
 
-        return [hill_number(data["Number of inventors"], q).compute() for q in q_range], q_range
+        return [hill_number(data["Number of inventors"], q) for q in q_range], q_range
 
     def plot_entropy_curve(self, q_range=np.linspace(0, 2)):
         ent, q = self.entropy_curve(q_range)
@@ -122,15 +125,15 @@ class InventorDisambiguationSummary:
         if self._cluster_unique_name_distribution is None:
             self._cluster_unique_name_distribution = (
                 self.get_cluster_sizes_dd()
-                    .join(
+                .join(
                     self._data.groupby("inventor_id")["name_first"]
-                        .apply(lambda x: len(set(x)) == 1)
-                        .rename("Proportion of unique name")
+                    .apply(lambda x: len(set(x)) == 1)
+                    .rename("Proportion of unique name")
                 )
-                    .groupby("Number of patents")
-                    .agg({"Proportion of unique name": "mean"})
-                    .reset_index()
-            ).compute()
+                .groupby("Number of patents")
+                .agg({"Proportion of unique name": "mean"})
+                .reset_index()
+            )
 
         return self._cluster_unique_name_distribution.copy()
 
@@ -157,25 +160,24 @@ class InventorDisambiguationSummary:
         The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.
         """
         if self._homonymy_rate_distribution is None:
-            data = self._data
-            data = self._data.assign(inventor_id2=data.index, homophones=data.name_first + ":" + data.name_last)
+            data = self._data.assign(inventor_id2=self._data.inventor_id, homophones=self._data.name_first + ":" + self._data.name_last)
 
             dat = (
                 data.join(
                     data.groupby("homophones")["inventor_id2"].apply(lambda x: len(set(x)) > 1).rename("Shared name"),
                     on="homophones",
                 )[["Shared name", "inventor_id2", "patent_id"]]
-                    .groupby("inventor_id2")
-                    .agg({"patent_id": "count", "Shared name": "sum"})
+                .groupby("inventor_id2")
+                .agg({"patent_id": "count", "Shared name": "sum"})
             )
 
-            dat = dat.assign(shared_name_prop=da.where(dat["Shared name"].values > 1, 1, 0))
+            dat = dat.assign(shared_name_prop=np.where(dat["Shared name"].values > 1, 1, 0))
             result = dat.groupby("patent_id")["shared_name_prop"].agg(np.mean)
 
             self._homonymy_rate_distribution = (
-                result.compute()
-                    .reset_index()
-                    .rename(columns={"shared_name_prop": "Homonymy rate", "patent_id": "Number of patents"})
+                result
+                .reset_index()
+                .rename(columns={"shared_name_prop": "Homonymy rate", "patent_id": "Number of patents"})
             )
 
         return self._homonymy_rate_distribution.copy()
@@ -186,7 +188,7 @@ class InventorDisambiguationSummary:
         The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.
         """
         data = self.get_homonymy_rate_distribution().reset_index()
-        fig = px.bar(data, x="Number of patents", y="Homonymy rate", title="Homonymy rate by cluster size", )
+        fig = px.bar(data, x="Number of patents", y="Homonymy rate", title="Homonymy rate by cluster size",)
         fig.update_xaxes(range=range)
 
         ylim = max(data["Homonymy rate"][data["Number of patents"].between(range[0], range[1])])

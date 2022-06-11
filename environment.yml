@@ -32,5 +32,6 @@ dependencies:
     - Sphinx
     - myst_parser
     - sphinx-rtd-theme
+    - parse
     - editdistance
     - dill

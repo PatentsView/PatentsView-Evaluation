@@ -10,8 +10,6 @@ Currently, **pv_evaluation** has the following submodules:
 - **benchmark**: Access to evaluation datasets and standardized comparison benchmarks. 
 - **data**: Processed data used in this package. Use `make data` to re-generate processed data from original datasets.
 - **templates**: Quarto report templates.
-
-The following submodules are planned:
 - **estimators**: performance metric *estimators* to estimate full-data performance from biased samples.
 
 The `examples` folder provides real-world examples of the use of **pv_evaluation** submodules.
