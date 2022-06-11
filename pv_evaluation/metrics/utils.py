@@ -1,4 +1,6 @@
 import pandas as pd
+import editdistance
+
 
 def validate_membership(membership_vect):
     """Validate membership vector
