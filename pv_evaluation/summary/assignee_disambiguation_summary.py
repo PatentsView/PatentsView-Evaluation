@@ -1,8 +1,6 @@
-import math
 from itertools import combinations
 import pandas as pd
 import dask.dataframe as dd
-from memory_profiler import profile
 
 from pv_evaluation.summary.utils import EuclideanDistance, DistanceMetric, calculate_silhouette_a_i, \
     calculate_silhouette_b_i
@@ -91,15 +89,15 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
         """
         silhouette_scores = {}
         for record_idx in self._data.index:
-            record_cluster_label = self._data.loc[record_idx, "cluster_label"].compute().values[0]
-            record_label = self._data.loc[record_idx, "data_label"].compute().values[0]
+            record_cluster_label = self._data.loc[record_idx, "cluster_label"].values[0]
+            record_label = self._data.loc[record_idx, "data_label"].values[0]
             current_cluster_distances = self.intra_cluster_distances[record_cluster_label]
             # s(i) = 0 if |C] =1
             if current_cluster_distances is None:
                 silhouette_scores[record_idx] = 0
             else:
                 a = calculate_silhouette_a_i(record_label, current_cluster_distances[1])
-                b = calculate_silhouette_b_i(record_cluster_label, self._data.cluster_label.compute().tolist())
+                b = calculate_silhouette_b_i(record_cluster_label, self._data.cluster_label.tolist())
                 silhouette_scores[record_idx] = (b - a) / max(a, b)
 
         # Update the _data variable with calculated scores
@@ -112,7 +110,7 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
 if __name__ == '__main__':
     assignee_summary = AssigneeDisambiguationSummary(
         datapath="/Users/smadhavan/Workspace/Current/PatentsView/Disambiguation/Assignee/sample_one.csv",
-        processed_data_dir="/Users/smadhavan/Workspace/Current/PatentsView/Disambiguation/Assignee/")
+        processed_data_dir="/Users/smadhavan/Workspace/Current/PatentsView/Disambiguation/Assignee/", name='test')
     assignee_summary.collect_inter_cluster_distance()
     assignee_summary.collect_intra_cluster_distance()
     assignee_summary.calculate_silhouette_score()

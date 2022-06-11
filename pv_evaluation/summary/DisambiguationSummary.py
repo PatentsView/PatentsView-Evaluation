@@ -1,11 +1,8 @@
-import pandas
 import dill as pickle
-import dask.dataframe as dd
-import dask.array as da
 import numpy as np
+import pandas as pd
 import os
 import tempfile
-import shutil
 import plotly.express as px
 from .utils import read_auto
 
@@ -29,12 +26,8 @@ class DisambiguationSummary:
         if self.processed_data_dir is None:
             self.processed_data_dir = tempfile.mkdtemp()
             self.tempdir = self.processed_data_dir
-        parquet_filename = "processed_{name}_disambiguation_data.parquet".format(name=self.name)
-        self._parquet_datapath = os.path.join(processed_data_dir, parquet_filename)
-        if os.path.exists(self._parquet_datapath):
-            self._data: pandas.DataFrame = dd.read_parquet(self._parquet_datapath)
-        else:
-            self._data: pandas.DataFrame = read_auto(datapath)
+
+        self._data: pd.DataFrame = read_auto(datapath)
         self._validate_data()
 
         # Lazy initialization
@@ -46,10 +39,6 @@ class DisambiguationSummary:
 
     def _validate_data(self):
         raise NotImplementedError()
-
-    def __del__(self):
-        if hasattr(self, "tempdir"):
-            shutil.rmtree(self.tempdir)
 
     def __save__(self):
         if self.processed_data_dir is not None:
@@ -67,10 +56,9 @@ class DisambiguationSummary:
         if self._cluster_size_distribution is None:
             self._cluster_size_distribution = (
                 self.get_cluster_sizes_dd()["Number of records"]
-                .value_counts()
-                .reset_index()
-                .rename(columns={"Number of records": "Number of clusters", "index": "Number of records"})
-                .compute()
+                    .value_counts()
+                    .reset_index()
+                    .rename(columns={"Number of records": "Number of clusters", "index": "Number of records"})
             )
 
         return self._cluster_size_distribution.copy()
@@ -129,13 +117,13 @@ class DisambiguationSummary:
         def hill_number(arr, q):
             if q == 1:
                 I = arr > 0
-                return da.exp(-da.sum(arr[I] * da.log(arr[I])))
+                return np.exp(-np.sum(arr[I] * np.log(arr[I])))
             elif q == 0:
-                return da.sum(arr > 0)
+                return np.sum(arr > 0)
             else:
-                return da.sum(arr ** (q)) ** (1 / (1 - q))
+                return np.sum(arr ** (q)) ** (1 / (1 - q))
 
-        return [hill_number(data["Number of clusters"], q).compute() for q in q_range], q_range
+        return [hill_number(data["Number of clusters"], q) for q in q_range], q_range
 
     def plot_entropy_curve(self, q_range=np.linspace(0, 2)):
         ent, q = self.entropy_curve(q_range)
@@ -153,10 +141,10 @@ class DisambiguationSummary:
                     .apply(lambda x: len(set(x)) == 1)
                     .rename("Proportion of unique name")
                 )
-                .groupby("Number of records")
-                .agg({"Proportion of unique name": "mean"})
-                .reset_index()
-            ).compute()
+                    .groupby("Number of records")
+                    .agg({"Proportion of unique name": "mean"})
+                    .reset_index()
+            )
 
         return self._cluster_unique_name_distribution.copy()
 
@@ -192,16 +180,16 @@ class DisambiguationSummary:
                     on="homophones",
                 )[["Shared name", "id_2", self.record_id_field]]
                 .groupby("id_2")
-                .agg({self.record_id_field: "count", "Shared name": "sum"})
+                    .agg({self.record_id_field: "count", "Shared name": "sum"})
             )
 
-            dat = dat.assign(shared_name_prop=da.where(dat["Shared name"].values > 1, 1, 0))
+            dat = dat.assign(shared_name_prop=np.where(dat["Shared name"].values > 1, 1, 0))
             result = dat.groupby(self.record_id_field)["shared_name_prop"].agg(np.mean)
 
             self._homonymy_rate_distribution = (
-                result.compute()
-                .reset_index()
-                .rename(columns={"shared_name_prop": "Homonymy rate", self.record_id_field: "Number of records"})
+                result
+                    .reset_index()
+                    .rename(columns={"shared_name_prop": "Homonymy rate", self.record_id_field: "Number of records"})
             )
 
         return self._homonymy_rate_distribution.copy()
