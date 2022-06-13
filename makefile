@@ -9,7 +9,7 @@
 ##		docs:		Make Sphinx documentation.
 ## 		black:		Format Python files.
 ##		data:		Make processed data folder.
-
+ENV?=pv-evaluation
 DATA_RAW_S3_URL=https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip
 
 .PHONY: help env black data clean
@@ -24,7 +24,7 @@ env: environment.yml
 black:
 	black . --line-length=127
 
-data: \
+data: env\
 	pv_evaluation/data/inventor/israeli-inventors-benchmark.csv\
 	pv_evaluation/data/inventor/patentsview-inventors-benchmark.csv
 
@@ -36,7 +36,7 @@ data-raw/.tag: data-raw.zip
 	touch data-raw/.tag
 
 pv_evaluation/data/inventor/%.csv: scripts/%.py data-raw/.tag
-	python3 $<
+	conda run -n $(ENV) python3 $<
 
 clean:
 	rm -r data-raw

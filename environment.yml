@@ -33,3 +33,4 @@ dependencies:
     - myst_parser
     - sphinx-rtd-theme
     - parse
+    - git+https://github.com/OlivierBinette/StringCompare.git@release
