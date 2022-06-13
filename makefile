@@ -26,7 +26,8 @@ black:
 
 data: env\
 	pv_evaluation/data/inventor/israeli-inventors-benchmark.csv\
-	pv_evaluation/data/inventor/patentsview-inventors-benchmark.csv
+	pv_evaluation/data/inventor/patentsview-inventors-benchmark.csv\
+	pv_evaluation/data/inventor/lai-2011-benchmark.csv
 
 data-raw.zip:
 	wget $(DATA_RAW_S3_URL)
