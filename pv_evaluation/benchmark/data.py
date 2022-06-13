@@ -28,6 +28,11 @@ def load_harvard_inventors_benchmark():
     pass
     return load_unique_id_series(INVENTOR_DATA_MODULE, "harvard-inventors-benchmark.csv")
 
+def load_lai_2011_inventors_benchmark():
+    """TODO: Document this dataset.
+    """
+    return load_unique_id_series(INVENTOR_DATA_MODULE, "lai-2011-benchmark.csv")
+
 
 def load_israeli_inventors_benchmark():
     """TODO: Document this dataset.
