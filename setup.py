@@ -5,7 +5,7 @@ if __name__ == "__main__":
     setup(
         name="pv_evaluation",
         version="0.0.0",
-        author="Olivier Binette",
+        author="Olivier Binette, Sarvo Madhavan",
         author_email="olivier.binette@gmail.com",
         description="Tools to evaluate disambiguation algorithms",
         url="https://github.com/OlivierBinette/PatentsView-Evaluation",
