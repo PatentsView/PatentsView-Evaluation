@@ -11,7 +11,7 @@ def clusters_count(membership_vect):
     """Compute number of clusters for a given membership vector.
 
     Args:
-        membership_vect (Series): membership vector, i.e. a pandas Series indexed by mention ids and with values representing cluster assignment. 
+        membership_vect (Series): membership vector, i.e. a pandas Series indexed by mention ids and with values representing cluster assignment.
 
     Returns:
         int: number of clusters
@@ -23,14 +23,14 @@ def clusters_count(membership_vect):
 
 def cluster_precision(prediction, reference):
     """Compute cluster precision, i.e. the proportion of predicted clusters with no erroneous assignment.
-    
+
     A cluster makes an erroneous assignment if it contains two mention ids that are not part of the same reference cluster.
 
     A perfect cluster precision means that all predicted links are correct.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: cluster precision
@@ -50,8 +50,8 @@ def cluster_recall(prediction, reference):
     A perfect cluster recall means that all reference links are correctly predicted.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: cluster recall
@@ -60,8 +60,7 @@ def cluster_recall(prediction, reference):
 
 
 def cluster_precision_recall(prediction, reference):
-    """TODO
-    """
+    """TODO"""
     return (cluster_precision(prediction, reference), cluster_recall(prediction, reference))
 
 
@@ -70,12 +69,12 @@ def cluster_fscore(prediction, reference, beta=1.0):
 
     This is indexed by a parameter `beta` representing the statement that "recall is beta times more important than precision".
     See [this Wikipedia article](https://en.wikipedia.org/wiki/F-score) for more information.
-    
+
     For beta = 1 (default value), this is the harmonic mean between precision and recall.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
         beta (float, optional): weight. Defaults to 1.0.
 
     Returns:
@@ -85,15 +84,15 @@ def cluster_fscore(prediction, reference, beta=1.0):
     P = cluster_precision(prediction, reference)
     R = cluster_recall(prediction, reference)
 
-    return (1 + beta ** 2) * P * R / (beta ** 2 * P + R)
+    return (1 + beta**2) * P * R / (beta**2 * P + R)
 
 
 def cluster_fowlkes_mallows(prediction, reference):
     """Geometric mean between cluster precision and cluster recall.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: geometric mean between cluster precision and cluster recall.
@@ -106,8 +105,8 @@ def cluster_fowlkes_mallows(prediction, reference):
 
 def wrap_sklearn_metric(sklearn_metric):
     """Generic function to wrap sklearn cluster metrics.
-    
-    Membership vectors are restricted to 
+
+    Membership vectors are restricted to
 
     Args:
         sklearn_metric (function): cluster metric to wrap.
@@ -132,8 +131,8 @@ def cluster_homogeneity(prediction, reference):
     This wraps scikit-learn's [homogeneity score function](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_score.html).
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: homogeneity score
@@ -147,8 +146,8 @@ def cluster_completeness(prediction, reference):
     This wraps scikit-learn's [completeness score function](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html).
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: completeness score
@@ -166,8 +165,8 @@ def rand_score(prediction, reference):
     This wraps scikit-learn's [rand index function](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score).
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: rand index

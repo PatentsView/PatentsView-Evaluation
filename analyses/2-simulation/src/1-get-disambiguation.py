@@ -7,7 +7,7 @@ import os
 
 if not os.path.isfile("output/rawinventor.tsv"):
     wget.download("https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip")
-    with zipfile.ZipFile("rawinventor.tsv.zip", 'r') as zip_ref:
+    with zipfile.ZipFile("rawinventor.tsv.zip", "r") as zip_ref:
         zip_ref.extractall(".")
     os.remove("rawinventor.tsv.zip")
 

@@ -18,6 +18,12 @@ for rate in rates:
     prediction.inventor_id[I] = prediction.inventor_id[J]
 
     prediction.to_csv(f"output/prediction_rate_{rate}.tsv", sep="\t")
-    ground_truth.append(pairwise_precision_recall(prediction.set_index("mention-id")["inventor_id"], reference.set_index("mention-id")["inventor_id"]))
+    ground_truth.append(
+        pairwise_precision_recall(
+            prediction.set_index("mention-id")["inventor_id"], reference.set_index("mention-id")["inventor_id"]
+        )
+    )
 
-pd.DataFrame.from_records(ground_truth, index=rates, columns=["precision", "recall"]).to_csv("output/ground_truth.tsv", sep="\t")
+pd.DataFrame.from_records(ground_truth, index=rates, columns=["precision", "recall"]).to_csv(
+    "output/ground_truth.tsv", sep="\t"
+)

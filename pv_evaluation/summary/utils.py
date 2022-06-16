@@ -5,7 +5,7 @@ import editdistance
 import pandas as pd
 
 
-def read_auto(datapath) -> pd.DataFrame:
+def read_auto(datapath):
     _, ext = os.path.splitext(datapath)
 
     if ext == ".csv":
@@ -18,7 +18,7 @@ def read_auto(datapath) -> pd.DataFrame:
         raise Exception("Unsupported file type. Should be one of csv, tsv, or parquet.")
 
 
-class DistanceMetric():
+class DistanceMetric:
     def pairwise_distance(self, point1, point2):
         """
 
@@ -43,7 +43,6 @@ class DistanceMetric():
 
 
 class EuclideanDistance(DistanceMetric):
-
     def pairwise_distance(self, point1: str, point2: str):
         """
         Levenshtein distance between two points.
@@ -98,6 +97,7 @@ class CorrelationDistance(DistanceMetric):
     def multi_point_distance(self, points_generator):
         raise NotImplementedError
         from sklearn.feature_extraction.text import CountVectorizer
+
         vectorizer = CountVectorizer()
 
     def pairwise_distance(self, point1: object, point2: object):
@@ -117,15 +117,16 @@ def standardize_names(name: str, *args, **kwargs):
 
     """
     processed_name = name
-    if kwargs.get('lower', True):
+    if kwargs.get("lower", True):
         processed_name = processed_name.lower()
-    if kwargs.get('trim_whitespace', True):
+    if kwargs.get("trim_whitespace", True):
         processed_name.strip()
-    if kwargs.get('strip_extra_whitespace', True):
+    if kwargs.get("strip_extra_whitespace", True):
         import re
-        processed_name = re.sub('(\s){2,}', '\\1', processed_name)
-    if kwargs.get('force_ascii', False):
-        processed_name = processed_name.encode('ascii', 'ignore')
+
+        processed_name = re.sub("(\s){2,}", "\\1", processed_name)
+    if kwargs.get("force_ascii", False):
+        processed_name = processed_name.encode("ascii", "ignore")
     return processed_name
 
 
@@ -168,6 +169,7 @@ def calculate_silhouette_b_i(record_cluster_label, cluster_labels, distance_metr
         lowest of the mean similarities for the record (float) with all the other clusters
     """
 
-    distance_comparison_points = zip(record_cluster_label, [cluster_name for cluster_name in cluster_labels if
-                                                            cluster_name != record_cluster_label])
+    distance_comparison_points = zip(
+        record_cluster_label, [cluster_name for cluster_name in cluster_labels if cluster_name != record_cluster_label]
+    )
     return min(distance_metric.multi_point_distance(distance_comparison_points)[1].values())

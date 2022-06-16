@@ -1,18 +1,14 @@
 from itertools import combinations
 import pandas as pd
-import dask.dataframe as dd
 
-from pv_evaluation.summary.utils import EuclideanDistance, DistanceMetric, calculate_silhouette_a_i, \
-    calculate_silhouette_b_i
-from pv_evaluation.summary.DisambiguationSummary import DisambiguationSummary
+from pv_evaluation.summary.utils import EuclideanDistance, DistanceMetric, calculate_silhouette_a_i, calculate_silhouette_b_i
+from pv_evaluation.summary.disambiguation_summary import DisambiguationSummary
 
 
 class AssigneeDisambiguationSummary(DisambiguationSummary):
-    def __init__(self, datapath, name, processed_data_dir=None):
-        super().__init__(datapath, name, processed_data_dir)
-        # ID field for the cluster
-        self.id_field = 'assignee_id'
-        self.record_id_field = 'patent_id'
+    def __init__(self, datapath, name):
+        super().__init__(datapath, name, id_field="assignee_id")
+
         # placeholder for storing various distances
         self.intra_cluster_distances = {}
         self.inter_cluster_distances = {}
@@ -20,15 +16,11 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
         self.dataset_inter_cluster_distance = None
         self.cluster_diameters = {}
 
-    def _validate_data(self):
-        for col in ["patent_id", "assignee_id", "data_label", "cluster_label"]:
-            assert (col in self._data.columns) or (col in [self._data.index.name]), f"{col} is not in the data columns."
-
     def get_intra_cluster_distance(self, *args, **kwargs):
         cluster_name = None
         if len(args) > 1:
             cluster_name = args[0]
-        cluster_name = kwargs.get('cluster_name', cluster_name)
+        cluster_name = kwargs.get("cluster_name", cluster_name)
         if cluster_name is not None:
             return self.intra_cluster_distances.get(cluster_name, None)
         else:
@@ -60,8 +52,9 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
             except ZeroDivisionError:
                 self.intra_cluster_distances[cluster_name] = None
 
-    def collect_inter_cluster_distance(self, distance_metric: DistanceMetric = EuclideanDistance(),
-                                       measure_using: str = 'centroid'):
+    def collect_inter_cluster_distance(
+        self, distance_metric: DistanceMetric = EuclideanDistance(), measure_using: str = "centroid"
+    ):
         """
         Collects all the between-cluster distance between all cluster in datasets.
         Args:
@@ -72,12 +65,13 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
             float: Inter-cluster distance
         """
         cluster_names = self._data.cluster_label.unique()
-        if measure_using != 'centroid':
+        if measure_using != "centroid":
             raise NotImplementedError
         points_generator = combinations(cluster_names, 2)
         try:
             self.dataset_inter_cluster_distance, self.inter_cluster_distances = distance_metric.multi_point_distance(
-                points_generator)
+                points_generator
+            )
         except ZeroDivisionError:
             raise Exception("There is only one cluster in the dataset")
 
@@ -102,19 +96,5 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
 
         # Update the _data variable with calculated scores
         silhouette_series = pd.DataFrame(silhouette_scores.values(), index=silhouette_scores.keys())
-        silhouette_series.rename({0: 'sihouette_score'}, axis=1, inplace=True)
+        silhouette_series.rename({0: "sihouette_score"}, axis=1, inplace=True)
         self._data = self._data.join(silhouette_series)
-
-
-if __name__ == '__main__':
-    assignee_summary = AssigneeDisambiguationSummary(
-        datapath="/Users/smadhavan/Workspace/Current/PatentsView/Disambiguation/Assignee/sample_one.csv",
-        processed_data_dir="/Users/smadhavan/Workspace/Current/PatentsView/Disambiguation/Assignee/", name='test')
-    assignee_summary.collect_inter_cluster_distance()
-    assignee_summary.collect_intra_cluster_distance()
-    assignee_summary.calculate_silhouette_score()
-    assignee_summary
-    assignee_summary.__save__()
-    print(assignee_summary.get_dataset_inter_cluster_distance())
-
-# %%
