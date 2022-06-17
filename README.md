@@ -25,6 +25,30 @@ pip install -e .
 
 Rendering reports requires the installation of quarto from [quarto.org](https://quarto.org/docs/get-started/).
 
+## Examples
+
+Note: Working with the full patent data requires large amounts of memory (we suggest having 64GB RAM available).
+
+### Metrics and Summary Statistics
+
+Generate a report summarizing properties of the current disambiguation algorithm, using the `rawinventor.tsv` data file from PatentsView's downloads page:
+```python
+from pv_evaluation.templates import render_inventor_disambiguation_report
+
+render_inventor_disambiguation_report(".", summary_table_files=["rawinventor.tsv"])
+```
+
+### Estimate precision and recall from a sample of inventors:
+
+Estimate precision from true clusters sampled with probability proportional to their size:
+```
+from pv_evaluation.estimators import pairwise_precision_estimator
+from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark
+
+current_disambiguation = # TODO: Make this the current disambiguation membership vector
+pairwise_precision_estimator(current_disambiguation, load_lai_2011_inventors_benchmark(), sampling_type="cluster_block", weights="cluster_size")
+```
+
 ## Contributing
 
 ### Contribute code and documentation

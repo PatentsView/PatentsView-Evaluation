@@ -26,7 +26,8 @@ data = df.head(50000)
 # Define index and relevant fields
 data["mention_id"] = data.patent_id.str.cat(data.sequence.astype(str), sep="-")
 data["name_full"] = data.name_first.str.cat(data.name_last, sep="_")
-data.set_index("mention_id", inplace=True)
 
 # Save as raw_inventor_sample.tsv
-data[["name_full", "inventor_id"]].to_csv("raw_inventor_sample.tsv", sep="\t")
+data[["mention_id", "name_full", "inventor_id", "patent_id", "name_first", "name_last"]].to_csv(
+    "raw_inventor_sample.tsv", sep="\t", index=False
+)
