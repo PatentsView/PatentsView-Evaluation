@@ -78,7 +78,10 @@ class InventorDisambiguationSummary:
         """
         data = self.get_cluster_size_distribution().reset_index()
         fig = px.bar(
-            data, x="Number of patents", y="Number of inventors", title="Distribution of the number of patents per inventor",
+            data,
+            x="Number of patents",
+            y="Number of inventors",
+            title="Distribution of the number of patents per inventor",
         )
         fig.update_xaxes(range=range)
 
@@ -160,7 +163,9 @@ class InventorDisambiguationSummary:
         The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.
         """
         if self._homonymy_rate_distribution is None:
-            data = self._data.assign(inventor_id2=self._data.inventor_id, homophones=self._data.name_first + ":" + self._data.name_last)
+            data = self._data.assign(
+                inventor_id2=self._data.inventor_id, homophones=self._data.name_first + ":" + self._data.name_last
+            )
 
             dat = (
                 data.join(
@@ -174,10 +179,8 @@ class InventorDisambiguationSummary:
             dat = dat.assign(shared_name_prop=np.where(dat["Shared name"].values > 1, 1, 0))
             result = dat.groupby("patent_id")["shared_name_prop"].agg(np.mean)
 
-            self._homonymy_rate_distribution = (
-                result
-                .reset_index()
-                .rename(columns={"shared_name_prop": "Homonymy rate", "patent_id": "Number of patents"})
+            self._homonymy_rate_distribution = result.reset_index().rename(
+                columns={"shared_name_prop": "Homonymy rate", "patent_id": "Number of patents"}
             )
 
         return self._homonymy_rate_distribution.copy()
@@ -188,7 +191,12 @@ class InventorDisambiguationSummary:
         The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.
         """
         data = self.get_homonymy_rate_distribution().reset_index()
-        fig = px.bar(data, x="Number of patents", y="Homonymy rate", title="Homonymy rate by cluster size",)
+        fig = px.bar(
+            data,
+            x="Number of patents",
+            y="Homonymy rate",
+            title="Homonymy rate by cluster size",
+        )
         fig.update_xaxes(range=range)
 
         ylim = max(data["Homonymy rate"][data["Number of patents"].between(range[0], range[1])])

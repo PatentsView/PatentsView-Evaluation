@@ -20,13 +20,14 @@ def load_unique_id_series(module, filename):
     data.set_index("mention-id", inplace=True)
     return data["unique-id"]
 
+
 def load_lai_2011_inventors_benchmark():
     """Lai's 2011 inventors benchmark dataset
 
     This is adapted from the benchmark dataset reported in Lai et al. (2011) to evaluate their disambiguation of the  U.S. Patent Inventor Database (1975-2010).
 
     Notes:
-        A number of patent IDs which could not be found were removed from Lai's original dataset. 
+        A number of patent IDs which could not be found were removed from Lai's original dataset.
         Inventor sequence numbers were assigned through automatic matching and manual review. There could be some errors.
 
     See:

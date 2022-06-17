@@ -11,7 +11,7 @@ def cluster_sizes(membership_vect):
     """Get cluster sizes for a given membership vector.
 
     Args:
-        membership_vect (Series):  membership vector, i.e. a pandas Series indexed by mention ids and with values representing cluster assignment. 
+        membership_vect (Series):  membership vector, i.e. a pandas Series indexed by mention ids and with values representing cluster assignment.
 
     Returns:
         Series: cluster sizes
@@ -23,12 +23,12 @@ def cluster_sizes(membership_vect):
 
 def links_count(membership_vect):
     """Number of links associated with a given membership vector.
-    
+
     There is one link for each distinct pair of elements within the same cluster.
 
     Args:
-        membership_vect (Series):  membership vector, i.e. a pandas Series indexed by mention ids and with values representing cluster assignment. 
-        
+        membership_vect (Series):  membership vector, i.e. a pandas Series indexed by mention ids and with values representing cluster assignment.
+
     Returns:
         int: number of links
     """
@@ -39,9 +39,9 @@ def true_positives_count(prediction, reference):
     """Number of true positives for given predicted and reference clusterings.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
-            
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
 
     Returns:
         int: Number of true positives.
@@ -59,9 +59,9 @@ def false_positives_count(prediction, reference):
     """Number of false positives for given predicted and reference clusterings.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
-            
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
 
     Returns:
         int: Number of false positives
@@ -73,9 +73,9 @@ def pairwise_precision(prediction, reference):
     """Pairwise precision: number of correct links divided by the number of predicted links.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
-            
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
     Returns:
         float: pairwise precision
     """
@@ -95,9 +95,9 @@ def pairwise_recall(prediction, reference):
     This is the same as `pairwise_precision(reference, prediction)`.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
-            
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
     Returns:
         float: pairwise recall
     """
@@ -109,9 +109,9 @@ def pairwise_precision_recall(prediction, reference):
     """Pairwise precision and recall
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
-            
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
     Returns:
         tuple: tuple (precision, recall).
     """
@@ -123,32 +123,32 @@ def pairwise_fscore(prediction, reference, beta=1.0):
 
     This is indexed by a parameter `beta` representing the statement that "recall is beta times more important than precision".
     See [this Wikipedia article](https://en.wikipedia.org/wiki/F-score) for more information.
-    
+
     For beta = 1 (default value), this is the harmonic mean between precision and recall.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
         beta (float): weight. Defaults to 1.0.
-    
+
     Returns:
         float: f-score
     """
     P = pairwise_precision(prediction, reference)
     R = pairwise_recall(prediction, reference)
 
-    return (1 + beta ** 2) * P * R / (beta ** 2 * P + R)
+    return (1 + beta**2) * P * R / (beta**2 * P + R)
 
 
 def pairwise_fowlkes_mallows(prediction, reference):
     """Geometric mean between pairwise precision and recall.
-    
+
     See [this Wikipedia article](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) for more information.
 
     Args:
-        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment. 
-        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment. 
-            
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
     Returns:
         float: Fowlks-Mallows index
     """

@@ -1,11 +1,7 @@
 """Evaluation datasets and standardized benchmarks.
 """
 
-from .data import (
-    load_israeli_inventors_benchmark,
-    load_patentsview_inventors_benchmark,
-    load_lai_2011_inventors_benchmark
-)
+from .data import load_israeli_inventors_benchmark, load_patentsview_inventors_benchmark, load_lai_2011_inventors_benchmark
 
 from .report import (
     inventor_benchmark_table,

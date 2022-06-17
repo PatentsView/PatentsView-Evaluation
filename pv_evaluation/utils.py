@@ -18,7 +18,6 @@ def compare_plots(*figs):
 
     return combined
 
+
 def expand_grid(**kwargs):
-    return pd.DataFrame.from_records(
-            itertools.product(*kwargs.values()), columns=kwargs.keys()
-        )
+    return pd.DataFrame.from_records(itertools.product(*kwargs.values()), columns=kwargs.keys())
