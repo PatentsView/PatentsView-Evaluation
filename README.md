@@ -41,7 +41,7 @@ render_inventor_disambiguation_report(".", summary_table_files=["rawinventor.tsv
 ### Estimate precision and recall from a sample of inventors:
 
 Estimate precision from true clusters sampled with probability proportional to their size:
-```
+```python
 from pv_evaluation.estimators import pairwise_precision_estimator
 from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark
 
