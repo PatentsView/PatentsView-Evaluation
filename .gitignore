@@ -5,7 +5,10 @@
 *.zip
 data-raw/
 .jupyter_cache/
+*.pickle
+*.pkl 
 
+index.qmd
 *.html
 *.css 
 *.js 
