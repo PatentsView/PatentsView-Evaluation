@@ -105,7 +105,7 @@ def style_cluster_inspection(table, by="prediction"):
 
 def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
     """Get table of cluster assignment errors on the given benchmark.
-    
+
     Args:
         disambiguation (Series): Disambiguation result Series.
         benchmark (Series): reference disambiguation Series.
