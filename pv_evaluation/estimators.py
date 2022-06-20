@@ -24,7 +24,7 @@ def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
-        sampling_type (str): Sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", or "single_block".
+        sampling_type (str): Sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", "single_block", or "cluster_block".
             Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster.
         weights (str): Sampling probability weights. Should be one of "uniform" or "cluster_size".
 
