@@ -1,4 +1,4 @@
-"""Disambiguation summary statistics.
+"""Disambiguation summary statistics
 """
 
 from .inventor_disambiguation_summary import InventorDisambiguationSummary
