@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>pv_evaluation.estimators &#8212; PatentsView-Evaluation  documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_lesson.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/minipres.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pv_evaluation.utils" href="pv_evaluation.utils.html" />
+    <link rel="prev" title="pv_evaluation.templates" href="pv_evaluation.templates.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="None">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">PatentsView-Evaluation  documentation</p>
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="readme.html">
+  README
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="examples.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="pv_evaluation.html">
+  API Doc
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="pv_evaluation.summary.html">
+   pv_evaluation.summary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pv_evaluation.metrics.html">
+   pv_evaluation.metrics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pv_evaluation.benchmark.html">
+   pv_evaluation.benchmark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pv_evaluation.templates.html">
+   pv_evaluation.templates
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   pv_evaluation.estimators
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pv_evaluation.utils.html">
+   pv_evaluation.utils
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contents">
+   Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-pv_evaluation.estimators">
+   Documentation
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                
+  <section id="pv-evaluation-estimators">
+<h1>pv_evaluation.estimators<a class="headerlink" href="#pv-evaluation-estimators" title="Permalink to this headline">#</a></h1>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">#</a></h2>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.estimators.pairwise_precision_estimator" title="pv_evaluation.estimators.pairwise_precision_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pairwise_precision_estimator</span></code></a></p></td>
+<td><p>Pairwise precision estimates for small non-replacement samples.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.estimators.pairwise_precision_std" title="pv_evaluation.estimators.pairwise_precision_std"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pairwise_precision_std</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.estimators.pairwise_recall_estimator" title="pv_evaluation.estimators.pairwise_recall_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pairwise_recall_estimator</span></code></a></p></td>
+<td><p>Pairwise recall estimates for small non-replacement samples.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-pv_evaluation.estimators">
+<span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-pv_evaluation.estimators" title="Permalink to this headline">#</a></h2>
+<p>Estimate full-data performance from biased samples</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_precision_estimator">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_precision_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.pairwise_precision_estimator" title="Permalink to this definition">#</a></dt>
+<dd><p>Pairwise precision estimates for small non-replacement samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
+<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
+<li><p><strong>sampling_type</strong> (<em>str</em>) – Sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, “single_block”, or “cluster_block”.
+Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
+<li><p><strong>weights</strong> (<em>str</em>) – Sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pairwise precision estimate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_precision_std">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_precision_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.pairwise_precision_std" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_recall_estimator">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_recall_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.pairwise_recall_estimator" title="Permalink to this definition">#</a></dt>
+<dd><p>Pairwise recall estimates for small non-replacement samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
+<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
+<li><p><strong>sampling_type</strong> (<em>str</em>) – Sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, or “single_block”.
+Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
+<li><p><strong>weights</strong> (<em>str</em>) – Sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pairwise recall estimate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.ratio_estimator">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">ratio_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.ratio_estimator" title="Permalink to this definition">#</a></dt>
+<dd><p>Ratio estimator for mean(B)/mean(A)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.std_dev">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">std_dev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.std_dev" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="pv_evaluation.templates.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">pv_evaluation.templates</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="pv_evaluation.utils.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">pv_evaluation.utils</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022, PatentsView.org.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>
