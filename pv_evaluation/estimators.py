@@ -1,6 +1,8 @@
+"""Estimate full-data performance from biased samples"""
+
 import numpy as np
 import pandas as pd
-from scipy.special import comb
+import scipy.special as sp
 
 from .metrics.utils import validate_membership
 
@@ -36,9 +38,9 @@ def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
 
     inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
     vals = inner.groupby(["prediction", "reference"]).size()
-    f_sum = vals.to_frame().assign(cmb=comb(vals.values, 2)).groupby("reference").sum().cmb.sort_index().values
+    f_sum = vals.to_frame().assign(cmb=sp.comb(vals.values, 2)).groupby("reference").sum().cmb.sort_index().values
     cluster_sizes = inner.reference.value_counts(sort=False).sort_index().values
-    P = np.sum(comb(prediction.value_counts(sort=False).values, 2))
+    P = np.sum(sp.comb(prediction.value_counts(sort=False).values, 2))
 
     if sampling_type == "record":
         if weights == "uniform":
@@ -55,8 +57,8 @@ def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
         else:
             raise Exception("Unrecognized 'weight' option. Should be one of 'uniform' or 'cluster_size'.")
     elif sampling_type == "single_block":
-        TP_block = np.sum(comb(vals.values, 2))
-        P_block = np.sum(comb(inner.prediction.value_counts(sort=False).values, 2))
+        TP_block = np.sum(sp.comb(vals.values, 2))
+        P_block = np.sum(sp.comb(inner.prediction.value_counts(sort=False).values, 2))
         I = prediction.isin(inner.prediction)
         A = inner.prediction.value_counts(sort=False).sort_index().values
         B = prediction[I].value_counts(sort=False).sort_index().values
@@ -113,7 +115,7 @@ def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
 
     inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
     vals = inner.groupby(["prediction", "reference"]).size()
-    f_sum = vals.to_frame().assign(cmb=comb(vals.values, 2)).groupby("reference").sum().cmb.sort_index().values
+    f_sum = vals.to_frame().assign(cmb=sp.comb(vals.values, 2)).groupby("reference").sum().cmb.sort_index().values
     cluster_sizes = inner.reference.value_counts(sort=False).sort_index().values
 
     if sampling_type == "record":
@@ -125,23 +127,23 @@ def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
             raise Exception("Unrecognized 'weight' option. Should be one of 'uniform' or 'cluster_size'.")
     elif sampling_type == "cluster":
         if weights == "uniform":
-            return ratio_estimator(f_sum, comb(cluster_sizes, 2))
+            return ratio_estimator(f_sum, sp.comb(cluster_sizes, 2))
         elif weights == "cluster_size":
             return 2 * ratio_estimator(f_sum / cluster_sizes, cluster_sizes - 1)
         else:
             raise Exception("Unrecognized 'weight' option. Should be one of 'uniform' or 'cluster_size'.")
     elif sampling_type == "single_block":
-        TP_block = np.sum(comb(vals.values, 2))
-        T_block = np.sum(comb(inner.reference.value_counts(sort=False).values, 2))
+        TP_block = np.sum(sp.comb(vals.values, 2))
+        T_block = np.sum(sp.comb(inner.reference.value_counts(sort=False).values, 2))
         return TP_block / (T_block)
     elif sampling_type == "cluster_block":
         if weights == "uniform":
             N = f_sum
-            D = comb(cluster_sizes, 2)
+            D = sp.comb(cluster_sizes, 2)
             return ratio_estimator(N, D)
         elif weights == "cluster_size":
             N = f_sum / cluster_sizes
-            D = comb(cluster_sizes, 2) / cluster_sizes
+            D = sp.comb(cluster_sizes, 2) / cluster_sizes
             return ratio_estimator(N, D)
     else:
         raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', or 'single_block'")
@@ -165,9 +167,9 @@ def pairwise_precision_std(prediction, reference, sampling_type, weights):
 
     inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
     vals = inner.groupby(["prediction", "reference"]).size()
-    f_sum = vals.to_frame().assign(cmb=comb(vals.values, 2)).groupby("reference").sum().cmb.sort_index().values
+    f_sum = vals.to_frame().assign(cmb=sp.comb(vals.values, 2)).groupby("reference").sum().cmb.sort_index().values
     cluster_sizes = inner.reference.value_counts(sort=False).sort_index().values
-    P = np.sum(comb(prediction.value_counts(sort=False).values, 2))
+    P = np.sum(sp.comb(prediction.value_counts(sort=False).values, 2))
 
     if sampling_type == "record":
         if weights == "uniform":

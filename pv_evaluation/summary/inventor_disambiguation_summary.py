@@ -102,7 +102,10 @@ class InventorDisambiguationSummary:
         """
         return self.get_cluster_sizes_dd().sort_values(by="Number of patents", ascending=False).head(n)
 
-    def entropy_curve(self, q_range=np.linspace(0, 2)):
+    def entropy_curve(self, q_range=None):
+        if q_range is None:
+            q_range = np.linspace(0, 2)
+        
         data = self.get_cluster_size_distribution()
         data["Number of inventors"] = data["Number of inventors"] / sum(data["Number of inventors"])
 
@@ -117,7 +120,10 @@ class InventorDisambiguationSummary:
 
         return [hill_number(data["Number of inventors"], q) for q in q_range], q_range
 
-    def plot_entropy_curve(self, q_range=np.linspace(0, 2)):
+    def plot_entropy_curve(self, q_range=None):
+        if q_range is None:
+            q_range = np.linspace(0, 2)
+        
         ent, q = self.entropy_curve(q_range)
         fig = px.line(x=q, y=ent, title="Hill Numbers entropy curve", labels={"x": "q", "y": "Entropy"})
         fig.update_traces(name=self.name)

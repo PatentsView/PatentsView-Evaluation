@@ -1,21 +1,24 @@
-pv\_evaluation.summary package
+pv\_evaluation.summary
 ==============================
 
-Submodules
-----------
+.. currentmodule:: pv_evaluation.summary
 
-pv\_evaluation.summary.inventor\_disambiguation\_summary module
----------------------------------------------------------------
+Contents
+--------
 
-.. automodule:: pv_evaluation.summary.inventor_disambiguation_summary
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autosummary:: 
+   :nosignatures:
+   
+   InventorDisambiguationSummary
 
-Module contents
----------------
+Documentation
+-------------
 
 .. automodule:: pv_evaluation.summary
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. autoclass:: InventorDisambiguationSummary
+   :members:
+   :undoc-members:
