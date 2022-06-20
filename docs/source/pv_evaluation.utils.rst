@@ -1,7 +1,7 @@
-pv\_evaluation.templates
+pv\_evaluation.utils
 ================================
 
-.. currentmodule:: pv_evaluation.templates
+.. currentmodule:: pv_evaluation.utils
 
 Contents
 --------
@@ -9,11 +9,12 @@ Contents
 .. autosummary:: 
    :nosignatures:
    
-   render_inventor_disambiguation_report
+   compare_plots
+   expand_grid
 
 Documentation
 -------------
 
-.. automodule:: pv_evaluation.templates
+.. automodule:: pv_evaluation.utils
    :members:
    :undoc-members:

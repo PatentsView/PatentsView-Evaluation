@@ -1,10 +1,9 @@
 [![Python package](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg)](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml)
 
-# PatentsView-Evaluation
+## PatentsView-Evaluation: Benchmark Disambiguation Algorithms
 
-**pv_evaluation** is a Python package for the evaluation and benchmarking of PatentsView disambiguation algorithms.
+**pv_evaluation** is a Python package for the evaluation and benchmarking of PatentsView disambiguation algorithms. It has the following submodules:
 
-Currently, **pv_evaluation** has the following submodules:
 - **summary**: Disambiguation summary statistics.
 - **metrics**: Implementation of performance evaluation metrics such as precision and recall.
 - **benchmark**: Access to evaluation datasets and standardized comparison benchmarks. 
@@ -12,7 +11,7 @@ Currently, **pv_evaluation** has the following submodules:
 - **templates**: Quarto report templates.
 - **estimators**: performance metric *estimators* to estimate full-data performance from biased samples.
 
-The `examples` folder provides real-world examples of the use of **pv_evaluation** submodules.
+The `examples` page provides real-world examples of the use of **pv_evaluation** submodules.
 
 ## Installation
 
@@ -29,24 +28,38 @@ Rendering reports requires the installation of quarto from [quarto.org](https://
 
 Note: Working with the full patent data requires large amounts of memory (we suggest having 64GB RAM available).
 
+See the examples page for complete reproducible examples. The examples below only provide a quick overview of **pv_evaluation**'s functionality.
+
 ### Metrics and Summary Statistics
 
-Generate a report summarizing properties of the current disambiguation algorithm, using the `rawinventor.tsv` data file from PatentsView's downloads page:
+Generate an html report summarizing properties of the current disambiguation algorithm (uses the `rawinventor.tsv` data file from PatentsView's [downloads page](https://patentsview.org/download/data-download-tables)):
 ```python
 from pv_evaluation.templates import render_inventor_disambiguation_report
 
 render_inventor_disambiguation_report(".", summary_table_files=["rawinventor.tsv"])
 ```
 
-### Estimate precision and recall from a sample of inventors:
+### Estimate Precision and Recall
 
-Estimate precision from true clusters sampled with probability proportional to their size:
+Estimate precision and recall from clusters sampled with probability proportional to their size:
 ```python
 from pv_evaluation.estimators import pairwise_precision_estimator
 from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark
 
 current_disambiguation = # TODO: Make this the current disambiguation membership vector
 pairwise_precision_estimator(current_disambiguation, load_lai_2011_inventors_benchmark(), sampling_type="cluster_block", weights="cluster_size")
+pairwise_recall_estimator(current_disambiguation, load_lai_2011_inventors_benchmark(), sampling_type="cluster_block", weights="cluster_size")
+```
+
+### Access Benchmark Datasets
+
+Access PatentsView-Evaluation's collection of benchmark datasets:
+```python
+from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark, load_israeli_inventors_benchmark, load_patentsview_inventors_benchmark
+
+load_lai_2011_inventors_benchmark()
+load_israeli_inventors_benchmark()
+load_patentsview_inventors_benchmark()
 ```
 
 ## Contributing

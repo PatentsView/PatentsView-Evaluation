@@ -40,7 +40,8 @@ pv_evaluation/data/inventor/%.csv: scripts/%.py data-raw/.tag
 	conda run -n $(ENV) python3 $<
 
 docs:
-	sphinx-apidoc -o docs/source pv_evaluation
+	find examples -name *.ipynb -exec cp --parents {} docs/source \;
+	$(MAKE) html -C docs
 
 clean:
 	rm -r data-raw

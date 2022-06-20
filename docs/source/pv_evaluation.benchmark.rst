@@ -1,29 +1,26 @@
-pv\_evaluation.benchmark package
-================================
+pv\_evaluation.benchmark
+=================================
 
-Submodules
-----------
+.. currentmodule:: pv_evaluation.benchmark
 
-pv\_evaluation.benchmark.data module
-------------------------------------
+Contents
+--------
 
-.. automodule:: pv_evaluation.benchmark.data
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. autosummary:: 
+   :nosignatures:
+   
+   inspect_clusters_to_merge
+   inspect_clusters_to_split
+   inventor_benchmark_plot
+   inventor_benchmark_table
+   load_israeli_inventors_benchmark
+   load_lai_2011_inventors_benchmark
+   load_patentsview_inventors_benchmark
+   style_cluster_inspection
 
-pv\_evaluation.benchmark.report module
---------------------------------------
-
-.. automodule:: pv_evaluation.benchmark.report
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
+Documentation
+-------------
 
 .. automodule:: pv_evaluation.benchmark
    :members:
    :undoc-members:
-   :show-inheritance:
