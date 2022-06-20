@@ -12,7 +12,7 @@
 ENV?=pv-evaluation
 DATA_RAW_S3_URL=https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip
 
-.PHONY: help env black data clean
+.PHONY: help env black data docs clean
 
 help: makefile
 	@sed -n "s/^##//p" $<
@@ -38,6 +38,9 @@ data-raw/.tag: data-raw.zip
 
 pv_evaluation/data/inventor/%.csv: scripts/%.py data-raw/.tag
 	conda run -n $(ENV) python3 $<
+
+docs:
+	sphinx-apidoc -o docs/source pv_evaluation
 
 clean:
 	rm -r data-raw
