@@ -29,6 +29,7 @@ jobs:
     
     - name: Install quarto
       uses: cderv/install-quarto-action@v1
+    - name: Test quarto
       run: |
         quarto --version
     - name: Test with pytest
