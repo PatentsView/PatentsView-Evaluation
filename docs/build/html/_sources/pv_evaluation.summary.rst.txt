@@ -18,4 +18,3 @@ Documentation
    :members:
    :undoc-members:
    :show-inheritance:
-
