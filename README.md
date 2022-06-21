@@ -1,14 +1,8 @@
 [![Python package](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg)](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml)
 
-<<<<<<< HEAD
-## PatentsView-Evaluation: Benchmark Disambiguation Algorithms
-
-**pv_evaluation** is a Python package for the evaluation and benchmarking of PatentsView disambiguation algorithms. It has the following submodules:
-=======
 ## 📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
 
 **pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It has the following submodules:
->>>>>>> main
 
 - **summary**: Disambiguation summary statistics.
 - **metrics**: Implementation of performance evaluation metrics such as precision and recall.
