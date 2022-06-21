@@ -21,30 +21,34 @@ DEFAULT_BENCHMARKS = {
 DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
     "pairwise recall": pairwise_recall,
-    # "pairwise f1": pairwise_fscore,
-    "cluster precision": cluster_precision,
-    "cluster recall": cluster_recall,
-    # "cluster f1": cluster_fscore
-    "rand index": rand_score,
+    #"pairwise f1": pairwise_fscore,
+    #"cluster precision": cluster_precision,
+    #"cluster recall": cluster_recall,
+    #"cluster f1": cluster_fscore
+    #"rand index": rand_score,
 }
 
 
-def inventor_benchmark_table(disambiguations, metrics=DEFAULT_METRICS, benchmarks=DEFAULT_BENCHMARKS):
+def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
     """Compute performance evaluation metrics on benchmark datasets.
 
     Args:
         disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
-        metrics (dict, optional): Dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.
-        benchmarks (dict, optional): Benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to `DEFAULT_BENCHMARK`.
+        metrics (dict, optional): dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.
+        benchmarks (dict, optional): benchmark datasets loading functions to use from the benchmark submodule. Defaults to `DEFAULT_BENCHMARK`.
     """
+    if metrics is None:
+        metrics = DEFAULT_METRICS
+    if benchmarks is None:
+        benchmarks = DEFAULT_BENCHMARKS
 
     def compute(benchmark, metric, algorithm):
         """Compute metric on benchmark data for a given disambiguation algorithm.
 
         Args:
-            benchmark (str): Benchmark dataset name.
-            metric (str): Performance metric name.
-            algorithm (str): Algorithm name.
+            benchmark (str): benchmark dataset name.
+            metric (str): performance metric name.
+            algorithm (str): algorithm name.
 
         Returns:
             float: Evaluated metric.
@@ -65,17 +69,23 @@ def inventor_benchmark_table(disambiguations, metrics=DEFAULT_METRICS, benchmark
     return computed_metrics
 
 
-def inventor_benchmark_plot(disambiguations, metrics=DEFAULT_METRICS, benchmarks=DEFAULT_BENCHMARKS, **kwargs):
+def inventor_benchmark_plot(disambiguations, metrics=None, benchmarks=None, **kwargs):
     """Bar plot of performance evaluation metrics on benchmark datasets.
 
     Args:
         disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
-        metrics (dict, optional): Dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.
-        benchmarks (dict, optional): Benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to `DEFAULT_BENCHMARK`.
+        metrics (dict, optional): dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.
+        benchmarks (dict, optional): benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to `DEFAULT_BENCHMARK`.
 
     Returns:
         plotly graph object
     """
+    if metrics is None:
+        metrics = DEFAULT_METRICS
+    if benchmarks is None:
+        benchmarks = DEFAULT_BENCHMARKS
+
+    
     computed_metrics = inventor_benchmark_table(disambiguations, metrics=metrics, benchmarks=benchmarks)
     return px.bar(computed_metrics, y="value", x="metric", color="algorithm", facet_col="benchmark", barmode="group", **kwargs)
 
@@ -107,7 +117,7 @@ def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
     """Get table of cluster assignment errors on the given benchmark.
 
     Args:
-        disambiguation (Series): Disambiguation result Series.
+        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
         benchmark (Series): reference disambiguation Series.
         join_with (DataFrame, optional): DataFrame to join based on "mention-id". Defaults to None.
 
@@ -133,7 +143,7 @@ def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None):
     """Get table to inspect missing cluster links given a benchmark dataset.
 
     Args:
-        disambiguation (Series): Disambiguation result Series.
+        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
         benchmark (Series): reference disambiguation Series.
         join_with (DataFrame, optional): DataFrame to join based on "mention-id". Defaults to None.
 

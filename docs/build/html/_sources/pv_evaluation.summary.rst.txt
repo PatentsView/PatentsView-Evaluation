@@ -19,6 +19,9 @@ Documentation
    :undoc-members:
    :show-inheritance:
 
+<<<<<<< HEAD
 .. autoclass:: InventorDisambiguationSummary
    :members:
    :undoc-members:
+=======
+>>>>>>> main

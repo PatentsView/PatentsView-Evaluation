@@ -24,7 +24,7 @@ df.sort_values(by="name_last", inplace=True)
 data = df.head(50000)
 
 # Define index and relevant fields
-data["mention-id"] = data.patent_id.str.cat(data.sequence.astype(str), sep="-")
+data["mention-id"] = "US" + data.patent_id.str.cat(data.sequence.astype(str), sep="-")
 data["name_full"] = data.name_first.str.cat(data.name_last, sep="_")
 
 # Save as raw_inventor_sample.tsv

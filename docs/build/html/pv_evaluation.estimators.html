@@ -44,8 +44,6 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pv_evaluation.utils" href="pv_evaluation.utils.html" />
-    <link rel="prev" title="pv_evaluation.templates" href="pv_evaluation.templates.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -83,18 +81,6 @@
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="readme.html">
   README
- </a>
-</li>
-
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="examples.html">
-  Examples
- </a>
-</li>
-
-<li class="toctree-l1 current active nav-item">
- <a class="reference internal nav-link" href="pv_evaluation.html">
-  API Doc
  </a>
 </li>
 
@@ -242,21 +228,31 @@
 <dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_precision_estimator">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_precision_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.pairwise_precision_estimator" title="Permalink to this definition">#</a></dt>
 <dd><p>Pairwise precision estimates for small non-replacement samples.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
-<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
-<li><p><strong>sampling_type</strong> (<em>str</em>) – Sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, “single_block”, or “cluster_block”.
-Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
-<li><p><strong>weights</strong> (<em>str</em>) – Sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
-</ul>
+<blockquote>
+<div><dl class="simple">
+<dt>Args:</dt><dd><p>prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>pairwise precision estimate.</p>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><p>sampling_type (str): Sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, “single_block”, or “cluster_block”.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
+</dl>
+<blockquote>
+<div><p>sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, “single_block”, or “cluster_block”.</p>
+</div></blockquote>
+<dl>
+<dt>&gt;&gt;&gt;&gt;&gt;&gt;&gt; main</dt><dd><blockquote>
+<div><blockquote>
+<div><p>Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p>
+</div></blockquote>
+<p>weights (str): sampling probability weights. Should be one of “uniform” or “cluster_size”.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: pairwise precision estimate.</p>
+</dd>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -275,9 +271,9 @@ Note that, for “record” sampling, it is assumed that no two different sample
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
 <li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
-<li><p><strong>sampling_type</strong> (<em>str</em>) – Sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, or “single_block”.
+<li><p><strong>sampling_type</strong> (<em>str</em>) – sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, or “single_block”.
 Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
-<li><p><strong>weights</strong> (<em>str</em>) – Sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
+<li><p><strong>weights</strong> (<em>str</em>) – sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -309,20 +305,6 @@ Note that, for “record” sampling, it is assumed that no two different sample
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="pv_evaluation.templates.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">pv_evaluation.templates</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="pv_evaluation.utils.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">pv_evaluation.utils</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
 </div>
               
           </main>

@@ -22,9 +22,9 @@ class InventorDisambiguationSummary:
         """Report inventor disambiguation summaries.
 
         Args:
-            datapath (str): Path to the inventor disambiguation data (csv, tsv or parquet format).
+            datapath (str): path to the inventor disambiguation data (csv, tsv or parquet format).
                 The data should have four columns: "patent_id", "inventor_id", "name_first", and "name_last".
-            name (str): Name of the disambiguation algorithm to show in plots. Defaults to the provided datapath.
+            name (str): name of the disambiguation algorithm to show in plots. Defaults to the provided datapath.
         """
         self.name = datapath if name is None else name
 

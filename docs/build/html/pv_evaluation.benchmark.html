@@ -44,8 +44,6 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pv_evaluation.templates" href="pv_evaluation.templates.html" />
-    <link rel="prev" title="pv_evaluation.metrics" href="pv_evaluation.metrics.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -83,18 +81,6 @@
     <li class="toctree-l1 nav-item">
  <a class="reference internal nav-link" href="readme.html">
   README
- </a>
-</li>
-
-<li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="examples.html">
-  Examples
- </a>
-</li>
-
-<li class="toctree-l1 current active nav-item">
- <a class="reference internal nav-link" href="pv_evaluation.html">
-  API Doc
  </a>
 </li>
 
@@ -260,7 +246,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguation</strong> (<em>Series</em>) – Disambiguation result Series.</p></li>
+<li><p><strong>disambiguation</strong> (<em>Series</em>) – disambiguation result Series (disambiguation results are pandas Series with “mention-id” index and cluster assignment values).</p></li>
 <li><p><strong>benchmark</strong> (<em>Series</em>) – reference disambiguation Series.</p></li>
 <li><p><strong>join_with</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – DataFrame to join based on “mention-id”. Defaults to None.</p></li>
 </ul>
@@ -281,7 +267,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguation</strong> (<em>Series</em>) – Disambiguation result Series.</p></li>
+<li><p><strong>disambiguation</strong> (<em>Series</em>) – disambiguation result Series (disambiguation results are pandas Series with “mention-id” index and cluster assignment values).</p></li>
 <li><p><strong>benchmark</strong> (<em>Series</em>) – reference disambiguation Series.</p></li>
 <li><p><strong>join_with</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – DataFrame to join based on “mention-id”. Defaults to None.</p></li>
 </ul>
@@ -297,14 +283,14 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_benchmark_plot">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics={'cluster</span> <span class="pre">precision':</span> <span class="pre">&lt;function</span> <span class="pre">cluster_precision&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'cluster</span> <span class="pre">recall':</span> <span class="pre">&lt;function</span> <span class="pre">cluster_recall&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pairwise</span> <span class="pre">precision':</span> <span class="pre">&lt;function</span> <span class="pre">pairwise_precision&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pairwise</span> <span class="pre">recall':</span> <span class="pre">&lt;function</span> <span class="pre">pairwise_recall&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'rand</span> <span class="pre">index':</span> <span class="pre">&lt;function</span> <span class="pre">rand_score&gt;}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmarks={'israeli-inventors':</span> <span class="pre">&lt;function</span> <span class="pre">load_israeli_inventors_benchmark&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'patentsview-inventors':</span> <span class="pre">&lt;function</span> <span class="pre">load_patentsview_inventors_benchmark&gt;}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_plot" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmarks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_plot" title="Permalink to this definition">#</a></dt>
 <dd><p>Bar plot of performance evaluation metrics on benchmark datasets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention-id” index and cluster assignment values).</p></li>
-<li><p><strong>metrics</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of metrics (from the metrics submodule) to compute. Defaults to <cite>DEFAULT_METRICS</cite>.</p></li>
-<li><p><strong>benchmarks</strong> (<em>dict</em><em>, </em><em>optional</em>) – Benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to <cite>DEFAULT_BENCHMARK</cite>.</p></li>
+<li><p><strong>metrics</strong> (<em>dict</em><em>, </em><em>optional</em>) – dictionary of metrics (from the metrics submodule) to compute. Defaults to <cite>DEFAULT_METRICS</cite>.</p></li>
+<li><p><strong>benchmarks</strong> (<em>dict</em><em>, </em><em>optional</em>) – benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to <cite>DEFAULT_BENCHMARK</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -315,14 +301,14 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_benchmark_table">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics={'cluster</span> <span class="pre">precision':</span> <span class="pre">&lt;function</span> <span class="pre">cluster_precision&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'cluster</span> <span class="pre">recall':</span> <span class="pre">&lt;function</span> <span class="pre">cluster_recall&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pairwise</span> <span class="pre">precision':</span> <span class="pre">&lt;function</span> <span class="pre">pairwise_precision&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pairwise</span> <span class="pre">recall':</span> <span class="pre">&lt;function</span> <span class="pre">pairwise_recall&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'rand</span> <span class="pre">index':</span> <span class="pre">&lt;function</span> <span class="pre">rand_score&gt;}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmarks={'israeli-inventors':</span> <span class="pre">&lt;function</span> <span class="pre">load_israeli_inventors_benchmark&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'patentsview-inventors':</span> <span class="pre">&lt;function</span> <span class="pre">load_patentsview_inventors_benchmark&gt;}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_table" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmarks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_table" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute performance evaluation metrics on benchmark datasets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention-id” index and cluster assignment values).</p></li>
-<li><p><strong>metrics</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of metrics (from the metrics submodule) to compute. Defaults to <cite>DEFAULT_METRICS</cite>.</p></li>
-<li><p><strong>benchmarks</strong> (<em>dict</em><em>, </em><em>optional</em>) – Benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to <cite>DEFAULT_BENCHMARK</cite>.</p></li>
+<li><p><strong>metrics</strong> (<em>dict</em><em>, </em><em>optional</em>) – dictionary of metrics (from the metrics submodule) to compute. Defaults to <cite>DEFAULT_METRICS</cite>.</p></li>
+<li><p><strong>benchmarks</strong> (<em>dict</em><em>, </em><em>optional</em>) – benchmark datasets loading functions to use from the benchmark submodule. Defaults to <cite>DEFAULT_BENCHMARK</cite>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -411,20 +397,6 @@ Inventor sequence numbers were assigned through automatic matching and manual re
               
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="pv_evaluation.metrics.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">pv_evaluation.metrics</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="pv_evaluation.templates.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">pv_evaluation.templates</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
 </div>
               
           </main>
