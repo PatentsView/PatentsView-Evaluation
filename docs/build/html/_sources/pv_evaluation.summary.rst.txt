@@ -19,6 +19,3 @@ Documentation
    :undoc-members:
    :show-inheritance:
 
-.. autoclass:: InventorDisambiguationSummary
-   :members:
-   :undoc-members:

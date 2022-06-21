@@ -1,8 +1,8 @@
 [![Python package](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg)](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml)
 
-## PatentsView-Evaluation: Benchmark Disambiguation Algorithms
+## 📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
 
-**pv_evaluation** is a Python package for the evaluation and benchmarking of PatentsView disambiguation algorithms. It has the following submodules:
+**pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It has the following submodules:
 
 - **summary**: Disambiguation summary statistics.
 - **metrics**: Implementation of performance evaluation metrics such as precision and recall.
@@ -74,11 +74,16 @@ Look through the [GitHub issues](https://github.com/PatentsView/PatentsView-Eval
 
 A conda environment is provided for development convenience. To create or update this environment, make sure you have conda installed and then run `make env`. You can then activate the development environment using `conda activate pv-evaluation`.
 
-The makefile provides other development utilities such as `make black` to format Python files and `make data` to re-generate benchmark datasets from raw data located on AWS S3.
+The makefile provides other development utilities such as `make black` to format Python files, `make data` to re-generate benchmark datasets from raw data located on AWS S3, and `make docs` to generate the documentation website.
 
 ### Report bugs and submit feedback
 
 Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Evaluation/issues.
+
+### Contributors
+
+- Olivier Binette (American Institutes for Research, Duke University)
+- Sarvo Madhavan (American Institutes for Research)
 
 ## References
 
