@@ -9,10 +9,10 @@ def render_inventor_disambiguation_report(outdir, summary_table_files, cache=Tru
     """Create html report based on disambiguation results.
 
     Args:
-        outdir (str): Directory where to output html files.
-        summary_table_files (list): List of paths to disambiguation table files (tables with the five columns "mention-id", "inventor_id", "patent_id", "name_first", and "name_last"). 
+        outdir (str): directory where to output html files.
+        summary_table_files (list): list of paths to disambiguation table files (tables with the five columns "mention-id", "inventor_id", "patent_id", "name_first", and "name_last"). 
             File format can be one of tsv, csv, or parquet.
-        cache (bool, optional): Whether or not to cache jupyter chunk execution between runs. Defaults to True.
+        cache (bool, optional): whether or not to cache jupyter chunk execution between runs. Defaults to True.
     """
     env = Environment(loader=PackageLoader("pv_evaluation", package_path="templates"))
     template = env.get_template("inventor/0-report.qmd")

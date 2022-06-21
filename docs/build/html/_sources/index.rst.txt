@@ -19,6 +19,7 @@ Documentation Contents
    :maxdepth: 2
 
    readme
+   concepts
    examples
    pv_evaluation
 
