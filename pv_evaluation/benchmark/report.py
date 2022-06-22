@@ -134,7 +134,7 @@ def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
     )
 
     if join_with is not None:
-        clusters_to_split = clusters_to_split.join(join_with, rsuffix="_joined")
+        return clusters_to_split.join(join_with, rsuffix="_joined")
     else:
         return clusters_to_split
 
