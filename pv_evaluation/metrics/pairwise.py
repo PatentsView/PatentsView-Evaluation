@@ -4,7 +4,7 @@
 import numpy as np
 from scipy.special import comb
 import pandas as pd
-from .utils import validate_membership
+from pv_evaluation.metrics.utils import validate_membership
 
 
 def cluster_sizes(membership_vect):
@@ -78,6 +78,9 @@ def pairwise_precision(prediction, reference):
 
     Returns:
         float: pairwise precision
+
+    Note:
+        The prediction and reference membership vectors are inner joined before precision is computed.
     """
 
     inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
@@ -92,14 +95,16 @@ def pairwise_precision(prediction, reference):
 def pairwise_recall(prediction, reference):
     """Pairwise recall: number of correct links divided by the number of reference links.
 
-    This is the same as `pairwise_precision(reference, prediction)`.
-
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: pairwise recall
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before recall is computed.
+        * This is the same as `pairwise_precision(reference, prediction)`_.
     """
 
     return pairwise_precision(reference, prediction)
@@ -114,6 +119,9 @@ def pairwise_precision_recall(prediction, reference):
 
     Returns:
         tuple: tuple (precision, recall).
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before precision and recall are computed.
     """
     return (pairwise_precision(prediction, reference), pairwise_recall(prediction, reference))
 
@@ -133,6 +141,9 @@ def pairwise_fscore(prediction, reference, beta=1.0):
 
     Returns:
         float: f-score
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before f-score is computed.
     """
     P = pairwise_precision(prediction, reference)
     R = pairwise_recall(prediction, reference)
@@ -151,6 +162,9 @@ def pairwise_fowlkes_mallows(prediction, reference):
 
     Returns:
         float: Fowlks-Mallows index
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before the fowlks-mallows score is computed.
     """
     P = pairwise_precision(prediction, reference)
     R = pairwise_recall(prediction, reference)

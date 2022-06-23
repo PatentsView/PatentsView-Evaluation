@@ -20,9 +20,13 @@ summarizers = {filename: InventorDisambiguationSummary(filename) for filename in
 
 {% include 'inventor/callouts/cluster-sizes-tips.qmd' %}
 
+:::{.column-body-outset}
 ```{python}
-compare_plots(*[s.plot_cluster_size_distribution() for s in summarizers.values()])
+fig = compare_plots(*[s.plot_cluster_size_distribution() for s in summarizers.values()])
+fig.update_layout(autosize=False, width=800)
+fig.show()
 ```
+:::
 
 ## Top Inventors
 
@@ -46,24 +50,36 @@ summarizers["{{ filename }}"].get_top_inventors(n=20)
 
 {% include 'inventor/callouts/entropy-tips.qmd' %}
 
+:::{.column-body-outset}
 ```{python}
-compare_plots(*[s.plot_entropy_curve() for s in summarizers.values()])
+fig = compare_plots(*[s.plot_entropy_curve() for s in summarizers.values()])
+fig.update_layout(autosize=False, width=800)
+fig.show()
 ```
+:::
 
 ## Cluster Homogeneity
 
 {% include 'inventor/callouts/cluster-homogeneity-tips.qmd' %}
 
+:::{.column-body-outset}
 ```{python}
-compare_plots(*[s.plot_cluster_unique_name_distribution() for s in summarizers.values()])
+fig = compare_plots(*[s.plot_cluster_unique_name_distribution() for s in summarizers.values()])
+fig.update_layout(autosize=False, width=800)
+fig.show()
 ```
+:::
 
 ## Between-cluster similarity
 
 {% include 'inventor/callouts/between-cluster-tips.qmd'%}
 
+:::{.column-body-outset}
 ```{python}
-compare_plots(*[s.plot_homonymy_rate_distribution() for s in summarizers.values()])
+fig = compare_plots(*[s.plot_homonymy_rate_distribution() for s in summarizers.values()])
+fig.update_layout(autosize=False, width=800)
+fig.show()
 ```
+:::
 
 :::
