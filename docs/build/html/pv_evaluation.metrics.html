@@ -266,7 +266,7 @@
 <td><p>Compute the Rand index.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.metrics.adjusted_rand_score" title="pv_evaluation.metrics.adjusted_rand_score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjusted_rand_score</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Compute the adjusted Rand index.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.metrics.cluster_precision" title="pv_evaluation.metrics.cluster_precision"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cluster_precision</span></code></a></p></td>
 <td><p>Compute cluster precision, i.e. the proportion of predicted clusters with no erroneous assignment.</p></td>
@@ -275,7 +275,7 @@
 <td><p>Compute cluster recall, i.e. the proportion of reference clusters that are not split accross different predicted clusters.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.metrics.cluster_precision_recall" title="pv_evaluation.metrics.cluster_precision_recall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cluster_precision_recall</span></code></a></p></td>
-<td><p>TODO</p></td>
+<td><p>Cluster precision and cluster recall tuple.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.metrics.cluster_homogeneity" title="pv_evaluation.metrics.cluster_homogeneity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cluster_homogeneity</span></code></a></p></td>
 <td><p>Cluster homogeneity score (based on conditional entropy).</p></td>
@@ -290,7 +290,7 @@
 <td><p>F-score between cluster precision and cluster recall.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.metrics.cluster_v_measure" title="pv_evaluation.metrics.cluster_v_measure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cluster_v_measure</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Compute the V-measure.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.metrics.cluster_sizes" title="pv_evaluation.metrics.cluster_sizes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cluster_sizes</span></code></a></p></td>
 <td><p>Get cluster sizes for a given membership vector.</p></td>
@@ -343,13 +343,37 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.metrics.adjusted_rand_score">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">adjusted_rand_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.adjusted_rand_score" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Compute the adjusted Rand index.</p>
+<p>This wraps scikit-learn’s <cite>adjusted rand score function &lt;https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html#sklearn-metrics-adjusted-rand-score&gt;</cite>.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before this metric is computed.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
+<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>adjusted rand index</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.metrics.cluster_completeness">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">cluster_completeness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.cluster_completeness" title="Permalink to this definition">#</a></dt>
 <dd><p>Cluster completeness score (based on conditional entropy)</p>
-<p>This wraps scikit-learn’s [completeness score function](<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html</a>).</p>
+<p>This wraps scikit-learn’s <cite>completeness score function &lt;https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html&gt;</cite>.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before this metric is computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -370,6 +394,10 @@
 <dt class="sig sig-object py" id="pv_evaluation.metrics.cluster_fowlkes_mallows">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">cluster_fowlkes_mallows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.cluster_fowlkes_mallows" title="Permalink to this definition">#</a></dt>
 <dd><p>Geometric mean between cluster precision and cluster recall.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before this metric is computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -393,6 +421,10 @@
 <p>This is indexed by a parameter <cite>beta</cite> representing the statement that “recall is beta times more important than precision”.
 See [this Wikipedia article](<a class="reference external" href="https://en.wikipedia.org/wiki/F-score">https://en.wikipedia.org/wiki/F-score</a>) for more information.</p>
 <p>For beta = 1 (default value), this is the harmonic mean between precision and recall.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before this metric is computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -414,7 +446,11 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <dt class="sig sig-object py" id="pv_evaluation.metrics.cluster_homogeneity">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">cluster_homogeneity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.cluster_homogeneity" title="Permalink to this definition">#</a></dt>
 <dd><p>Cluster homogeneity score (based on conditional entropy).</p>
-<p>This wraps scikit-learn’s [homogeneity score function](<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_score.html">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_score.html</a>).</p>
+<p>This wraps scikit-learn’s <cite>homogeneity score function &lt;https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_score.html&gt;</cite>.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before this metric is computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -437,6 +473,10 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <dd><p>Compute cluster precision, i.e. the proportion of predicted clusters with no erroneous assignment.</p>
 <p>A cluster makes an erroneous assignment if it contains two mention ids that are not part of the same reference cluster.</p>
 <p>A perfect cluster precision means that all predicted links are correct.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before cluster precision is computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -456,7 +496,25 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.metrics.cluster_precision_recall">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">cluster_precision_recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.cluster_precision_recall" title="Permalink to this definition">#</a></dt>
-<dd><p>TODO</p>
+<dd><p>Cluster precision and cluster recall tuple.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before metrics are computed.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
+<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(cluster precision, cluster recall)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -464,6 +522,11 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">cluster_recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.cluster_recall" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute cluster recall, i.e. the proportion of reference clusters that are not split accross different predicted clusters.</p>
 <p>A perfect cluster recall means that all reference links are correctly predicted.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before cluster recall is computed.</p></li>
+<li><p>This is the same as <a href="#id1"><span class="problematic" id="id2">`cluster_precision(reference, prediction)`_</span></a>.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -500,7 +563,27 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.metrics.cluster_v_measure">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">cluster_v_measure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.cluster_v_measure" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Compute the V-measure.</p>
+<p>This wraps scikit-learn’s <cite>V-measure function &lt;https://scikit-learn.org/stable/modules/generated/sklearn.metrics.v_measure_score.html#sklearn-metrics-v-measure-score&gt;</cite>.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before this metric is computed.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
+<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>V-measure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.metrics.clusters_count">
@@ -562,6 +645,10 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">pairwise_fowlkes_mallows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.pairwise_fowlkes_mallows" title="Permalink to this definition">#</a></dt>
 <dd><p>Geometric mean between pairwise precision and recall.</p>
 <p>See [this Wikipedia article](<a class="reference external" href="https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index">https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index</a>) for more information.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before the fowlks-mallows score is computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -585,6 +672,10 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <p>This is indexed by a parameter <cite>beta</cite> representing the statement that “recall is beta times more important than precision”.
 See [this Wikipedia article](<a class="reference external" href="https://en.wikipedia.org/wiki/F-score">https://en.wikipedia.org/wiki/F-score</a>) for more information.</p>
 <p>For beta = 1 (default value), this is the harmonic mean between precision and recall.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before f-score is computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -606,6 +697,10 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <dt class="sig sig-object py" id="pv_evaluation.metrics.pairwise_precision">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">pairwise_precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.pairwise_precision" title="Permalink to this definition">#</a></dt>
 <dd><p>Pairwise precision: number of correct links divided by the number of predicted links.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The prediction and reference membership vectors are inner joined before precision is computed.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -626,6 +721,10 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <dt class="sig sig-object py" id="pv_evaluation.metrics.pairwise_precision_recall">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">pairwise_precision_recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.pairwise_precision_recall" title="Permalink to this definition">#</a></dt>
 <dd><p>Pairwise precision and recall</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before precision and recall are computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -646,7 +745,11 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <dt class="sig sig-object py" id="pv_evaluation.metrics.pairwise_recall">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">pairwise_recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.pairwise_recall" title="Permalink to this definition">#</a></dt>
 <dd><p>Pairwise recall: number of correct links divided by the number of reference links.</p>
-<p>This is the same as <cite>pairwise_precision(reference, prediction)</cite>.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before recall is computed.</p></li>
+<li><p>This is the same as <a href="#id3"><span class="problematic" id="id4">`pairwise_precision(reference, prediction)`_</span></a>.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -667,7 +770,11 @@ See [this Wikipedia article](<a class="reference external" href="https://en.wiki
 <dt class="sig sig-object py" id="pv_evaluation.metrics.rand_score">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.metrics.</span></span><span class="sig-name descname"><span class="pre">rand_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.metrics.rand_score" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute the Rand index.</p>
-<p>This wraps scikit-learn’s [rand index function](<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score</a>).</p>
+<p>This wraps scikit-learn’s <cite>rand index function &lt;https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score&gt;</cite>.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The prediction and reference membership vectors are inner joined before this metric is computed.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

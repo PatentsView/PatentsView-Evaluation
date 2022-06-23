@@ -249,13 +249,13 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.estimators.pairwise_precision_estimator" title="pv_evaluation.estimators.pairwise_precision_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pairwise_precision_estimator</span></code></a></p></td>
-<td><p>Pairwise precision estimates for small non-replacement samples.</p></td>
+<td><p>Pairwise precision estimates for given sampling mechanisms.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.estimators.pairwise_precision_std" title="pv_evaluation.estimators.pairwise_precision_std"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pairwise_precision_std</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Standard deviation estimates for the pairwise precision estimator.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.estimators.pairwise_recall_estimator" title="pv_evaluation.estimators.pairwise_recall_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pairwise_recall_estimator</span></code></a></p></td>
-<td><p>Pairwise recall estimates for small non-replacement samples.</p></td>
+<td><p>Pairwise recall estimates for given sampling mechanisms.</p></td>
 </tr>
 </tbody>
 </table>
@@ -266,32 +266,44 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_precision_estimator">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_precision_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.pairwise_precision_estimator" title="Permalink to this definition">#</a></dt>
-<dd><p>Pairwise precision estimates for small non-replacement samples.</p>
+<dd><p>Pairwise precision estimates for given sampling mechanisms.</p>
+<p>Sampling mechanisms considered are:</p>
 <blockquote>
-<div><dl class="simple">
-<dt>Args:</dt><dd><p>prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
-reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p>
-</dd>
-</dl>
+<div><ul class="simple">
+<li><p><strong>record</strong> sampling: records are sampled and associated ground truth clusters are recovered.</p></li>
+<li><p><strong>cluster</strong> sampling: ground truth clusters are directly sampled.</p></li>
+<li><p><strong>single_block</strong> sampling: a single block (set of ground truth clusters) is sampled.</p></li>
+<li><p><strong>cluster_block</strong> sampling: ground truth clusters are directly sampled and treated as block samples.</p></li>
+</ul>
 </div></blockquote>
-<dl class="simple">
-<dt>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</dt><dd><p>sampling_type (str): Sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, “single_block”, or “cluster_block”.</p>
-</dd>
-</dl>
+<p>For each of these sampling types (excepted single_block), the following probability weights can be used:</p>
 <blockquote>
-<div><p>sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, “single_block”, or “cluster_block”.</p>
+<div><ul class="simple">
+<li><p><strong>uniform</strong>: uniform probability weights.</p></li>
+<li><p><strong>cluster_size</strong>: probability weights proportional to cluster size.</p></li>
+</ul>
 </div></blockquote>
-<dl>
-<dt>&gt;&gt;&gt;&gt;&gt;&gt;&gt; main</dt><dd><blockquote>
-<div><blockquote>
-<div><p>Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p>
-</div></blockquote>
-<p>weights (str): sampling probability weights. Should be one of “uniform” or “cluster_size”.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>float: pairwise precision estimate.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>We recommend using the <strong>cluster_block</strong> estimator when possible since it is the most efficient.</p></li>
+<li><p>This is meant for use with relatively small non-replacement samples.</p></li>
+<li><p>For unknown sampling processes, the <strong>single_block</strong> estimator can be used.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
+<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
+<li><p><strong>sampling_type</strong> (<em>str</em>) – sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, “single_block”, or “cluster_block”.
+Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
+<li><p><strong>weights</strong> (<em>str</em>) – sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
+</ul>
 </dd>
-</dl>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pairwise precision estimate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -299,18 +311,41 @@ reference (Series):  membership vector for sampled reference clusters, i.e. a pa
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_precision_std">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_precision_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.pairwise_precision_std" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Standard deviation estimates for the pairwise precision estimator.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_recall_estimator">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_recall_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.pairwise_recall_estimator" title="Permalink to this definition">#</a></dt>
-<dd><p>Pairwise recall estimates for small non-replacement samples.</p>
+<dd><p>Pairwise recall estimates for given sampling mechanisms.</p>
+<p>Sampling mechanisms considered are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>record</strong> sampling: records are sampled and associated ground truth clusters are recovered.</p></li>
+<li><p><strong>cluster</strong> sampling: ground truth clusters are directly sampled.</p></li>
+<li><p><strong>single_block</strong> sampling: a single block (set of ground truth clusters) is sampled.</p></li>
+<li><p><strong>cluster_block</strong> sampling: ground truth clusters are directly sampled and treated as block samples.</p></li>
+</ul>
+</div></blockquote>
+<p>For each of these sampling types (excepted single_block), the following probability weights can be used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>uniform</strong>: uniform probability weights.</p></li>
+<li><p><strong>cluster_size</strong>: probability weights proportional to cluster size.</p></li>
+</ul>
+</div></blockquote>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>We recommend using the <strong>cluster_block</strong> estimator when possible since it is the most efficient.</p></li>
+<li><p>This is meant for use with relatively small non-replacement samples.</p></li>
+<li><p>For unknown sampling processes, the <strong>single_block</strong> estimator can be used.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
 <li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
-<li><p><strong>sampling_type</strong> (<em>str</em>) – sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, or “single_block”.
+<li><p><strong>sampling_type</strong> (<em>str</em>) – sampling mechanism used to obtain reference clusters. Should be one of “record”, “cluster”, “single_block”, or “cluster_block”.
 Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
 <li><p><strong>weights</strong> (<em>str</em>) – sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
 </ul>
@@ -325,15 +360,10 @@ Note that, for “record” sampling, it is assumed that no two different sample
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.estimators.ratio_estimator">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">ratio_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.ratio_estimator" title="Permalink to this definition">#</a></dt>
-<dd><p>Ratio estimator for mean(B)/mean(A)</p>
+<dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_recall_std">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_recall_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.pairwise_recall_std" title="Permalink to this definition">#</a></dt>
+<dd><p>Standard deviation estimates for the pairwise recall estimator.</p>
 </dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.estimators.std_dev">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">std_dev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.estimators.std_dev" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
 
 </section>
 </section>

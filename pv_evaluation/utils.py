@@ -20,6 +20,5 @@ def compare_plots(*figs):
 
 
 def expand_grid(**kwargs):
-    """Get all value combinations.
-    """
+    """Get all value combinations."""
     return pd.DataFrame.from_records(itertools.product(*kwargs.values()), columns=kwargs.keys())

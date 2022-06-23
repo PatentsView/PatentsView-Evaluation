@@ -261,13 +261,13 @@
 <td><p>Compute performance evaluation metrics on benchmark datasets.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark" title="pv_evaluation.benchmark.load_israeli_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_israeli_inventors_benchmark</span></code></a></p></td>
-<td><p>Israeli inventors benchmark dataset</p></td>
+<td><p>Israeli inventors benchmark dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_lai_2011_inventors_benchmark" title="pv_evaluation.benchmark.load_lai_2011_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_lai_2011_inventors_benchmark</span></code></a></p></td>
-<td><p>Lai's 2011 inventors benchmark dataset</p></td>
+<td><p>Lai's 2011 inventors benchmark dataset (also referred to as as Lai's 2014 inventors benchmark).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_patentsview_inventors_benchmark" title="pv_evaluation.benchmark.load_patentsview_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_patentsview_inventors_benchmark</span></code></a></p></td>
-<td><p>PatentsView hand-disambiguated inventors benchmark</p></td>
+<td><p>PatentsView hand-disambiguated inventors benchmark.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.style_cluster_inspection" title="pv_evaluation.benchmark.style_cluster_inspection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">style_cluster_inspection</span></code></a></p></td>
 <td><p>Style table to highlight groups with alternating colors.</p></td>
@@ -350,13 +350,16 @@
 <li><p><strong>benchmarks</strong> (<em>dict</em><em>, </em><em>optional</em>) – benchmark datasets loading functions to use from the benchmark submodule. Defaults to <cite>DEFAULT_BENCHMARK</cite>.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DataFrame of computed metrics for every disambiguations and every benchmark dataset.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_israeli_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_israeli_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Israeli inventors benchmark dataset</p>
+<dd><p>Israeli inventors benchmark dataset.</p>
 <p>This is adapted from Trajenberg and Shiff (2008). The data covers U.S. patents granted between 1963 and 1999 for Israeli inventors.</p>
 <dl class="simple">
 <dt>See:</dt><dd><p>Trajtenberg, M., &amp; Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development.</p>
@@ -375,11 +378,13 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_lai_2011_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_lai_2011_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.benchmark.load_lai_2011_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Lai’s 2011 inventors benchmark dataset</p>
-<p>This is adapted from the benchmark dataset reported in Lai et al. (2011) to evaluate their disambiguation of the  U.S. Patent Inventor Database (1975-2010).</p>
+<dd><p>Lai’s 2011 inventors benchmark dataset (also referred to as as Lai’s 2014 inventors benchmark).</p>
+<p>This is adapted from the benchmark dataset reported in Li et al. (2014) to evaluate their disambiguation of the  U.S. Patent Inventor Database (1975-2010).</p>
 <p class="rubric">Notes</p>
-<p>A number of patent IDs which could not be found were removed from Lai’s original dataset.
-Inventor sequence numbers were assigned through automatic matching and manual review. There could be some errors.</p>
+<ul class="simple">
+<li><p>A number of patent IDs which could not be found were removed from Lai’s original dataset.</p></li>
+<li><p>Inventor sequence numbers were assigned through automatic matching and manual review. There could be some errors.</p></li>
+</ul>
 <dl class="simple">
 <dt>See:</dt><dd><p>Li, G. C., Lai, R., D’Amour, A., Doolin, D. M., Sun, Y., Torvik, V. I., … &amp; Fleming, L. (2014). Disambiguation and co-authorship networks of the US patent inventor database (1975-2010). Research Policy, 43(6), 941-955.</p>
 </dd>
@@ -397,7 +402,7 @@ Inventor sequence numbers were assigned through automatic matching and manual re
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_patentsview_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_patentsview_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pv_evaluation.benchmark.load_patentsview_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>PatentsView hand-disambiguated inventors benchmark</p>
+<dd><p>PatentsView hand-disambiguated inventors benchmark.</p>
 <p>This is the hand-disambiguation of a set of particularly ambiguous inventor names.</p>
 <dl class="simple">
 <dt>See:</dt><dd><p>Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p>

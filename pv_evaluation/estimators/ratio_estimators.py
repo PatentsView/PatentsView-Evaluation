@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def ratio_estimator(B, A):
     """Ratio estimator for mean(B)/mean(A) with bias adjustment."""
     assert len(A) == len(B)
@@ -8,9 +9,13 @@ def ratio_estimator(B, A):
     B_mean = np.mean(B)
     n = len(A)
 
-    adj = 1 + ((n - 1) * A_mean) ** (-1) * np.mean(A * (B / B_mean - A / A_mean))
+    if len(A) == 1:
+        adj = 1
+    else:
+        adj = 1 + ((n - 1) * A_mean) ** (-1) * np.mean(A * (B / B_mean - A / A_mean))
 
     return adj * B_mean / A_mean
+
 
 def std_dev(B, A):
     """Standard deviation estimator for ratio estimator."""

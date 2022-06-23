@@ -4,7 +4,7 @@
 import numpy as np
 from scipy.special import comb
 import pandas as pd
-from pv_evaluation.utils import validate_membership
+from pv_evaluation.metrics.utils import validate_membership
 
 
 def cluster_sizes(membership_vect):

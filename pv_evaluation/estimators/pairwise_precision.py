@@ -5,6 +5,7 @@ import scipy.special as sp
 from pv_evaluation.metrics.utils import validate_membership
 from pv_evaluation.estimators.ratio_estimators import ratio_estimator, std_dev
 
+
 def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
     """Raw data for use with ratio estimator and standard deviation estimators."""
     validate_membership(prediction)
@@ -27,7 +28,7 @@ def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
         if weights == "uniform":
             return (len(prediction) * f_sum / P, cluster_sizes)
         elif weights == "cluster_size":
-            return (len(prediction) * np.mean(f_sum / cluster_sizes) / P, 1)
+            return (len(prediction) * np.mean(f_sum / cluster_sizes) / P, np.ones(len(f_sum)))
         else:
             raise Exception("Unrecognized 'weight' option. Should be one of 'uniform' or 'cluster_size'.")
     elif sampling_type == "single_block":
@@ -37,7 +38,7 @@ def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
         A = inner.prediction.value_counts(sort=False).sort_index().values
         B = prediction[I].value_counts(sort=False).sort_index().values
         P_block_minus = np.sum(A * (B - A))
-        return (TP_block / (P_block + 0.5 * P_block_minus), 1)
+        return (np.array([TP_block / (P_block + 0.5 * P_block_minus)]), np.array([1]))
     elif sampling_type == "cluster_block":
         if weights == "uniform":
             N = f_sum
@@ -103,6 +104,7 @@ def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
     """
     N, D = pairwise_precision_arrays(prediction, reference, sampling_type, weights)
     return ratio_estimator(N, D)
+
 
 def pairwise_precision_std(prediction, reference, sampling_type, weights):
     """Standard deviation estimates for the pairwise precision estimator."""

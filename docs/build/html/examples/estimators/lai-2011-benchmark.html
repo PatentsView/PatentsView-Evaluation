@@ -243,7 +243,7 @@
 <p>First we import required modules and recover the current disambiguation from <code class="docutils literal notranslate"><span class="pre">rawinventor.tsv</span></code>. The current disambiguation is filtered to only contain inventor mentions for granted patents between 1975 and 2010.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.estimators</span> <span class="kn">import</span> <span class="n">pairwise_precision_estimator</span><span class="p">,</span> <span class="n">pairwise_recall_estimator</span><span class="p">,</span> <span class="n">pairwise_precision_std</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.estimators</span> <span class="kn">import</span> <span class="n">pairwise_precision_estimator</span><span class="p">,</span> <span class="n">pairwise_recall_estimator</span><span class="p">,</span> <span class="n">pairwise_precision_std</span><span class="p">,</span> <span class="n">pairwise_recall_std</span>
 <span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_lai_2011_inventors_benchmark</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -305,6 +305,18 @@
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_precision_std</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02694415809739732
+</pre></div>
+</div>
+</div>
+</div>
 <p>Recall estimate:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -314,6 +326,18 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9096034933749487
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_recall_std</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05017639288406865
 </pre></div>
 </div>
 </div>

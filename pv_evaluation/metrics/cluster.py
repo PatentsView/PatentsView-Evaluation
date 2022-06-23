@@ -5,7 +5,7 @@ import pandas as pd
 import sklearn.metrics as sm
 from functools import wraps
 
-from pv_evaluation.utils import validate_membership
+from pv_evaluation.metrics.utils import validate_membership
 
 
 def clusters_count(membership_vect):
@@ -137,6 +137,7 @@ def wrap_sklearn_metric(sklearn_metric):
     Args:
         sklearn_metric (function): cluster metric to wrap.
     """
+
     @wraps(sklearn_metric)
     def func(prediction, reference, **kw):
         validate_membership(prediction)

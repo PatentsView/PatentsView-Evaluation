@@ -111,7 +111,7 @@ class InventorDisambiguationSummary:
     def entropy_curve(self, q_range=None):
         if q_range is None:
             q_range = np.linspace(0, 2)
-        
+
         data = self.get_cluster_size_distribution()
         data["Number of inventors"] = data["Number of inventors"] / sum(data["Number of inventors"])
 
@@ -129,7 +129,7 @@ class InventorDisambiguationSummary:
     def plot_entropy_curve(self, q_range=None):
         if q_range is None:
             q_range = np.linspace(0, 2)
-        
+
         ent, q = self.entropy_curve(q_range)
         fig = px.line(x=q, y=ent, title="Hill Numbers entropy curve", labels={"x": "q", "y": "Entropy"})
         fig.update_traces(name=self.name)

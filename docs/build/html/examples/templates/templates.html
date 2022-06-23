@@ -290,24 +290,38 @@ Executing &#39;index.ipynb&#39;
   Cell 10/14...Done
   Cell 11/14...Done
   Cell 12/14...Done
-  Cell 13/14...
+  Cell 13/14...Done
+  Cell 14/14...Done
 
-An error occurred while executing the following cell:
-------------------
-style_and_display(
-    inspect_clusters_to_merge(
-        disambiguations[&quot;rawinventor.tsv&quot;], 
-        load_israeli_inventors_benchmark()
-        join_with=dataframes[&quot;rawinventor.tsv&quot;]), 
-        by=&quot;reference&quot;)
-------------------
-
-<span class=" -Color -Color-Cyan">  File </span><span class=" -Color -Color-Green">&quot;/tmp/ipykernel_1755/829423903.py&quot;</span><span class=" -Color -Color-Cyan">, line </span><span class=" -Color -Color-Green">5</span>
-<span class=" -Color -Color-Red">    join_with=dataframes[&quot;rawinventor.tsv&quot;]),</span>
-            ^
-<span class=" -Color -Color-Red">SyntaxError:</span> invalid syntax
-
-SyntaxError: invalid syntax (829423903.py, line 5)
+<span class=" -Color -Color-Bold">pandoc --output index.html</span>
+  to: html
+  standalone: true
+  self-contained: true
+  section-divs: true
+  html-math-method: mathjax
+  wrap: none
+  default-image-extension: png
+  toc: true
+  toc-depth: 3
+  filters:
+    - crossref
+  
+<span class=" -Color -Color-Bold">metadata</span>
+  document-css: false
+  link-citations: true
+  date-format: long
+  lang: en
+  title: Inventor Disambiguation Report
+  date: today
+  author: PatentsView-Evaluation
+  toc-location: left
+  jupyter: python3
+  theme: cosmo
+  fig-cap-location: margin
+  code-block-border-left: &#39;#31BAE9&#39;
+  code-copy: true
+  
+Output created: index.html
 </pre></div>
 </div>
 </div>

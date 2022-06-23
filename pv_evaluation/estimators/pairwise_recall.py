@@ -18,7 +18,7 @@ def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
 
     if sampling_type == "record":
         if weights == "uniform":
-            return (2 *f_sum / cluster_sizes, cluster_sizes - 1)
+            return (2 * f_sum / cluster_sizes, cluster_sizes - 1)
         elif weights == "cluster_size":
             raise Exception("'cluster_size' weights are not used with 'record' sampling type.")
         else:
@@ -33,7 +33,7 @@ def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
     elif sampling_type == "single_block":
         TP_block = np.sum(sp.comb(vals.values, 2))
         T_block = np.sum(sp.comb(inner.reference.value_counts(sort=False).values, 2))
-        return TP_block / (T_block)
+        return (np.array([TP_block / (T_block)]), np.array([1]))
     elif sampling_type == "cluster_block":
         if weights == "uniform":
             N = f_sum
@@ -45,7 +45,6 @@ def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
             return (N, D)
     else:
         raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', or 'single_block'")
-
 
 
 def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
@@ -86,5 +85,3 @@ def pairwise_recall_std(prediction, reference, sampling_type, weights):
     """Standard deviation estimates for the pairwise recall estimator."""
     N, D = pairwise_recall_arrays(prediction, reference, sampling_type, weights)
     return std_dev(N, D)
-
-
