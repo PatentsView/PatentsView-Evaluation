@@ -41,7 +41,7 @@ def cluster_precision(prediction, reference):
     data = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
     n_correct_clusters = np.sum(data.groupby(["prediction"]).nunique()["reference"].values == 1)
 
-    return n_correct_clusters / clusters_count(prediction)
+    return n_correct_clusters / clusters_count(data.prediction)
 
 
 def cluster_recall(prediction, reference):
