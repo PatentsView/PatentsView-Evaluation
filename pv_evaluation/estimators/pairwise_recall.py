@@ -2,11 +2,12 @@ import numpy as np
 import pandas as pd
 import scipy.special as sp
 
-from ..metrics.utils import validate_membership
-from .ratio_estimators import ratio_estimator, std_dev
+from pv_evaluation.metrics.utils import validate_membership
+from pv_evaluation.estimators.ratio_estimators import ratio_estimator, std_dev
 
 
 def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
+    """Raw data for use with ratio estimator and standard deviation estimators."""
     validate_membership(prediction)
     validate_membership(reference)
 
@@ -48,12 +49,29 @@ def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
 
 
 def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
-    """Pairwise recall estimates for small non-replacement samples.
+    """Pairwise recall estimates for given sampling mechanisms.
+
+    Sampling mechanisms considered are:
+
+        * **record** sampling: records are sampled and associated ground truth clusters are recovered.
+        * **cluster** sampling: ground truth clusters are directly sampled.
+        * **single_block** sampling: a single block (set of ground truth clusters) is sampled.
+        * **cluster_block** sampling: ground truth clusters are directly sampled and treated as block samples.
+
+    For each of these sampling types (excepted single_block), the following probability weights can be used:
+
+        * **uniform**: uniform probability weights.
+        * **cluster_size**: probability weights proportional to cluster size.
+
+    Notes:
+        * We recommend using the **cluster_block** estimator when possible since it is the most efficient.
+        * This is meant for use with relatively small non-replacement samples.
+        * For unknown sampling processes, the **single_block** estimator can be used.
 
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
-        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", or "single_block".
+        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", "single_block", or "cluster_block".
             Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster.
         weights (str): sampling probability weights. Should be one of "uniform" or "cluster_size".
 
@@ -65,6 +83,7 @@ def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
 
 
 def pairwise_recall_std(prediction, reference, sampling_type, weights):
+    """Standard deviation estimates for the pairwise recall estimator."""
     N, D = pairwise_recall_arrays(prediction, reference, sampling_type, weights)
     return std_dev(N, D)
 

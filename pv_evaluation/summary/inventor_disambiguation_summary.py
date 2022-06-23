@@ -18,17 +18,23 @@ def read_auto(datapath):
 
 
 class InventorDisambiguationSummary:
-    def __init__(self, datapath, name=None):
-        """Report inventor disambiguation summaries.
+    """Report inventor disambiguation summaries."""
+
+    def __init__(self, data, name=None):
+        """Constructor.
 
         Args:
-            datapath (str): path to the inventor disambiguation data (csv, tsv or parquet format).
+            data (str or DataFrame): pandas DataFrame or string path to the inventor disambiguation data (csv, tsv or parquet format).
                 The data should have four columns: "patent_id", "inventor_id", "name_first", and "name_last".
             name (str): name of the disambiguation algorithm to show in plots. Defaults to the provided datapath.
         """
-        self.name = datapath if name is None else name
-
-        self._data = read_auto(datapath)
+        self.name = name
+        if isinstance(data, str):
+            self._data = read_auto(data)
+            if self.name is None:
+                self.name = data
+        else:
+            self._data = data
         self._validate_data()
 
         # Lazy initialization
@@ -68,7 +74,7 @@ class InventorDisambiguationSummary:
         )
 
     def plot_cluster_size_distribution(self, range=(0, 20)):
-        """Plot the distribution of the number of patents per inventor
+        """Plot the distribution of the number of patents per inventor.
 
         Args:
             range (tuple, optional): x-axis limits (inclusive range for the number of patents by inventor). Defaults to (1, 10).
@@ -92,7 +98,7 @@ class InventorDisambiguationSummary:
         return fig
 
     def get_top_inventors(self, n=10):
-        """Get DataFrame of n most prolific inventors
+        """Get DataFrame of n most prolific inventors.
 
         Args:
             n (int, optional): Number of inventors to return. Defaults to 10.

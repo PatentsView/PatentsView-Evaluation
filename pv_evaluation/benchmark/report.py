@@ -22,8 +22,8 @@ DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
     "pairwise recall": pairwise_recall,
     #"pairwise f1": pairwise_fscore,
-    #"cluster precision": cluster_precision,
-    #"cluster recall": cluster_recall,
+    "cluster precision": cluster_precision,
+    "cluster recall": cluster_recall,
     #"cluster f1": cluster_fscore
     #"rand index": rand_score,
 }
@@ -36,6 +36,9 @@ def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
         disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
         metrics (dict, optional): dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.
         benchmarks (dict, optional): benchmark datasets loading functions to use from the benchmark submodule. Defaults to `DEFAULT_BENCHMARK`.
+    
+    Returns:
+        DataFrame of computed metrics for every disambiguations and every benchmark dataset.
     """
     if metrics is None:
         metrics = DEFAULT_METRICS

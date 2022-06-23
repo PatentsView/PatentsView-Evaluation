@@ -3,8 +3,9 @@
 import numpy as np
 import pandas as pd
 import sklearn.metrics as sm
+from functools import wraps
 
-from .utils import validate_membership
+from pv_evaluation.utils import validate_membership
 
 
 def clusters_count(membership_vect):
@@ -28,6 +29,9 @@ def cluster_precision(prediction, reference):
 
     A perfect cluster precision means that all predicted links are correct.
 
+    Notes:
+        * The prediction and reference membership vectors are inner joined before cluster precision is computed.
+
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
@@ -49,6 +53,10 @@ def cluster_recall(prediction, reference):
 
     A perfect cluster recall means that all reference links are correctly predicted.
 
+    Notes:
+        * The prediction and reference membership vectors are inner joined before cluster recall is computed.
+        * This is the same as `cluster_precision(reference, prediction)`_.
+
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
@@ -60,7 +68,18 @@ def cluster_recall(prediction, reference):
 
 
 def cluster_precision_recall(prediction, reference):
-    """TODO"""
+    """Cluster precision and cluster recall tuple.
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before metrics are computed.
+
+    Args:
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
+    Returns:
+        tuple: (cluster precision, cluster recall)
+    """
     return (cluster_precision(prediction, reference), cluster_recall(prediction, reference))
 
 
@@ -71,6 +90,9 @@ def cluster_fscore(prediction, reference, beta=1.0):
     See [this Wikipedia article](https://en.wikipedia.org/wiki/F-score) for more information.
 
     For beta = 1 (default value), this is the harmonic mean between precision and recall.
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before this metric is computed.
 
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
@@ -90,6 +112,9 @@ def cluster_fscore(prediction, reference, beta=1.0):
 def cluster_fowlkes_mallows(prediction, reference):
     """Geometric mean between cluster precision and cluster recall.
 
+    Notes:
+        * The prediction and reference membership vectors are inner joined before this metric is computed.
+
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
@@ -106,12 +131,13 @@ def cluster_fowlkes_mallows(prediction, reference):
 def wrap_sklearn_metric(sklearn_metric):
     """Generic function to wrap sklearn cluster metrics.
 
-    Membership vectors are restricted to
+    Notes:
+        * The prediction and reference membership vectors are inner joined before this metric is computed.
 
     Args:
         sklearn_metric (function): cluster metric to wrap.
     """
-
+    @wraps(sklearn_metric)
     def func(prediction, reference, **kw):
         validate_membership(prediction)
         validate_membership(reference)
@@ -128,7 +154,10 @@ def wrap_sklearn_metric(sklearn_metric):
 def cluster_homogeneity(prediction, reference):
     """Cluster homogeneity score (based on conditional entropy).
 
-    This wraps scikit-learn's [homogeneity score function](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_score.html).
+    This wraps scikit-learn's `homogeneity score function <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_score.html>`.
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before this metric is computed.
 
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
@@ -143,7 +172,10 @@ def cluster_homogeneity(prediction, reference):
 def cluster_completeness(prediction, reference):
     """Cluster completeness score (based on conditional entropy)
 
-    This wraps scikit-learn's [completeness score function](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html).
+    This wraps scikit-learn's `completeness score function <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html>`.
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before this metric is computed.
 
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
@@ -156,13 +188,31 @@ def cluster_completeness(prediction, reference):
 
 
 def cluster_v_measure(prediction, reference, beta=1.0):
+    """Compute the V-measure.
+
+    This wraps scikit-learn's `V-measure function <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.v_measure_score.html#sklearn-metrics-v-measure-score>`.
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before this metric is computed.
+
+    Args:
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
+    Returns:
+        float: V-measure
+    """
+
     return wrap_sklearn_metric(sm.v_measure_score)(prediction, reference, beta=beta)
 
 
 def rand_score(prediction, reference):
     """Compute the Rand index.
 
-    This wraps scikit-learn's [rand index function](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score).
+    This wraps scikit-learn's `rand index function <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score>`.
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before this metric is computed.
 
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
@@ -175,4 +225,19 @@ def rand_score(prediction, reference):
 
 
 def adjusted_rand_score(prediction, reference):
+    """Compute the adjusted Rand index.
+
+    This wraps scikit-learn's `adjusted rand score function <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html#sklearn-metrics-adjusted-rand-score>`.
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before this metric is computed.
+
+    Args:
+        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
+        reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
+
+    Returns:
+        float: adjusted rand index
+    """
+
     return wrap_sklearn_metric(sm.adjusted_rand_score)(prediction, reference)

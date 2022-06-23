@@ -76,6 +76,14 @@ A conda environment is provided for development convenience. To create or update
 
 The makefile provides other development utilities such as `make black` to format Python files, `make data` to re-generate benchmark datasets from raw data located on AWS S3, and `make docs` to generate the documentation website.
 
+#### Raw data
+
+Raw public data is located on PatentsView's AWS S3 server at [https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip](https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip). This zip file should be updated as needed to reflect datasets provided by this package and to ensure that original data sources are preserved without modification.
+
+#### Testing
+
+The minimal testing requirement for this package is a check that all code executes without error. We recommend placing execution checks in a runnable notebook and using the [testbook](https://pypi.org/project/testbook/) package for execution within unit tests. User examples should also be provided to exemplify usage on real data.
+
 ### Report bugs and submit feedback
 
 Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Evaluation/issues.
@@ -98,6 +106,6 @@ Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Ev
 
 ### Datasets
 
-- Trajtenberg, M., Shiff, G., & Melamed, R. (2006). The" names game": Harnessing inventors' patent data for economic research. [link]
-- Trajtenberg, M., & Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. [link]
-- Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. https://doi.org/10.6084/m9.figshare.3502754.v1 
+- Trajtenberg, M., & Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. [[link]](https://econ.tau.ac.il/sites/economy.tau.ac.il/files/media_server/Economics/Sapir/papers/%D7%9E%D7%A0%D7%95%D7%90%D7%9C%20%D7%98%D7%A8%D7%9B%D7%98%D7%A0%D7%91%D7%A8%D7%92%205-08%20%D7%9E%D7%A9%D7%95%D7%9C%D7%91.pdf)
+- Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. [[link]](https://doi.org/10.6084/m9.figshare.3502754.v1)
+- Monath, N., Madhavan, S. & Jones, C. (2021) PatentsView: Disambiguating Inventors, Assignees, and Locations. Technical report. [[link]](https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf)
