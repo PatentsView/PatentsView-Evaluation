@@ -12,6 +12,7 @@ Contents
    pairwise_precision_estimator
    pairwise_precision_std
    pairwise_recall_estimator
+   pairwise_recall_std
 
 Documentation
 -------------

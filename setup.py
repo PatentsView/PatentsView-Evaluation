@@ -22,6 +22,6 @@ if __name__ == "__main__":
             "sklearn",
             "quarto",
             "jinja2",
-            "kaleido"
+            "kaleido",
         ],
     )

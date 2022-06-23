@@ -197,6 +197,18 @@
     <a class="reference internal nav-link" href="#contribute-code-and-documentation">
      Contribute code and documentation
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#raw-data">
+       Raw data
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#testing">
+       Testing
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#report-bugs-and-submit-feedback">
@@ -323,6 +335,14 @@ pip install -e .
 </ol>
 <p>A conda environment is provided for development convenience. To create or update this environment, make sure you have conda installed and then run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">env</span></code>. You can then activate the development environment using <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">pv-evaluation</span></code>.</p>
 <p>The makefile provides other development utilities such as <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">black</span></code> to format Python files, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">data</span></code> to re-generate benchmark datasets from raw data located on AWS S3, and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span></code> to generate the documentation website.</p>
+<section id="raw-data">
+<h4>Raw data<a class="headerlink" href="#raw-data" title="Permalink to this headline">#</a></h4>
+<p>Raw public data is located on PatentsView’s AWS S3 server at <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip">https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip</a>. This zip file should be updated as needed to reflect datasets provided by this package and to ensure that original data sources are preserved without modification.</p>
+</section>
+<section id="testing">
+<h4>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">#</a></h4>
+<p>The minimal testing requirement for this package is a check that all code executes without error. We recommend placing execution checks in a runnable notebook and using the <a class="reference external" href="https://pypi.org/project/testbook/">testbook</a> package for execution within unit tests. User examples should also be provided to exemplify usage on real data.</p>
+</section>
 </section>
 <section id="report-bugs-and-submit-feedback">
 <h3>Report bugs and submit feedback<a class="headerlink" href="#report-bugs-and-submit-feedback" title="Permalink to this headline">#</a></h3>
@@ -352,9 +372,9 @@ pip install -e .
 <section id="datasets">
 <h3>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
-<li><p>Trajtenberg, M., Shiff, G., &amp; Melamed, R. (2006). The” names game”: Harnessing inventors’ patent data for economic research. [link]</p></li>
-<li><p>Trajtenberg, M., &amp; Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. [link]</p></li>
-<li><p>Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. <a class="reference external" href="https://doi.org/10.6084/m9.figshare.3502754.v1">https://doi.org/10.6084/m9.figshare.3502754.v1</a></p></li>
+<li><p>Trajtenberg, M., &amp; Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. <a class="reference external" href="https://econ.tau.ac.il/sites/economy.tau.ac.il/files/media_server/Economics/Sapir/papers/%D7%9E%D7%A0%D7%95%D7%90%D7%9C%20%D7%98%D7%A8%D7%9B%D7%98%D7%A0%D7%91%D7%A8%D7%92%205-08%20%D7%9E%D7%A9%D7%95%D7%9C%D7%91.pdf">[link]</a></p></li>
+<li><p>Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. <a class="reference external" href="https://doi.org/10.6084/m9.figshare.3502754.v1">[link]</a></p></li>
+<li><p>Monath, N., Madhavan, S. &amp; Jones, C. (2021) PatentsView: Disambiguating Inventors, Assignees, and Locations. Technical report. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">[link]</a></p></li>
 </ul>
 </section>
 </section>
