@@ -189,7 +189,19 @@ def pairwise_precision_std(prediction, reference, sampling_type, weights):
         return np.nan
     elif sampling_type == "cluster_block":
         if weights == "uniform":
-            raise NotImplementedError()
+            N = f_sum
+            K = prediction.isin(inner.prediction)
+
+            def lambd(x):
+                I = inner.prediction.index.isin(x.index)
+                J = prediction[K].isin(inner.prediction[I])
+                A = inner.prediction[I].value_counts(sort=False).sort_index().values
+                B = prediction[K][J].value_counts(sort=False).sort_index().values
+                return np.sum(A * (B - A))
+
+            P_minus = inner.groupby("reference").apply(lambd)
+            D = f_sum + 0.5 * P_minus
+            return std_dev(N, D)
         elif weights == "cluster_size":
             N = f_sum / cluster_sizes
             K = prediction.isin(inner.prediction)
