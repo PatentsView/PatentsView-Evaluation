@@ -26,15 +26,15 @@ def load_lai_2011_inventors_benchmark():
 
     This is adapted from the benchmark dataset reported in Li et al. (2014) to evaluate their disambiguation of the  U.S. Patent Inventor Database (1975-2010).
 
-    Notes:
-        * A number of patent IDs which could not be found were removed from Lai's original dataset.
-        * Inventor sequence numbers were assigned through automatic matching and manual review. There could be some errors.
-
     See:
         Li, G. C., Lai, R., D'Amour, A., Doolin, D. M., Sun, Y., Torvik, V. I., ... & Fleming, L. (2014). Disambiguation and co-authorship networks of the US patent inventor database (1975-2010). Research Policy, 43(6), 941-955.
 
     Returns:
         Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
+
+    Notes:
+        * A number of patent IDs which could not be found were removed from Lai's original dataset.
+        * Inventor sequence numbers were assigned through automatic matching and manual review. There could be some errors.
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "lai-2011-benchmark.csv")
 

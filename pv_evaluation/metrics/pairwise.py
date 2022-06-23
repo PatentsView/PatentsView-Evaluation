@@ -72,15 +72,15 @@ def false_positives_count(prediction, reference):
 def pairwise_precision(prediction, reference):
     """Pairwise precision: number of correct links divided by the number of predicted links.
 
-    Note:
-        The prediction and reference membership vectors are inner joined before precision is computed.
-
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: pairwise precision
+
+    Note:
+        The prediction and reference membership vectors are inner joined before precision is computed.
     """
 
     inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner", copy=False)
@@ -95,16 +95,16 @@ def pairwise_precision(prediction, reference):
 def pairwise_recall(prediction, reference):
     """Pairwise recall: number of correct links divided by the number of reference links.
 
-    Notes:
-        * The prediction and reference membership vectors are inner joined before recall is computed.
-        * This is the same as `pairwise_precision(reference, prediction)`_.
-
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: pairwise recall
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before recall is computed.
+        * This is the same as `pairwise_precision(reference, prediction)`_.
     """
 
     return pairwise_precision(reference, prediction)
@@ -113,15 +113,15 @@ def pairwise_recall(prediction, reference):
 def pairwise_precision_recall(prediction, reference):
     """Pairwise precision and recall
 
-    Notes:
-        * The prediction and reference membership vectors are inner joined before precision and recall are computed.
-
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         tuple: tuple (precision, recall).
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before precision and recall are computed.
     """
     return (pairwise_precision(prediction, reference), pairwise_recall(prediction, reference))
 
@@ -134,9 +134,6 @@ def pairwise_fscore(prediction, reference, beta=1.0):
 
     For beta = 1 (default value), this is the harmonic mean between precision and recall.
 
-    Notes:
-        * The prediction and reference membership vectors are inner joined before f-score is computed.
-
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
@@ -144,6 +141,9 @@ def pairwise_fscore(prediction, reference, beta=1.0):
 
     Returns:
         float: f-score
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before f-score is computed.
     """
     P = pairwise_precision(prediction, reference)
     R = pairwise_recall(prediction, reference)
@@ -156,15 +156,15 @@ def pairwise_fowlkes_mallows(prediction, reference):
 
     See [this Wikipedia article](https://en.wikipedia.org/wiki/Fowlkes%E2%80%93Mallows_index) for more information.
 
-    Notes:
-        * The prediction and reference membership vectors are inner joined before the fowlks-mallows score is computed.
-
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
 
     Returns:
         float: Fowlks-Mallows index
+
+    Notes:
+        * The prediction and reference membership vectors are inner joined before the fowlks-mallows score is computed.
     """
     P = pairwise_precision(prediction, reference)
     R = pairwise_recall(prediction, reference)

@@ -62,11 +62,6 @@ def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
         * **uniform**: uniform probability weights.
         * **cluster_size**: probability weights proportional to cluster size.
 
-    Notes:
-        * We recommend using the **cluster_block** estimator when possible since it is the most efficient.
-        * This is meant for use with relatively small non-replacement samples.
-        * For unknown sampling processes, the **single_block** estimator can be used.
-
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
@@ -76,6 +71,11 @@ def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
 
     Returns:
         float: pairwise recall estimate.
+
+    Notes:
+        * We recommend using the **cluster_block** estimator when possible since it is the most efficient.
+        * This is meant for use with relatively small non-replacement samples.
+        * For unknown sampling processes, the **single_block** estimator can be used.
     """
     N, D = pairwise_recall_arrays(prediction, reference, sampling_type, weights)
     return ratio_estimator(N, D)
