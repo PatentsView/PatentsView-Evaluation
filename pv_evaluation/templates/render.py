@@ -3,6 +3,7 @@ import quarto
 from jinja2 import Environment, PackageLoader
 import shutil
 from pkg_resources import resource_filename
+from datetime import datetime
 
 
 def render_inventor_disambiguation_report(outdir, summary_table_files, cache=True, **kwargs):
@@ -27,7 +28,9 @@ def render_inventor_disambiguation_report(outdir, summary_table_files, cache=Tru
     shutil.copyfile(resource_filename("pv_evaluation", "templates/inventor/footer.html"), os.path.join(outdir, "footer.html"))
 
     with open(qmdpath, "w+") as file:
-        file.write(template.render(summary_table_files=summary_table_files))
+        file.write(
+            template.render(summary_table_files=summary_table_files, datetime=datetime.now().strftime("%I:%M%p on %B %d, %Y"))
+        )
 
     if quarto.path() is None:
         raise Exception("Could not find quarto. Is quarto (quarto.org) installed?")
