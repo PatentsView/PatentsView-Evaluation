@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import sklearn.metrics as sm
 
-from utils import validate_membership
+from .utils import validate_membership
 
 
 def clusters_count(membership_vect):
