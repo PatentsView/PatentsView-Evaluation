@@ -53,6 +53,7 @@ from IPython.core.display import display, HTML
 from pv_evaluation.benchmark import (
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark,
+    load_lai_2011_inventors_benchmark,
     inspect_clusters_to_split,
     inspect_clusters_to_merge,
     style_cluster_inspection,
@@ -90,6 +91,18 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_patentsview_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="prediction")
+```
+
+#### Lai's Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_split(
+        disambiguations["{{ filename }}"], 
+        load_lai_2011_inventors_benchmark(),
         join_with=dataframes["{{ filename }}"]), 
         by="prediction")
 ```
@@ -132,6 +145,18 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_patentsview_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="reference")
+``` 
+
+#### Lai's Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_merge(
+        disambiguations["{{ filename }}"], 
+        load_lai_2011_inventors_benchmark(),
         join_with=dataframes["{{ filename }}"]), 
         by="reference")
 ``` 

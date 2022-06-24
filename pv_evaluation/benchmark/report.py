@@ -11,12 +11,17 @@ from pv_evaluation.metrics import (
     cluster_fscore,
     rand_score,
 )
-from pv_evaluation.benchmark import load_israeli_inventors_benchmark, load_patentsview_inventors_benchmark
+from pv_evaluation.benchmark import (
+    load_israeli_inventors_benchmark,
+    load_patentsview_inventors_benchmark,
+    load_lai_2011_inventors_benchmark,
+)
 
 # Default benchmarks to run.
 DEFAULT_BENCHMARKS = {
     "patentsview-inventors": load_patentsview_inventors_benchmark,
     "israeli-inventors": load_israeli_inventors_benchmark,
+    "lai-benchmark": load_lai_2011_inventors_benchmark,
 }
 DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
