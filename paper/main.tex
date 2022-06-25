@@ -1,0 +1,500 @@
+\documentclass[fontsize=11pt]{article}
+
+\renewcommand{\baselinestretch}{2}
+
+\usepackage[english]{babel}
+
+\usepackage[letterpaper,top=1in,bottom=1in,left=1in,right=1in]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{natbib}
+\usepackage{amssymb, amsthm}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{authblk}
+\usepackage{lineno}
+\linenumbers
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+\title{Practical Performance Evaluation of Entity Resolution Algorithms: Lessons Learned at PatentsView.org}
+
+\author[1,2]{Olivier Binette}
+\author[1]{Youngsoo Baek}
+\author[2]{Aida York}
+\author[2]{Emma Hickerson}
+\author[2]{Sarvo Madhavan}
+\author[2]{Christina Jones}
+\affil[1]{Department of Statistical Science, Duke University}
+\affil[2]{American Institutes for Research}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper introduces a novel evaluation methodology for entity resolution algorithms. It is motivated by PatentsView.org, a publicly-available patent data analysis tool which disambiguates patent inventors based on an entity resolution algorithm. We provide a data collection methodology and performance estimators which account for sampling biases. Our approach is simple, practical and principled -- key characteristics which allow us to paint the first representative picture of PatentsView's disambiguation performance. This is used to inform PatentsView's users of the reliability of the data and to allow the comparison of competing disambiguation algorithms.
+\end{abstract}
+
+\section{Introduction}
+Entity resolution is the task of identifying records in a database which refer to the same entity. An entity may be a person, a company, an object or an event. Records are assumed to contain partially identifying information about these entities. When there is no unique identifier (such as a social security number) available for all records, entity resolution becomes a complex problem which requires sophisticated algorithmic solutions \citep{Herzog2007, Christen2012, Dong2015, Ilyas2019, Christophides2019, Christen2019, Papadakis2021, Binette2022a}. 
+
+For instance, the U.S. Patents and Trademarks Office (USPTO) makes available patent data dating back to 1790. However, there is no standard for uniquely identifying inventors on patent applications. The result is a set of ambiguous mentions to inventors, where a single person's name may be spelled in different ways on two applications, and where two different inventors with the same name may be difficult to distinguish. Much research has ben done within the fields of economics, computer science and statistics to disambiguate inventor mentions \citep{trajtenberg2008identification, ferreira2012brief, ventura2013methods, Li2014, Ventura2015, kim2016random, yang2017mixture, morrison2017disambiguation, muller2017semantic, traylor2017learning, balsmeier2018machine,tam2019optimal, monath2019scalable, doherr2021disambiguation}.
+
+The Office of the Chief Economist at the USPTO and the American Institutes for Research (AIR) currently maintain \textbf{PatentsView.org}, a patents knowledge discovery service which provides disambiguated patents data based on statistical entity resolution \citep{toole2021patentsview}. Our paper is motivated by this disambiguation service. Specifically, we are interested in the problem of \textit{evaluating} the accuracy of PatentsView's disambiguation, for the purpose of informing users of the reliability of the data and in order to support methodological research to improve upon PatentsView's disambiguation algorithm. We expand on the evaluation problem below.
+
+\subsection{The Evaluation Problem}\label{sec:challenges}
+
+The entity resolution evaluation problem is to extrapolate from observed performance on small samples to real performance in a database with millions of records. \cite{Wang2022} refers to this as bridging the ``reality-ideality gap" in entity matching, where high performance on benchmark datasets often does not translate in the real world. Here, performance may be defined as any combination of commonly used evaluation metrics for entity resolution, such as precision and recall, cluster homogeneity and completeness, rand index, or generalized merge distance \citep{Maidasani2012}. These metrics can be computed on benchmark datasets for which we have a ground truth disambiguation. However, the key evaluation problem is to obtain estimates which are representative of performance on the full data for which no ground truth disambiguation is available. This is challenging for the following reasons.
+
+First, entity resolution problems scale non-linearly. While it may be easy to disambiguate a small dataset, the opportunity for errors grows \textit{quadratically} in the number of records. As such, we may observe good performance of an algorithm on a small benchmark dataset, while the true performance of on the entire data may be something else entirely.\footnote{This particular effect of dataset size in entity resolution is explored in \cite{Draisbach2013} in the context of choosing similarity thresholds.} This is a problem that PatentsView.org currently faces. Despite encouraging performance evaluation metrics on benchmark datasets, with nearly perfect precision and recall reported in the latest methodological report \citep{Monath2021}, the data science team at AIR observes lower real-world accuracy.
+
+A second problem is large class imbalance in entity resolution \citep{Marchant2017}. Among all pairs of records, only a small fraction (usually much less than a fraction of a percent) refer to the same entity. The vast majority of record pairs are not a match. This makes it difficult to evaluate performance through random sampling.
+
+A third problem is the multiplicity of sampling mechanisms used to obtain benchmark datasets. To construct hand-disambiguated datasets, blocks, entity clusters, or predicted clusters may be sampled with various probability weights. These sampling approaches must be accounted for in order to obtain representative performance estimates \citep{fuller2011sampling}.
+
+Our approach, detailed in sections \ref{sec:approach} and \ref{sec:proposed_estimators}, addresses these challenges by putting forward cluster-based expressions for performance metrics which reflect various sampling schemes. Each of these representations immediately suggests simple estimators which properly account for the above issues.
+
+\begin{example}[Bias of precision computed on benchmark datasets]\label{first_example}
+    To exemplify the problem with the trivial use of performance evaluation metrics on benchmark datasets, we have carried out a simple experiment which is described in detail in appendix \ref{appendix:example}. In short, we considered evaluating a disambiguation algorithm by sampling ground truth clusters and computing pairwise precision\footnote{Pairwise precision is the probability that a pair of record predicted to be a match is indeed a match. See section \ref{sec:proposed_estimators} for a formal definition} on this set of sampled clusters. This is analogous to the way that many real-world benchmark data sets are obtained and used. For reference, it is known that the disambiguation algorithm has a precision of $52\%$ for the entire dataset.
+    
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=5.5in]{first-example}
+        \caption{Distribution of precision estimates versus the true precision of $52\%$ (shown as a dotted vertical line). Panel \textbf{A} shows the trivial precision estimates computed for sampled records. Panel \textbf{B} shows our proposed precision estimates which accounts for the sampling mechanism. Sample bias and root mean squared error (rmse) are reported on each figure.}
+        \label{fig:precision_problem}
+    \end{figure}
+    
+    In panel \textbf{A} of figure \ref{fig:precision_problem} below, we see the distribution of precision estimates versus the true precision of $52\%$ shown as a dotted vertical line. Precision estimates are most of the time very close to $100\%$ and always higher than $80\%$, despite the truth being a precision of only $52\%$. In contrast, panel \textbf{B} shows the distribution of our proposed precision estimator which is nearly unbiased. Both precision estimators rely on exactly the same data. They only differ in how they account for the underlying sampling process and the extrapolation from small benchmark datasets to full data.
+    
+\end{example}
+
+\subsubsection{Why Bother With Evaluation?}
+
+There are two main uses for accurate and statistically rigorous evaluation methodology.
+
+The first is model selection and comparison. PatentsView.org continually works at improving disambiguation methodology. This requires choosing between alternative methods and evaluating the results of methodological experiments. Without sound evaluation methodology, decisions regarding the disambiguation algorithm may be misaligned from real-world use and real-world performance. Notably, for a performance metric such as the pairwise f-score, one algorithm may perform better than another on a small benchmark dataset, while the opposite may hold true for performance on the entire data. This problem happens on typical benchmark datasets obtained from randomly sampling blocks or randomly sampling clusters (see section \ref{sec:proposed_estimators} for a definition of different sampling mechanisms).
+
+The second is adequate use of disambiguated data. PatentsView.org's disambiguation results have been used in numerous scientific studies \citep{toole2021patentsview}. These studies make assumptions about the reliability of the data which need to be validated and upheld. In short, users of disambiguated data need to understand its reliability in order to make scientifically appropriate use of it. Evaluation aims to provide this rigorous reliability information.
+
+\subsubsection{Past Work}
+
+Much of past work has focused on defining and using relevant clustering evaluation metrics. The topic of estimating performance from samples has received much less attention, usually focusing on importance sampling estimators based on record pairs. We review contributions to these two main topics in the paragraphs below.
+
+\paragraph{Metrics}
+
+Pairwise precision and recall metrics were first reported in \cite{Newcombe1959}, with \cite{Bilenko2003, Christen2007} emphasizing the importance of precision-recall curves for algorithm evaluation. Now, there are issues with the use of pairwise precision and recall in entity resolution applications, such as the large relative importance of large clusters. As such, other clustering metrics have been proposed, including cluster precision and recall, cluster homogeneity and completeness, and the generalized merge distance \citep{Michelson2009, Menestrina2010, Maidasani2012, Barnes2015}. Important practical issues regarding the use of aggregate metrics are discussed in \cite{Hand2018}.
+
+\paragraph{Estimation}
+
+Regarding the reliable estimation of performance metrics, \cite{Belin1995} first proposed a semi-supervised approach to calibrate error rates when using a Fellegi-Sunter model \citep{fellegi_theory_1969}. \cite{Marchant2017} proposed an adaptive importance sampling estimator to estimate precision and recall from sampled record pairs. Other approaches to the estimation of performance metrics are model-based, where estimated precision and recall can be obtained from predicted match probabilities between record pairs \citep{enamorado2019using}. However, these model-based approaches cannot be used when working with black-box machine learning models or ad hoc clustering algorithms.
+
+\subsubsection{Our Approach}\label{sec:approach}
+
+Our approach to estimating performance metrics is based on the use of benchmark datasets which are already existing or which can be collected in a cost-effective way. This data contains entity clusters corresponding to sampling records and recovering all associated instances, to directly sampling clusters, or to sampling blocks. For each of these sampling processes, we propose estimators which correct for the issues discussed in section \ref{sec:challenges}, which are nearly unbiased, and which are easy to use in practice.
+
+Our approach has the following advantages:
+\begin{enumerate}
+    \item It can leverage existing benchmark datasets as well as new datasets collected specifically for performance evaluation.
+    \item It can easily be generalized to estimate other clustering metrics, such as cluster precision, cluster recall, cluster homogeneity and completeness, and other generalized merge distances.
+    \item For evaluation, the review of entity clusters is much more efficient than the review of record pairs. We can achieve high accuracy with small samples without relying on any sophisticated sampling scheme.
+\end{enumerate}
+
+In short, the proposed approach is simple, principled, and practical. It is simple to use, it is statistically principled in its account of sampling processes and in its uncertainty quantification, and it is practical in the way that it can provide cost-effective estimates for any disambiguation algorithm.
+
+\subsection{Structure of the Paper}
+
+The rest of the paper is organized as follows. In section \ref{sec:data_methods}, we introduce motivating benchmark datasets, we describe our data collection process for evaluation, we introduce the proposed estimators, and we summarize our simulation study used to validate the performance of our estimators. Section \ref{sec:results} then shows the results -- our performance estimates and results from the simulation study. Finally, section \ref{sec:discussion} summarizes the paper and discusses open research directions.
+
+\section{Data and Methodology}\label{sec:data_methods}
+
+In this section, we review motivating datasets used at PatentsView, we introduce our hand-disambiguation methodology, we describe our proposed performance metric estimators, and we describe our simulation framework used to compare estimators.
+
+\subsection{Benchmark Datasets for Inventor Disambiguation}
+
+We consider the following benchmark datasets for inventor disambiguation.
+
+\paragraph{Israeli Inventors Benchmark}
+\cite{trajtenberg2008identification} disambiguated the US patents of Israeli inventors which were granted between 1963 and 1999. A total of 6,023 Israeli inventors were identified for this time period with 15,310 associated patents.
+
+\paragraph{\cite{Li2014}'s Inventors Benchmark}
+
+Based on an original dataset from \cite{gu2008march}, \cite{Li2014} disambiguated the patent history (between 1975 and 2010) of 95 US inventors.
+
+
+
+\subsection{Hand-Disambiguation Protocol}\label{sec:hand-disambiguation}
+
+In addition to the above benchmark datasets, we have carried out a data collection experiment which was motivated by the evaluation, using the proposed estimators discussed in section \ref{sec:proposed_estimators}, of the current PatentsView inventor disambiguation.
+
+In total, 100 inventors were sampled with probability proportional to their number of granted patents. This was done by sampling inventor mentions uniformly at random and recovering all patents for a given inventor. These inventor mentions were from US patents granted between 1976 and December 31, 2021.
+
+Two AIR staff were tasked with recovering inventors' patents given sampled inventor mentions. To do this, they were assisted by tools available on PatentsView.org. First, given a sampled inventor, the associated predicted cluster was reviewed and wrongly assigned patents were removed. Next, PatentsView's search tools were used to find additional mentions of similarly named inventors. These were reviewed and added to the predicted cluster if appropriate. The two AIR staff had an initial training session, followed by a test run on 10 inventors, before carrying out the rest of the data collection. They worked independently so that two resulting datasets were obtained for the same inventor mentions. In section \ref{sec:results}, these are referred to as the \textbf{Staff 1} and \textbf{Staff 2} datasets.
+
+Note that our data collection methodology is biased towards PantentsView's current disambiguation. In cases where no errors were found, the current disambiguation was assumed to be correct. Performance estimates based on this data might therefore be slightly optimistic.
+
+\subsection{Proposed Performance Estimators}\label{sec:proposed_estimators}
+
+Throughout the rest of the paper, we focus on pairwise precision and pairwise recall (defined below in \eqref{eq:def_P_R}) as our performance evaluation metrics. 
+
+%We propose precision and recall estimators based on different sampling processes for ground truth data. In practice, ground truth data may be obtained by sampling records and recovering the clusters associated to each record. For example, patents may be sampled and, for each inventor mention, we can find all other patents authored by the same person. Alternatively, disjoint \textit{blocks} may be sampled and hand-disambiguated. Here, a block is a set of records assumed to cover complete clusters. For example, we can sample inventors from specific disciplines or from specific nationalities. The Israeli Benchmark dataset described in XX is an example of a single block sample. The choice of sampling process and sampling weights naturally suggests estimators which are described next. Note that all proofs are in appendix \ref{appendix:proofs}.
+
+\subsubsection{Representation Lemmas}
+
+First, we define pairwise precision and recall in terms of the number of links between records. Let $\mathcal{D} = \{1, 2, 3, \dots, N\}$ index a set of records let $\mathcal{C}$ be the partition of $\mathcal{D}$ representing ground truth clustering, and let $\widehat{\mathcal{C}}$ be a set of predicted clusters. Now let $\mathcal{T}$ be the set of record pairs which appear in the same cluster in $\mathcal{C}$ (matching pairs), and let $\mathcal{P}$ be the set of record pairs which appear in the same predicted cluster in $\widehat{\mathcal{C}}$ (predicted links). Pairwise precision ($P$) and pairwise recall ($R$) are then defined as
+\begin{equation}\label{eq:def_P_R}
+    P = \frac{\lvert \mathcal{T} \cap \mathcal{P} \rvert}{\lvert \mathcal{P} \rvert}, \quad R = \frac{\lvert \mathcal{T} \cap \mathcal{P} \rvert}{\lvert \mathcal{T} \rvert}.
+\end{equation}
+
+Note that $P = R \, \lvert \mathcal{T} \rvert / \lvert \mathcal{P} \rvert$. As such, precision and recall are equal if and only if the right number of matching pairs is predicted under $\widehat{\mathcal{C}}$.
+
+We now provide three alternative representations of precision and recall which correspond to the processes of sampling records, sampling true clusters, and sampling blocks. These will be used to obtain precision and recall estimators under these sampling processes.
+
+\paragraph{Record Sampling Representation}
+For a given $i \in \mathcal{D}$, let $c(i) \in \mathcal{C}$ be the ground truth cluster associated with $i$ in $\mathcal{C}$. For a given $c \in \mathcal{C}$, we define
+\begin{equation}
+    f(c,\, \widehat{\mathcal{C}}) = \sum_{\hat c \in \hat{\mathcal{C}}} { \lvert c \cap \hat c \rvert \choose 2 }, \quad g(c,\, \widehat{\mathcal{C}}) = \frac{f(c,\, \widehat{\mathcal{C}}) }{\sum_{\hat c \in \hat{\mathcal{C}}} { \lvert \hat c \rvert \choose 2 }}.
+\end{equation}
+\begin{lemma}\label{lemma:record_sampling_representation}
+If $i$ is distributed over $\mathcal{D}$ with probabilities $p_i > 0$, then
+\begin{equation}
+    P = \mathbb{E} \left[ \frac{g(c(i),\, \widehat{\mathcal{C}})}{p_i \lvert c(i) \rvert} \right], \quad R = 2\frac{\mathbb{E}\left[ f(c(i),\, \widehat{\mathcal{C}})  \big/ (\lvert c(i) \rvert p_i) \right]}{\mathbb{E}\left[ (\lvert c(i) \rvert - 1) / p_i \right]}.
+\end{equation}
+\end{lemma}
+
+\paragraph{Cluster Sampling Representation}
+
+In the cluster sampling case, sampling probabilities are typically known only up to normalizing factors. This is due to the fact that the total number of true clusters and other aspects of the ground truth cluster distribution are unknown in practice. As such, we provide expressions for precision and recall which only require knowing sampling probabilities up to normalizing factors. This allows the consideration of sampling uniformly at random and sampling clusters with probability proportional to their size. 
+
+\begin{lemma}\label{lemma:cluster_sampling_representation}
+If $c$ is distributed over $\mathcal{C}$ with probabilities proportional to $p_c > 0$, then
+\begin{equation}\label{eq:lemma_1}
+    P = \frac{N\, \mathbb{E} \left[ g(c,\, \widehat{\mathcal{C}})/p_c \right]}{\mathbb{E} \left[ \vert c \rvert /p_c \right]}, \quad R = \frac{\mathbb{E}\left[ f(c, \widehat{\mathcal{C}})/p_c \right]}{\mathbb{E}\left[ {\lvert c \rvert \choose 2}/p_c \right]}.
+\end{equation}
+\end{lemma}
+
+Note that, with clusters sampled with probability proportional to their size, the expression for precision simplifies to
+$
+    P = N\, \mathbb{E} \left[ g(c,\, \widehat{\mathcal{C}})/\lvert c \rvert \right].
+$
+
+\begin{remark}
+    Lemma \ref{lemma:record_sampling_representation} and lemma \ref{lemma:cluster_sampling_representation} can be generalized to apply to any performance metric which can be expressed as a sum $\sum_{c \in \mathcal{C}} h(c, \widehat{\mathcal{C}})$, for some function $h$, or as a function of such sums. For instance, the use of the so-called \textit{cluster} precision and \textit{cluster} recall \citep{}, or of cluster homogeneity and completeness \citep{}, can be more appropriate in the presence of large clusters. We leave these generalizations as extensions of our work.
+\end{remark}
+
+\paragraph{Disjoint Block Sampling Representation}
+
+Let $\mathcal{B}$ be a partition of $\mathcal{D}$ such that for every $ c \in \mathcal{C}$, there exists $b \in \mathcal{B}$ with $c \subset b$. For a given $b \in \mathcal{B}$, let $\mathcal{T}_b$ be the set of ground truth links contained within $b$, let $\mathcal{P}_b$ be the set of predicted links contained within $b$, and let $\mathcal{P}_b^{-}$ be the set of predicted links with a single record in $b$ (i.e., $\mathcal{P}_b^{-}$ is the set of outgoing links from $b$).
+
+\begin{lemma}\label{lemma:block_sampling_representation}
+If $b$ is distributed over $\mathcal{B}$ with probabilities proportional to $p_b > 0$, then
+\begin{equation}\label{eq:lemma_3}
+    P = \frac{\mathbb{E}\left[ \lvert \mathcal{T}_b \cap \mathcal{P}_b \rvert / p_b \right]}{\mathbb{E}\left[ (\lvert \mathcal{P}_b \rvert + \tfrac{1}{2} \lvert \mathcal{P}_b^{-} \rvert)/p_b \right]}, \quad R = \frac{\mathbb{E}\left[ \lvert \mathcal{T}_b \cap \mathcal{P}_b \rvert / p_b \right]}{\mathbb{E}\left[ \lvert \mathcal{T}_b \rvert / p_b \right]}.
+\end{equation}
+\end{lemma}
+
+\begin{remark}
+    Lemmas \ref{lemma:record_sampling_representation} -- \ref{lemma:block_sampling_representation} are formulated in terms of sampled ground truth clusters and sampled blocks which do not contain errors. However, given the duality between precision and recall (interchanging the roles between $\mathcal{C}$ and $\widehat{\mathcal{C}}$  interchanges precision and recall), the results also apply to sampling \textit{predicted} clusters.
+\end{remark}
+
+\subsubsection{Proposed Estimators}
+
+All of the expressions for precision and recall in lemmas \ref{lemma:record_sampling_representation} -- \ref{lemma:block_sampling_representation} are either population means or ratios of population means. As such, they can be estimated using sample means and ratios of sample means. For readability, we present here a generic formula for an approximately unbiased estimator of the ratio of means, and then specify the needed quantities for each representation below. The estimator applies a first order bias correction to the ratio of sample means, based on Taylor approximation. Approximate confidence intervals can be computed based on the variance estimator of the ratio of sample means by Taylor approximation, assuming the corrected estimator has small bias \citep{fuller2011sampling}. The generic formula for estimating the ratio of $T$-sized ``population'' (of records/clusters/blocks) means of the form
+\begin{align}
+    E=\frac{1/T\sum_{i=1}^{T} B_i}{1/T\sum_{i=1}^T A_i},
+\end{align}
+assuming we have sampled $n$ elements (records/clusters/blocks), is
+\begin{align}\label{eq:bias_adjustment}
+    \widehat{E}=\frac{\bar{B}_n}{\bar{A}_n}\left\{1 + \frac{\theta_{n,T}}{n(n-1)}\frac{1}{\bar{A}_n}\sum_{s=1}^n A_s
+    \left(\frac{B_s}{\bar{B}_n} - \frac{A_s}{\bar{A}_n}\right)\right\},\;
+    \bar{A}_n = \frac{1}{n}\sum_{s=1}^{n}A_s,\;
+    \bar{B}_n = \frac{1}{n}\sum_{s=1}^{n}B_s
+\end{align}
+We note that an additional symbol $\theta_{n,T}$ is introduced for possible finite population correction when relatively large number of elements are sampled without replacement (see below). Classical adjustment is to set $\theta_{n,T} = (1 - \frac{n-1}{T-1})$ \citep{Cochran1977}. For practical purposes when $T$ is large, often $\theta_{n,T}=1$ will suffice. In fact, knowledge of $T$ is not needed at all as long as it is large enough relative to $n$, which is useful because the total number of true clusters/blocks is not known in advance. Confidence interval can be computed based on the variance estimate of the above, which is
+\begin{align} \label{eq:estimated_variance}
+    \widehat{V}(\widehat{E})=\left( \frac{\bar{B}_n}{\bar{A}_n} \right)^2\frac{\theta_{n,T}}{n(n-1)}
+    \sum_{s=1}^n \left( \frac{A_s^2}{\bar{A}_n^2} + \frac{B_s^2}{\bar{B}_n^2} - 2\frac{A_sB_s}{\bar{A}_n\bar{B}_n} \right).
+\end{align}
+
+The specific values for $A_s$, $B_s$, and $T$ in each of our representation is described in appendix X.
+
+%\begin{remark}
+%    There are many ways to define ratio estimators. For small samples and given prior knowledge, Bayesian approaches would be the most appropriate. In this paper, we have opted for the simple estimators since they are sufficient for our application and demonstrate the strength of our methodology.
+%\end{remark}
+
+\begin{remark}
+    In entity resolution applications, we can typically assume that elements have been sampled with replacement (or closely so). Indeed, with a small proportion of sampled elements, non-replacement samples are approximately equivalent to samples with replacement. However, if dealing with relatively large non-replacement samples, then the sampling probabilities used in the definition of the estimators should be adjusted to reflect the size-dependent effect of non-replacement \citep{Horvitz1952}.
+\end{remark}
+
+\subsection{Simulation Study}\label{sec:simulation_study}
+
+In order to assess the performance of the proposed estimators, we carry out a simulation study based on PatentsView's inventor disambiguation. Specifically, in the context of the simulation, we consider PatentsView current inventor disambiguation as the ground truth clustering. A simulated set of predicted clusters is obtained by introducing errors (misattribution of inventor mentions) into the current disambiguation. We then estimate the precision and recall of this predicted clustering using our estimators based on random cluster samples. The process of sampling clusters and estimating precision/recall is repeated $100$ times in order to provide the distribution of the estimators and metrics such as bias and root mean squared error (rmse). 
+
+To introduce errors, we pick records at random and change their cluster assignment to that of other records picked at random. This is a simple process which ensures that larger clusters are more likely to contain errors. In our simulation, we consider rates of $5\%$, $10\%$, and $25\%$ for the proportion of records that are sampled for cluster misassignment. The larger proportions of error are more realistic. However, the $5\%$ misattribution rate helps showcase properties of our estimators when only a small portion of sampled clusters are associated with errors.
+
+For the sampling process, we consider sampling records uniformly at random and recovering their associated clusters. This is the same as sampling clusters with probability proportional to their size. In the record/cluster sampling cases, we look at the effect of sampling $100$, $200$ and $400$ records/clusters.
+
+Finally, we compare the following three precision and recall estimators:
+\begin{description}
+    \item[\texttt{P\_naive}, \texttt{R\_naive}] This is the ``naive" precision (resp. recall) estimator obtained by computing precision (resp. recall) when only looking at records which appear in the sampled clusters.
+    \item[\texttt{P\_record}, \texttt{R\_record}] These are the precision and recall estimators corresponding to uniformly sampling records in lemma \ref{lemma:record_sampling_representation} ($p_i \propto 1$) with the bias adjustment given in \eqref{eq:bias_adjustment}. Note that these are the same as the estimators obtained from lemma \ref{lemma:cluster_sampling_representation} when sampling clusters with probability proportional to their size ($p_c \propto \lvert c \rvert$).
+    \item[\texttt{P\_cluster\_block}] This is the precision estimator obtained by considering each sampled cluster as its own block in lemma \ref{lemma:block_sampling_representation}, where clusters have been sampled with probability proportional to their size ($p_b \propto \lvert b \rvert$), and with bias adjustment given in \eqref{eq:bias_adjustment}. Note that in the case of recall with cluster blocks, the estimator corresponding to lemma \ref{lemma:block_sampling_representation} is the same as the one corresponding to lemma \ref{lemma:cluster_sampling_representation} and lemma \ref{lemma:record_sampling_representation}.
+\end{description}
+
+\section{Results}\label{sec:results}
+
+\subsection{Results From the Simulation Study}
+
+Figure \ref{fig:sim_records_precision} shows the distribution of the three precision estimators used in the simulation study (see section \ref{sec:simulation_study}) compared to ground truth precision. The block sampling estimator \texttt{P\_cluster\_block} is highly accurate, while \texttt{P\_record} is more variable and \texttt{P\_naive} is entirely uninformative. Note that \texttt{P\_record} can take values greater than $1$ (not shown in this figure), so that truncating it to be less than $1$ introduces a bias in some cases.
+
+The reason why \texttt{P\_cluster\_block} performs better than \texttt{P\_record} is due to the fact that \texttt{P\_record} has been derived in a generic way which applies to any performance metric which can be expressed in cluster form similar to \eqref{eq:lemma_1}. On the other hand, \texttt{P\_cluster\_block} relies on speific properties of precision. Among other things, this ensures that \texttt{P\_cluster\_block} is constrained to be between $0$ and $1$. In practice, \texttt{P\_cluster\_block} should be preferred as a pairwise precision estimator.
+
+\begin{figure}
+    \centering
+        \caption{Distribution of precision estimates for various sample sizes and misattribution rates, as described in section \ref{sec:simulation_study}. Ground truth precision is marked by a dotted vertical line. The \texttt{rate} variable represents the percentage misattribution rate. The estimator \texttt{P\_cluster\_block} is highly accurate, while \texttt{P\_naive} is almost always close to $1.0$, having little to do with the true precision.}
+    \includegraphics[width=\linewidth]{sim_records_precision}
+    \label{fig:sim_records_precision}
+\end{figure}
+
+Bias and root mean squared error are reported in table \ref{tab:precision_results}.
+
+\begin{table}\label{tab:precision_results}
+    \centering
+    \caption{\centering Bias and root mean squared error of precision estimators for the simulation study described in section \ref{sec:simulation_study}. The \texttt{rate} variable represents the percentage misattribution rate.}
+\begin{tabular}{llccccccccc}
+\toprule
+{} & \hfill{\textbf{rate}} & \multicolumn{3}{c}{5} & \multicolumn{3}{c}{10} & \multicolumn{3}{c}{20} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}\cmidrule(lr){9-11}
+{} & \hfill{\textbf{sample size}} & {100} & {200} & {400} & {100} & {200} & {400} & {100} & {200} & {400} \\
+\midrule
+\multirow[c]{4}{*}{\textbf{bias}} & P\_cluster\_block & -0.004 & -0.002 & -0.001 & -0.002 & -0.001 & 0.001 & -0.004 & -0.001 & -0.000 \\
+ & P\_naive & 0.099 & 0.099 & 0.099 & 0.195 & 0.195 & 0.195 & 0.366 & 0.366 & 0.365 \\
+ & P\_record & -0.002 & 0.013 & 0.009 & -0.001 & 0.011 & 0.008 & -0.001 & 0.009 & 0.006 \\
+\midrule
+\multirow[c]{4}{*}{\textbf{rmse}} & P\_cluster\_block & 0.045 & 0.033 & 0.021 & 0.041 & 0.038 & 0.026 & 0.063 & 0.052 & 0.034 \\
+ & P\_naive & 0.099 & 0.099 & 0.099 & 0.195 & 0.195 & 0.195 & 0.366 & 0.366 & 0.365 \\
+ & P\_record & 0.294 & 0.232 & 0.169 & 0.260 & 0.205 & 0.150 & 0.207 & 0.162 & 0.117 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Regarding recall, figure \ref{fig:recall_results} shows the distribution of the two estimators used in the simulation study. The naive recall estimator performs well in this case. However, the recall estimator accounting for the sampling mechanism is more accurate. Bias and root mean squared error (rmse) are reported in table \ref{tab:recall_results}.
+
+\begin{figure}
+    \centering
+        \caption{Distribution of recall estimates for various sample sizes and misattribution rates, as described in section \ref{sec:simulation_study}. Ground truth recall is marked by a dotted vertical line. The \texttt{rate} variable represents the percentage misattribution rate.}
+    \includegraphics[width=\linewidth]{sim_records_recall}
+    \label{fig:recall_results}
+\end{figure}
+
+\begin{table}\label{tab:recall_results}
+    \centering
+    \caption{\centering Bias and root mean squared error of recall estimators for the simulation study described in section \ref{sec:simulation_study}. The \texttt{rate} variable represents the percentage misattribution rate.}
+\begin{tabular}{llccccccccc}
+\toprule
+{} & {\textbf{rate}} & \multicolumn{3}{c}{{5}} & \multicolumn{3}{c}{10} & \multicolumn{3}{c}{20} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}\cmidrule(lr){9-11}
+{} & {\textbf{sample size}} & {100} & {200} & {400} & {100} & {200} & {400} & {100} & {200} & {400} \\
+\midrule
+\multirow[c]{2}{*}{\textbf{bias}} & R\_naive & 0.0007 & 0.0001 & 0.0004 & 0.0009 & -0.0015 & -0.0024 & -0.0008 & -0.0010 & -0.0017 \\
+ & R\_record & 0.0002 & -0.0001 & -0.0002 & 0.0011 & -0.0002 & -0.0004 & 0.0005 & 0.0001 & -0.0002 \\
+ \midrule
+\multirow[c]{2}{*}{\textbf{rmse}} & R\_naive & 0.0089 & 0.0056 & 0.0043 & 0.0123 & 0.0089 & 0.0075 & 0.0132 & 0.0109 & 0.0091 \\
+ & R\_record & 0.0060 & 0.0037 & 0.0028 & 0.0089 & 0.0056 & 0.0039 & 0.0099 & 0.0071 & 0.0050 \\
+\bottomrule
+\end{tabular}
+
+
+\end{table}
+
+\subsection{Evaluation of PatentsView's Disambiguation}
+
+Table \ref{tab:results} shows estimated pairwise precision and recall from benchmark datasets and from our two hand-curated datasets. Note that each estimate is associated with a given population of inventor mentions which is a subset of granted US patents since 1976. We focused on US patents granted since 1976 as this is the main data product of patentsview.org.
+
+The choice of estimators for the results presented in table \ref{tab:results} is as follows.
+Since our two hand-curated datasets (see section \ref{sec:hand-disambiguation}) were obtained by sampling inventor clusters with probabilities proportional to cluster sizes, we used the \texttt{P\_cluster\_block} and \texttt{R\_record} estimators with corresponding probability weights. 
+For the Israeli benchmark dataset, we assumed that a single block of inventor clusters were sampled alltogether and used the corresponding estimators defined through \eqref{eq:lemma_3} with a single block sample. Note that no variance estimates can be given for single samples.
+For \cite{Li2014}'s inventors benchmark, given that inventor clusters were originally obtained from a set of inventor curriculum vitae, we assumed that inventor clusters were sampled uniformly at random. As such, we used cluster block estimators with constant probability weights.
+
+\begin{table}[!h]
+    \label{tab:results}
+    \centering
+    \caption{\centering Estimated pairwise precision and recall (with estimated standard deviation) from our four benchmark datasets.}
+    \begin{tabular}{lccc}
+    \toprule
+    \textbf{dataset} & \textbf{est. precision ($\hat \sigma$)} & \textbf{est. recall ($\hat \sigma$)} & \textbf{scope} \\
+    \midrule
+    Staff 1 & 86\% (5.6\%) & 94\% (2.1\%)  & 1976 -- Dec. 31, 2022 (US granted)\\
+    Staff 2 & 88\% (5.6\%) & 95\% (2.0\%) & 1976 -- Dec. 31, 2022 (US granted)\\
+    Israeli Benchmark & 79\% (NA) & 94\% (NA) & 1976 -- 1999 (US granted)\\
+    \cite{Li2014}'s Benchmark & 91\% (2.7\%) & 91\% (5.0\%) & 1976 -- 2010 (US granted)\\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+It is interesting to note that there is a small but notable difference in the estimates from the ``Staff 1" and ``Staff 2" datasets. Since these datasets were obtained by two different people from the same sample of inventor mentions, the difference in estimates is due to differences in the hand-disambiguation provided by the two staff. Staff 2 was slightly more conservative than Staff 1 in flagging errors.
+
+Overall, our performance estimates paint the first realistic picture of PatentsView's disambiguation accuracy in practice. Precision is not nearly 100\%, as would be assumed from naively computing precision on benchmark datasets. Rather, there is significant room for improvement. Our hand-curated datasets and data collection methodology provide the necessary basis to investigate errors and plan for improvements to the disambiguation algorithm. 
+
+\section{Discussion}\label{sec:discussion}
+
+Motivated by PatentsView's disambiguation, this paper introduced a novel evaluation methodology for entity resolution algorithms. The methodology relies on benchmark datasets containing ground truth clusters and estimators which account for biases inherent to these datasets. For PatentsView, this provided the first representative estimates of disambiguation performance. Furthermore, all data and code used in this paper, as well as other tools developed to facilitate evaluation at PatentsView, are freely available at \hyperref[https://github.com/PatentsView/PatentsView-Evaluation/]{https://github.com/PatentsView/PatentsView-Evaluation/}.
+
+There are two main resulting products for this work. The first is to provide PatentsView data users with an appropriate understanding of PatentsView data quality. Our performance estimates indicate that, despite an overall accurate disambiguation, there is room for improvement and the disambiguation algorithm estimates more links then there truly are. The second product is the set of tools needed for methodological research and model comparison. Given our evaluation methodology, we can now reliably compare algorithms and decide with confidence on changes which will affect users.
+
+
+
+
+\section*{Data and Code}
+
+All data and code used for this paper are available as part of the PatentsView-Evaluation Python package at \hyperref[https://github.com/PatentsView/PatentsView-Evaluation/]{https://github.com/PatentsView/PatentsView-Evaluation/}.
+
+%\section*{Acknowledgements}
+
+\section*{Author Contributions}
+
+Olivier Binette led the project and wrote the bulk of the manuscript. Youngsoo Baek provided bias adjustment and uncertainty quantification for ratio estimators. Aida York and Emma Hickerson carried out data collection by manually reviewing inventor clusters. Sarvo Madhavan was a technical advisor and contributed to code. Christina Jones was an advisor and project manager. All authors provided input on the manuscript.
+
+
+\bibliographystyle{chicago}
+\bibliography{biblio}
+
+\appendix
+
+\section{Appendix}
+
+\subsection{Bias of precision computed on benchmark datasets}\label{appendix:example}
+
+This section provides more information regarding example \ref{first_example}.
+
+For this example, we considered the RLdata10000 dataset from \citep{}. This is a synthetic dataset containing 10,000 records with first name, last name, and date of birth attributes. There is noise in these attributes and a $10\%$ duplication rate. Ground truth identity is known for all records.
+
+The disambiguation algorithm we consider matches records together if any of the following conditions is met:
+\begin{itemize}
+    \item records match on first name, last name, and birth year,
+    \item records match on first name, birth day, and birth year, or
+    \item records match on last name, birth day, and birth year.
+\end{itemize}
+Note that this is not at all a good disambiguation algorithm. It has $52\%$ precision and $83\%$ recall. However, it allows to to showcase the issue with non-adjusted precision computed on cluster samples.
+
+In our experiment, we have repeated 5,000 times the following 3-steps process:
+\begin{enumerate}
+    \item First, 200 records were sampled and the ground truth clusters associated to them were recovered. This provided a ``benchmark" dataset which was used for evaluation.
+    \item Second, a trivial precision estimate was obtained by computing precision over the benchmark dataset. That is, predicted cluster assignments were restricted to records which appear in the benchmark data and precision was compared for this. Most often than not, the result was an observation of $100\%$ precision.
+    \item Third, we computed our proposed precision estimator which corresponds to lemma \ref{lemma:record_sampling_representation} and the estimator $\widehat P_{\text{block}}$ defined in equation \eqref{eq:P_block}, with blocks corresponding to clusters and with sampling probabilities $p_b \propto \lvert b \rvert$.
+\end{enumerate}
+The distributions of the these two precision estimates over the 5,000 repetitions are shown in figure \ref{fig:precision_problem}. Our proposed estimator is accurate and nearly unbiased, whereas the trivial precision estimates have almost nothing to do with actual algorithmic performance.
+
+\subsection{Precision and Recall Estimator Formulas}
+
+This section describes specific values for $A_s$, $B_s$, and $T$ in \eqref{eq:bias_adjustment} in order to obtained nearly unbiased precision and recall estimators based on each of the representation in XX. We use the symbols $\widehat P$ and $\widehat R$, indexed by one of ``$\text{rec}$", ``$\text{clust}$", and ``$\text{block}$", in order to refer to precision and recall estimators corresponding to record, cluster, and block sampling representations.
+
+\paragraph{Record Sampling Estimators}
+
+\begin{description}
+    \item[$\widehat{P}_{\text{rec}}$]{Estimating $P$ is a special case that does not require ratio-of-means estimation. We propose to use a simple unbiased estimator:}
+    \begin{align}\label{eq:P_rec}
+        \widehat{P}_{\text{rec}} =
+        \frac{1}{n}\sum_{s=1}^{n}\frac{g(c(i_s),\widehat{\mathcal{C}})}{|c(i_s)|p_{i_s}}.
+    \end{align}
+    The unbiased estimator of the variance of $\widehat{P}_{\text{rec}}$ is also available:
+    \begin{align}
+        \widehat{V}(\widehat{P}_{\text{rec}}) = 
+        \frac{\theta_{n,N}}{n(n-1)}\sum_{s=1}^{n}\left(
+        \frac{g(c(i_s),\widehat{\mathcal{C}})^2}{|c(i_s)|^2p_{i_s}^2} - 
+        \widehat{P}_{\text{rec}}^2.
+        \right)
+    \end{align}
+    \item[$\widehat{R}_{\text{rec}}$]{Going forward, we refer to formulae \eqref{eq:bias_adjustment} and \eqref{eq:estimated_variance}. $\widehat{R}_{\text{rec}}$ and its variance estimate $\widehat{V}(\widehat{R}_{\text{rec}})$ are given by \eqref{eq:bias_adjustment} and \eqref{eq:estimated_variance}, where we substitute in}
+    \begin{align}
+    T = N,\; A_s = \frac{(\lvert c(i_s) \rvert - 1)}{p_{i_s}},\; 
+    B_s = 2\frac{f(c(i_s),\widehat{\mathcal{C}})}{|c(i_s)|p_{i_s}}.
+    \end{align}
+\end{description}
+
+\paragraph{Cluster Sampling Estimators}
+
+\begin{description}
+    \item[$\widehat{P}_{\text{clust}}$]{The estimator and its variance estimate $\widehat{V}(\widehat{P}_{\text{clust}})$ are given by \eqref{eq:bias_adjustment} and \eqref{eq:estimated_variance}, where we substitute in}
+    \begin{align}
+        T = |\mathcal{C}|,\; A_s = \frac{|c_s|}{p_{c_s}},\; B_s = N\frac{g(c_s,\widehat{\mathcal{C}})}{p_{c_s}}.
+    \end{align}
+    \item[$\widehat{R}_{\text{clust}}$]{The estimator and its variance estimate $\widehat{V}(\widehat{R}_{\text{clust}})$ are given by \eqref{eq:bias_adjustment} and \eqref{eq:estimated_variance}, where we substitute in}
+    \begin{align}
+    T = |\mathcal{C}|,\; A_s = \frac{{\lvert c_s \rvert \choose 2}}{p_{c_s}},\; B_s = \frac{f(c_s,\widehat{\mathcal{C}})}{p_{c_s}}. 
+    \end{align}
+\end{description}
+
+\paragraph{Disjoint Block Sampling Estimators}
+
+\begin{description}
+    \item[$\widehat{P}_{\text{block}}$]{The estimator and its variance estimate $\widehat{V}(\widehat{P}_{\text{block}})$ are given by \eqref{eq:bias_adjustment} and \eqref{eq:estimated_variance}, where we substitute in}
+    \begin{align}\label{eq:P_block}
+        T = |\mathcal{B}|,\; A_s = \frac{\lvert \mathcal{P}_{b_s} \rvert + \frac{1}{2} \lvert \mathcal{P}_{b_s}^{-} \rvert}{p_{b_s}},\;
+        B_s = \frac{\lvert \mathcal{T}_{b_s} \cap \mathcal{P}_{b_s} \rvert}{p_{b_s}}.
+    \end{align}
+    \item[$\widehat{R}_{\text{block}}$]{The estimator and its variance estimate $\widehat{V}(\widehat{R}_{\text{block}})$ are given by \eqref{eq:bias_adjustment} and \eqref{eq:estimated_variance}, where we substitute in}
+    \begin{align}
+        T = |\mathcal{B}|,\; A_s = \frac{\lvert \mathcal{T}_{b_s} \rvert}{p_{b_s}},\; B_s = 
+        \frac{\lvert \mathcal{T}_{b_s} \cap \mathcal{P}_{b_s} \rvert}{p_{b_s}}.
+    \end{align}
+\end{description}
+
+
+\subsection{Proofs}\label{appendix:proofs}
+
+\begin{proof}[Proof of lemma \ref{lemma:record_sampling_representation}]
+By breaking down $\mathcal{P}$ and $\mathcal{T}$ over predicted clusters, we find
+\begin{equation}
+    P = \sum_{c\in\mathcal{C}} \sum_{\hat c \in \widehat{\mathcal{C}}} {\lvert c \cap \hat c \rvert \choose 2} \Big/ \sum_{\hat c \in \widehat{\mathcal{C}}} {\lvert \hat c \rvert \choose 2}.
+\end{equation}
+Now writing $\sum_{c \in \mathcal{C}} \sum_{\hat c \in \widehat{\mathcal{C}}}{\lvert c \cap \hat c \rvert \choose 2} = \sum_{i=1}^{N} \frac{1}{\lvert c(i) \rvert} \sum_{\hat c \in \widehat{\mathcal{C}}} {\lvert c(i) \cap \hat c \rvert \choose 2}$ and substituting $g(c(i), \widehat{\mathcal{C}})$, we obtain
+\begin{equation}
+    P = \sum_{i=1}^N p_i \frac{g(c(i)), \widehat{\mathcal{C}})}{p_i \lvert c(i) \rvert} = \mathbb{E}\left[ \frac{g(c(i)), \widehat{\mathcal{C}}}{p_i \lvert c(i) \rvert} \right].
+\end{equation}
+For recall, write 
+\begin{equation}\label{eq:recall_cluster_form}
+    R = \sum_{c\in\mathcal{C}} \sum_{\hat c \in \widehat{\mathcal{C}}} {\lvert c \cap \hat c \rvert \choose 2} \Big/ \sum_{ c \in {\mathcal{C}}} {\lvert c \rvert \choose 2}.
+\end{equation}
+Through a similar argument as above, we may express the nominator as 
+\begin{equation}\label{eq:nominator}
+    \sum_{c\in\mathcal{C}} \sum_{\hat c \in \widehat{\mathcal{C}}} {\lvert c \cap \hat c \rvert \choose 2} = \mathbb{E}\left[ f(c(i),\, \widehat{\mathcal{C}})  \big/ (\lvert c(i) \rvert p_i) \right].
+\end{equation}
+For the denominator, we have
+\begin{equation}\label{eq:denominator}
+    \sum_{c \in \mathcal{C}} {\lvert c \rvert \choose 2} = \sum_{i=1}^N \frac{1}{\lvert c(i) \rvert}  {\lvert c(i) \rvert \choose 2} = \mathbb{E}[ (\lvert c(i) \rvert - 1)/(2 p_i)].
+\end{equation}
+Combining \eqref{eq:nominator} and \eqref{eq:denominator} yields the result. 
+\end{proof}
+
+\begin{proof}[Proof of lemma \ref{lemma:cluster_sampling_representation}]
+Let $\pi > 0$ be such that $\sum_{c \in \mathcal{C}} \pi p_c= 1$. Now write
+\begin{equation}
+    P = \sum_{c \in \mathcal{C}} g(c, \widehat{\mathcal{C}}) = \lvert \mathcal{C} \rvert\, \sum _{c \in \mathcal{C}} \pi p_c g(c, \widehat{\mathcal{C}}) / (\pi p_c \lvert \mathcal{C} \rvert)  =  \lvert \mathcal{C}\rvert\, \mathbb{E}\left[ g(c, \widehat{\mathcal{C}})/(\pi p_c \lvert \mathcal{C} \rvert) \right]
+\end{equation}
+and 
+\begin{equation}
+    \lvert \mathcal{C} \rvert = \frac{N}{\frac{1}{\lvert \mathcal{C} \rvert} \sum_{c \in \mathcal{C}} \lvert c \rvert} = \frac{N}{\mathbb{E}[\lvert c \rvert / (\pi p_c \lvert \mathcal{C} \rvert)]}.
+\end{equation}
+Simplifying $\pi \lvert \mathcal{C} \rvert$ from the nominator and denominator then yields the expression for precision.
+
+The expression for recall follows in a straightforward way from equation \eqref{eq:recall_cluster_form}.
+\end{proof}
+
+\begin{proof}[Proof of lemma \ref{lemma:block_sampling_representation}]
+Since the blocking procedure is assumed to have no error (for every $ c \in \mathcal{C}$, there exists $b \in \mathcal{B}$ with $c \subset b$), we can break down $\mathcal{T}$ as the disjoint union of the $\mathcal{T}_b$'s over $b \in \mathcal{B}$. It follows that $\lvert T \rvert = \sum_{b \in \mathcal{B}} \lvert \mathcal{T}_b \rvert$ and  $\lvert \mathcal{T} \cap \mathcal{P} \rvert = \sum_{b \in \mathcal{B}} \lvert \mathcal{T}_b \cap \mathcal{P}_b \rvert$. The expression for recall in in \eqref{eq:lemma_3} follows directly. For precision, we can express $\lvert \mathcal{P} \rvert$ as the number of links within blocks plus the number of links across blocks. Since the number of links across blocks are counted twice when considering for each block, we obtain $\lvert \mathcal{P} \rvert = \sum_{b \in \mathcal{B}} \left( \lvert \mathcal{P}_b \rvert + \tfrac{1}{2} \lvert \mathcal{P}_b^{-} \rvert \right)$. 
+\end{proof}
+
+
+\end{document}
