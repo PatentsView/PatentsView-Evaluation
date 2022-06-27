@@ -42,6 +42,8 @@ pv_evaluation/data/inventor/%.csv: scripts/%.py data-raw/.tag
 docs:
 	find examples -name *.ipynb -exec cp --parents {} docs/source \;
 	$(MAKE) html -C docs
+	cp -r docs/build/html/* docs/
+	rm -r docs/build/html
 
 clean:
 	rm -r data-raw
