@@ -23,8 +23,9 @@ project = "PatentsView-Evaluation"
 copyright = "2022, PatentsView.org"
 author = "Olivier Binette, Sarvo Madhavan"
 
-
 # -- General configuration ---------------------------------------------------
+
+html_baseurl = '/build/html/'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
