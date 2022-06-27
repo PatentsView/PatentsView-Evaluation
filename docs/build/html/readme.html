@@ -173,7 +173,7 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#examples">
+  <a class="reference internal nav-link" href="#id1">
    Examples
   </a>
   <ul class="nav section-nav flex-column">
@@ -269,18 +269,19 @@
   <section id="readme">
 <h1>README<a class="headerlink" href="#readme" title="Permalink to this headline">#</a></h1>
 <a class="reference external image-reference" href="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml"><img alt="Python package" src="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment"><img alt="pages-build-deployment" src="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment/badge.svg" /></a>
 <section id="patentsview-evaluation-benchmark-disambiguation-algorithms">
 <h2>📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms<a class="headerlink" href="#patentsview-evaluation-benchmark-disambiguation-algorithms" title="Permalink to this headline">#</a></h2>
 <p><strong>pv_evaluation</strong> is a Python package for the evaluation and benchmarking of <a class="reference external" href="https://patentsview.org/">PatentsView</a> disambiguation algorithms. It has the following submodules:</p>
 <ul class="simple">
-<li><p><strong>summary</strong>: Disambiguation summary statistics.</p></li>
-<li><p><strong>metrics</strong>: Implementation of performance evaluation metrics such as precision and recall.</p></li>
-<li><p><strong>benchmark</strong>: Access to evaluation datasets and standardized comparison benchmarks.</p></li>
-<li><p><strong>data</strong>: Processed data used in this package. Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">data</span></code> to re-generate processed data from original datasets.</p></li>
-<li><p><strong>templates</strong>: Quarto report templates.</p></li>
-<li><p><strong>estimators</strong>: performance metric <em>estimators</em> to estimate full-data performance from biased samples.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.summary.html">**summary**</a>: Disambiguation summary statistics.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.metrics.html">**metrics**</a>: Implementation of performance evaluation metrics such as precision and recall.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html">**benchmark**</a>: Access to evaluation datasets and standardized comparison benchmarks.</p></li>
+<li><p><a class="reference external" href="https://github.com/PatentsView/PatentsView-Evaluation/tree/main/pv_evaluation/data">**data**</a>: Processed data used in this package. Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">data</span></code> to re-generate processed data from original datasets.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html">**templates**</a>: Quarto report templates.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.estimators.html">**estimators**</a>: performance metric <em>estimators</em> to estimate full-data performance from biased samples.</p></li>
 </ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">examples</span></code> page provides real-world examples of the use of <strong>pv_evaluation</strong> submodules.</p>
+<p>The <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html">Examples</a> page provides real-world examples of the use of <strong>pv_evaluation</strong> submodules. Please refer to the <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html">project website</a> for full documentation.</p>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
@@ -290,8 +291,8 @@
 </div>
 <p>Rendering reports requires the installation of quarto from <a class="reference external" href="https://quarto.org/docs/get-started/">quarto.org</a>.</p>
 </section>
-<section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">#</a></h2>
+<section id="id1">
+<h2>Examples<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <p>Note: Working with the full patent data requires large amounts of memory (we suggest having 64GB RAM available).</p>
 <p>See the examples page for complete reproducible examples. The examples below only provide a quick overview of <strong>pv_evaluation</strong>‘s functionality.</p>
 <section id="metrics-and-summary-statistics">
@@ -336,6 +337,7 @@
 <li><p>Fork this repository</p></li>
 <li><p>Make your changes and update CHANGELOG.md</p></li>
 <li><p>Submit a pull request</p></li>
+<li><p>For maintainers: if needed, update the “release” branch and create a release.</p></li>
 </ol>
 <p>A conda environment is provided for development convenience. To create or update this environment, make sure you have conda installed and then run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">env</span></code>. You can then activate the development environment using <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">pv-evaluation</span></code>.</p>
 <p>The makefile provides other development utilities such as <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">black</span></code> to format Python files, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">data</span></code> to re-generate benchmark datasets from raw data located on AWS S3, and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span></code> to generate the documentation website.</p>

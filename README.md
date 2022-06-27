@@ -1,17 +1,18 @@
 [![Python package](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg)](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml)
+[![pages-build-deployment](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment)
 
 ## 📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
 
 **pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It has the following submodules:
 
-- **summary**: Disambiguation summary statistics.
-- **metrics**: Implementation of performance evaluation metrics such as precision and recall.
-- **benchmark**: Access to evaluation datasets and standardized comparison benchmarks. 
-- **data**: Processed data used in this package. Use `make data` to re-generate processed data from original datasets.
-- **templates**: Quarto report templates.
-- **estimators**: performance metric *estimators* to estimate full-data performance from biased samples.
+- [**summary**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.summary.html): Disambiguation summary statistics.
+- [**metrics**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.metrics.html): Implementation of performance evaluation metrics such as precision and recall.
+- [**benchmark**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Access to evaluation datasets and standardized comparison benchmarks. 
+- [**data**](https://github.com/PatentsView/PatentsView-Evaluation/tree/main/pv_evaluation/data): Processed data used in this package. Use `make data` to re-generate processed data from original datasets.
+- [**templates**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html): Quarto report templates.
+- [**estimators**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.estimators.html): performance metric *estimators* to estimate full-data performance from biased samples.
 
-The `examples` page provides real-world examples of the use of **pv_evaluation** submodules.
+The [Examples](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html) page provides real-world examples of the use of **pv_evaluation** submodules. Please refer to the [project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html) for full documentation.
 
 ## Installation
 
@@ -69,6 +70,7 @@ Look through the [GitHub issues](https://github.com/PatentsView/PatentsView-Eval
 1. Fork this repository
 2. Make your changes and update CHANGELOG.md
 3. Submit a pull request
+4. For maintainers: if needed, update the "release" branch and create a release.
 
 A conda environment is provided for development convenience. To create or update this environment, make sure you have conda installed and then run `make env`. You can then activate the development environment using `conda activate pv-evaluation`.
 
