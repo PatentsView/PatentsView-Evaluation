@@ -17,9 +17,7 @@ The `examples` page provides real-world examples of the use of **pv_evaluation**
 
 Install **pv_evaluation** in editable mode using
 ```shell
-git clone https://github.com/PatentsView/PatentsView-Evaluation.git
-cd PatentsView-Evaluation
-pip install -e .
+pip install git+https://github.com/PatentsView/PatentsView-Evaluation.git@release
 ```
 
 Rendering reports requires the installation of quarto from [quarto.org](https://quarto.org/docs/get-started/).
