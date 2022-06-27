@@ -227,7 +227,7 @@ We note that an additional symbol $\theta_{n,T}$ is introduced for possible fini
     \sum_{s=1}^n \left( \frac{A_s^2}{\bar{A}_n^2} + \frac{B_s^2}{\bar{B}_n^2} - 2\frac{A_sB_s}{\bar{A}_n\bar{B}_n} \right).
 \end{align}
 
-The specific values for $A_s$, $B_s$, and $T$ in each of our representation is described in appendix X.
+The specific values for $A_s$, $B_s$, and $T$ in each of our representation is described in appendix \ref{sec:appendix}.
 
 %\begin{remark}
 %    There are many ways to define ratio estimators. For small samples and given prior knowledge, Bayesian approaches would be the most appropriate. In this paper, we have opted for the simple estimators since they are sufficient for our application and demonstrate the strength of our methodology.
@@ -372,7 +372,7 @@ Olivier Binette led the project and wrote the bulk of the manuscript. Youngsoo B
 
 \appendix
 
-\section{Appendix}
+\section{Appendix}\label{sec:appendix}
 
 \subsection{Bias of precision computed on benchmark datasets}\label{appendix:example}
 
@@ -398,7 +398,7 @@ The distributions of the these two precision estimates over the 5,000 repetition
 
 \subsection{Precision and Recall Estimator Formulas}
 
-This section describes specific values for $A_s$, $B_s$, and $T$ in \eqref{eq:bias_adjustment} in order to obtained nearly unbiased precision and recall estimators based on each of the representation in XX. We use the symbols $\widehat P$ and $\widehat R$, indexed by one of ``$\text{rec}$", ``$\text{clust}$", and ``$\text{block}$", in order to refer to precision and recall estimators corresponding to record, cluster, and block sampling representations.
+This section describes specific values for $A_s$, $B_s$, and $T$ in \eqref{eq:bias_adjustment} in order to obtained nearly unbiased precision and recall estimators based on each of the representation in section \ref{sec:proposed_estimators}. We use the symbols $\widehat P$ and $\widehat R$, indexed by one of ``$\text{rec}$", ``$\text{clust}$", and ``$\text{block}$", in order to refer to precision and recall estimators corresponding to record, cluster, and block sampling representations.
 
 \paragraph{Record Sampling Estimators}
 
