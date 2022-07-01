@@ -105,16 +105,25 @@ class AssigneeDisambiguationSummary(DisambiguationSummary):
         silhouette_series.rename({0: 'sihouette_score'}, axis=1, inplace=True)
         self._data = self._data.join(silhouette_series)
 
+    @classmethod
+    def get_example_summary(cls):
+        import os
+        try:
+            import importlib.resources as pkg_resources
+        except ImportError:
+            # Try backported to PY<37 `importlib_resources`.
+            import importlib_resources as pkg_resources
+        from pv_evaluation.data import assignee
+        with pkg_resources.path(package=assignee, resource='rawassignee_baseline.csv') as p:
+            baseline_assignee_file = p
+        return cls(datapath=baseline_assignee_file, processed_data_dir=os.path.dirname(baseline_assignee_file),
+                   name='test')
+
 
 if __name__ == '__main__':
-    assignee_summary = AssigneeDisambiguationSummary(
-        datapath="/Users/smadhavan/Workspace/Current/PatentsView/Disambiguation/Assignee/sample_one.csv",
-        processed_data_dir="/Users/smadhavan/Workspace/Current/PatentsView/Disambiguation/Assignee/", name='test')
+    assignee_summary = AssigneeDisambiguationSummary.get_example_summary()
     assignee_summary.collect_inter_cluster_distance()
     assignee_summary.collect_intra_cluster_distance()
     assignee_summary.calculate_silhouette_score()
-    assignee_summary
     assignee_summary.__save__()
     print(assignee_summary.get_dataset_inter_cluster_distance())
-
-# %%
