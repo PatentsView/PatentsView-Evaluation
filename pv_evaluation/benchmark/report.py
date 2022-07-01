@@ -22,8 +22,8 @@ DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
     "pairwise recall": pairwise_recall,
     # "pairwise f1": pairwise_fscore,
-    "cluster precision": cluster_precision,
-    "cluster recall": cluster_recall,
+    #"cluster precision": cluster_precision,
+    #"cluster recall": cluster_recall,
     # "cluster f1": cluster_fscore
     "rand index": rand_score,
 }
@@ -105,7 +105,7 @@ def style_cluster_inspection(table, by="prediction"):
 
 def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
     """Get table of cluster assignment errors on the given benchmark.
-    
+
     Args:
         disambiguation (Series): Disambiguation result Series.
         benchmark (Series): reference disambiguation Series.
