@@ -2,7 +2,7 @@
 import pandas as pd
 import os
 
-def read_disambiguation(filename):
+def read_auto(filename):
     _, ext = os.path.splitext(filename)
 
     if ext == ".csv":
@@ -13,12 +13,18 @@ def read_disambiguation(filename):
         df = pd.read_parquet(filename)
     else:
         raise Exception("Unsupported file type. Should be one of csv, tsv, or parquet.")
+    
+    return df
 
+
+def read_disambiguation(filename):
+    df = read_auto(filename)
     df.set_index("mention-id", inplace=True)
     
     return df["inventor_id"]
 
 disambiguations = {filename: read_disambiguation(filename) for filename in {{ summary_table_files }} }
+dataframes = {filename: read_auto(filename).set_index("mention-id")[["name_first", "name_last"]] for filename in {{ summary_table_files }} }
 ```
 
 # Benchmark Evaluation
@@ -29,9 +35,13 @@ disambiguations = {filename: read_disambiguation(filename) for filename in {{ su
 
 {% include 'inventor/callouts/metrics-tips.qmd' %}
 
+:::{.column-body-outset}
 ```{python}
-inventor_benchmark_plot(disambiguations)
+fig = inventor_benchmark_plot(disambiguations)
+fig.update_layout(autosize=False, width=800)
+fig.show()
 ```
+:::
 
 ## Predicted Cluster Errors
 
@@ -43,6 +53,7 @@ from IPython.core.display import display, HTML
 from pv_evaluation.benchmark import (
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark,
+    load_lai_2011_inventors_benchmark,
     inspect_clusters_to_split,
     inspect_clusters_to_merge,
     style_cluster_inspection,
@@ -64,14 +75,36 @@ def style_and_display(table, by="prediction"):
 
 ```{python}
 #| column: page
-style_and_display(inspect_clusters_to_split(disambiguations["{{ filename }}"], load_israeli_inventors_benchmark()), by="prediction")
+style_and_display(
+    inspect_clusters_to_split(
+        disambiguations["{{ filename }}"], 
+        load_israeli_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+    by="prediction")
 ```
 
 #### PatentsView Inventors
 
 ```{python}
 #| column: page
-style_and_display(inspect_clusters_to_split(disambiguations["{{ filename }}"], load_patentsview_inventors_benchmark()), by="prediction")
+style_and_display(
+    inspect_clusters_to_split(
+        disambiguations["{{ filename }}"], 
+        load_patentsview_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="prediction")
+```
+
+#### Lai's Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_split(
+        disambiguations["{{ filename }}"], 
+        load_lai_2011_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="prediction")
 ```
 
 :::
@@ -96,14 +129,36 @@ style_and_display(inspect_clusters_to_split(disambiguations["{{ filename }}"], l
 
 ```{python}
 #| column: page
-style_and_display(inspect_clusters_to_merge(disambiguations["{{ filename }}"], load_israeli_inventors_benchmark()), by="reference")
+style_and_display(
+    inspect_clusters_to_merge(
+        disambiguations["{{ filename }}"], 
+        load_israeli_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="reference")
 ```
 
 #### PatentsView Inventors
 
 ```{python}
 #| column: page
-style_and_display(inspect_clusters_to_merge(disambiguations["{{ filename }}"], load_patentsview_inventors_benchmark()), by="reference")
+style_and_display(
+    inspect_clusters_to_merge(
+        disambiguations["{{ filename }}"], 
+        load_patentsview_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="reference")
+``` 
+
+#### Lai's Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_merge(
+        disambiguations["{{ filename }}"], 
+        load_lai_2011_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="reference")
 ``` 
 
 :::

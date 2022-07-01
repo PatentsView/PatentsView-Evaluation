@@ -1,6 +1,6 @@
-"""Disambiguation summary statistics.
+"""Disambiguation summary statistics
 """
 
-from .inventor_disambiguation_summary import InventorDisambiguationSummary
+from pv_evaluation.summary.inventor_disambiguation_summary import InventorDisambiguationSummary
 
 __all__ = ["InventorDisambiguationSummary"]

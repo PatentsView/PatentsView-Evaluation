@@ -12,7 +12,7 @@ def load_unique_id_series(module, filename):
         filename (str): csv filename.
 
     Returns:
-        Series: pandas series named "unique-id" and with "mention-id" as an index.
+        Series: pandas Series named "unique-id" and with "mention-id" as an index.
     """
     with resources.open_text(module, filename) as f:
         data = pd.read_csv(f)
@@ -21,26 +21,47 @@ def load_unique_id_series(module, filename):
     return data["unique-id"]
 
 
-def load_harvard_inventors_benchmark():
-    """TODO: Document this dataset."""
-    # TODO: Fix inventor mention order in this dataset. Right now inventor sequence numbers are mixed up.
-    pass
-    return load_unique_id_series(INVENTOR_DATA_MODULE, "harvard-inventors-benchmark.csv")
+def load_lai_2011_inventors_benchmark():
+    """Lai's 2011 inventors benchmark dataset (also referred to as as Lai's 2014 inventors benchmark).
+
+    This is adapted from the benchmark dataset reported in Li et al. (2014) to evaluate their disambiguation of the  U.S. Patent Inventor Database (1975-2010).
+
+    See:
+        Li, G. C., Lai, R., D'Amour, A., Doolin, D. M., Sun, Y., Torvik, V. I., ... & Fleming, L. (2014). Disambiguation and co-authorship networks of the US patent inventor database (1975-2010). Research Policy, 43(6), 941-955.
+
+    Returns:
+        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
+
+    Notes:
+        * A number of patent IDs which could not be found were removed from Lai's original dataset.
+        * Inventor sequence numbers were assigned through automatic matching and manual review. There could be some errors.
+    """
+    return load_unique_id_series(INVENTOR_DATA_MODULE, "lai-2011-benchmark.csv")
 
 
 def load_israeli_inventors_benchmark():
-    """TODO: Document this dataset.
+    """Israeli inventors benchmark dataset.
+
+    This is adapted from Trajenberg and Shiff (2008). The data covers U.S. patents granted between 1963 and 1999 for Israeli inventors.
+
+    See:
+        Trajtenberg, M., & Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development.
 
     Returns:
-        _type_: _description_
+        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "israeli-inventors-benchmark.csv")
 
 
 def load_patentsview_inventors_benchmark():
-    """TODO: Document dataset.
+    """PatentsView hand-disambiguated inventors benchmark.
+
+    This is the hand-disambiguation of a set of particularly ambiguous inventor names.
+
+    See:
+        Monath, N., Jones, C., & Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf
 
     Returns:
-        _type_: _description_
+        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "patentsview-inventors-benchmark.csv")

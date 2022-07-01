@@ -31,7 +31,11 @@ dependencies:
     - sphinx-autoapi
     - Sphinx
     - myst_parser
-    - sphinx-rtd-theme
+    - pydata-sphinx-theme
+    - m2r2
+    - sphinx-lesson
+    - sphinx-design
     - parse
+    - git+https://github.com/OlivierBinette/StringCompare.git@release
     - editdistance
     - dill

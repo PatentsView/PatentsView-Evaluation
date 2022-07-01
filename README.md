@@ -1,29 +1,65 @@
 [![Python package](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg)](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml)
+[![pages-build-deployment](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment)
 
-# PatentsView-Evaluation
+## 📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
 
-**pv_evaluation** is a Python package for the evaluation and benchmarking of PatentsView disambiguation algorithms.
+**pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It has the following submodules:
 
-Currently, **pv_evaluation** has the following submodules:
-- **summary**: Disambiguation summary statistics.
-- **metrics**: Implementation of performance evaluation metrics such as precision and recall.
-- **benchmark**: Access to evaluation datasets and standardized comparison benchmarks. 
-- **data**: Processed data used in this package. Use `make data` to re-generate processed data from original datasets.
-- **templates**: Quarto report templates.
-- **estimators**: performance metric *estimators* to estimate full-data performance from biased samples.
+- [**summary**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.summary.html): Disambiguation summary statistics.
+- [**metrics**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.metrics.html): Implementation of performance evaluation metrics such as precision and recall.
+- [**benchmark**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Access to evaluation datasets and standardized comparison benchmarks. 
+- [**data**](https://github.com/PatentsView/PatentsView-Evaluation/tree/main/pv_evaluation/data): Processed data used in this package. Use `make data` to re-generate processed data from original datasets.
+- [**templates**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html): Quarto report templates.
+- [**estimators**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.estimators.html): performance metric *estimators* to estimate full-data performance from biased samples.
 
-The `examples` folder provides real-world examples of the use of **pv_evaluation** submodules.
+The [Examples](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html) page provides real-world examples of the use of **pv_evaluation** submodules. Please refer to the [project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html) for full documentation.
 
 ## Installation
 
 Install **pv_evaluation** in editable mode using
 ```shell
-git clone https://github.com/PatentsView/PatentsView-Evaluation.git
-cd PatentsView-Evaluation
-pip install -e .
+pip install git+https://github.com/PatentsView/PatentsView-Evaluation.git@release
 ```
 
 Rendering reports requires the installation of quarto from [quarto.org](https://quarto.org/docs/get-started/).
+
+## Examples
+
+Note: Working with the full patent data requires large amounts of memory (we suggest having 64GB RAM available).
+
+See the examples page for complete reproducible examples. The examples below only provide a quick overview of **pv_evaluation**'s functionality.
+
+### Metrics and Summary Statistics
+
+Generate an html report summarizing properties of the current disambiguation algorithm (uses the `rawinventor.tsv` data file from PatentsView's [downloads page](https://patentsview.org/download/data-download-tables)):
+```python
+from pv_evaluation.templates import render_inventor_disambiguation_report
+
+render_inventor_disambiguation_report(".", summary_table_files=["rawinventor.tsv"])
+```
+
+### Estimate Precision and Recall
+
+Estimate precision and recall from clusters sampled with probability proportional to their size:
+```python
+from pv_evaluation.estimators import pairwise_precision_estimator
+from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark
+
+current_disambiguation = # TODO: Make this the current disambiguation membership vector
+pairwise_precision_estimator(current_disambiguation, load_lai_2011_inventors_benchmark(), sampling_type="cluster_block", weights="cluster_size")
+pairwise_recall_estimator(current_disambiguation, load_lai_2011_inventors_benchmark(), sampling_type="cluster_block", weights="cluster_size")
+```
+
+### Access Benchmark Datasets
+
+Access PatentsView-Evaluation's collection of benchmark datasets:
+```python
+from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark, load_israeli_inventors_benchmark, load_patentsview_inventors_benchmark
+
+load_lai_2011_inventors_benchmark()
+load_israeli_inventors_benchmark()
+load_patentsview_inventors_benchmark()
+```
 
 ## Contributing
 
@@ -34,14 +70,28 @@ Look through the [GitHub issues](https://github.com/PatentsView/PatentsView-Eval
 1. Fork this repository
 2. Make your changes and update CHANGELOG.md
 3. Submit a pull request
+4. For maintainers: if needed, update the "release" branch and create a release.
 
 A conda environment is provided for development convenience. To create or update this environment, make sure you have conda installed and then run `make env`. You can then activate the development environment using `conda activate pv-evaluation`.
 
-The makefile provides other development utilities such as `make black` to format Python files and `make data` to re-generate benchmark datasets from raw data located on AWS S3.
+The makefile provides other development utilities such as `make black` to format Python files, `make data` to re-generate benchmark datasets from raw data located on AWS S3, and `make docs` to generate the documentation website.
+
+#### Raw data
+
+Raw public data is located on PatentsView's AWS S3 server at [https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip](https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip). This zip file should be updated as needed to reflect datasets provided by this package and to ensure that original data sources are preserved without modification.
+
+#### Testing
+
+The minimal testing requirement for this package is a check that all code executes without error. We recommend placing execution checks in a runnable notebook and using the [testbook](https://pypi.org/project/testbook/) package for execution within unit tests. User examples should also be provided to exemplify usage on real data.
 
 ### Report bugs and submit feedback
 
 Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Evaluation/issues.
+
+### Contributors
+
+- Olivier Binette (American Institutes for Research, Duke University)
+- Sarvo Madhavan (American Institutes for Research)
 
 ## References
 
@@ -56,6 +106,6 @@ Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Ev
 
 ### Datasets
 
-- Trajtenberg, M., Shiff, G., & Melamed, R. (2006). The" names game": Harnessing inventors' patent data for economic research. [link]
-- Trajtenberg, M., & Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. [link]
-- Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. https://doi.org/10.6084/m9.figshare.3502754.v1 
+- Trajtenberg, M., & Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. [[link]](https://econ.tau.ac.il/sites/economy.tau.ac.il/files/media_server/Economics/Sapir/papers/%D7%9E%D7%A0%D7%95%D7%90%D7%9C%20%D7%98%D7%A8%D7%9B%D7%98%D7%A0%D7%91%D7%A8%D7%92%205-08%20%D7%9E%D7%A9%D7%95%D7%9C%D7%91.pdf)
+- Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. [[link]](https://doi.org/10.6084/m9.figshare.3502754.v1)
+- Monath, N., Madhavan, S. & Jones, C. (2021) PatentsView: Disambiguating Inventors, Assignees, and Locations. Technical report. [[link]](https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf)

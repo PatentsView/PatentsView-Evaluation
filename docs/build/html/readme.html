@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>README &#8212; PatentsView-Evaluation  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_lesson.css" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/minipres.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Key Concepts" href="concepts.html" />
+    <link rel="prev" title="PatentsView-Evaluation’s documentation" href="index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+<a class="navbar-brand" href="index.html">
+<p class="title">PatentsView-Evaluation</p>
+</a>
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  README
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="concepts.html">
+  Key Concepts
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="examples.html">
+  Examples
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="pv_evaluation.html">
+  API Doc
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/patentsview/patentsview-evaluation" rel="noopener" target="_blank" title="GitHub"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#patentsview-evaluation-benchmark-disambiguation-algorithms">
+   📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#installation">
+   Installation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Examples
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#metrics-and-summary-statistics">
+     Metrics and Summary Statistics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#estimate-precision-and-recall">
+     Estimate Precision and Recall
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#access-benchmark-datasets">
+     Access Benchmark Datasets
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contributing">
+   Contributing
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contribute-code-and-documentation">
+     Contribute code and documentation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#raw-data">
+       Raw data
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#testing">
+       Testing
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#report-bugs-and-submit-feedback">
+     Report bugs and submit feedback
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#contributors">
+     Contributors
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#methodology">
+     Methodology
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#datasets">
+     Datasets
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="readme">
+<h1>README<a class="headerlink" href="#readme" title="Permalink to this headline">#</a></h1>
+<a class="reference external image-reference" href="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml"><img alt="Python package" src="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment"><img alt="pages-build-deployment" src="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment/badge.svg" /></a>
+<section id="patentsview-evaluation-benchmark-disambiguation-algorithms">
+<h2>📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms<a class="headerlink" href="#patentsview-evaluation-benchmark-disambiguation-algorithms" title="Permalink to this headline">#</a></h2>
+<p><strong>pv_evaluation</strong> is a Python package for the evaluation and benchmarking of <a class="reference external" href="https://patentsview.org/">PatentsView</a> disambiguation algorithms. It has the following submodules:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.summary.html">**summary**</a>: Disambiguation summary statistics.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.metrics.html">**metrics**</a>: Implementation of performance evaluation metrics such as precision and recall.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html">**benchmark**</a>: Access to evaluation datasets and standardized comparison benchmarks.</p></li>
+<li><p><a class="reference external" href="https://github.com/PatentsView/PatentsView-Evaluation/tree/main/pv_evaluation/data">**data**</a>: Processed data used in this package. Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">data</span></code> to re-generate processed data from original datasets.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html">**templates**</a>: Quarto report templates.</p></li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.estimators.html">**estimators**</a>: performance metric <em>estimators</em> to estimate full-data performance from biased samples.</p></li>
+</ul>
+<p>The <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html">Examples</a> page provides real-world examples of the use of <strong>pv_evaluation</strong> submodules. Please refer to the <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html">project website</a> for full documentation.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
+<p>Install <strong>pv_evaluation</strong> in editable mode using</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/PatentsView/PatentsView-Evaluation.git@release
+</pre></div>
+</div>
+<p>Rendering reports requires the installation of quarto from <a class="reference external" href="https://quarto.org/docs/get-started/">quarto.org</a>.</p>
+</section>
+<section id="id1">
+<h2>Examples<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>Note: Working with the full patent data requires large amounts of memory (we suggest having 64GB RAM available).</p>
+<p>See the examples page for complete reproducible examples. The examples below only provide a quick overview of <strong>pv_evaluation</strong>‘s functionality.</p>
+<section id="metrics-and-summary-statistics">
+<h3>Metrics and Summary Statistics<a class="headerlink" href="#metrics-and-summary-statistics" title="Permalink to this headline">#</a></h3>
+<p>Generate an html report summarizing properties of the current disambiguation algorithm (uses the <code class="docutils literal notranslate"><span class="pre">rawinventor.tsv</span></code> data file from PatentsView’s <a class="reference external" href="https://patentsview.org/download/data-download-tables">downloads page</a>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.templates</span> <span class="kn">import</span> <span class="n">render_inventor_disambiguation_report</span>
+
+<span class="n">render_inventor_disambiguation_report</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">summary_table_files</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="estimate-precision-and-recall">
+<h3>Estimate Precision and Recall<a class="headerlink" href="#estimate-precision-and-recall" title="Permalink to this headline">#</a></h3>
+<p>Estimate precision and recall from clusters sampled with probability proportional to their size:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.estimators</span> <span class="kn">import</span> <span class="n">pairwise_precision_estimator</span>
+<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_lai_2011_inventors_benchmark</span>
+
+<span class="n">current_disambiguation</span> <span class="o">=</span> <span class="c1"># TODO: Make this the current disambiguation membership vector</span>
+<span class="n">pairwise_precision_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">)</span>
+<span class="n">pairwise_recall_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="access-benchmark-datasets">
+<h3>Access Benchmark Datasets<a class="headerlink" href="#access-benchmark-datasets" title="Permalink to this headline">#</a></h3>
+<p>Access PatentsView-Evaluation’s collection of benchmark datasets:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">,</span> <span class="n">load_israeli_inventors_benchmark</span><span class="p">,</span> <span class="n">load_patentsview_inventors_benchmark</span>
+
+<span class="n">load_lai_2011_inventors_benchmark</span><span class="p">()</span>
+<span class="n">load_israeli_inventors_benchmark</span><span class="p">()</span>
+<span class="n">load_patentsview_inventors_benchmark</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">#</a></h2>
+<section id="contribute-code-and-documentation">
+<h3>Contribute code and documentation<a class="headerlink" href="#contribute-code-and-documentation" title="Permalink to this headline">#</a></h3>
+<p>Look through the <a class="reference external" href="https://github.com/PatentsView/PatentsView-Evaluation/issues">GitHub issues</a> for bugs and feature requests. To contribute to this package:</p>
+<ol class="arabic simple">
+<li><p>Fork this repository</p></li>
+<li><p>Make your changes and update CHANGELOG.md</p></li>
+<li><p>Submit a pull request</p></li>
+<li><p>For maintainers: if needed, update the “release” branch and create a release.</p></li>
+</ol>
+<p>A conda environment is provided for development convenience. To create or update this environment, make sure you have conda installed and then run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">env</span></code>. You can then activate the development environment using <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">pv-evaluation</span></code>.</p>
+<p>The makefile provides other development utilities such as <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">black</span></code> to format Python files, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">data</span></code> to re-generate benchmark datasets from raw data located on AWS S3, and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span></code> to generate the documentation website.</p>
+<section id="raw-data">
+<h4>Raw data<a class="headerlink" href="#raw-data" title="Permalink to this headline">#</a></h4>
+<p>Raw public data is located on PatentsView’s AWS S3 server at <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip">https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip</a>. This zip file should be updated as needed to reflect datasets provided by this package and to ensure that original data sources are preserved without modification.</p>
+</section>
+<section id="testing">
+<h4>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">#</a></h4>
+<p>The minimal testing requirement for this package is a check that all code executes without error. We recommend placing execution checks in a runnable notebook and using the <a class="reference external" href="https://pypi.org/project/testbook/">testbook</a> package for execution within unit tests. User examples should also be provided to exemplify usage on real data.</p>
+</section>
+</section>
+<section id="report-bugs-and-submit-feedback">
+<h3>Report bugs and submit feedback<a class="headerlink" href="#report-bugs-and-submit-feedback" title="Permalink to this headline">#</a></h3>
+<p>Report bugs and submit feedback at <a class="reference external" href="https://github.com/PatentsView/PatentsView-Evaluation/issues">https://github.com/PatentsView/PatentsView-Evaluation/issues</a>.</p>
+</section>
+<section id="contributors">
+<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Olivier Binette (American Institutes for Research, Duke University)</p></li>
+<li><p>Sarvo Madhavan (American Institutes for Research)</p></li>
+</ul>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<section id="methodology">
+<h3>Methodology<a class="headerlink" href="#methodology" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Menestrina, D., Whang, S. E., &amp; Garciamolina, H. (2010). Evaluating entity resolution results. Proceedings of the VLDB Endowment, 3(1), 208–219. <a class="reference external" href="https://doi.org/10.14778/1920841.1920871">https://doi.org/10.14778/1920841.1920871</a></p></li>
+<li><p>Michelson, M., &amp; Macskassy, S. A. (2009). Record linkage measures in an entity centric world. Proceedings of the 4th Workshop on Evaluation Methods for Machine Learning.</p></li>
+<li><p>Ferreira, A. A., Gonçalves, M. A., &amp; Laender, A. H. (2012). A brief survey of automatic methods for author name disambiguation. Acm Sigmod Record, 41(2), 15-26. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/USPTO_Entity_Resolution_Symposium/Ferreira+et+al_2012_A+Brief+Survey+of+Automatic+Methods+for+Author+Name+Disambiguation.pdf">[link]</a></p></li>
+<li><p>Pfitzner, D., Leibbrandt, R., &amp; Powers, D. (2009). Characterization and evaluation of similarity measures for pairs of clusterings. Knowledge and Information Systems, 19(3), 361-394. <a class="reference external" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.214.7233&amp;rep=rep1&amp;type=pdf">[link]</a></p></li>
+<li><p>Barnes, M. (2015). A Practioner’s Guide to Evaluating Entity Resolution Results. 1–6. <a class="reference external" href="http://arxiv.org/abs/1509.04238">http://arxiv.org/abs/1509.04238</a></p></li>
+<li><p>Marchant, N. G., &amp; Rubinstein, B. I. P. (2017). In search of an entity resolution OASIS: Optimal asymptotic sequential importance sampling. Proceedings of the VLDB Endowment, 10(11), 1322–1333. <a class="reference external" href="https://doi.org/10.14778/3137628.3137642">https://doi.org/10.14778/3137628.3137642</a></p></li>
+</ul>
+</section>
+<section id="datasets">
+<h3>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Trajtenberg, M., &amp; Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. <a class="reference external" href="https://econ.tau.ac.il/sites/economy.tau.ac.il/files/media_server/Economics/Sapir/papers/%D7%9E%D7%A0%D7%95%D7%90%D7%9C%20%D7%98%D7%A8%D7%9B%D7%98%D7%A0%D7%91%D7%A8%D7%92%205-08%20%D7%9E%D7%A9%D7%95%D7%9C%D7%91.pdf">[link]</a></p></li>
+<li><p>Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. <a class="reference external" href="https://doi.org/10.6084/m9.figshare.3502754.v1">[link]</a></p></li>
+<li><p>Monath, N., Madhavan, S. &amp; Jones, C. (2021) PatentsView: Disambiguating Inventors, Assignees, and Locations. Technical report. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">[link]</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">PatentsView-Evaluation’s documentation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="concepts.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Key Concepts</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, PatentsView.org.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

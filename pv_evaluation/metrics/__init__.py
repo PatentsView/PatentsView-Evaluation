@@ -1,4 +1,4 @@
-"""Performance evaluation metrics.
+"""Performance evaluation metrics
 """
 
 from .pairwise import (
