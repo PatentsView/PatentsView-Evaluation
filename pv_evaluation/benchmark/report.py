@@ -15,6 +15,8 @@ from pv_evaluation.benchmark import (
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark,
     load_lai_2011_inventors_benchmark,
+    load_als_inventors_benchmark,
+    load_ens_inventors_benchmark,
 )
 
 # Default benchmarks to run.
@@ -22,6 +24,8 @@ DEFAULT_BENCHMARKS = {
     "patentsview-inventors": load_patentsview_inventors_benchmark,
     "israeli-inventors": load_israeli_inventors_benchmark,
     "lai-benchmark": load_lai_2011_inventors_benchmark,
+    "als-benchmark": load_als_inventors_benchmark,
+    "ens-benchmark": load_ens_inventors_benchmark,
 }
 DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
@@ -77,7 +81,7 @@ def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
     return computed_metrics
 
 
-def inventor_benchmark_plot(disambiguations, metrics=None, benchmarks=None, **kwargs):
+def inventor_benchmark_plot(disambiguations, metrics=None, benchmarks=None, facet_col_wrap=2, **kwargs):
     """Bar plot of performance evaluation metrics on benchmark datasets.
 
     Args:
@@ -94,7 +98,7 @@ def inventor_benchmark_plot(disambiguations, metrics=None, benchmarks=None, **kw
         benchmarks = DEFAULT_BENCHMARKS
 
     computed_metrics = inventor_benchmark_table(disambiguations, metrics=metrics, benchmarks=benchmarks)
-    return px.bar(computed_metrics, y="value", x="metric", color="algorithm", facet_col="benchmark", barmode="group", **kwargs)
+    return px.bar(computed_metrics, y="value", x="metric", color="algorithm", facet_col="benchmark", barmode="group", facet_col_wrap=facet_col_wrap, **kwargs)
 
 
 def style_cluster_inspection(table, by="prediction"):

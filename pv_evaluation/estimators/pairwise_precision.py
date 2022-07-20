@@ -19,7 +19,7 @@ def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
 
     if sampling_type == "record":
         if weights == "uniform":
-            return len(prediction) * np.mean(f_sum / cluster_sizes) / P
+            return ([len(prediction) * np.mean(f_sum / cluster_sizes) / P], [1])
         elif weights == "cluster_size":
             raise Exception("'cluster_size' weights are not used with 'record' sampling type.")
         else:
@@ -28,7 +28,7 @@ def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
         if weights == "uniform":
             return (len(prediction) * f_sum / P, cluster_sizes)
         elif weights == "cluster_size":
-            return (len(prediction) * np.mean(f_sum / cluster_sizes) / P, np.ones(len(f_sum)))
+            return ([len(prediction) * np.mean(f_sum / cluster_sizes) / P], [1])
         else:
             raise Exception("Unrecognized 'weight' option. Should be one of 'uniform' or 'cluster_size'.")
     elif sampling_type == "single_block":
@@ -38,7 +38,7 @@ def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
         A = inner.prediction.value_counts(sort=False).sort_index().values
         B = prediction[I].value_counts(sort=False).sort_index().values
         P_block_minus = np.sum(A * (B - A))
-        return (np.array([TP_block / (P_block + 0.5 * P_block_minus)]), np.array([1]))
+        return ([TP_block / (P_block + 0.5 * P_block_minus)], [1])
     elif sampling_type == "cluster_block":
         if weights == "uniform":
             N = f_sum
@@ -55,21 +55,10 @@ def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
             D = f_sum + 0.5 * P_minus
             return (N, D)
         elif weights == "cluster_size":
-            N = f_sum / cluster_sizes
-            K = prediction.isin(inner.prediction)
-
-            def lambd(x):
-                I = inner.prediction.index.isin(x.index)
-                J = prediction[K].isin(inner.prediction[I])
-                A = inner.prediction[I].value_counts(sort=False).sort_index().values
-                B = prediction[K][J].value_counts(sort=False).sort_index().values
-                return np.sum(A * (B - A))
-
-            P_minus = inner.groupby("reference").apply(lambd)
-            D = (f_sum + 0.5 * P_minus) / cluster_sizes
-            return (N, D)
+            (N, D) = pairwise_precision_arrays(prediction, reference, sampling_type="cluster_block", weights="uniform")
+            return (N/cluster_sizes, D/cluster_sizes)
     else:
-        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', or 'single_block'")
+        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', 'cluster_block' or 'single_block'")
 
 
 def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
