@@ -7,12 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Performance Benchmarks &#8212; PatentsView-Evaluation  documentation</title>
-    
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
 
-    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
   <link rel="stylesheet"
     href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
@@ -27,9 +31,9 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx_lesson.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -48,32 +52,40 @@
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="HTML Report Template" href="../templates/templates.html" />
     <link rel="prev" title="Inventor Disambiguation Summaries" href="../summary/inventor.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="None">
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
 
     
-    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
 
   <div id="navbar-start">
     
     
-<a class="navbar-brand" href="../../index.html">
-<p class="title">PatentsView-Evaluation</p>
-</a>
+  
 
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">PatentsView-Evaluation  documentation</p>
+  
+</a>
     
   </div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="fas fa-bars"></span>
   </button>
 
   
@@ -129,13 +141,13 @@
     </nav>
     
 
-    <div class="container-xl">
-      <div class="row">
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
           
-            
-            <!-- Only show if we have sidebars configured, else just a small margin  -->
-            <div class="col-12 col-md-3 bd-sidebar">
-              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
@@ -170,19 +182,20 @@
 
   </div>
 </nav>
-              </div>
-              <div class="sidebar-end-items">
-              </div>
-            </div>
-            
-          
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
 
           
-          <div class="d-none d-xl-block col-xl-2 bd-toc">
-            
-              
-              <div class="toc-item">
-                
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
 <div class="tocsection onthispage mt-5 pt-1 pb-3">
     <i class="fas fa-list"></i> On this page
 </div>
@@ -202,23 +215,21 @@
 </ul>
 
 </nav>
-              </div>
-              
-              <div class="toc-item">
-                
-              </div>
-              
-            
-          </div>
-          
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
 
           
           
-            
-          
-          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+          <div class="bd-content col-12 col-md-9 col-xl-7">
               
-              <div>
+              <article class="bd-article" role="main">
                 
   <section id="performance-benchmarks">
 <h1>Performance Benchmarks<a class="headerlink" href="#performance-benchmarks" title="Permalink to this headline">#</a></h1>
@@ -278,6 +289,98 @@
 </div>
 </div>
 <p>The inventors benchmark table provides the value of key metrics for each combination of benchmark, metric type, and disambiguation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inventor_benchmark_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>benchmark</th>
+      <th>metric</th>
+      <th>algorithm</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>als-benchmark</td>
+      <td>pairwise precision</td>
+      <td>current</td>
+      <td>0.997342</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>als-benchmark</td>
+      <td>pairwise precision</td>
+      <td>one cluster</td>
+      <td>0.000049</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>als-benchmark</td>
+      <td>pairwise recall</td>
+      <td>current</td>
+      <td>0.961500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>als-benchmark</td>
+      <td>pairwise recall</td>
+      <td>one cluster</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>als-benchmark</td>
+      <td>cluster precision</td>
+      <td>current</td>
+      <td>0.995445</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>als-benchmark</td>
+      <td>cluster precision</td>
+      <td>one cluster</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>als-benchmark</td>
+      <td>cluster recall</td>
+      <td>current</td>
+      <td>0.971152</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>als-benchmark</td>
+      <td>cluster recall</td>
+      <td>one cluster</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inventor_benchmark_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">)</span>
@@ -422,6 +525,174 @@
       <td>one cluster</td>
       <td>1.000000</td>
     </tr>
+    <tr>
+      <th>16</th>
+      <td>lai-benchmark</td>
+      <td>pairwise precision</td>
+      <td>current</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>lai-benchmark</td>
+      <td>pairwise precision</td>
+      <td>one cluster</td>
+      <td>0.026273</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>lai-benchmark</td>
+      <td>pairwise recall</td>
+      <td>current</td>
+      <td>0.898367</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>lai-benchmark</td>
+      <td>pairwise recall</td>
+      <td>one cluster</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>lai-benchmark</td>
+      <td>cluster precision</td>
+      <td>current</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>lai-benchmark</td>
+      <td>cluster precision</td>
+      <td>one cluster</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>lai-benchmark</td>
+      <td>cluster recall</td>
+      <td>current</td>
+      <td>0.715789</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>lai-benchmark</td>
+      <td>cluster recall</td>
+      <td>one cluster</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>als-benchmark</td>
+      <td>pairwise precision</td>
+      <td>current</td>
+      <td>0.997342</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>als-benchmark</td>
+      <td>pairwise precision</td>
+      <td>one cluster</td>
+      <td>0.000049</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>als-benchmark</td>
+      <td>pairwise recall</td>
+      <td>current</td>
+      <td>0.961500</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>als-benchmark</td>
+      <td>pairwise recall</td>
+      <td>one cluster</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>als-benchmark</td>
+      <td>cluster precision</td>
+      <td>current</td>
+      <td>0.995445</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>als-benchmark</td>
+      <td>cluster precision</td>
+      <td>one cluster</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>als-benchmark</td>
+      <td>cluster recall</td>
+      <td>current</td>
+      <td>0.971152</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>als-benchmark</td>
+      <td>cluster recall</td>
+      <td>one cluster</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>ens-benchmark</td>
+      <td>pairwise precision</td>
+      <td>current</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>ens-benchmark</td>
+      <td>pairwise precision</td>
+      <td>one cluster</td>
+      <td>0.001335</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>ens-benchmark</td>
+      <td>pairwise recall</td>
+      <td>current</td>
+      <td>0.956651</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>ens-benchmark</td>
+      <td>pairwise recall</td>
+      <td>one cluster</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>ens-benchmark</td>
+      <td>cluster precision</td>
+      <td>current</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>ens-benchmark</td>
+      <td>cluster precision</td>
+      <td>one cluster</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>ens-benchmark</td>
+      <td>cluster recall</td>
+      <td>current</td>
+      <td>0.901702</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>ens-benchmark</td>
+      <td>cluster recall</td>
+      <td>one cluster</td>
+      <td>1.000000</td>
+    </tr>
   </tbody>
 </table>
 </div></div></div>
@@ -434,7 +705,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f2b6a4044c909f3a1a19373e1964a39ca1a8192586e7294074bed7c7c6020f86.svg" src="../../_images/f2b6a4044c909f3a1a19373e1964a39ca1a8192586e7294074bed7c7c6020f86.svg" /></div>
+<img alt="../../_images/3e600f44a8a1cacf0d568a8db961bd142dec50f48b5617b9e8d10ae00d121693.svg" src="../../_images/3e600f44a8a1cacf0d568a8db961bd142dec50f48b5617b9e8d10ae00d121693.svg" /></div>
 </div>
 <p>Next, we can look at the tables showcasing two types of errors: predicted clusters which should have been <strong>split</strong>, and predicted cluster which should have been <strong>merged</strong>.</p>
 <div class="cell docutils container">
@@ -447,14 +718,14 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
-#T_9e720_row0_col0, #T_9e720_row0_col1, #T_9e720_row1_col0, #T_9e720_row1_col1, #T_9e720_row9_col0, #T_9e720_row9_col1, #T_9e720_row10_col0, #T_9e720_row10_col1 {
+#T_a95d7_row0_col0, #T_a95d7_row0_col1, #T_a95d7_row1_col0, #T_a95d7_row1_col1, #T_a95d7_row9_col0, #T_a95d7_row9_col1, #T_a95d7_row10_col0, #T_a95d7_row10_col1 {
   background-color: white;
 }
-#T_9e720_row2_col0, #T_9e720_row2_col1, #T_9e720_row3_col0, #T_9e720_row3_col1, #T_9e720_row4_col0, #T_9e720_row4_col1, #T_9e720_row5_col0, #T_9e720_row5_col1, #T_9e720_row6_col0, #T_9e720_row6_col1, #T_9e720_row7_col0, #T_9e720_row7_col1, #T_9e720_row8_col0, #T_9e720_row8_col1, #T_9e720_row11_col0, #T_9e720_row11_col1, #T_9e720_row12_col0, #T_9e720_row12_col1, #T_9e720_row13_col0, #T_9e720_row13_col1, #T_9e720_row14_col0, #T_9e720_row14_col1 {
+#T_a95d7_row2_col0, #T_a95d7_row2_col1, #T_a95d7_row3_col0, #T_a95d7_row3_col1, #T_a95d7_row4_col0, #T_a95d7_row4_col1, #T_a95d7_row5_col0, #T_a95d7_row5_col1, #T_a95d7_row6_col0, #T_a95d7_row6_col1, #T_a95d7_row7_col0, #T_a95d7_row7_col1, #T_a95d7_row8_col0, #T_a95d7_row8_col1, #T_a95d7_row11_col0, #T_a95d7_row11_col1, #T_a95d7_row12_col0, #T_a95d7_row12_col1, #T_a95d7_row13_col0, #T_a95d7_row13_col1, #T_a95d7_row14_col0, #T_a95d7_row14_col1 {
   background-color: #c5dcf5;
 }
 </style>
-<table id="T_9e720_">
+<table id="T_a95d7_">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
@@ -469,79 +740,79 @@
   </thead>
   <tbody>
     <tr>
-      <th id="T_9e720_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
-      <td id="T_9e720_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_9e720_row0_col1" class="data row0 col1" >472</td>
+      <th id="T_a95d7_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
+      <td id="T_a95d7_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
+      <td id="T_a95d7_row0_col1" class="data row0 col1" >472</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
-      <td id="T_9e720_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_9e720_row1_col1" class="data row1 col1" >470</td>
+      <th id="T_a95d7_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
+      <td id="T_a95d7_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
+      <td id="T_a95d7_row1_col1" class="data row1 col1" >470</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
-      <td id="T_9e720_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_9e720_row2_col1" class="data row2 col1" >16528</td>
+      <th id="T_a95d7_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
+      <td id="T_a95d7_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_a95d7_row2_col1" class="data row2 col1" >16528</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
-      <td id="T_9e720_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_9e720_row3_col1" class="data row3 col1" >16522</td>
+      <th id="T_a95d7_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
+      <td id="T_a95d7_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_a95d7_row3_col1" class="data row3 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
-      <td id="T_9e720_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_9e720_row4_col1" class="data row4 col1" >16522</td>
+      <th id="T_a95d7_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
+      <td id="T_a95d7_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_a95d7_row4_col1" class="data row4 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
-      <td id="T_9e720_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_9e720_row5_col1" class="data row5 col1" >16522</td>
+      <th id="T_a95d7_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
+      <td id="T_a95d7_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_a95d7_row5_col1" class="data row5 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
-      <td id="T_9e720_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_9e720_row6_col1" class="data row6 col1" >16522</td>
+      <th id="T_a95d7_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
+      <td id="T_a95d7_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_a95d7_row6_col1" class="data row6 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
-      <td id="T_9e720_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_9e720_row7_col1" class="data row7 col1" >16522</td>
+      <th id="T_a95d7_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
+      <td id="T_a95d7_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_a95d7_row7_col1" class="data row7 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
-      <td id="T_9e720_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_9e720_row8_col1" class="data row8 col1" >16522</td>
+      <th id="T_a95d7_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
+      <td id="T_a95d7_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_a95d7_row8_col1" class="data row8 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
-      <td id="T_9e720_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_9e720_row9_col1" class="data row9 col1" >307</td>
+      <th id="T_a95d7_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
+      <td id="T_a95d7_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
+      <td id="T_a95d7_row9_col1" class="data row9 col1" >307</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
-      <td id="T_9e720_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_9e720_row10_col1" class="data row10 col1" >306</td>
+      <th id="T_a95d7_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
+      <td id="T_a95d7_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
+      <td id="T_a95d7_row10_col1" class="data row10 col1" >306</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
-      <td id="T_9e720_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_9e720_row11_col1" class="data row11 col1" >2910</td>
+      <th id="T_a95d7_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
+      <td id="T_a95d7_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_a95d7_row11_col1" class="data row11 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
-      <td id="T_9e720_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_9e720_row12_col1" class="data row12 col1" >2910</td>
+      <th id="T_a95d7_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
+      <td id="T_a95d7_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_a95d7_row12_col1" class="data row12 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
-      <td id="T_9e720_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_9e720_row13_col1" class="data row13 col1" >2910</td>
+      <th id="T_a95d7_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
+      <td id="T_a95d7_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_a95d7_row13_col1" class="data row13 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_9e720_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
-      <td id="T_9e720_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_9e720_row14_col1" class="data row14 col1" >2910</td>
+      <th id="T_a95d7_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
+      <td id="T_a95d7_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_a95d7_row14_col1" class="data row14 col1" >2910</td>
     </tr>
   </tbody>
 </table>
@@ -557,170 +828,60 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>reference</th>
-      <th>prediction</th>
-      <th>name_first</th>
-      <th>name_last</th>
-    </tr>
-    <tr>
-      <th>mention-id</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>US5825476-0</th>
-      <td>13</td>
-      <td>h6uzumjdp27ulvxe69um3plwa</td>
-      <td>Marc</td>
-      <td>Abitol</td>
-    </tr>
-    <tr>
-      <th>US5784282-0</th>
-      <td>13</td>
-      <td>fl:ma_ln:abitbol-2</td>
-      <td>Marc</td>
-      <td>Abitbol</td>
-    </tr>
-    <tr>
-      <th>US5855074-0</th>
-      <td>13</td>
-      <td>fl:mo_ln:abitbol-1</td>
-      <td>Mordechai</td>
-      <td>Abitbol</td>
-    </tr>
-    <tr>
-      <th>US5688262-0</th>
-      <td>20</td>
-      <td>fl:ma_ln:abraham-26</td>
-      <td>Martin David</td>
-      <td>Abraham</td>
-    </tr>
-    <tr>
-      <th>US5783798-0</th>
-      <td>20</td>
-      <td>fl:ma_ln:abraham-26</td>
-      <td>Martin</td>
-      <td>Abraham</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>US5288705-0</th>
-      <td>18670</td>
-      <td>fl:jo_ln:zohar-2</td>
-      <td>Jonathan</td>
-      <td>Zohar</td>
-    </tr>
-    <tr>
-      <th>US5344434-0</th>
-      <td>19132</td>
-      <td>fl:el_ln:talmore-1</td>
-      <td>Eli T.</td>
-      <td>Talmore</td>
-    </tr>
-    <tr>
-      <th>US5344433-0</th>
-      <td>19132</td>
-      <td>fl:el_ln:talmore-1</td>
-      <td>Eli</td>
-      <td>Talmore</td>
-    </tr>
-    <tr>
-      <th>US5707401-0</th>
-      <td>19132</td>
-      <td>fl:el_ln:talmore-1</td>
-      <td>Eli T.</td>
-      <td>Talmore</td>
-    </tr>
-    <tr>
-      <th>US5851181-0</th>
-      <td>19132</td>
-      <td>fl:el_ln:talmor-1</td>
-      <td>Eli T.</td>
-      <td>Talmor</td>
-    </tr>
-  </tbody>
-</table>
-<p>1369 rows × 4 columns</p>
-</div></div></div>
 </div>
 </section>
 </section>
 
 
-              </div>
+              </article>
               
+
               
-              <!-- Previous / next buttons -->
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../summary/inventor.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Inventor Disambiguation Summaries</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="../templates/templates.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">HTML Report Template</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
+  <a class='left-prev' id="prev-link" href="../summary/inventor.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Inventor Disambiguation Summaries</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../templates/templates.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">HTML Report Template</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
 </div>
+              </footer>
               
-          </main>
+          </div>
           
-
       </div>
     </div>
+
+  
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-<footer class="footer mt-5 mt-md-0">
-  <div class="container">
-    
-    <div class="footer-item">
-      <p class="copyright">
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
     &copy; Copyright 2022, PatentsView.org.<br>
 </p>
-    </div>
-    
-    <div class="footer-item">
-      <p class="sphinx-version">
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
 Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
 </p>
-    </div>
-    
   </div>
+  
+</div>
 </footer>
   </body>
 </html>

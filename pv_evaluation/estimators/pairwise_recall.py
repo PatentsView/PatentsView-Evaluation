@@ -33,7 +33,7 @@ def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
     elif sampling_type == "single_block":
         TP_block = np.sum(sp.comb(vals.values, 2))
         T_block = np.sum(sp.comb(inner.reference.value_counts(sort=False).values, 2))
-        return (np.array([TP_block / (T_block)]), np.array([1]))
+        return ([TP_block / (T_block)], [1])
     elif sampling_type == "cluster_block":
         if weights == "uniform":
             N = f_sum
@@ -44,7 +44,7 @@ def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
             D = sp.comb(cluster_sizes, 2) / cluster_sizes
             return (N, D)
     else:
-        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', or 'single_block'")
+        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', 'cluster_block', or 'single_block'")
 
 
 def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
