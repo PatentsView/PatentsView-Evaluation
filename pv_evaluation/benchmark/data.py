@@ -65,3 +65,31 @@ def load_patentsview_inventors_benchmark():
         Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "patentsview-inventors-benchmark.csv")
+
+def load_als_inventors_benchmark():
+    """Academic Life Sciences inventors benchmark.
+
+    This is a set of disambiguated inventor mentions derived from Pierre Azoulay's Academic Life Sciences dataset, 
+    which covers US patents granted between 1970 and 2005. At this time, no further information is available regarding this dataset.
+
+    Note that inventor sequence numbers were obtained using a computer matching procedure which may have introduced errors. 
+    Rows with unresolved sequence numbers were removed.
+
+    Returns:
+        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
+    """
+    return load_unique_id_series(INVENTOR_DATA_MODULE, "als-inventors.csv")
+
+def load_ens_inventors_benchmark():
+    """Engineering and Sciences inventors benchmark.
+
+    This is a set of disambiguated inventor mentions derived from Png's LinkedIn-Patent Inventors Dataset for the 2015 PatentsView Disambiguation Workshop.
+    No further information regarding this dataset is available at this time.
+
+    See:
+        Ge, Chunmian, Ke-wei Huang, and Ivan P.L. Png, “Engineer/Scientist Careers: Patents, Online Profiles, and Misclassification”, Strategic Management Journal, Vol 37 No 1, January 2016, 232-253.
+
+    Returns:
+        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
+    """
+    return load_unique_id_series(INVENTOR_DATA_MODULE, "ens-inventors.csv")
