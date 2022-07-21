@@ -265,6 +265,100 @@
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-pv_evaluation.estimators" title="Permalink to this headline">#</a></h2>
 <p>Estimate full-data performance from biased samples</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.cluster_precision_estimator">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">cluster_precision_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_block'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_size'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/estimators/cluster_precision.html#cluster_precision_estimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.estimators.cluster_precision_estimator" title="Permalink to this definition">#</a></dt>
+<dd><p>Cluster precision estimates.</p>
+<p>The only sampling mechanism considered is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>cluster_block</strong> sampling: ground truth clusters are directly sampled and treated as block samples.</p></li>
+</ul>
+</div></blockquote>
+<p>The following probability weights can be used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>uniform</strong>: uniform probability weights.</p></li>
+<li><p><strong>cluster_size</strong>: probability weights proportional to cluster size.</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
+<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
+<li><p><strong>sampling_type</strong> (<em>str</em>) – sampling mechanism used to obtain reference clusters. Should be “cluster_block”.
+Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
+<li><p><strong>weights</strong> (<em>str</em>) – sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cluster precision estimate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This is meant for use with relatively small non-replacement samples.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.cluster_precision_std">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">cluster_precision_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/estimators/cluster_precision.html#cluster_precision_std"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.estimators.cluster_precision_std" title="Permalink to this definition">#</a></dt>
+<dd><p>Standard deviation estimates for the cluster precision estimator.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.cluster_recall_estimator">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">cluster_recall_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_block'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_size'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/estimators/cluster_recall.html#cluster_recall_estimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.estimators.cluster_recall_estimator" title="Permalink to this definition">#</a></dt>
+<dd><p>Cluster recall estimates.</p>
+<p>The only sampling mechanism considered is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>cluster_block</strong> sampling: ground truth clusters are directly sampled and treated as block samples.</p></li>
+</ul>
+</div></blockquote>
+<p>The following probability weights can be used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>uniform</strong>: uniform probability weights.</p></li>
+<li><p><strong>cluster_size</strong>: probability weights proportional to cluster size.</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
+<li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
+<li><p><strong>sampling_type</strong> (<em>str</em>) – sampling mechanism used to obtain reference clusters. Should be “cluster_block”.
+Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
+<li><p><strong>weights</strong> (<em>str</em>) – sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cluster recall estimate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>We recommend using the <strong>cluster_block</strong> estimator when possible since it is the most efficient.</p></li>
+<li><p>This is meant for use with relatively small non-replacement samples.</p></li>
+<li><p>For unknown sampling processes, the <strong>single_block</strong> estimator can be used.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.estimators.cluster_recall_std">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">cluster_recall_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/estimators/cluster_recall.html#cluster_recall_std"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.estimators.cluster_recall_std" title="Permalink to this definition">#</a></dt>
+<dd><p>Standard deviation estimates for the pairwise recall estimator.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.estimators.pairwise_precision_estimator">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.estimators.</span></span><span class="sig-name descname"><span class="pre">pairwise_precision_estimator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/estimators/pairwise_precision.html#pairwise_precision_estimator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.estimators.pairwise_precision_estimator" title="Permalink to this definition">#</a></dt>
 <dd><p>Pairwise precision estimates for given sampling mechanisms.</p>
