@@ -60,7 +60,7 @@ This paper introduces a novel evaluation methodology for entity resolution algor
 \section{Introduction}
 Entity resolution (also called record linkage, deduplication, or disambiguation) is the task of identifying records in a database which refer to the same entity. An entity may be a person, a company, an object or an event. Records are assumed to contain partially identifying information about these entities. When there is no unique identifier (such as a social security number) available for all records, entity resolution becomes a complex problem which requires sophisticated algorithmic solutions \citep{Herzog2007, Christen2012, Dong2015, Ilyas2019, Christophides2019, Christen2019, Papadakis2021, Binette2022a}. 
 
-For instance, the U.S. Patents and Trademarks Office (USPTO) makes available patent data dating back to 1790. However, there is no standard for uniquely identifying inventors on patent applications. The result is a set of ambiguous mentions to inventors, where a single person's name may be spelled in different ways on two applications, and where two different inventors with the same name may be difficult to distinguish. Much research has been done within the fields of economics, computer science and statistics to disambiguate inventor mentions \citep{trajtenberg2008identification, ferreira2012brief, ventura2013methods, Li2014, Ventura2015, kim2016random, yang2017mixture, morrison2017disambiguation, muller2017semantic, traylor2017learning, balsmeier2018machine,tam2019optimal, monath2019scalable, doherr2021disambiguation}.
+For instance, the U.S. Patents and Trademarks Office (USPTO) makes available patent data dating back to 1790 \ob{(numerized full-text data is available from 1976)}. However, there is no standard for uniquely identifying inventors on patent applications. The result is a set of ambiguous mentions to inventors, where a single person's name may be spelled in different ways on two applications, and where two different inventors with the same name may be difficult to distinguish. \ob{Inventor mobility further complicates the use of contextual information for disambiguation.} Much research has been done within the fields of economics, computer science and statistics to disambiguate inventor mentions \ob{in this situation} \citep{trajtenberg2008identification, ferreira2012brief, ventura2013methods, Li2014, Ventura2015, kim2016random, yang2017mixture, morrison2017disambiguation, muller2017semantic, traylor2017learning, balsmeier2018machine,tam2019optimal, monath2019scalable, doherr2021disambiguation}.
 
 The Office of the Chief Economist at the USPTO and the American Institutes for Research (AIR) currently maintain \textbf{PatentsView.org}, a patents knowledge discovery service which provides disambiguated patents data based on statistical entity resolution \citep{toole2021patentsview}. Our paper is motivated by this disambiguation service. Specifically, we are interested in the problem of \textit{evaluating} the accuracy of PatentsView's disambiguation, for the purpose of informing users of the reliability of the data and in order to support methodological research to improve upon PatentsView's disambiguation algorithm. We expand on the evaluation problem below.
 
@@ -77,7 +77,7 @@ A third problem is the multiplicity of sampling mechanisms used to obtain benchm
 Our approach, detailed in sections \ref{sec:approach} and \ref{sec:proposed_estimators}, addresses these challenges by putting forward novel cluster-based expressions for performance metrics which reflect various sampling schemes. Each of these representations immediately suggests simple estimators which properly account for the above issues.
 
 \begin{example}[Bias of precision computed on benchmark datasets]\label{first_example}
-    To exemplify the problem with the trivial use of performance evaluation metrics on benchmark datasets, we have carried out a simple experiment which is described in detail in appendix \ref{appendix:example}. In short, we considered evaluating a disambiguation algorithm by sampling ground truth clusters and computing pairwise precision\footnote{Pairwise precision is the probability that a pair of record predicted to be a match is indeed a match. See section \ref{sec:proposed_estimators} for a formal definition} on this set of sampled clusters. This is analogous to the way that many real-world benchmark data sets are obtained and used. In this experiment, we know that the disambiguation algorithm has a precision of $52\%$ for the entire dataset.
+    To exemplify the problem with the trivial use of performance evaluation metrics on benchmark datasets, we have carried out a simple experiment which is described in detail in appendix \ref{appendix:example}. In short, we considered evaluating a disambiguation algorithm by sampling ground truth clusters and computing pairwise precision\footnote{Pairwise precision is the probability that a pair of record predicted to be a match is indeed a match. See section \ref{sec:proposed_estimators} for a formal definition} on this set of sampled clusters. This is analogous to the way that many real-world benchmark data sets are obtained and typically used. In this experiment, we know that the disambiguation algorithm has a precision of $52\%$ for the entire dataset.
     
     \begin{figure}[h]
         \centering
@@ -175,6 +175,13 @@ First, we define pairwise precision and recall in terms of the number of links b
 \end{equation}
 
 Note that $P = R \, \lvert \mathcal{T} \rvert / \lvert \mathcal{P} \rvert$. As such, precision and recall are equal if and only if the right number of matching pairs is predicted under $\widehat{\mathcal{C}}$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{paper/clustering-example.pdf}
+    \caption{\ob{Example of ground truth clustering $\mathcal{C}$ (represented by boxes with a full border) and predicted clustering $\widehat{\mathcal{C}}$ (rounded boxes with a dotted border) of elements $\mathcal{D} = \{1,2,\dots, 8\}$. Here $\mathcal{T} = \{(1,2), (2,3), (1,3), (4,5), (6,7)\}$ and $\mathcal{P} = \{(1,4), (2,3), (6,7), (7,8), (6,8)\}$. As such, $P = R = 2/5$ in this example.}}
+    \label{fig:my_label}
+\end{figure}
 
 We now provide three alternative representations of precision and recall which correspond to the processes of sampling records, sampling true clusters, and sampling blocks. These will be used to obtain precision and recall estimators under these sampling processes.
 
@@ -340,9 +347,9 @@ For the Israeli benchmark dataset, we assumed that a single block of inventor cl
 For \cite{Li2014}'s inventors benchmark, given that inventor clusters were originally obtained from a set of inventor curriculum vitae, we assumed that inventor clusters were sampled uniformly at random. As such, we used cluster block estimators with constant probability weights.
 
 \begin{table}
-    \label{tab:results}
     \centering
     \caption{\centering Estimated pairwise precision and recall (with estimated standard deviation) from our four benchmark datasets.}
+    \label{tab:results}
     \begin{tabular}{lccc}
     \toprule
     \textbf{dataset} & \textbf{est. precision ($\hat \sigma$)} & \textbf{est. recall ($\hat \sigma$)} & \textbf{scope} \\
@@ -406,11 +413,11 @@ Note that this is not at all a good disambiguation algorithm. It has $52\%$ prec
 
 In our experiment, we have repeated 5,000 times the following 3-steps process:
 \begin{enumerate}
-    \item First, 100 (resp. 200 and 400) records were sampled and the ground truth clusters associated to them were recovered. This provided a ``benchmark" dataset which was used for evaluation.
+    \item First, 200 records were sampled and the ground truth clusters associated to them were recovered. This provided a ``benchmark" dataset which was used for evaluation.
     \item Second, a trivial precision estimate was obtained by computing precision over the benchmark dataset. That is, predicted cluster assignments were restricted to records which appear in the benchmark data and precision was compared for this. Most often than not, the result was an observation of $100\%$ precision.
     \item Third, we computed our proposed precision estimator which corresponds to lemma \ref{lemma:record_sampling_representation} and the estimator $\widehat P_{\text{block}}$ defined in equation \eqref{eq:P_block}, with blocks corresponding to clusters and with sampling probabilities $p_b \propto \lvert b \rvert$.
 \end{enumerate}
-The distributions of the these two precision estimates over the 5,000 repetitions and for sample of sizes 100, 200, and 400 are shown in figure \ref{fig:precision_problem}. Our proposed estimator is accurate and nearly unbiased, whereas the trivial precision estimates have almost nothing to do with actual algorithmic performance.
+The distributions of the these two precision estimates over the 5,000 repetitions are shown in figure \ref{fig:precision_problem}. Our proposed estimator is accurate and nearly unbiased, whereas the trivial precision estimates have almost nothing to do with actual algorithmic performance.
 
 \subsection{Precision and Recall Estimator Formulas}
 
