@@ -93,3 +93,21 @@ def load_ens_inventors_benchmark():
         Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "ens-inventors.csv")
+
+def load_harvard_inventors_benchmark():
+    """Harvard inventors benchmark.
+
+    This is a set of disambiguated inventor mentions derived from Morrisson's Harvard inventors benchmark, 
+    which contains the manual disambiguation of "USPTO patents filed by assignees containing the phrases 
+    ‘harvard college’ and ‘harvard university’ (case insensitive) in the name" (Morrisson et al, 2017).
+
+    Inventor sequence numbers were added through automated matching and a hand-review process. 
+    Note that errors could have been incorporated through this process.
+
+    See:
+        Morrison, G., Riccaboni, M. & Pammolli, F. Disambiguation of patent inventors and assignees using high-resolution geolocation data. Sci Data 4, 170064 (2017). https://doi.org/10.1038/sdata.2017.64
+
+    Returns:
+        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
+    """
+    return load_unique_id_series(INVENTOR_DATA_MODULE, "harvard-inventors-benchmark.csv")

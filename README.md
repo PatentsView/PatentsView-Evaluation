@@ -52,7 +52,7 @@ pairwise_recall_estimator(current_disambiguation, load_lai_2011_inventors_benchm
 
 ### Access Benchmark Datasets
 
-Access PatentsView-Evaluation's collection of benchmark datasets:
+Access PatentsView-Evaluation's large collection of benchmark datasets:
 ```python
 from pv_evaluation.benchmark import *
 
@@ -61,6 +61,7 @@ load_israeli_inventors_benchmark()
 load_patentsview_inventors_benchmark()
 load_als_inventors_benchmark()
 load_ens_inventors_benchmark()
+load_harvard_inventors_benchmark()
 ```
 
 ## Contributing
