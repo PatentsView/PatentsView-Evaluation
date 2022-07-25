@@ -29,7 +29,8 @@ data: env\
 	pv_evaluation/data/inventor/patentsview-inventors-benchmark.csv\
 	pv_evaluation/data/inventor/lai-2011-benchmark.csv\
 	pv_evaluation/data/inventor/ens-inventors.csv\
-	pv_evaluation/data/inventor/als-inventors.csv
+	pv_evaluation/data/inventor/als-inventors.csv\
+	pv_evaluation/data/inventor/harvard-inventors-benchmark.csv
 
 data-raw.zip:
 	wget $(DATA_RAW_S3_URL)
