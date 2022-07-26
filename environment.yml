@@ -37,3 +37,5 @@ dependencies:
     - sphinx-design
     - parse
     - git+https://github.com/OlivierBinette/StringCompare.git@release
+    - editdistance
+    - dill

@@ -33,8 +33,8 @@ DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
     "pairwise recall": pairwise_recall,
     # "pairwise f1": pairwise_fscore,
-    "cluster precision": cluster_precision,
-    "cluster recall": cluster_recall,
+    #"cluster precision": cluster_precision,
+    #"cluster recall": cluster_recall,
     # "cluster f1": cluster_fscore
     # "rand index": rand_score,
 }
