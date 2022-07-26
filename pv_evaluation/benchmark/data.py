@@ -4,6 +4,22 @@ import pandas as pd
 INVENTOR_DATA_MODULE = "pv_evaluation.data.inventor"
 
 
+def load_full_benchmark(module, filename):
+    """Load benchmark DataFrame from csv file with columns "unique-id", "mention-id", "name_first", and "name_last".
+
+    Args:
+        module (str): module where file is located.
+        filename (str): csv filename.
+
+    Returns:
+        DataFrame: pandas Dataframe with columns "unique-id", "mention-id", "name_first", and "name_last".
+    """
+    with resources.open_text(module, filename) as f:
+        data = pd.read_csv(f)
+
+    cols = ["unique-id", "mention-id", "name_first", "name_last"]
+    return data[cols]
+
 def load_unique_id_series(module, filename):
     """Load disambiguation series from csv file with columns "unique-id" and "mention-id".
 
