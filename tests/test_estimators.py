@@ -12,14 +12,14 @@ def sampling_types():
 def test_edge_cases(reference):
     from pv_evaluation.estimators import pairwise_precision_estimator, pairwise_recall_estimator
 
-    # Precision
+    # Pairwise precision
     # Bias adjustment makes the following be at around 1.05 instead of 1.0.
     #assert pairwise_precision_estimator(reference, reference, sampling_type="cluster", weights="uniform") == 1.0
     assert pairwise_precision_estimator(reference, reference, sampling_type="cluster_block", weights="uniform") == 1.0
     assert pairwise_precision_estimator(reference, reference, sampling_type="single_block", weights="uniform") == 1.0
     assert pairwise_precision_estimator(reference, reference, sampling_type="single_block", weights="cluster_size") == 1.0
 
-    # Recall
+    # Pairwise recall
     assert pairwise_recall_estimator(reference, reference, sampling_type="record", weights="uniform") == 1.0
     assert pairwise_recall_estimator(reference, reference, sampling_type="cluster", weights="uniform") == 1.0
     assert pairwise_recall_estimator(reference, reference, sampling_type="cluster_block", weights="uniform") == 1.0
@@ -28,3 +28,6 @@ def test_edge_cases(reference):
     assert pairwise_recall_estimator(reference, reference, sampling_type="cluster", weights="cluster_size") == 1.0
     assert pairwise_recall_estimator(reference, reference, sampling_type="cluster_block", weights="cluster_size") == 1.0
     assert pairwise_recall_estimator(reference, reference, sampling_type="single_block", weights="cluster_size") == 1.0
+
+    # Cluster precision
+    assert pairwise_precision_estimator(reference, reference, sampling_type="cluster_block", weights="uniform") == 1.0

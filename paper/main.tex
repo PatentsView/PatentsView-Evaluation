@@ -18,6 +18,13 @@
 \usepackage{lineno}
 \linenumbers
 
+\usepackage{subcaption}
+\DeclareCaptionFormat{custom}
+{%
+    \textbf{#1#2}\textit{#3}
+}
+\captionsetup{format=custom}
+
 \usepackage{xcolor}
 \newcommand{\ob}[1]{{\color{purple}#1}}
 
@@ -33,12 +40,12 @@
 \title{Practical Performance Evaluation of Entity Resolution Algorithms: Lessons Learned at PatentsView.org}
 
 \author[1,2]{Olivier Binette}
-\author[1]{Youngsoo Baek}
 \author[2]{Sokhna A York}
 \author[2]{Emma Hickerson}
+\author[1]{Youngsoo Baek}
 \author[2]{Sarvo Madhavan}
 \author[2]{Christina Jones}
-\affil[1]{Department of Statistical Science, Duke University}
+\affil[1]{Duke University}
 \affil[2]{American Institutes for Research}
 
 \date{\today}
@@ -47,13 +54,13 @@
 \maketitle
 
 \begin{abstract}
-This paper introduces a novel evaluation methodology for entity resolution algorithms. It is motivated by PatentsView.org, a \ob{U.S. Patents and Trademarks Office patent data exploration tool} which disambiguates patent inventors using an entity resolution algorithm. We provide a data collection methodology and tailored performance estimators which account for sampling biases. Our approach is simple, practical and principled -- key characteristics which allow us to paint the first representative picture of PatentsView's disambiguation performance. This is used to inform PatentsView's users of the reliability of the data and to allow the comparison of competing disambiguation algorithms.
+This paper introduces a novel evaluation methodology for entity resolution algorithms. It is motivated by PatentsView.org, a {U.S. Patents and Trademarks Office patent data exploration tool} which disambiguates patent inventors using an entity resolution algorithm. We provide a data collection methodology and tailored performance estimators which account for sampling biases. Our approach is simple, practical and principled -- key characteristics which allow us to paint the first representative picture of PatentsView's disambiguation performance. This is used to inform PatentsView's users of the reliability of the data and to allow the comparison of competing disambiguation algorithms.
 \end{abstract}
 
 \section{Introduction}
 Entity resolution (also called record linkage, deduplication, or disambiguation) is the task of identifying records in a database which refer to the same entity. An entity may be a person, a company, an object or an event. Records are assumed to contain partially identifying information about these entities. When there is no unique identifier (such as a social security number) available for all records, entity resolution becomes a complex problem which requires sophisticated algorithmic solutions \citep{Herzog2007, Christen2012, Dong2015, Ilyas2019, Christophides2019, Christen2019, Papadakis2021, Binette2022a}. 
 
-For instance, the U.S. Patents and Trademarks Office (USPTO) makes available patent data dating back to 1790. However, there is no standard for uniquely identifying inventors on patent applications. The result is a set of ambiguous mentions to inventors, where a single person's name may be spelled in different ways on two applications, and where two different inventors with the same name may be difficult to distinguish. Much research has been done within the fields of economics, computer science and statistics to disambiguate inventor mentions \citep{trajtenberg2008identification, ferreira2012brief, ventura2013methods, Li2014, Ventura2015, kim2016random, yang2017mixture, morrison2017disambiguation, muller2017semantic, traylor2017learning, balsmeier2018machine,tam2019optimal, monath2019scalable, doherr2021disambiguation}.
+For instance, the U.S. Patents and Trademarks Office (USPTO) makes available patent data dating back to 1790 \ob{(numerized full-text data is available from 1976)}. However, there is no standard for uniquely identifying inventors on patent applications. The result is a set of ambiguous mentions to inventors, where a single person's name may be spelled in different ways on two applications, and where two different inventors with the same name may be difficult to distinguish. \ob{Inventor mobility further complicates the use of contextual information for disambiguation.} Much research has been done within the fields of economics, computer science and statistics to disambiguate inventor mentions \ob{in this situation} \citep{trajtenberg2008identification, ferreira2012brief, ventura2013methods, Li2014, Ventura2015, kim2016random, yang2017mixture, morrison2017disambiguation, muller2017semantic, traylor2017learning, balsmeier2018machine,tam2019optimal, monath2019scalable, doherr2021disambiguation}.
 
 The Office of the Chief Economist at the USPTO and the American Institutes for Research (AIR) currently maintain \textbf{PatentsView.org}, a patents knowledge discovery service which provides disambiguated patents data based on statistical entity resolution \citep{toole2021patentsview}. Our paper is motivated by this disambiguation service. Specifically, we are interested in the problem of \textit{evaluating} the accuracy of PatentsView's disambiguation, for the purpose of informing users of the reliability of the data and in order to support methodological research to improve upon PatentsView's disambiguation algorithm. We expand on the evaluation problem below.
 
@@ -61,16 +68,16 @@ The Office of the Chief Economist at the USPTO and the American Institutes for R
 
 The entity resolution evaluation problem is to extrapolate from observed performance on small samples to real performance in a database with millions of records. \cite{Wang2022} refers to this as bridging the ``reality-ideality gap" in entity resolution, where high performance on benchmark datasets often does not translate in the real world. Here, performance may be defined as any combination of commonly used evaluation metrics for entity resolution, such as precision and recall, cluster homogeneity and completeness, rand index, or generalized merge distance \citep{Maidasani2012}. These metrics can be computed on benchmark datasets for which we have a ground truth disambiguation. However, the key evaluation problem is to obtain estimates which are representative of performance on the full data for which no ground truth disambiguation is available. This is challenging for the following reasons.
 
-First, entity resolution problems \ob{do not scale linearly}. While it may be easy to disambiguate a small dataset, the opportunity for errors grows \textit{quadratically} in the number of records. As such, we may observe good performance of an algorithm on a small benchmark dataset, while the true performance of on the entire data may be something else entirely.\footnote{This particular effect of dataset size in entity resolution is explored in \cite{Draisbach2013} in the context of choosing similarity thresholds.} This is a problem that PatentsView.org currently faces. Despite encouraging performance evaluation metrics on benchmark datasets, with nearly perfect precision and recall reported in the latest methodological report \citep{Monath2021}, the data science team at AIR observes lower real-world accuracy. \ob{This phenomenon is illustrated in example \ref{first_example} below.}
+First, entity resolution problems {do not scale linearly}. While it may be easy to disambiguate a small dataset, the opportunity for errors grows \textit{quadratically} in the number of records. As such, we may observe good performance of an algorithm on a small benchmark dataset, while the true performance of on the entire data may be something else entirely.\footnote{This particular effect of dataset size in entity resolution is explored in \cite{Draisbach2013} in the context of choosing similarity thresholds.} This is a problem that PatentsView.org currently faces. Despite encouraging performance evaluation metrics on benchmark datasets, with nearly perfect precision and recall reported in the latest methodological report \citep{Monath2021}, the data science team at AIR observes lower real-world accuracy. {This phenomenon is illustrated in example \ref{first_example} below.}
 
-A second problem is large class imbalance in entity resolution \citep{Marchant2017}. \ob{Viewing entity resolution as a classification problem, the task is to classify record pairs as being a match or non-match. However,} among all pairs of records, only a small fraction (usually much less than a fraction of a percent) refer to the same entity. The vast majority of record pairs are not a match. This makes it difficult to evaluate performance through random sampling of record pairs.
+A second problem is large class imbalance in entity resolution \citep{Marchant2017}. {Viewing entity resolution as a classification problem, the task is to classify record pairs as being a match or non-match. However,} among all pairs of records, only a small fraction (usually much less than a fraction of a percent) refer to the same entity. The vast majority of record pairs are not a match. This makes it difficult to evaluate performance through random sampling of record pairs.
 
 A third problem is the multiplicity of sampling mechanisms used to obtain benchmark datasets. To construct hand-disambiguated datasets, blocks, entity clusters, or predicted clusters may be sampled with various probability weights. These sampling approaches must be accounted for in order to obtain representative performance estimates \citep{fuller2011sampling}.
 
 Our approach, detailed in sections \ref{sec:approach} and \ref{sec:proposed_estimators}, addresses these challenges by putting forward novel cluster-based expressions for performance metrics which reflect various sampling schemes. Each of these representations immediately suggests simple estimators which properly account for the above issues.
 
 \begin{example}[Bias of precision computed on benchmark datasets]\label{first_example}
-    To exemplify the problem with the trivial use of performance evaluation metrics on benchmark datasets, we have carried out a simple experiment which is described in detail in appendix \ref{appendix:example}. In short, we considered evaluating a disambiguation algorithm by sampling ground truth clusters and computing pairwise precision\footnote{Pairwise precision is the probability that a pair of record predicted to be a match is indeed a match. See section \ref{sec:proposed_estimators} for a formal definition} on this set of sampled clusters. This is analogous to the way that many real-world benchmark data sets are obtained and used. In this experiment, we known that the disambiguation algorithm has a precision of $52\%$ for the entire dataset.
+    To exemplify the problem with the trivial use of performance evaluation metrics on benchmark datasets, we have carried out a simple experiment which is described in detail in appendix \ref{appendix:example}. In short, we considered evaluating a disambiguation algorithm by sampling ground truth clusters and computing pairwise precision\footnote{Pairwise precision is the probability that a pair of record predicted to be a match is indeed a match. See section \ref{sec:proposed_estimators} for a formal definition} on this set of sampled clusters. This is analogous to the way that many real-world benchmark data sets are obtained and typically used. In this experiment, we know that the disambiguation algorithm has a precision of $52\%$ for the entire dataset.
     
     \begin{figure}[h]
         \centering
@@ -79,7 +86,7 @@ Our approach, detailed in sections \ref{sec:approach} and \ref{sec:proposed_esti
         \label{fig:precision_problem}
     \end{figure}
     
-    In panel \textbf{A} of figure \ref{fig:precision_problem} below, we see the distribution of precision estimates versus the true precision of $52\%$ shown as a dotted vertical line. Precision estimates are most of the time very close to $100\%$ and always higher than $80\%$, despite the truth being a precision of only $52\%$. In contrast, panel \textbf{B} shows the distribution of our proposed precision estimator which is nearly unbiased. Both precision estimators rely on exactly the same data. They only differ in how they account for the underlying sampling process and the extrapolation from small benchmark datasets to full data.
+    In panel \textbf{A} of figure \ref{fig:precision_problem}, we see the distribution of precision estimates versus the true precision of $52\%$ shown as a dotted vertical line. Precision estimates are most of the time very close to $100\%$ and always higher than $80\%$, despite the truth being a precision of only $52\%$. In contrast, panel \textbf{B} shows the distribution of our proposed precision estimator which is nearly unbiased. Both precision estimators rely on exactly the same data. They only differ in how they account for the underlying sampling process and the extrapolation from small benchmark datasets to full data.
     
 \end{example}
 
@@ -99,13 +106,13 @@ Much of past work has focused on defining and using relevant clustering evaluati
 
 Pairwise precision and recall metrics were first reported in \cite{Newcombe1959}, with \cite{Bilenko2003, Christen2007} emphasizing the importance of precision-recall curves for algorithm evaluation. Now, there are issues with the use of pairwise precision and recall in entity resolution applications, such as the large relative importance of large clusters. As such, other clustering metrics have been proposed, including cluster precision and recall, cluster homogeneity and completeness, and generalized merge distances \citep{Michelson2009, Menestrina2010, Maidasani2012, Barnes2015}. Important practical issues regarding the use of aggregate metrics are discussed in \cite{Hand2018}.
 
-\ob{While our work focuses on estimating pairwise precision and recall, the general approach also applies to any cluster based performance evaluation metrics, such as those described in \cite{Michelson2009}.}
+{While our work focuses on estimating pairwise precision and recall, the general approach also applies to any cluster based performance evaluation metrics, such as those described in \cite{Michelson2009}.}
 
 \paragraph{Estimation}
 
 Regarding the reliable estimation of performance metrics, \cite{Belin1995} first proposed a semi-supervised approach to calibrate error rates when using a Fellegi-Sunter model \citep{fellegi_theory_1969}. \cite{Marchant2017} proposed an adaptive importance sampling estimator to estimate precision and recall from sampled record pairs. Other approaches to the estimation of performance metrics are model-based, where estimated precision and recall can be obtained from predicted match probabilities between record pairs \citep{enamorado2019using}. However, these model-based approaches cannot be used when working with black-box machine learning models or ad hoc clustering algorithms.
 
-\ob{In contrast to the above, our approach to estimation is more practical than pairwise sampling and applies to any black-box disambiguation algorithms such as those used at PatentsView.}
+{In contrast to the above, our approach to estimation is more practical than pairwise sampling and applies to any black-box disambiguation algorithms such as those used at PatentsView.}
 
 \subsubsection{Our Approach}\label{sec:approach}
 
@@ -118,18 +125,18 @@ Our approach has the following advantages:
     \item For evaluation, the review of entity clusters is much more efficient than the review of record pairs. We can achieve high accuracy with small samples without relying on any sophisticated sampling scheme.
 \end{enumerate}
 
-\ob{Furthermore, our approach is novel. To our knowledge, we are the first to propose unbiased performance estimators based on cluster and block samples. Past work either ignored biases when computing precision and recall from benchmark datasets \citep{frisoli2018exploring, Monath2021, han2019disambiguating}, did not provide estimates for one of precision or recall \citep{mcveigh2019scaling}, or provided solutions that are tailored to very specific record linkage models \citep{Belin1995}. We provide the first general solution to entity resolution evaluation which does not rely on sampling record pairs and which applies to any disambiguation algorithm.}
+{Furthermore, our approach is novel. To our knowledge, we are the first to propose unbiased performance estimators based on cluster and block samples. Past work either ignored biases when computing precision and recall from benchmark datasets \citep{frisoli2018exploring, Monath2021, han2019disambiguating}, did not provide estimates for one of precision or recall \citep{mcveigh2019scaling}, or provided solutions that are tailored to very specific record linkage models \citep{Belin1995}. We provide the first general solution to entity resolution evaluation which does not rely on sampling record pairs and which applies to any disambiguation algorithm.}
 
 
 In short, the proposed approach is simple, principled, and practical. It is simple to use, it is statistically principled in its account of sampling processes and in its uncertainty quantification, and it is practical in the way that it can provide cost-effective estimates for any disambiguation algorithm.
 
 \subsection{Structure of the Paper}
 
-The rest of the paper is organized as follows. In section \ref{sec:data_methods}, \ob{we describe: motivating benchmark datasets, our data collection process for evaluation, the proposed estimators, and our simulation study used to validate the performance of our estimators.} Section \ref{sec:results} then shows the results: our performance estimates and results from the simulation study. Finally, section \ref{sec:discussion} summarizes the paper and discusses future research directions.
+The rest of the paper is organized as follows. In section \ref{sec:data_methods}, {we describe: motivating benchmark datasets, our data collection process for evaluation, the proposed estimators, and our simulation study used to validate the performance of our estimators.} Section \ref{sec:results} then shows the results: our performance estimates and results from the simulation study. Finally, section \ref{sec:discussion} summarizes the paper and discusses future research directions.
 
 \section{Data and Methodology}\label{sec:data_methods}
 
-In this section, \ob{we introduce: motivating datasets used at PatentsView, our hand-disambiguation methodology, our proposed performance metric estimators, and our simulation framework used to compare estimators.} \ob{Note that we focus on \textit{inventor} disambiguation throughout, rather than the related problems of assignee and location disambiguation.}
+In this section, {we introduce: motivating datasets used at PatentsView, our hand-disambiguation methodology, our proposed performance metric estimators, and our simulation framework used to compare estimators.} {Note that we focus on \textit{inventor} disambiguation throughout, rather than the related problems of assignee and location disambiguation.}
 
 \subsection{Benchmark Datasets for Inventor Disambiguation}
 
@@ -146,13 +153,13 @@ Based on an original dataset from \cite{gu2008march}, \cite{Li2014} disambiguate
 
 \subsection{Hand-Disambiguation Protocol}\label{sec:hand-disambiguation}
 
-In addition to the above benchmark datasets, \ob{we have carried out a data collection experiment. This was motivated by the evaluation of the current PatentsView inventor disambiguation using the estimators proposed in section \ref{sec:proposed_estimators}.}
+In addition to the above benchmark datasets, {we have carried out a data collection experiment. This was motivated by the evaluation of the current PatentsView inventor disambiguation using the estimators proposed in section \ref{sec:proposed_estimators}.}
 
 In total, 100 inventors were sampled with probability proportional to their number of granted patents. This was done by sampling inventor mentions uniformly at random and recovering all patents for a given inventor. These inventor mentions were from U.S. patents granted between 1976 and December 31, 2021.
 
-Two AIR staff were tasked with recovering inventors' patents given sampled inventor mentions. To do this, they were assisted by tools available on PatentsView.org. First, given a sampled inventor, the associated predicted cluster was reviewed and wrongly assigned patents were removed. Next, PatentsView's search tools were used to find additional mentions of similarly named inventors. These were reviewed and added to the predicted cluster if appropriate. The two AIR staff had an initial training session, followed by a test run on 10 inventors, before carrying out the rest of the data collection. They worked independently so that two resulting datasets were obtained for the same inventor mentions. In section \ref{sec:results}, these are referred to as the \textbf{Staff 1} and \textbf{Staff 2} datasets.
+Two AIR staff were tasked with recovering inventors' patents given sampled inventor mentions. To do this, they were assisted by tools available on PatentsView.org. First, given a sampled inventor, the associated predicted cluster was reviewed \ob{and, if any, wrongly} assigned patents were removed. Next, PatentsView's search tools were used to find additional mentions of similarly named inventors. These were reviewed \ob{and inventor mentions were added} to the predicted cluster if appropriate. The two AIR staff had an initial training session, followed by a test run on 10 inventors, before carrying out the rest of the data collection. They worked independently so that two resulting datasets were obtained for the same inventor mentions. In section \ref{sec:results}, these are referred to as the \textbf{Staff 1} and \textbf{Staff 2} datasets.
 
-Note that our data collection methodology is biased towards PantentsView's current disambiguation. \ob{Indeed, we do not expect the staff to have found all errors or all missing inventor mentions from predicted clusters. The staff used their best judgment, supported by a thorough search, to resolve inventor mentions.} In cases where no errors were found, the current disambiguation was assumed to be correct. Performance estimates based on this data might therefore be slightly optimistic. \ob{This should be acknowledged when reporting performance estimates to PatentsView.org users. Otherwise, for the purpose of improving the current disambiguation algorithm, the slightly biased data is still appropriate to use. It represents the most visible errors in the current disambiguation rather than the totality of them.}
+Note that our data collection methodology is biased towards PantentsView's current disambiguation. {Indeed, we do not expect the staff to have found all errors or all missing inventor mentions from predicted clusters. The staff used their best judgment, supported by a thorough search, to resolve inventor mentions.} In cases where no errors were found, the current disambiguation was assumed to be correct. Performance estimates based on this data might therefore be slightly optimistic. {This should be acknowledged when reporting performance estimates to PatentsView.org users. Otherwise, for the purpose of improving the current disambiguation \ob{algorithm, this data} is still appropriate to use. It represents the most visible errors in the current disambiguation rather than the totality of them.}
 
 \subsection{Proposed Performance Estimators}\label{sec:proposed_estimators}
 
@@ -168,6 +175,13 @@ First, we define pairwise precision and recall in terms of the number of links b
 \end{equation}
 
 Note that $P = R \, \lvert \mathcal{T} \rvert / \lvert \mathcal{P} \rvert$. As such, precision and recall are equal if and only if the right number of matching pairs is predicted under $\widehat{\mathcal{C}}$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{paper/clustering-example.pdf}
+    \caption{\ob{Example of ground truth clustering $\mathcal{C}$ (represented by boxes with a full border) and predicted clustering $\widehat{\mathcal{C}}$ (rounded boxes with a dotted border) of elements $\mathcal{D} = \{1,2,\dots, 8\}$. Here $\mathcal{T} = \{(1,2), (2,3), (1,3), (4,5), (6,7)\}$ and $\mathcal{P} = \{(1,4), (2,3), (6,7), (7,8), (6,8)\}$. As such, $P = R = 2/5$ in this example.}}
+    \label{fig:my_label}
+\end{figure}
 
 We now provide three alternative representations of precision and recall which correspond to the processes of sampling records, sampling true clusters, and sampling blocks. These will be used to obtain precision and recall estimators under these sampling processes.
 
@@ -232,7 +246,7 @@ We note that an additional symbol $\theta_{n,T}$ is introduced for possible fini
 \begin{align} \label{eq:estimated_variance}
     \widehat{V}(\widehat{E}) = \left( \frac{\bar{B}_n}{\bar{A}_n} \right)^2 \frac{\theta_{n,T}}{n(n-1)} \sum_{s=1}^n \left( \frac{A_s}{\bar{A}_n} - \frac{B_s}{\bar{B}_n}\right)^2.
 \end{align}
-The specific values for $A_s$, $B_s$, and $T$ in each of our representation is described in appendix \ref{sec:appendix}.
+The specific values for $A_s$, $B_s$, and $T$ in each of our representation are described in appendix \ref{sec:appendix}.
 
 %\begin{remark}
 %    There are many ways to define ratio estimators. For small samples and given prior knowledge, Bayesian approaches would be the most appropriate. In this paper, we have opted for the simple estimators since they are sufficient for our application and demonstrate the strength of our methodology.
@@ -332,10 +346,10 @@ Since our two hand-curated datasets (see section \ref{sec:hand-disambiguation}) 
 For the Israeli benchmark dataset, we assumed that a single block of inventor clusters was sampled and used the corresponding estimators defined through \eqref{eq:lemma_3} with a single block sample. Note that no variance estimates can be given for single samples.
 For \cite{Li2014}'s inventors benchmark, given that inventor clusters were originally obtained from a set of inventor curriculum vitae, we assumed that inventor clusters were sampled uniformly at random. As such, we used cluster block estimators with constant probability weights.
 
-\begin{table}[!h]
-    \label{tab:results}
+\begin{table}
     \centering
     \caption{\centering Estimated pairwise precision and recall (with estimated standard deviation) from our four benchmark datasets.}
+    \label{tab:results}
     \begin{tabular}{lccc}
     \toprule
     \textbf{dataset} & \textbf{est. precision ($\hat \sigma$)} & \textbf{est. recall ($\hat \sigma$)} & \textbf{scope} \\
@@ -350,19 +364,19 @@ For \cite{Li2014}'s inventors benchmark, given that inventor clusters were origi
 
 It is interesting to note that there is a small but notable difference in the estimates from the ``Staff 1" and ``Staff 2" datasets. Since these datasets were obtained by two different people from the same sample of inventor mentions, the difference in estimates is due to differences in the hand-disambiguation provided by the two staff. Staff 2 was slightly more conservative than Staff 1 in flagging errors.
 
-Overall, our performance estimates paint the first realistic picture of PatentsView's disambiguation accuracy in practice. Precision is not nearly 100\%, as would be assumed from naively computing precision on benchmark datasets. Rather, there is significant room for improvement. Our hand-curated datasets and data collection methodology provide the necessary basis to investigate errors and plan for improvements to the disambiguation algorithm. 
+Overall, our performance estimates paint the first realistic picture of PatentsView's disambiguation accuracy in practice. Precision is not nearly 100\%, as would be assumed from naively computing precision on benchmark datasets. Rather, there is significant room for improvement. Our hand-curated datasets and data collection methodology provide the necessary basis to investigate errors and plan for improvements to the disambiguation algorithm.
 
 \section{Discussion}\label{sec:discussion}
 
 Motivated by PatentsView's disambiguation, this paper introduced a novel evaluation methodology for entity resolution algorithms. The methodology relies on benchmark datasets containing ground truth clusters and estimators which account for biases inherent to these datasets. For PatentsView, this provided the first representative estimates of disambiguation performance. Furthermore, all data and code used in this paper, as well as other tools developed to facilitate evaluation at PatentsView, are freely available at \hyperref[https://github.com/PatentsView/PatentsView-Evaluation/]{https://github.com/PatentsView/PatentsView-Evaluation/}.
 
-There are two main resulting products for this work. The first is to provide PatentsView data users with an appropriate understanding of PatentsView data quality. Our performance estimates indicate that, despite an overall accurate disambiguation, there is room for improvement and the disambiguation algorithm estimates more links then there truly are. The second product is the set of tools needed for methodological research and model comparison. Given our evaluation methodology, we can now reliably compare algorithms and decide with confidence on changes which will affect users.
+There are two main resulting products for this work. The first is to provide PatentsView data users with an appropriate understanding of PatentsView data quality. Our performance estimates indicate that, despite an overall accurate disambiguation, there is significant room for \ob{improvement. Notably, the current disambiguation over-estimates the number of matching inventor mention pairs.} The second product is the set of tools needed for methodological research and model comparison. Given our evaluation methodology, we can now reliably compare algorithms and decide with confidence on changes which will affect users.
 
-\ob{One important topic for future work is the quantification of uncertainty associated with errors in the hand-disambiguation process. This is challenging problem given the lack of validation information available. Surveying inventors to validate the hand-disambiguation process would be one approach to explore for this. Sensitivity analyses involving potential errors in the hand-disambiguation process could also be informative. We refer the reader to \citep{bailey2017well} for a state-of-the-art hand-labeling study which evaluated human review accuracy.}
+{One important topic for future work is the quantification of uncertainty associated with errors in the hand-disambiguation process. This is challenging problem given the lack of validation information available. Surveying inventors to validate the hand-disambiguation process would be one approach to explore for this. Sensitivity analyses involving potential errors in the hand-disambiguation process could also be informative. We refer the reader to \citep{bailey2017well} for a state-of-the-art hand-labeling study which evaluated human review accuracy.}
 
-\ob{Another important topic for future work is the development of estimators for additional performance metrics. As we have seen in the simulation study, the generically-derived estimators (e.g., from lemma \ref{lemma:cluster_sampling_representation}) do not perform as well as estimators derived using specific properties of pairwise precision and recall (lemma \ref{lemma:block_sampling_representation}). As such, care should be taken to obtain efficient estimators for every metric of interest.}
+{Another important topic for future work is the development of estimators for additional performance metrics. As we have seen in the simulation study, the generically-derived estimators (e.g., from lemma \ref{lemma:cluster_sampling_representation}) do not perform as well as estimators derived using specific properties of pairwise precision and recall (lemma \ref{lemma:block_sampling_representation}). As such, care should be taken to obtain efficient estimators for every metric of interest.}
 
-
+\ob{Finally, we note that the performance of estimators can degrade when dealing with heavy-tailed cluster size distributions. Bias of ratio estimators can be high in this case, especially when using small samples and when sampling clusters uniformly at random rather than with probability proportional to their size. Model-based estimators which exploit known properties of the cluster size distribution could be developed to improve estimation accuracy in this situation.}
 
 
 \section*{Data and Code}
@@ -373,7 +387,7 @@ All data and code used for this paper are available as part of the PatentsView-E
 
 \section*{Author Contributions}
 
-Olivier Binette led the project and wrote the bulk of the manuscript. Youngsoo Baek provided bias adjustment and uncertainty quantification for ratio estimators. Sokhna A York and Emma Hickerson carried out data collection by manually reviewing inventor clusters. Sarvo Madhavan was a technical advisor and contributed to code. Christina Jones was an advisor and project manager. All authors provided input on the manuscript.
+Olivier Binette led the project and wrote most of the manuscript. Sokhna A York and Emma Hickerson carried out data collection by manually reviewing inventor clusters. Youngsoo Baek provided bias adjustment and uncertainty quantification for ratio estimators. Sarvo Madhavan was a technical advisor and contributed to code. Christina Jones was an advisor and project manager. All authors provided input on the manuscript.
 
 
 \bibliographystyle{chicago}
@@ -399,11 +413,11 @@ Note that this is not at all a good disambiguation algorithm. It has $52\%$ prec
 
 In our experiment, we have repeated 5,000 times the following 3-steps process:
 \begin{enumerate}
-    \item First, 100 (resp. 200 and 400) records were sampled and the ground truth clusters associated to them were recovered. This provided a ``benchmark" dataset which was used for evaluation.
+    \item First, 200 records were sampled and the ground truth clusters associated to them were recovered. This provided a ``benchmark" dataset which was used for evaluation.
     \item Second, a trivial precision estimate was obtained by computing precision over the benchmark dataset. That is, predicted cluster assignments were restricted to records which appear in the benchmark data and precision was compared for this. Most often than not, the result was an observation of $100\%$ precision.
     \item Third, we computed our proposed precision estimator which corresponds to lemma \ref{lemma:record_sampling_representation} and the estimator $\widehat P_{\text{block}}$ defined in equation \eqref{eq:P_block}, with blocks corresponding to clusters and with sampling probabilities $p_b \propto \lvert b \rvert$.
 \end{enumerate}
-The distributions of the these two precision estimates over the 5,000 repetitions and for sample of sizes 100, 200, and 400 are shown in figure \ref{fig:precision_problem}. Our proposed estimator is accurate and nearly unbiased, whereas the trivial precision estimates have almost nothing to do with actual algorithmic performance.
+The distributions of the these two precision estimates over the 5,000 repetitions are shown in figure \ref{fig:precision_problem}. Our proposed estimator is accurate and nearly unbiased, whereas the trivial precision estimates have almost nothing to do with actual algorithmic performance.
 
 \subsection{Precision and Recall Estimator Formulas}
 
