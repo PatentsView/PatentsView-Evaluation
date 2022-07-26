@@ -5,7 +5,7 @@ from .utils import read_auto
 
 
 class DisambiguationSummary:
-    def __init__(self, datapath, name=None, id_field="inventor_id"):
+    def __init__(self, data, name=None, id_field="inventor_id"):
         """Report disambiguation summaries.
 
         Args:
@@ -15,9 +15,23 @@ class DisambiguationSummary:
             name (str): Name of the disambiguation algorithm to show in plots.n
             id_field (str): Column name of unique entity identifiers, such as "inventor_id" or "assignee_id". Defaults to "inventor_id".
         """
-        self.name = datapath if name is None else name
-        self._data: pd.DataFrame = read_auto(datapath)
         self.id_field = id_field
+
+        self.name = name
+        if isinstance(data, str):
+            self._data = read_auto(data)
+            if self.name is None:
+                self.name = data
+        else:
+            self._data = data
+            
+        self._validate_data()
+
+        # Lazy initialization
+        self._cluster_size_distribution = None
+        self._cluster_unique_name_distribution = None
+        self._homonymy_rate_distribution = None
+
 
         self._validate_data()
 

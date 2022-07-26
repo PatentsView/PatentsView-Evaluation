@@ -7,8 +7,8 @@ from pv_evaluation.summary.disambiguation_summary import DisambiguationSummary
 
 
 class AssigneeDisambiguationSummary(DisambiguationSummary):
-    def __init__(self, datapath, name):
-        super().__init__(datapath, name, id_field="assignee_id")
+    def __init__(self, data, name):
+        super().__init__(data, name, id_field="assignee_id")
 
         # placeholder for storing various distances
         self.intra_cluster_distances = {}
