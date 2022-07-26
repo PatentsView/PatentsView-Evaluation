@@ -203,11 +203,6 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-preparation">
-   Data Preparation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#rendering-report">
    Rendering Report
   </a>
@@ -234,9 +229,15 @@
   <section id="html-report-template">
 <h1>HTML Report Template<a class="headerlink" href="#html-report-template" title="Permalink to this headline">#</a></h1>
 <p>This document shows the use of <strong>pv_evaluation</strong> to automatically report on a disambiguation’s performance.</p>
-<section id="data-preparation">
-<h2>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">#</a></h2>
-<p>First, we download “rawinventor.tsv”, which is the input of the report.</p>
+<p>The key assumption is that the disambiguation algorithm has resulted in a table with one row for each inventor mention and with the following five columns:</p>
+<ul class="simple">
+<li><p><strong>mention_id</strong>: the inventor mention ID, in the form of US&lt;patent_number&gt;-&lt;sequence_number&gt;, such as “US6584128-0”.</p></li>
+<li><p><strong>patent_id</strong>: the inventor mention’s patent number</p></li>
+<li><p><strong>inventor_id</strong>: the inventor unique id assigned by the disambiguation algorithm</p></li>
+<li><p><strong>name_first</strong>: the inventor mention’s first name</p></li>
+<li><p><strong>name_last</strong>: the inventor mention’s last name</p></li>
+</ul>
+<p>For instance, we can use the “rawinventor.tsv” file from <a class="reference external" href="https://patentsview.org/download/data-download-tables">PatentsView’s bulk data download</a> as containing the current inventor disambiguation. Below, this dataset is downloaded and the “mention-id” field is added from patent numbers and inventor sequence numbers:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -252,15 +253,86 @@
     <span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
     <span class="n">rawinventor</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">del</span><span class="p">(</span><span class="n">rawinventor</span><span class="p">)</span>
+
+<span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">rawinventor</span><span class="p">[[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">,</span> <span class="s2">&quot;inventor_id&quot;</span><span class="p">,</span> <span class="s2">&quot;patent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;name_first&quot;</span><span class="p">,</span> <span class="s2">&quot;name_last&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mention-id</th>
+      <th>inventor_id</th>
+      <th>patent_id</th>
+      <th>name_first</th>
+      <th>name_last</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>US6584128-0</td>
+      <td>fl:ri_ln:kroeger-1</td>
+      <td>6584128</td>
+      <td>Richard</td>
+      <td>Kroeger</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>US4789863-0</td>
+      <td>fl:th_ln:bush-1</td>
+      <td>4789863</td>
+      <td>Thomas A.</td>
+      <td>Bush</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>US11161990-1</td>
+      <td>fl:ma_ln:boudreaux-4</td>
+      <td>11161990</td>
+      <td>Matthew F.</td>
+      <td>Boudreaux</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>US6795487-1</td>
+      <td>fl:ge_ln:whitworth-1</td>
+      <td>6795487</td>
+      <td>Gerald</td>
+      <td>Whitworth</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>USD474886-0</td>
+      <td>fl:th_ln:fleming-3</td>
+      <td>D474886</td>
+      <td>Thomas W.</td>
+      <td>Fleming</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-</section>
 <section id="rendering-report">
 <h2>Rendering Report<a class="headerlink" href="#rendering-report" title="Permalink to this headline">#</a></h2>
-<p>We can now generate the report using <code class="docutils literal notranslate"><span class="pre">render_inventor_disambiguation_report</span></code>. The results are saved to the current folder “.”.</p>
+<p>We can now generate the report using the <code class="docutils literal notranslate"><span class="pre">render_inventor_disambiguation_report()</span></code> function. The results are saved to the current folder “.”.</p>
 <p>Note that, if we wish to compare multiple disambiguations, then we can add more files to the list <code class="docutils literal notranslate"><span class="pre">summary_table_files</span></code>. Each file in this list should be a table with the five columns “mention-id”, “inventor_id”, “patent_id”, “name_first”, and “name_last”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -273,25 +345,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting python3 kernel...Done
-
-Executing &#39;index.ipynb&#39;
-  Cell 1/16...Done
-  Cell 2/16...Done
-  Cell 3/16...Done
-  Cell 4/16...Done
-  Cell 5/16...Done
-  Cell 6/16...Done
-  Cell 7/16...Done
-  Cell 8/16...Done
-  Cell 9/16...Done
-  Cell 10/16...Done
-  Cell 11/16...Done
-  Cell 12/16...Done
-  Cell 13/16...Done
-  Cell 14/16...Done
-  Cell 15/16...Done
-  Cell 16/16...Done
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting python3 kernel...(Notebook read from cache)
 
 <span class=" -Color -Color-Bold">pandoc --output index.html</span>
   to: html

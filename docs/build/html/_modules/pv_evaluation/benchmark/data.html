@@ -180,6 +180,22 @@
 <span class="n">INVENTOR_DATA_MODULE</span> <span class="o">=</span> <span class="s2">&quot;pv_evaluation.data.inventor&quot;</span>
 
 
+<span class="k">def</span> <span class="nf">load_full_benchmark</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load benchmark DataFrame from csv file with columns &quot;unique-id&quot;, &quot;mention-id&quot;, &quot;name_first&quot;, and &quot;name_last&quot;.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module (str): module where file is located.</span>
+<span class="sd">        filename (str): csv filename.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame: pandas Dataframe with columns &quot;unique-id&quot;, &quot;mention-id&quot;, &quot;name_first&quot;, and &quot;name_last&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">resources</span><span class="o">.</span><span class="n">open_text</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;unique-id&quot;</span><span class="p">,</span> <span class="s2">&quot;mention-id&quot;</span><span class="p">,</span> <span class="s2">&quot;name_first&quot;</span><span class="p">,</span> <span class="s2">&quot;name_last&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+
 <span class="k">def</span> <span class="nf">load_unique_id_series</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load disambiguation series from csv file with columns &quot;unique-id&quot; and &quot;mention-id&quot;.</span>
 
