@@ -1,12 +1,25 @@
 try:
     import pandas as pd
+    import wget
+    import zipfile
+    import os
 except:
-    raise Exception("Unable to import pandas. Please install required dependencies.")
+    raise Exception("Unable to import required dependencies.")
 
-data = pd.read_csv("data-raw/israeli-dataset/uniq_pat.csv")
-data["mention-id"] = "US" + data.patent.astype(str).map(lambda x: x.lstrip("0")) + "-" + (data.invseq - 1).astype(str)
+if not os.path.isfile("rawinventor.tsv"):
+    wget.download("https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip")
+    with zipfile.ZipFile("rawinventor.tsv.zip", 'r') as zip_ref:
+        zip_ref.extractall(".")
+    os.remove("rawinventor.tsv.zip")
+
+rawinventor = pd.read_csv("rawinventor.tsv", sep="\t", dtype=str)
+
+data = pd.read_csv("data-raw/israeli-dataset/uniq_pat.csv", dtype=str)
+data["mention-id"] = "US" + data.patent.astype(str).map(lambda x: x.lstrip("0")) + "-" + (data.invseq.astype(int) - 1).astype(str)
 data["unique-id"] = data.id
 
-data[["mention-id", "unique-id", "lastnam", "firstnam", "country"]].to_csv(
-    "pv_evaluation/data/inventor/israeli-inventors-benchmark.csv", index=False
-)
+rawinventor["mention-id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
+data = data.merge(rawinventor[["mention-id", "name_first", "name_last"]], on="mention-id", how="left")
+
+cols = ["mention-id", "unique-id", "name_first", "name_last"]
+data[cols].to_csv("pv_evaluation/data/inventor/israeli-inventors-benchmark.csv", index=False)
