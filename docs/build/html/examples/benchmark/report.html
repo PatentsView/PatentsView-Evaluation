@@ -260,9 +260,63 @@
     <span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
     <span class="n">rawinventor</span><span class="p">[[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">,</span> <span class="s2">&quot;inventor_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;disambiguation.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">del</span><span class="p">(</span><span class="n">rawinventor</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;disambiguation.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mention-id</th>
+      <th>inventor_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>US6584128-0</td>
+      <td>fl:ri_ln:kroeger-1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>US4789863-0</td>
+      <td>fl:th_ln:bush-1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>US11161990-1</td>
+      <td>fl:ma_ln:boudreaux-4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>US6795487-1</td>
+      <td>fl:ge_ln:whitworth-1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>USD474886-0</td>
+      <td>fl:th_ln:fleming-3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 <section id="benchmarks">
@@ -669,7 +723,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/0da82df657f1736c79acc60d8b3aca4c201ad965b9e56c0f65f1dfa332a01c11.svg" src="../../_images/0da82df657f1736c79acc60d8b3aca4c201ad965b9e56c0f65f1dfa332a01c11.svg" /></div>
+<img alt="../../_images/ec48067a6c51442483637fc35ea662af5de323cdd5af93b49917046bddd1b6fe.svg" src="../../_images/ec48067a6c51442483637fc35ea662af5de323cdd5af93b49917046bddd1b6fe.svg" /></div>
 </div>
 <p>Next, we can look at the tables showcasing two types of errors: predicted clusters which should have been <strong>split</strong>, and predicted cluster which should have been <strong>merged</strong>.</p>
 <div class="cell docutils container">
@@ -682,14 +736,14 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
-#T_f66a4_row0_col0, #T_f66a4_row0_col1, #T_f66a4_row1_col0, #T_f66a4_row1_col1, #T_f66a4_row9_col0, #T_f66a4_row9_col1, #T_f66a4_row10_col0, #T_f66a4_row10_col1 {
+#T_6c9fe_row0_col0, #T_6c9fe_row0_col1, #T_6c9fe_row1_col0, #T_6c9fe_row1_col1, #T_6c9fe_row9_col0, #T_6c9fe_row9_col1, #T_6c9fe_row10_col0, #T_6c9fe_row10_col1 {
   background-color: white;
 }
-#T_f66a4_row2_col0, #T_f66a4_row2_col1, #T_f66a4_row3_col0, #T_f66a4_row3_col1, #T_f66a4_row4_col0, #T_f66a4_row4_col1, #T_f66a4_row5_col0, #T_f66a4_row5_col1, #T_f66a4_row6_col0, #T_f66a4_row6_col1, #T_f66a4_row7_col0, #T_f66a4_row7_col1, #T_f66a4_row8_col0, #T_f66a4_row8_col1, #T_f66a4_row11_col0, #T_f66a4_row11_col1, #T_f66a4_row12_col0, #T_f66a4_row12_col1, #T_f66a4_row13_col0, #T_f66a4_row13_col1, #T_f66a4_row14_col0, #T_f66a4_row14_col1 {
+#T_6c9fe_row2_col0, #T_6c9fe_row2_col1, #T_6c9fe_row3_col0, #T_6c9fe_row3_col1, #T_6c9fe_row4_col0, #T_6c9fe_row4_col1, #T_6c9fe_row5_col0, #T_6c9fe_row5_col1, #T_6c9fe_row6_col0, #T_6c9fe_row6_col1, #T_6c9fe_row7_col0, #T_6c9fe_row7_col1, #T_6c9fe_row8_col0, #T_6c9fe_row8_col1, #T_6c9fe_row11_col0, #T_6c9fe_row11_col1, #T_6c9fe_row12_col0, #T_6c9fe_row12_col1, #T_6c9fe_row13_col0, #T_6c9fe_row13_col1, #T_6c9fe_row14_col0, #T_6c9fe_row14_col1 {
   background-color: #c5dcf5;
 }
 </style>
-<table id="T_f66a4_">
+<table id="T_6c9fe_">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
@@ -704,79 +758,79 @@
   </thead>
   <tbody>
     <tr>
-      <th id="T_f66a4_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
-      <td id="T_f66a4_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_f66a4_row0_col1" class="data row0 col1" >472</td>
+      <th id="T_6c9fe_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
+      <td id="T_6c9fe_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
+      <td id="T_6c9fe_row0_col1" class="data row0 col1" >472</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
-      <td id="T_f66a4_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_f66a4_row1_col1" class="data row1 col1" >470</td>
+      <th id="T_6c9fe_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
+      <td id="T_6c9fe_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
+      <td id="T_6c9fe_row1_col1" class="data row1 col1" >470</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
-      <td id="T_f66a4_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_f66a4_row2_col1" class="data row2 col1" >16528</td>
+      <th id="T_6c9fe_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
+      <td id="T_6c9fe_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_6c9fe_row2_col1" class="data row2 col1" >16528</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
-      <td id="T_f66a4_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_f66a4_row3_col1" class="data row3 col1" >16522</td>
+      <th id="T_6c9fe_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
+      <td id="T_6c9fe_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_6c9fe_row3_col1" class="data row3 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
-      <td id="T_f66a4_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_f66a4_row4_col1" class="data row4 col1" >16522</td>
+      <th id="T_6c9fe_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
+      <td id="T_6c9fe_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_6c9fe_row4_col1" class="data row4 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
-      <td id="T_f66a4_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_f66a4_row5_col1" class="data row5 col1" >16522</td>
+      <th id="T_6c9fe_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
+      <td id="T_6c9fe_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_6c9fe_row5_col1" class="data row5 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
-      <td id="T_f66a4_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_f66a4_row6_col1" class="data row6 col1" >16522</td>
+      <th id="T_6c9fe_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
+      <td id="T_6c9fe_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_6c9fe_row6_col1" class="data row6 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
-      <td id="T_f66a4_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_f66a4_row7_col1" class="data row7 col1" >16522</td>
+      <th id="T_6c9fe_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
+      <td id="T_6c9fe_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_6c9fe_row7_col1" class="data row7 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
-      <td id="T_f66a4_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_f66a4_row8_col1" class="data row8 col1" >16522</td>
+      <th id="T_6c9fe_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
+      <td id="T_6c9fe_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_6c9fe_row8_col1" class="data row8 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
-      <td id="T_f66a4_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_f66a4_row9_col1" class="data row9 col1" >307</td>
+      <th id="T_6c9fe_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
+      <td id="T_6c9fe_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
+      <td id="T_6c9fe_row9_col1" class="data row9 col1" >307</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
-      <td id="T_f66a4_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_f66a4_row10_col1" class="data row10 col1" >306</td>
+      <th id="T_6c9fe_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
+      <td id="T_6c9fe_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
+      <td id="T_6c9fe_row10_col1" class="data row10 col1" >306</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
-      <td id="T_f66a4_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_f66a4_row11_col1" class="data row11 col1" >2910</td>
+      <th id="T_6c9fe_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
+      <td id="T_6c9fe_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_6c9fe_row11_col1" class="data row11 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
-      <td id="T_f66a4_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_f66a4_row12_col1" class="data row12 col1" >2910</td>
+      <th id="T_6c9fe_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
+      <td id="T_6c9fe_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_6c9fe_row12_col1" class="data row12 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
-      <td id="T_f66a4_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_f66a4_row13_col1" class="data row13 col1" >2910</td>
+      <th id="T_6c9fe_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
+      <td id="T_6c9fe_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_6c9fe_row13_col1" class="data row13 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_f66a4_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
-      <td id="T_f66a4_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_f66a4_row14_col1" class="data row14 col1" >2910</td>
+      <th id="T_6c9fe_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
+      <td id="T_6c9fe_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_6c9fe_row14_col1" class="data row14 col1" >2910</td>
     </tr>
   </tbody>
 </table>
