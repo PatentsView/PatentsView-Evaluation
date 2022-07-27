@@ -15,11 +15,11 @@ if not os.path.isfile("rawinventor.tsv"):
 rawinventor = pd.read_csv("rawinventor.tsv", sep="\t", dtype=str)
 
 data = pd.read_csv("data-raw/ALS-dataset/als-inventors.csv", dtype=str)
-data.rename(columns={"inventor-id":"unique-id"}, inplace=True)
-data = data[~data["mention-id"].duplicated(keep='first')]
+data.rename(columns={"inventor-id":"unique_id", "mention-id":"mention_id"}, inplace=True)
+data = data[~data["mention_id"].duplicated(keep='first')]
 
-rawinventor["mention-id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
-data = data.merge(rawinventor[["mention-id", "name_first", "name_last"]], on="mention-id", how="left")
+rawinventor["mention_id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
+data = data.merge(rawinventor[["mention_id", "name_first", "name_last"]], on="mention_id", how="left")
 
-cols = ["mention-id", "unique-id", "name_first", "name_last"]
+cols = ["mention_id", "unique_id", "name_first", "name_last"]
 data[cols].to_csv("pv_evaluation/data/inventor/als-inventors.csv", index=False)

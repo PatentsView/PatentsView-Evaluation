@@ -12,5 +12,5 @@ if not os.path.isfile("output/rawinventor.tsv"):
     os.remove("rawinventor.tsv.zip")
 
 rawinventor = pd.read_csv("rawinventor.tsv", sep="\t")
-rawinventor["mention-id"] = "US" + rawinventor.patent_id.astype(str) + "-" + rawinventor.sequence.astype(str)
-rawinventor[["mention-id", "inventor_id"]].to_csv("output/disambiguation.tsv", sep="\t", index=False)
+rawinventor["mention_id"] = "US" + rawinventor.patent_id.astype(str) + "-" + rawinventor.sequence.astype(str)
+rawinventor[["mention_id", "inventor_id"]].to_csv("output/disambiguation.tsv", sep="\t", index=False)

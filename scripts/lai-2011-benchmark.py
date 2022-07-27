@@ -16,11 +16,11 @@ rawinventor = pd.read_csv("rawinventor.tsv", sep="\t", dtype=str)
 
 lai_benchmark = pd.read_csv("data-raw/Lai-2011-data/benchmark_with_sequence.tsv", sep="\t", dtype=str, header=1)
 
-lai_benchmark["mention-id"] = "US" + lai_benchmark.Patent + "-" + lai_benchmark.Sequence
-lai_benchmark["unique-id"] = lai_benchmark.UniqueID
+lai_benchmark["mention_id"] = "US" + lai_benchmark.Patent + "-" + lai_benchmark.Sequence
+lai_benchmark["unique_id"] = lai_benchmark.UniqueID
 
-rawinventor["mention-id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
-lai_benchmark = lai_benchmark.merge(rawinventor[["mention-id", "name_first", "name_last"]], on="mention-id", how="left")
+rawinventor["mention_id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
+lai_benchmark = lai_benchmark.merge(rawinventor[["mention_id", "name_first", "name_last"]], on="mention_id", how="left")
 
-cols = ["mention-id", "unique-id", "name_first", "name_last"]
+cols = ["mention_id", "unique_id", "name_first", "name_last"]
 lai_benchmark[cols].to_csv("pv_evaluation/data/inventor/lai-2011-benchmark.csv", index=False)

@@ -12,10 +12,10 @@ from pv_evaluation.estimators import pairwise_recall_estimator
 
 rates = [x.named["rate"] for x in findall("prediction_rate_{rate}.tsv", "".join(os.listdir("output/")))]
 predictions = {
-    rate: pd.read_csv(f"output/prediction_rate_{rate}.tsv", sep="\t").set_index("mention-id")["inventor_id"] for rate in rates
+    rate: pd.read_csv(f"output/prediction_rate_{rate}.tsv", sep="\t").set_index("mention_id")["inventor_id"] for rate in rates
 }
 
-reference = pd.read_csv("output/disambiguation.tsv", sep="\t").set_index("mention-id")["inventor_id"]
+reference = pd.read_csv("output/disambiguation.tsv", sep="\t").set_index("mention_id")["inventor_id"]
 
 estimators = {
     "R_naive": lambda ref, benchmark: pairwise_recall(ref, benchmark),
