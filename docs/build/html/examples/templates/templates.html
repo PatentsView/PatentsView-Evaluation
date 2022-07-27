@@ -237,7 +237,7 @@
 <li><p><strong>name_first</strong>: the inventor mention’s first name</p></li>
 <li><p><strong>name_last</strong>: the inventor mention’s last name</p></li>
 </ul>
-<p>For instance, we can use the “rawinventor.tsv” file from <a class="reference external" href="https://patentsview.org/download/data-download-tables">PatentsView’s bulk data download</a> as containing the current inventor disambiguation. Below, this dataset is downloaded and the “mention-id” field is added from patent numbers and inventor sequence numbers:</p>
+<p>For instance, we can use the “rawinventor.tsv” file from <a class="reference external" href="https://patentsview.org/download/data-download-tables">PatentsView’s bulk data download</a> as containing the current inventor disambiguation. Below, this dataset is downloaded and the “mention_id” field is added from patent numbers and inventor sequence numbers:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -251,11 +251,11 @@
         <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
     <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv.zip&quot;</span><span class="p">)</span>
     <span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
     <span class="n">rawinventor</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">rawinventor</span><span class="p">[[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">,</span> <span class="s2">&quot;inventor_id&quot;</span><span class="p">,</span> <span class="s2">&quot;patent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;name_first&quot;</span><span class="p">,</span> <span class="s2">&quot;name_last&quot;</span><span class="p">]]</span>
+<span class="n">rawinventor</span><span class="p">[[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="s2">&quot;inventor_id&quot;</span><span class="p">,</span> <span class="s2">&quot;patent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;name_first&quot;</span><span class="p">,</span> <span class="s2">&quot;name_last&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -278,7 +278,7 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>mention-id</th>
+      <th>mention_id</th>
       <th>inventor_id</th>
       <th>patent_id</th>
       <th>name_first</th>
@@ -333,7 +333,7 @@
 <section id="rendering-report">
 <h2>Rendering Report<a class="headerlink" href="#rendering-report" title="Permalink to this headline">#</a></h2>
 <p>We can now generate the report using the <code class="docutils literal notranslate"><span class="pre">render_inventor_disambiguation_report()</span></code> function. The results are saved to the current folder “.”.</p>
-<p>Note that, if we wish to compare multiple disambiguations, then we can add more files to the list <code class="docutils literal notranslate"><span class="pre">summary_table_files</span></code>. Each file in this list should be a table with the five columns “mention-id”, “inventor_id”, “patent_id”, “name_first”, and “name_last”.</p>
+<p>Note that, if we wish to compare multiple disambiguations, then we can add more files to the list <code class="docutils literal notranslate"><span class="pre">summary_table_files</span></code>. Each file in this list should be a table with the five columns “mention_id”, “inventor_id”, “patent_id”, “name_first”, and “name_last”.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.templates</span> <span class="kn">import</span> <span class="n">render_inventor_disambiguation_report</span>
@@ -345,7 +345,31 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting python3 kernel...(Notebook read from cache)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting python3 kernel...Done
+
+Executing &#39;index.ipynb&#39;
+  Cell 1/22...Done
+  Cell 2/22...Done
+  Cell 3/22...Done
+  Cell 4/22...Done
+  Cell 5/22...Done
+  Cell 6/22...Done
+  Cell 7/22...Done
+  Cell 8/22...Done
+  Cell 9/22...Done
+  Cell 10/22...Done
+  Cell 11/22...Done
+  Cell 12/22...Done
+  Cell 13/22...Done
+  Cell 14/22...Done
+  Cell 15/22...Done
+  Cell 16/22...Done
+  Cell 17/22...Done
+  Cell 18/22...Done
+  Cell 19/22...Done
+  Cell 20/22...Done
+  Cell 21/22...Done
+  Cell 22/22...Done
 
 <span class=" -Color -Color-Bold">pandoc --output index.html</span>
   to: html

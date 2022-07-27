@@ -20,7 +20,7 @@ for rate in rates:
     prediction.to_csv(f"output/prediction_rate_{rate}.tsv", sep="\t")
     ground_truth.append(
         pairwise_precision_recall(
-            prediction.set_index("mention-id")["inventor_id"], reference.set_index("mention-id")["inventor_id"]
+            prediction.set_index("mention_id")["inventor_id"], reference.set_index("mention_id")["inventor_id"]
         )
     )
 

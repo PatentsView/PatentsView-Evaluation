@@ -15,11 +15,11 @@ if not os.path.isfile("rawinventor.tsv"):
 rawinventor = pd.read_csv("rawinventor.tsv", sep="\t", dtype=str)
 
 data = pd.read_csv("data-raw/patentsview-2015-workshop-datasets/eval/eval_ens.txt", sep="\t", header=None, dtype=str)
-data.columns = ["mention-id", "unique-id"]
-data["mention-id"] = "US" + data["mention-id"]
+data.columns = ["mention_id", "unique_id"]
+data["mention_id"] = "US" + data["mention_id"]
 
-rawinventor["mention-id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
-data = data.merge(rawinventor[["mention-id", "name_first", "name_last"]], on="mention-id", how="left")
+rawinventor["mention_id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
+data = data.merge(rawinventor[["mention_id", "name_first", "name_last"]], on="mention_id", how="left")
 
-cols = ["mention-id", "unique-id", "name_first", "name_last"]
+cols = ["mention_id", "unique_id", "name_first", "name_last"]
 data[cols].to_csv("pv_evaluation/data/inventor/ens-inventors.csv", index=False)

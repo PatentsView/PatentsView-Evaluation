@@ -18,11 +18,11 @@ data = pd.read_csv("data-raw/patentsview-inventor/gold-labels.txt", sep="\t", he
 
 mention_numbers = data[0].str.split("-").values
 
-data["mention-id"] = list(map(lambda x: "US" + x[0].lstrip("0") + "-" + x[1], mention_numbers))
-data["unique-id"] = data[1]
+data["mention_id"] = list(map(lambda x: "US" + x[0].lstrip("0") + "-" + x[1], mention_numbers))
+data["unique_id"] = data[1]
 
-rawinventor["mention-id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
-data = data.merge(rawinventor[["mention-id", "name_first", "name_last"]], on="mention-id", how="left")
+rawinventor["mention_id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
+data = data.merge(rawinventor[["mention_id", "name_first", "name_last"]], on="mention_id", how="left")
 
-cols = ["mention-id", "unique-id", "name_first", "name_last"]
+cols = ["mention_id", "unique_id", "name_first", "name_last"]
 data[cols].to_csv("pv_evaluation/data/inventor/patentsview-inventors-benchmark.csv", index=False)
