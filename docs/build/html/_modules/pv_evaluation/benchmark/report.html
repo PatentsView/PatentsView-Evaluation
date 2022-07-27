@@ -220,7 +220,7 @@
     <span class="sd">&quot;&quot;&quot;Compute performance evaluation metrics on benchmark datasets.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with &quot;mention-id&quot; index and cluster assignment values).</span>
+<span class="sd">        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
 <span class="sd">        metrics (dict, optional): dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.</span>
 <span class="sd">        benchmarks (dict, optional): benchmark datasets loading functions to use from the benchmark submodule. Defaults to `DEFAULT_BENCHMARK`.</span>
 
@@ -263,7 +263,7 @@
     <span class="sd">&quot;&quot;&quot;Bar plot of performance evaluation metrics on benchmark datasets.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with &quot;mention-id&quot; index and cluster assignment values).</span>
+<span class="sd">        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
 <span class="sd">        metrics (dict, optional): dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.</span>
 <span class="sd">        benchmarks (dict, optional): benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to `DEFAULT_BENCHMARK`.</span>
 
@@ -306,9 +306,9 @@
     <span class="sd">&quot;&quot;&quot;Get table of cluster assignment errors on the given benchmark.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with &quot;mention-id&quot; index and cluster assignment values).</span>
+<span class="sd">        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
 <span class="sd">        benchmark (Series): reference disambiguation Series.</span>
-<span class="sd">        join_with (DataFrame, optional): DataFrame to join based on &quot;mention-id&quot;. Defaults to None.</span>
+<span class="sd">        join_with (DataFrame, optional): DataFrame to join based on &quot;mention_id&quot;. Defaults to None.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        DataFrame: DataFrame containing erroneous cluster assignments according to the given benchmark.</span>
@@ -332,9 +332,9 @@
     <span class="sd">&quot;&quot;&quot;Get table to inspect missing cluster links given a benchmark dataset.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with &quot;mention-id&quot; index and cluster assignment values).</span>
+<span class="sd">        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
 <span class="sd">        benchmark (Series): reference disambiguation Series.</span>
-<span class="sd">        join_with (DataFrame, optional): DataFrame to join based on &quot;mention-id&quot;. Defaults to None.</span>
+<span class="sd">        join_with (DataFrame, optional): DataFrame to join based on &quot;mention_id&quot;. Defaults to None.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        DataFrame: DataFrame containing missing cluster links according to the given benchmark.</span>

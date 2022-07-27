@@ -19,12 +19,12 @@ def read_auto(filename):
 
 def read_disambiguation(filename):
     df = read_auto(filename)
-    df.set_index("mention-id", inplace=True)
+    df.set_index("mention_id", inplace=True)
     
     return df["inventor_id"]
 
 disambiguations = {filename: read_disambiguation(filename) for filename in {{ summary_table_files }} }
-dataframes = {filename: read_auto(filename).set_index("mention-id")[["name_first", "name_last"]] for filename in {{ summary_table_files }} }
+dataframes = {filename: read_auto(filename).set_index("mention_id")[["name_first", "name_last"]] for filename in {{ summary_table_files }} }
 ```
 
 # Benchmark Evaluation
@@ -54,6 +54,9 @@ from pv_evaluation.benchmark import (
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark,
     load_lai_2011_inventors_benchmark,
+    load_als_inventors_benchmark,
+    load_ens_inventors_benchmark,
+    load_harvard_inventors_benchmark,
     inspect_clusters_to_split,
     inspect_clusters_to_merge,
     style_cluster_inspection,
@@ -103,6 +106,42 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_lai_2011_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="prediction")
+```
+
+#### ALS Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_split(
+        disambiguations["{{ filename }}"], 
+        load_als_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="prediction")
+```
+
+#### ENS Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_split(
+        disambiguations["{{ filename }}"], 
+        load_ens_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="prediction")
+```
+
+#### Harvard Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_split(
+        disambiguations["{{ filename }}"], 
+        load_harvard_inventors_benchmark(),
         join_with=dataframes["{{ filename }}"]), 
         by="prediction")
 ```
@@ -160,6 +199,42 @@ style_and_display(
         join_with=dataframes["{{ filename }}"]), 
         by="reference")
 ``` 
+
+#### ALS Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_merge(
+        disambiguations["{{ filename }}"], 
+        load_als_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="reference")
+```
+
+#### ENS Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_merge(
+        disambiguations["{{ filename }}"], 
+        load_ens_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="reference")
+```
+
+#### Harvard Benchmark
+
+```{python}
+#| column: page
+style_and_display(
+    inspect_clusters_to_merge(
+        disambiguations["{{ filename }}"], 
+        load_harvard_inventors_benchmark(),
+        join_with=dataframes["{{ filename }}"]), 
+        by="reference")
+```
 
 :::
 

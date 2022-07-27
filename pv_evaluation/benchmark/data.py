@@ -5,36 +5,36 @@ INVENTOR_DATA_MODULE = "pv_evaluation.data.inventor"
 
 
 def load_full_benchmark(module, filename):
-    """Load benchmark DataFrame from csv file with columns "unique-id", "mention-id", "name_first", and "name_last".
+    """Load benchmark DataFrame from csv file with columns "unique_id", "mention_id", "name_first", and "name_last".
 
     Args:
         module (str): module where file is located.
         filename (str): csv filename.
 
     Returns:
-        DataFrame: pandas Dataframe with columns "unique-id", "mention-id", "name_first", and "name_last".
+        DataFrame: pandas Dataframe with columns "unique_id", "mention_id", "name_first", and "name_last".
     """
     with resources.open_text(module, filename) as f:
         data = pd.read_csv(f)
 
-    cols = ["unique-id", "mention-id", "name_first", "name_last"]
+    cols = ["unique_id", "mention_id", "name_first", "name_last"]
     return data[cols]
 
 def load_unique_id_series(module, filename):
-    """Load disambiguation series from csv file with columns "unique-id" and "mention-id".
+    """Load disambiguation series from csv file with columns "unique_id" and "mention_id".
 
     Args:
         module (str): module where file is located.
         filename (str): csv filename.
 
     Returns:
-        Series: pandas Series named "unique-id" and with "mention-id" as an index.
+        Series: pandas Series named "unique_id" and with "mention_id" as an index.
     """
     with resources.open_text(module, filename) as f:
         data = pd.read_csv(f)
 
-    data.set_index("mention-id", inplace=True)
-    return data["unique-id"]
+    data.set_index("mention_id", inplace=True)
+    return data["unique_id"]
 
 
 def load_lai_2011_inventors_benchmark():

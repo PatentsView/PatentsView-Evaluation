@@ -257,8 +257,8 @@
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;disambiguation.tsv&quot;</span><span class="p">):</span>
     <span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-    <span class="n">rawinventor</span><span class="p">[[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">,</span> <span class="s2">&quot;inventor_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;disambiguation.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">rawinventor</span><span class="p">[[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="s2">&quot;inventor_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;disambiguation.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">del</span><span class="p">(</span><span class="n">rawinventor</span><span class="p">)</span>
 
 <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;disambiguation.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -284,7 +284,7 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>mention-id</th>
+      <th>mention_id</th>
       <th>inventor_id</th>
     </tr>
   </thead>
@@ -331,7 +331,7 @@
 <span class="p">)</span>
 
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;disambiguation.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention-id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">]</span>
 
 <span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span>
@@ -751,7 +751,7 @@
       <th class="col_heading level0 col1" >reference</th>
     </tr>
     <tr>
-      <th class="index_name level0" >mention-id</th>
+      <th class="index_name level0" >mention_id</th>
       <th class="blank col0" >&nbsp;</th>
       <th class="blank col1" >&nbsp;</th>
     </tr>
@@ -839,8 +839,8 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">rawinventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention-id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">rawinventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">inspect_clusters_to_merge</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">load_israeli_inventors_benchmark</span><span class="p">(),</span> <span class="n">join_with</span><span class="o">=</span><span class="n">rawinventor</span><span class="p">[[</span><span class="s2">&quot;name_first&quot;</span><span class="p">,</span> <span class="s2">&quot;name_last&quot;</span><span class="p">]])</span>
 </pre></div>
@@ -871,7 +871,7 @@
       <th>name_last</th>
     </tr>
     <tr>
-      <th>mention-id</th>
+      <th>mention_id</th>
       <th></th>
       <th></th>
       <th></th>

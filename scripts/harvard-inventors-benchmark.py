@@ -16,11 +16,11 @@ rawinventor = pd.read_csv("rawinventor.tsv", sep="\t", dtype=str)
 
 data = pd.read_csv("data-raw/harvard-inventors-benchmark/harvard-benchmark-with-reviewed-sequence-number.csv", dtype=str)
 
-data["mention-id"] = "US" + data.patent_number + "-" + data.sequence
-data["unique-id"] = data["inventor_id"]
+data["mention_id"] = "US" + data.patent_number + "-" + data.sequence
+data["unique_id"] = data["inventor_id"]
 
-rawinventor["mention-id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
-data = data.merge(rawinventor[["mention-id", "name_first", "name_last"]], on="mention-id", how="left")
+rawinventor["mention_id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
+data = data.merge(rawinventor[["mention_id", "name_first", "name_last"]], on="mention_id", how="left")
 
-cols = ["mention-id", "unique-id", "name_first", "name_last"]
+cols = ["mention_id", "unique_id", "name_first", "name_last"]
 data[cols].to_csv("pv_evaluation/data/inventor/harvard-inventors-benchmark.csv", index=False)

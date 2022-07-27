@@ -279,9 +279,9 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joined</span><span class="p">[</span><span class="s2">&quot;mention-id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">joined</span><span class="o">.</span><span class="n">patent_id</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">joined</span><span class="o">.</span><span class="n">sequence</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joined</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">joined</span><span class="o">.</span><span class="n">patent_id</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">joined</span><span class="o">.</span><span class="n">sequence</span>
 <span class="n">joined</span> <span class="o">=</span> <span class="n">joined</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;date &gt;= 1975 and date &lt;= 2010&#39;</span><span class="p">)</span>
-<span class="n">current_disambiguation</span> <span class="o">=</span> <span class="n">joined</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention-id&quot;</span><span class="p">)[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">]</span>
+<span class="n">current_disambiguation</span> <span class="o">=</span> <span class="n">joined</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>

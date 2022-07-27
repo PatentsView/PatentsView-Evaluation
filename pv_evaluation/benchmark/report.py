@@ -44,7 +44,7 @@ def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
     """Compute performance evaluation metrics on benchmark datasets.
 
     Args:
-        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
+        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
         metrics (dict, optional): dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.
         benchmarks (dict, optional): benchmark datasets loading functions to use from the benchmark submodule. Defaults to `DEFAULT_BENCHMARK`.
 
@@ -87,7 +87,7 @@ def inventor_benchmark_plot(disambiguations, metrics=None, benchmarks=None, face
     """Bar plot of performance evaluation metrics on benchmark datasets.
 
     Args:
-        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
+        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
         metrics (dict, optional): dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.
         benchmarks (dict, optional): benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to `DEFAULT_BENCHMARK`.
 
@@ -130,9 +130,9 @@ def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
     """Get table of cluster assignment errors on the given benchmark.
 
     Args:
-        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
+        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
         benchmark (Series): reference disambiguation Series.
-        join_with (DataFrame, optional): DataFrame to join based on "mention-id". Defaults to None.
+        join_with (DataFrame, optional): DataFrame to join based on "mention_id". Defaults to None.
 
     Returns:
         DataFrame: DataFrame containing erroneous cluster assignments according to the given benchmark.
@@ -156,9 +156,9 @@ def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None):
     """Get table to inspect missing cluster links given a benchmark dataset.
 
     Args:
-        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention-id" index and cluster assignment values).
+        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
         benchmark (Series): reference disambiguation Series.
-        join_with (DataFrame, optional): DataFrame to join based on "mention-id". Defaults to None.
+        join_with (DataFrame, optional): DataFrame to join based on "mention_id". Defaults to None.
 
     Returns:
         DataFrame: DataFrame containing missing cluster links according to the given benchmark.
