@@ -8,7 +8,7 @@ Cluster error tabs (predicted cluster errors and reference cluster errors) allow
 
 To investigate predicted cluster errors, sort the table by `prediction` id and look for mismatching `reference` ids within predicted clusters.
 
-**Reference cluster errors are about predicted clusters which should be merged together, according to the reference data.
+**Reference cluster errors** are about predicted clusters which should be merged together, according to the reference data.
 
 To investigate reference cluster errors, sort the table by `reference` id and look for mismatching `cluster` ids within reference clusters.
 
