@@ -56,7 +56,6 @@ from pv_evaluation.benchmark import (
     load_lai_2011_inventors_benchmark,
     load_als_inventors_benchmark,
     load_ens_inventors_benchmark,
-    load_harvard_inventors_benchmark,
     inspect_clusters_to_split,
     inspect_clusters_to_merge,
     style_cluster_inspection,
@@ -130,18 +129,6 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_ens_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
-        by="prediction")
-```
-
-#### Harvard Benchmark
-
-```{python}
-#| column: page
-style_and_display(
-    inspect_clusters_to_split(
-        disambiguations["{{ filename }}"], 
-        load_harvard_inventors_benchmark(),
         join_with=dataframes["{{ filename }}"]), 
         by="prediction")
 ```
@@ -220,18 +207,6 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_ens_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
-        by="reference")
-```
-
-#### Harvard Benchmark
-
-```{python}
-#| column: page
-style_and_display(
-    inspect_clusters_to_merge(
-        disambiguations["{{ filename }}"], 
-        load_harvard_inventors_benchmark(),
         join_with=dataframes["{{ filename }}"]), 
         by="reference")
 ```
