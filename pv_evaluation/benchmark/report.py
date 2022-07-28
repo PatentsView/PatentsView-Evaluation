@@ -17,7 +17,6 @@ from pv_evaluation.benchmark import (
     load_lai_2011_inventors_benchmark,
     load_als_inventors_benchmark,
     load_ens_inventors_benchmark,
-    load_harvard_inventors_benchmark,
 )
 
 # Default benchmarks to run.
@@ -27,7 +26,6 @@ DEFAULT_BENCHMARKS = {
     "lai-benchmark": load_lai_2011_inventors_benchmark,
     "als-benchmark": load_als_inventors_benchmark,
     "ens-benchmark": load_ens_inventors_benchmark,
-    "harvard-benchmark": load_harvard_inventors_benchmark,
 }
 DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,

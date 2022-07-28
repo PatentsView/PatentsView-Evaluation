@@ -61,7 +61,6 @@ load_israeli_inventors_benchmark()
 load_patentsview_inventors_benchmark()
 load_als_inventors_benchmark()
 load_ens_inventors_benchmark()
-load_harvard_inventors_benchmark()
 ```
 
 ## Contributing
