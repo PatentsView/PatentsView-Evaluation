@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
@@ -53,7 +54,7 @@
     <link rel="next" title="Examples" href="examples.html" />
     <link rel="prev" title="README" href="readme.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None">
+<meta name="docsearch:language" content="en">
   </head>
   
   
@@ -215,22 +216,22 @@
               <article class="bd-article" role="main">
                 
   <section id="key-concepts">
-<h1>Key Concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">#</a></h1>
+<h1>Key Concepts<a class="headerlink" href="#key-concepts" title="Permalink to this heading">#</a></h1>
 <p>This page highlights key concepts and terminology used throughout the package.</p>
 <section id="patent-number">
-<h2>Patent Number<a class="headerlink" href="#patent-number" title="Permalink to this headline">#</a></h2>
+<h2>Patent Number<a class="headerlink" href="#patent-number" title="Permalink to this heading">#</a></h2>
 <p>Patent numbers are assigned by the USPTO following the format described <code class="docutils literal notranslate"><span class="pre">here</span> <span class="pre">&lt;https://www.uspto.gov/patents/apply/applying-online/patent-number&gt;</span></code>_. Note that there are no leading zeroes in patent nubmers.</p>
 </section>
 <section id="mention-id">
-<h2>Mention ID<a class="headerlink" href="#mention-id" title="Permalink to this headline">#</a></h2>
+<h2>Mention ID<a class="headerlink" href="#mention-id" title="Permalink to this heading">#</a></h2>
 <p>An inventor’s mention ID is a reference to a specific author on a specific patent. It takes the format <code class="docutils literal notranslate"><span class="pre">US&lt;patent_number&gt;-&lt;sequence_number&gt;</span></code>, such as US12345-0, where <code class="docutils literal notranslate"><span class="pre">patent_number</span></code> is the patent number and where <code class="docutils literal notranslate"><span class="pre">sequence_number</span></code> is the authorship number (0 for the first author, 1 for the second author, etc).</p>
 </section>
 <section id="cluster">
-<h2>Cluster<a class="headerlink" href="#cluster" title="Permalink to this headline">#</a></h2>
+<h2>Cluster<a class="headerlink" href="#cluster" title="Permalink to this heading">#</a></h2>
 <p>An inventor cluster is a set of mention IDs thought to refer to the same person. There are <em>predicted</em> clusters which are provided by disambiguation algorithms, and there are <em>true</em> clusters which are <em>ground-truth</em> sets of mentions for inventors.</p>
 </section>
 <section id="membership-vector">
-<h2>Membership Vector<a class="headerlink" href="#membership-vector" title="Permalink to this headline">#</a></h2>
+<h2>Membership Vector<a class="headerlink" href="#membership-vector" title="Permalink to this heading">#</a></h2>
 <p>A clustering is typically represented as a <em>membership vector</em>. This is a map between mention IDs and the clusters to which they are associated.</p>
 <p>In this package, membership vectors are represented by pandas Series with mention ID as index and cluster assignment as values. All clusterings and disambiguation results follow this format.</p>
 <p>Below is an example of a membership vector for a subset of inventor mention IDs. The values appearing in the right column (cluster IDs) are arbitrary; the only convention is that mention IDs corresponding to the same inventor (belonging to the same cluster) should have the same cluster ID.</p>
@@ -308,7 +309,7 @@ Name: unique_id, Length: 9156, dtype: int64
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   

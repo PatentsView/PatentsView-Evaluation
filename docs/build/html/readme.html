@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
@@ -53,7 +54,7 @@
     <link rel="next" title="Key Concepts" href="concepts.html" />
     <link rel="prev" title="PatentsView-Evaluation’s documentation" href="index.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None">
+<meta name="docsearch:language" content="en">
   </head>
   
   
@@ -278,11 +279,11 @@
               <article class="bd-article" role="main">
                 
   <section id="readme">
-<h1>README<a class="headerlink" href="#readme" title="Permalink to this headline">#</a></h1>
+<h1>README<a class="headerlink" href="#readme" title="Permalink to this heading">#</a></h1>
 <a class="reference external image-reference" href="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml"><img alt="Python package" src="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/python-package.yml/badge.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment"><img alt="pages-build-deployment" src="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment/badge.svg" /></a>
 <section id="patentsview-evaluation-benchmark-disambiguation-algorithms">
-<h2>📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms<a class="headerlink" href="#patentsview-evaluation-benchmark-disambiguation-algorithms" title="Permalink to this headline">#</a></h2>
+<h2>📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms<a class="headerlink" href="#patentsview-evaluation-benchmark-disambiguation-algorithms" title="Permalink to this heading">#</a></h2>
 <p><strong>pv_evaluation</strong> is a Python package for the evaluation and benchmarking of <a class="reference external" href="https://patentsview.org/">PatentsView</a> disambiguation algorithms. It has the following submodules:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.summary.html">**summary**</a>: Disambiguation summary statistics.</p></li>
@@ -295,7 +296,7 @@
 <p>The <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html">Examples</a> page provides real-world examples of the use of <strong>pv_evaluation</strong> submodules. Please refer to the <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html">project website</a> for full documentation.</p>
 </section>
 <section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h2>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
 <p>Install <strong>pv_evaluation</strong> in editable mode using</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install git+https://github.com/PatentsView/PatentsView-Evaluation.git@release
 </pre></div>
@@ -303,11 +304,11 @@
 <p>Rendering reports requires the installation of quarto from <a class="reference external" href="https://quarto.org/docs/get-started/">quarto.org</a>.</p>
 </section>
 <section id="id1">
-<h2>Examples<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<h2>Examples<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>Note: Working with the full patent data requires large amounts of memory (we suggest having 64GB RAM available).</p>
 <p>See the examples page for complete reproducible examples. The examples below only provide a quick overview of <strong>pv_evaluation</strong>‘s functionality.</p>
 <section id="metrics-and-summary-statistics">
-<h3>Metrics and Summary Statistics<a class="headerlink" href="#metrics-and-summary-statistics" title="Permalink to this headline">#</a></h3>
+<h3>Metrics and Summary Statistics<a class="headerlink" href="#metrics-and-summary-statistics" title="Permalink to this heading">#</a></h3>
 <p>Generate an html report summarizing properties of the current disambiguation algorithm (uses the <code class="docutils literal notranslate"><span class="pre">rawinventor.tsv</span></code> data file from PatentsView’s <a class="reference external" href="https://patentsview.org/download/data-download-tables">downloads page</a>):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.templates</span> <span class="kn">import</span> <span class="n">render_inventor_disambiguation_report</span>
 
@@ -316,7 +317,7 @@
 </div>
 </section>
 <section id="estimate-precision-and-recall">
-<h3>Estimate Precision and Recall<a class="headerlink" href="#estimate-precision-and-recall" title="Permalink to this headline">#</a></h3>
+<h3>Estimate Precision and Recall<a class="headerlink" href="#estimate-precision-and-recall" title="Permalink to this heading">#</a></h3>
 <p>Estimate precision and recall from clusters sampled with probability proportional to their size:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.estimators</span> <span class="kn">import</span> <span class="n">pairwise_precision_estimator</span>
 <span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_lai_2011_inventors_benchmark</span>
@@ -328,7 +329,7 @@
 </div>
 </section>
 <section id="access-benchmark-datasets">
-<h3>Access Benchmark Datasets<a class="headerlink" href="#access-benchmark-datasets" title="Permalink to this headline">#</a></h3>
+<h3>Access Benchmark Datasets<a class="headerlink" href="#access-benchmark-datasets" title="Permalink to this heading">#</a></h3>
 <p>Access PatentsView-Evaluation’s large collection of benchmark datasets:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -343,9 +344,9 @@
 </section>
 </section>
 <section id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">#</a></h2>
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">#</a></h2>
 <section id="contribute-code-and-documentation">
-<h3>Contribute code and documentation<a class="headerlink" href="#contribute-code-and-documentation" title="Permalink to this headline">#</a></h3>
+<h3>Contribute code and documentation<a class="headerlink" href="#contribute-code-and-documentation" title="Permalink to this heading">#</a></h3>
 <p>Look through the <a class="reference external" href="https://github.com/PatentsView/PatentsView-Evaluation/issues">GitHub issues</a> for bugs and feature requests. To contribute to this package:</p>
 <ol class="arabic simple">
 <li><p>Fork this repository</p></li>
@@ -356,20 +357,20 @@
 <p>A conda environment is provided for development convenience. To create or update this environment, make sure you have conda installed and then run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">env</span></code>. You can then activate the development environment using <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">pv-evaluation</span></code>.</p>
 <p>The makefile provides other development utilities such as <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">black</span></code> to format Python files, <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">data</span></code> to re-generate benchmark datasets from raw data located on AWS S3, and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span></code> to generate the documentation website.</p>
 <section id="raw-data">
-<h4>Raw data<a class="headerlink" href="#raw-data" title="Permalink to this headline">#</a></h4>
+<h4>Raw data<a class="headerlink" href="#raw-data" title="Permalink to this heading">#</a></h4>
 <p>Raw public data is located on PatentsView’s AWS S3 server at <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip">https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip</a>. This zip file should be updated as needed to reflect datasets provided by this package and to ensure that original data sources are preserved without modification.</p>
 </section>
 <section id="testing">
-<h4>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">#</a></h4>
+<h4>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">#</a></h4>
 <p>The minimal testing requirement for this package is a check that all code executes without error. We recommend placing execution checks in a runnable notebook and using the <a class="reference external" href="https://pypi.org/project/testbook/">testbook</a> package for execution within unit tests. User examples should also be provided to exemplify usage on real data.</p>
 </section>
 </section>
 <section id="report-bugs-and-submit-feedback">
-<h3>Report bugs and submit feedback<a class="headerlink" href="#report-bugs-and-submit-feedback" title="Permalink to this headline">#</a></h3>
+<h3>Report bugs and submit feedback<a class="headerlink" href="#report-bugs-and-submit-feedback" title="Permalink to this heading">#</a></h3>
 <p>Report bugs and submit feedback at <a class="reference external" href="https://github.com/PatentsView/PatentsView-Evaluation/issues">https://github.com/PatentsView/PatentsView-Evaluation/issues</a>.</p>
 </section>
 <section id="contributors">
-<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">#</a></h3>
+<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Olivier Binette (American Institutes for Research, Duke University)</p></li>
 <li><p>Sarvo Madhavan (American Institutes for Research)</p></li>
@@ -377,9 +378,9 @@
 </section>
 </section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <section id="methodology">
-<h3>Methodology<a class="headerlink" href="#methodology" title="Permalink to this headline">#</a></h3>
+<h3>Methodology<a class="headerlink" href="#methodology" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Menestrina, D., Whang, S. E., &amp; Garciamolina, H. (2010). Evaluating entity resolution results. Proceedings of the VLDB Endowment, 3(1), 208–219. <a class="reference external" href="https://doi.org/10.14778/1920841.1920871">https://doi.org/10.14778/1920841.1920871</a></p></li>
 <li><p>Michelson, M., &amp; Macskassy, S. A. (2009). Record linkage measures in an entity centric world. Proceedings of the 4th Workshop on Evaluation Methods for Machine Learning.</p></li>
@@ -390,7 +391,7 @@
 </ul>
 </section>
 <section id="datasets">
-<h3>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">#</a></h3>
+<h3>Datasets<a class="headerlink" href="#datasets" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Trajtenberg, M., &amp; Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. <a class="reference external" href="https://econ.tau.ac.il/sites/economy.tau.ac.il/files/media_server/Economics/Sapir/papers/%D7%9E%D7%A0%D7%95%D7%90%D7%9C%20%D7%98%D7%A8%D7%9B%D7%98%D7%A0%D7%91%D7%A8%D7%92%205-08%20%D7%9E%D7%A9%D7%95%D7%9C%D7%91.pdf">[link]</a></p></li>
 <li><p>Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. <a class="reference external" href="https://doi.org/10.6084/m9.figshare.3502754.v1">[link]</a></p></li>
@@ -445,7 +446,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   
