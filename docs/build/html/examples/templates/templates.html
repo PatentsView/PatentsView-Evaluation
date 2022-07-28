@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -53,7 +54,7 @@
     <link rel="next" title="Performance Estimates for the Israeli Inventors Dataset" href="../estimators/israeli-data.html" />
     <link rel="prev" title="Performance Benchmarks" href="../benchmark/report.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None">
+<meta name="docsearch:language" content="en">
   </head>
   
   
@@ -227,7 +228,7 @@
               <article class="bd-article" role="main">
                 
   <section id="html-report-template">
-<h1>HTML Report Template<a class="headerlink" href="#html-report-template" title="Permalink to this headline">#</a></h1>
+<h1>HTML Report Template<a class="headerlink" href="#html-report-template" title="Permalink to this heading">#</a></h1>
 <p>This document shows the use of <strong>pv_evaluation</strong> to automatically report on a disambiguation’s performance.</p>
 <p>The key assumption is that the disambiguation algorithm has resulted in a table with one row for each inventor mention and with the following five columns:</p>
 <ul class="simple">
@@ -331,7 +332,7 @@
 </div></div></div>
 </div>
 <section id="rendering-report">
-<h2>Rendering Report<a class="headerlink" href="#rendering-report" title="Permalink to this headline">#</a></h2>
+<h2>Rendering Report<a class="headerlink" href="#rendering-report" title="Permalink to this heading">#</a></h2>
 <p>We can now generate the report using the <code class="docutils literal notranslate"><span class="pre">render_inventor_disambiguation_report()</span></code> function. The results are saved to the current folder “.”.</p>
 <p>Note that, if we wish to compare multiple disambiguations, then we can add more files to the list <code class="docutils literal notranslate"><span class="pre">summary_table_files</span></code>. Each file in this list should be a table with the five columns “mention_id”, “inventor_id”, “patent_id”, “name_first”, and “name_last”.</p>
 <div class="cell docutils container">
@@ -381,8 +382,6 @@ Executing &#39;index.ipynb&#39;
   default-image-extension: png
   toc: true
   toc-depth: 3
-  filters:
-    - crossref
   
 <span class=" -Color -Color-Bold">metadata</span>
   document-css: false
@@ -452,7 +451,7 @@ Output created: index.html
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   

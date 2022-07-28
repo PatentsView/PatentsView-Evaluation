@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -53,7 +54,7 @@
     <link rel="next" title="HTML Report Template" href="../templates/templates.html" />
     <link rel="prev" title="Inventor Disambiguation Summaries" href="../summary/inventor.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None">
+<meta name="docsearch:language" content="en">
   </head>
   
   
@@ -232,11 +233,11 @@
               <article class="bd-article" role="main">
                 
   <section id="performance-benchmarks">
-<h1>Performance Benchmarks<a class="headerlink" href="#performance-benchmarks" title="Permalink to this headline">#</a></h1>
+<h1>Performance Benchmarks<a class="headerlink" href="#performance-benchmarks" title="Permalink to this heading">#</a></h1>
 <p>This notebook shows the use of the <strong>benchmark</strong> submodule to obtain key performance metrics.</p>
 <p>Note that the metrics considered here are not representative of full-data performance. They only provide an indication of performance when restricting the disambiguation to the mention IDs which appear in the benchmark data.</p>
 <section id="data-preparation">
-<h2>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">#</a></h2>
+<h2>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading">#</a></h2>
 <p>To get started, we recover the current disambiguation from <code class="docutils literal notranslate"><span class="pre">rawinventor.tsv</span></code>. The result, a pandas Series indexed by mention id and with values corresponding to cluster assignment, is saved to <code class="docutils literal notranslate"><span class="pre">disambiguation.tsv</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -320,7 +321,7 @@
 </div>
 </section>
 <section id="benchmarks">
-<h2>Benchmarks<a class="headerlink" href="#benchmarks" title="Permalink to this headline">#</a></h2>
+<h2>Benchmarks<a class="headerlink" href="#benchmarks" title="Permalink to this heading">#</a></h2>
 <p>For this example, we consider two disambiguations. One is the current disambiguation, and the other is a trivial disambiguation named “one cluster” where everything is in the same cluster.</p>
 <p>The two disambiguation Series are placed in a dictionary.</p>
 <div class="cell docutils container">
@@ -723,7 +724,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ec48067a6c51442483637fc35ea662af5de323cdd5af93b49917046bddd1b6fe.svg" src="../../_images/ec48067a6c51442483637fc35ea662af5de323cdd5af93b49917046bddd1b6fe.svg" /></div>
+<img alt="../../_images/ea90b4bf0b9ce1a10deb3851a28d1b730517cfeff6f8360e92024f985856688e.svg" src="../../_images/ea90b4bf0b9ce1a10deb3851a28d1b730517cfeff6f8360e92024f985856688e.svg" /></div>
 </div>
 <p>Next, we can look at the tables showcasing two types of errors: predicted clusters which should have been <strong>split</strong>, and predicted cluster which should have been <strong>merged</strong>.</p>
 <div class="cell docutils container">
@@ -736,14 +737,14 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
-#T_6c9fe_row0_col0, #T_6c9fe_row0_col1, #T_6c9fe_row1_col0, #T_6c9fe_row1_col1, #T_6c9fe_row9_col0, #T_6c9fe_row9_col1, #T_6c9fe_row10_col0, #T_6c9fe_row10_col1 {
+#T_3da30_row0_col0, #T_3da30_row0_col1, #T_3da30_row1_col0, #T_3da30_row1_col1, #T_3da30_row9_col0, #T_3da30_row9_col1, #T_3da30_row10_col0, #T_3da30_row10_col1 {
   background-color: white;
 }
-#T_6c9fe_row2_col0, #T_6c9fe_row2_col1, #T_6c9fe_row3_col0, #T_6c9fe_row3_col1, #T_6c9fe_row4_col0, #T_6c9fe_row4_col1, #T_6c9fe_row5_col0, #T_6c9fe_row5_col1, #T_6c9fe_row6_col0, #T_6c9fe_row6_col1, #T_6c9fe_row7_col0, #T_6c9fe_row7_col1, #T_6c9fe_row8_col0, #T_6c9fe_row8_col1, #T_6c9fe_row11_col0, #T_6c9fe_row11_col1, #T_6c9fe_row12_col0, #T_6c9fe_row12_col1, #T_6c9fe_row13_col0, #T_6c9fe_row13_col1, #T_6c9fe_row14_col0, #T_6c9fe_row14_col1 {
+#T_3da30_row2_col0, #T_3da30_row2_col1, #T_3da30_row3_col0, #T_3da30_row3_col1, #T_3da30_row4_col0, #T_3da30_row4_col1, #T_3da30_row5_col0, #T_3da30_row5_col1, #T_3da30_row6_col0, #T_3da30_row6_col1, #T_3da30_row7_col0, #T_3da30_row7_col1, #T_3da30_row8_col0, #T_3da30_row8_col1, #T_3da30_row11_col0, #T_3da30_row11_col1, #T_3da30_row12_col0, #T_3da30_row12_col1, #T_3da30_row13_col0, #T_3da30_row13_col1, #T_3da30_row14_col0, #T_3da30_row14_col1 {
   background-color: #c5dcf5;
 }
 </style>
-<table id="T_6c9fe_">
+<table id="T_3da30_">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
@@ -758,79 +759,79 @@
   </thead>
   <tbody>
     <tr>
-      <th id="T_6c9fe_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
-      <td id="T_6c9fe_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_6c9fe_row0_col1" class="data row0 col1" >472</td>
+      <th id="T_3da30_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
+      <td id="T_3da30_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
+      <td id="T_3da30_row0_col1" class="data row0 col1" >472</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
-      <td id="T_6c9fe_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_6c9fe_row1_col1" class="data row1 col1" >470</td>
+      <th id="T_3da30_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
+      <td id="T_3da30_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
+      <td id="T_3da30_row1_col1" class="data row1 col1" >470</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
-      <td id="T_6c9fe_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_6c9fe_row2_col1" class="data row2 col1" >16528</td>
+      <th id="T_3da30_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
+      <td id="T_3da30_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_3da30_row2_col1" class="data row2 col1" >16528</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
-      <td id="T_6c9fe_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_6c9fe_row3_col1" class="data row3 col1" >16522</td>
+      <th id="T_3da30_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
+      <td id="T_3da30_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_3da30_row3_col1" class="data row3 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
-      <td id="T_6c9fe_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_6c9fe_row4_col1" class="data row4 col1" >16522</td>
+      <th id="T_3da30_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
+      <td id="T_3da30_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_3da30_row4_col1" class="data row4 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
-      <td id="T_6c9fe_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_6c9fe_row5_col1" class="data row5 col1" >16522</td>
+      <th id="T_3da30_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
+      <td id="T_3da30_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_3da30_row5_col1" class="data row5 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
-      <td id="T_6c9fe_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_6c9fe_row6_col1" class="data row6 col1" >16522</td>
+      <th id="T_3da30_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
+      <td id="T_3da30_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_3da30_row6_col1" class="data row6 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
-      <td id="T_6c9fe_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_6c9fe_row7_col1" class="data row7 col1" >16522</td>
+      <th id="T_3da30_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
+      <td id="T_3da30_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_3da30_row7_col1" class="data row7 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
-      <td id="T_6c9fe_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_6c9fe_row8_col1" class="data row8 col1" >16522</td>
+      <th id="T_3da30_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
+      <td id="T_3da30_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_3da30_row8_col1" class="data row8 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
-      <td id="T_6c9fe_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_6c9fe_row9_col1" class="data row9 col1" >307</td>
+      <th id="T_3da30_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
+      <td id="T_3da30_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
+      <td id="T_3da30_row9_col1" class="data row9 col1" >307</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
-      <td id="T_6c9fe_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_6c9fe_row10_col1" class="data row10 col1" >306</td>
+      <th id="T_3da30_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
+      <td id="T_3da30_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
+      <td id="T_3da30_row10_col1" class="data row10 col1" >306</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
-      <td id="T_6c9fe_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_6c9fe_row11_col1" class="data row11 col1" >2910</td>
+      <th id="T_3da30_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
+      <td id="T_3da30_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_3da30_row11_col1" class="data row11 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
-      <td id="T_6c9fe_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_6c9fe_row12_col1" class="data row12 col1" >2910</td>
+      <th id="T_3da30_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
+      <td id="T_3da30_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_3da30_row12_col1" class="data row12 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
-      <td id="T_6c9fe_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_6c9fe_row13_col1" class="data row13 col1" >2910</td>
+      <th id="T_3da30_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
+      <td id="T_3da30_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_3da30_row13_col1" class="data row13 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_6c9fe_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
-      <td id="T_6c9fe_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_6c9fe_row14_col1" class="data row14 col1" >2910</td>
+      <th id="T_3da30_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
+      <td id="T_3da30_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_3da30_row14_col1" class="data row14 col1" >2910</td>
     </tr>
   </tbody>
 </table>
@@ -1009,7 +1010,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   

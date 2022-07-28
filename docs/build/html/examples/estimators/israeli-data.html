@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -53,7 +54,7 @@
     <link rel="next" title="Performance Estimates for Lai’s 2011 Benchmark" href="lai-2011-benchmark.html" />
     <link rel="prev" title="HTML Report Template" href="../templates/templates.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None">
+<meta name="docsearch:language" content="en">
   </head>
   
   
@@ -232,12 +233,12 @@
               <article class="bd-article" role="main">
                 
   <section id="performance-estimates-for-the-israeli-inventors-dataset">
-<h1>Performance Estimates for the Israeli Inventors Dataset<a class="headerlink" href="#performance-estimates-for-the-israeli-inventors-dataset" title="Permalink to this headline">#</a></h1>
+<h1>Performance Estimates for the Israeli Inventors Dataset<a class="headerlink" href="#performance-estimates-for-the-israeli-inventors-dataset" title="Permalink to this heading">#</a></h1>
 <p>This notebook showcases the use of our precision and recall performance estimators in application to the Israeli inventors benchmark dataset.</p>
 <p>Note that the Israeli dataset only covers patents granted between 1963 and 1999. As such, we can only estimate the performance of the current disambiguation algorithm for this time period.</p>
 <p>Furthermore, we consider the the Israeli benchmark to be following the “single block” sampling process. That is, we assume that the data corresponds to the sampling of a single block, here the block of Israeli inventors.</p>
 <section id="data-preparation">
-<h2>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this headline">#</a></h2>
+<h2>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading">#</a></h2>
 <p>First we import required modules and recover the current disambiguation from <code class="docutils literal notranslate"><span class="pre">rawinventor.tsv</span></code>. The current disambiguation is filtered to only contain inventor mentions for granted patents between 1963 and 1999.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -288,7 +289,7 @@
 </div>
 </section>
 <section id="precision-and-recall-estimates">
-<h2>Precision and Recall Estimates<a class="headerlink" href="#precision-and-recall-estimates" title="Permalink to this headline">#</a></h2>
+<h2>Precision and Recall Estimates<a class="headerlink" href="#precision-and-recall-estimates" title="Permalink to this heading">#</a></h2>
 <p>Next, we can estimate precision and recall using the “single_block” estimator. Note that since a single block has been sampled, no standard deviation estimate can be provided.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -362,7 +363,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   

@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -38,6 +38,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
@@ -53,7 +54,7 @@
     <link rel="next" title="Performance Benchmarks" href="../benchmark/report.html" />
     <link rel="prev" title="Examples" href="../../examples.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="docsearch:language" content="None">
+<meta name="docsearch:language" content="en">
   </head>
   
   
@@ -305,7 +306,7 @@
               <article class="bd-article" role="main">
                 
   <section id="inventor-disambiguation-summaries">
-<h1>Inventor Disambiguation Summaries<a class="headerlink" href="#inventor-disambiguation-summaries" title="Permalink to this headline">#</a></h1>
+<h1>Inventor Disambiguation Summaries<a class="headerlink" href="#inventor-disambiguation-summaries" title="Permalink to this heading">#</a></h1>
 <p>This document shows the use of the <code class="docutils literal notranslate"><span class="pre">InventorDisambiguationSummary</span></code> class to obtain descriptive statistics and visualizations of the output of an inventor disambiguation algorithm.</p>
 <p>The key assumption is that the disambiguation algorithm has resulted in a table with one row for each inventor mention and with the following columns:</p>
 <ul class="simple">
@@ -316,10 +317,10 @@
 </ul>
 <p>This table will be used to instanciate <code class="docutils literal notranslate"><span class="pre">InventorDisambiguationSummary</span></code> objects and generate summaries.</p>
 <section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">#</a></h2>
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">#</a></h2>
 <p>In order to execute this notebook, you need the development environment described below.</p>
 <section id="development-environment">
-<h3>Development environment:<a class="headerlink" href="#development-environment" title="Permalink to this headline">#</a></h3>
+<h3>Development environment:<a class="headerlink" href="#development-environment" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Need conda.</p></li>
 <li><p>Development environment can be created and updated using:</p></li>
@@ -334,7 +335,7 @@
 </ul>
 </section>
 <section id="package-imports">
-<h3>Package imports<a class="headerlink" href="#package-imports" title="Permalink to this headline">#</a></h3>
+<h3>Package imports<a class="headerlink" href="#package-imports" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">wget</span>
@@ -351,7 +352,7 @@
 </div>
 </section>
 <section id="data-download">
-<h3>Data download<a class="headerlink" href="#data-download" title="Permalink to this headline">#</a></h3>
+<h3>Data download<a class="headerlink" href="#data-download" title="Permalink to this heading">#</a></h3>
 <p>Here we use the current PatentsView inventor disambiguation algorithm as our example throughout. The disambiguation result is contained in the dataset <code class="docutils literal notranslate"><span class="pre">rawinventor.tsv</span></code> from PatentsView’s bulk data download.</p>
 <p>This dataset is downloaded below:</p>
 <div class="cell docutils container">
@@ -368,9 +369,9 @@
 </section>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">#</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h2>
 <section id="setting-up-inventordisambigationsummary-object">
-<h3>Setting up InventorDisambigationSummary object<a class="headerlink" href="#setting-up-inventordisambigationsummary-object" title="Permalink to this headline">#</a></h3>
+<h3>Setting up InventorDisambigationSummary object<a class="headerlink" href="#setting-up-inventordisambigationsummary-object" title="Permalink to this heading">#</a></h3>
 <p>To get started, instanciate a <code class="docutils literal notranslate"><span class="pre">InventorDisambiguationSummary</span></code> object using the disambiguation table output. Note:</p>
 <ul class="simple">
 <li><p>The argument <code class="docutils literal notranslate"><span class="pre">processed_data_dir</span></code> is set to the home directory in order to save and re-use processed data across executions of this notebook.</p></li>
@@ -385,9 +386,9 @@
 </div>
 </section>
 <section id="cluster-sizes">
-<h3>Cluster sizes<a class="headerlink" href="#cluster-sizes" title="Permalink to this headline">#</a></h3>
+<h3>Cluster sizes<a class="headerlink" href="#cluster-sizes" title="Permalink to this heading">#</a></h3>
 <section id="cluster-size-distribution-data">
-<h4>Cluster size distribution data<a class="headerlink" href="#cluster-size-distribution-data" title="Permalink to this headline">#</a></h4>
+<h4>Cluster size distribution data<a class="headerlink" href="#cluster-size-distribution-data" title="Permalink to this heading">#</a></h4>
 <p>Get the cluster size distribution as a table:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -481,7 +482,7 @@
 </div>
 </section>
 <section id="cluster-size-distribution-plot">
-<h4>Cluster size distribution plot<a class="headerlink" href="#cluster-size-distribution-plot" title="Permalink to this headline">#</a></h4>
+<h4>Cluster size distribution plot<a class="headerlink" href="#cluster-size-distribution-plot" title="Permalink to this heading">#</a></h4>
 <p>Plot the cluster size distribution. We can see from the plot below that there are 1.75M inventors with a single patent, about 0.6M inventors with two patents, etc.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -491,7 +492,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/dd137eebd7672983c4e7dc5554452aae1531f9dd2da779e702726b8d130c00b4.svg" src="../../_images/dd137eebd7672983c4e7dc5554452aae1531f9dd2da779e702726b8d130c00b4.svg" /></div>
+<img alt="../../_images/a1c88c9132aa9b4c120a1b02d975688b3bd6580afd2344254848a15b16ad63f3.svg" src="../../_images/a1c88c9132aa9b4c120a1b02d975688b3bd6580afd2344254848a15b16ad63f3.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -501,11 +502,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/defac47ca7aa64241580c53f406d3e0c11bc763c7909cef47b41f1bc7816741e.svg" src="../../_images/defac47ca7aa64241580c53f406d3e0c11bc763c7909cef47b41f1bc7816741e.svg" /></div>
+<img alt="../../_images/cfd4f8050e26845cee6a90cbbbea25e909997c907a1dea8d2966cdf8fe8bb224.svg" src="../../_images/cfd4f8050e26845cee6a90cbbbea25e909997c907a1dea8d2966cdf8fe8bb224.svg" /></div>
 </div>
 </section>
 <section id="show-histograms-side-by-side">
-<h4>Show histograms side by side<a class="headerlink" href="#show-histograms-side-by-side" title="Permalink to this headline">#</a></h4>
+<h4>Show histograms side by side<a class="headerlink" href="#show-histograms-side-by-side" title="Permalink to this heading">#</a></h4>
 <p>Use <code class="docutils literal notranslate"><span class="pre">compare_plots()</span></code> from <code class="docutils literal notranslate"><span class="pre">pv_evaluation.utils</span></code> in order to compare plots next to each other:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -519,11 +520,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/bb976832f46f0240ae60c84c9e74e1419e2aafff68b53ad32ee7e0f1e5b64c17.svg" src="../../_images/bb976832f46f0240ae60c84c9e74e1419e2aafff68b53ad32ee7e0f1e5b64c17.svg" /></div>
+<img alt="../../_images/f181fa4e7e7eae4dafd91c63c0e6b5daf82794c2dea049516f58abacd6127ce0.svg" src="../../_images/f181fa4e7e7eae4dafd91c63c0e6b5daf82794c2dea049516f58abacd6127ce0.svg" /></div>
 </div>
 </section>
 <section id="top-inventors">
-<h4>Top inventors<a class="headerlink" href="#top-inventors" title="Permalink to this headline">#</a></h4>
+<h4>Top inventors<a class="headerlink" href="#top-inventors" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summarizer</span><span class="o">.</span><span class="n">get_top_inventors</span><span class="p">()</span>
@@ -627,7 +628,7 @@
 </div>
 </section>
 <section id="entropy-curve">
-<h4>Entropy curve<a class="headerlink" href="#entropy-curve" title="Permalink to this headline">#</a></h4>
+<h4>Entropy curve<a class="headerlink" href="#entropy-curve" title="Permalink to this heading">#</a></h4>
 <p>Show the <a class="reference external" href="https://en.wikipedia.org/wiki/Diversity_index">Hill Numbers</a> (exponentiated <a class="reference external" href="https://en.wikipedia.org/wiki/R%C3%A9nyi_entropy">Rényi entropy</a>) entropy curve for the cluster size distribution:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -637,12 +638,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2ae452d394348c7c1622c06cb7353650763eb380811acfb39813f7435496d237.svg" src="../../_images/2ae452d394348c7c1622c06cb7353650763eb380811acfb39813f7435496d237.svg" /></div>
+<img alt="../../_images/df73bb60399685d4a8980666762407e7da72e71e8c175e180bcefc2fcb4ed757.svg" src="../../_images/df73bb60399685d4a8980666762407e7da72e71e8c175e180bcefc2fcb4ed757.svg" /></div>
 </div>
 </section>
 </section>
 <section id="cluster-homogeneity">
-<h3>Cluster homogeneity<a class="headerlink" href="#cluster-homogeneity" title="Permalink to this headline">#</a></h3>
+<h3>Cluster homogeneity<a class="headerlink" href="#cluster-homogeneity" title="Permalink to this heading">#</a></h3>
 <p>As a measure of cluster homogeneity, we consider the proportion of clusters which have no name variation (no misspellings or other variation in the stated name). This measure is computed for each cluster size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -742,7 +743,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/326d8d1f192691043608e2c7c33f82f9b1e39237da9bc8988597c91176543d23.svg" src="../../_images/326d8d1f192691043608e2c7c33f82f9b1e39237da9bc8988597c91176543d23.svg" /></div>
+<img alt="../../_images/d03c66aac1ae6a65dd9ef0c136e741a2e3efe9c1f2787096f6f876e56d817d5a.svg" src="../../_images/d03c66aac1ae6a65dd9ef0c136e741a2e3efe9c1f2787096f6f876e56d817d5a.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -752,11 +753,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/01afad446096fb52f17c4a6528646e04517a26ae60bcd562d28857b7cb6eaed9.svg" src="../../_images/01afad446096fb52f17c4a6528646e04517a26ae60bcd562d28857b7cb6eaed9.svg" /></div>
+<img alt="../../_images/b9f454f2c29b9663db7459209e07df11b23be320352e4e38338de76b929499a4.svg" src="../../_images/b9f454f2c29b9663db7459209e07df11b23be320352e4e38338de76b929499a4.svg" /></div>
 </div>
 </section>
 <section id="between-cluster-heterogeneity-homonymy-rates">
-<h3>Between-cluster heterogeneity (homonymy rates)<a class="headerlink" href="#between-cluster-heterogeneity-homonymy-rates" title="Permalink to this headline">#</a></h3>
+<h3>Between-cluster heterogeneity (homonymy rates)<a class="headerlink" href="#between-cluster-heterogeneity-homonymy-rates" title="Permalink to this heading">#</a></h3>
 <p>The homonymy rate is the proportion of clusters which share at least one name mention with another cluster.</p>
 <p>Use the function <code class="docutils literal notranslate"><span class="pre">get_homonymy_rate_distribution()</span></code> to obtain homonymy rates for each cluster size:</p>
 <div class="cell docutils container">
@@ -857,7 +858,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/0123c5434ced469b789364dafb4b2a17815d663cbfc125713935f2199602527d.svg" src="../../_images/0123c5434ced469b789364dafb4b2a17815d663cbfc125713935f2199602527d.svg" /></div>
+<img alt="../../_images/db7854263c5442ee1c66c1e327c2475e5761fb8ca139d5b5c218cc0cf602f6d2.svg" src="../../_images/db7854263c5442ee1c66c1e327c2475e5761fb8ca139d5b5c218cc0cf602f6d2.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -867,10 +868,10 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a408fd12f7fe5fc00bf56ae5a5d8a64b78d544f63ccbe7e7d941defc6ab7269d.svg" src="../../_images/a408fd12f7fe5fc00bf56ae5a5d8a64b78d544f63ccbe7e7d941defc6ab7269d.svg" /></div>
+<img alt="../../_images/ddb63aaf95ff8fe49d51767e86fd71c1ab412483f260da21fc5299be28c19241.svg" src="../../_images/ddb63aaf95ff8fe49d51767e86fd71c1ab412483f260da21fc5299be28c19241.svg" /></div>
 </div>
 <section id="homonomy-rate-for-large-clusters">
-<h4>Homonomy rate for large clusters<a class="headerlink" href="#homonomy-rate-for-large-clusters" title="Permalink to this headline">#</a></h4>
+<h4>Homonomy rate for large clusters<a class="headerlink" href="#homonomy-rate-for-large-clusters" title="Permalink to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summarizer</span><span class="o">.</span><span class="n">get_homonymy_rate_distribution</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Number of patents&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -1005,7 +1006,7 @@
   
   <div class="footer-item">
     <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.1.1.<br>
 </p>
   </div>
   

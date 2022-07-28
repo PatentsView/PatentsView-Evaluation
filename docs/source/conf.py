@@ -40,7 +40,7 @@ extensions = [
 
 nb_execution_mode = "off"
 
-source_suffix = [".rst", ".md", ".ipynb"]
+source_suffix = [".rst", ".md", ".ipynb", ".html"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
