@@ -35,7 +35,7 @@ Performance Summaries
     .. grid-item-card:: Inventor disambiguation summaries
       :text-align: center
       :link: https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/summary/inventor.html
-      :link-type: doc
+      :link-type: url
       
       Descriptive statistics for inventor disambiguation.
 
