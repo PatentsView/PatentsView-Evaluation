@@ -61,7 +61,7 @@ def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
         raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', 'cluster_block' or 'single_block'")
 
 
-def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
+def pairwise_precision_estimator(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
     """Pairwise precision estimates for given sampling mechanisms.
 
     Sampling mechanisms considered are:
@@ -79,9 +79,9 @@ def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
-        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", "single_block", or "cluster_block".
-            Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster.
-        weights (str): sampling probability weights. Should be one of "uniform" or "cluster_size".
+        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", "single_block", or "cluster_block". Defaults to "cluster_block".
+            Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster. 
+        weights (str): sampling probability weights. Should be one of "uniform" or "cluster_size". Defaults to "cluster_size".
 
     Returns:
         float: pairwise precision estimate.
@@ -95,7 +95,7 @@ def pairwise_precision_estimator(prediction, reference, sampling_type, weights):
     return ratio_estimator(N, D)
 
 
-def pairwise_precision_std(prediction, reference, sampling_type, weights):
+def pairwise_precision_std(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
     """Standard deviation estimates for the pairwise precision estimator."""
     N, D = pairwise_precision_arrays(prediction, reference, sampling_type, weights)
     return std_dev(N, D)

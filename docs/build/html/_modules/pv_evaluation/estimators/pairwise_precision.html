@@ -238,7 +238,7 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unrecognized &#39;sampling_type&#39; option. Should be one of &#39;record&#39;, &#39;cluster&#39;, &#39;cluster_block&#39; or &#39;single_block&#39;&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="pairwise_precision_estimator"><a class="viewcode-back" href="../../../pv_evaluation.estimators.html#pv_evaluation.estimators.pairwise_precision_estimator">[docs]</a><span class="k">def</span> <span class="nf">pairwise_precision_estimator</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+<div class="viewcode-block" id="pairwise_precision_estimator"><a class="viewcode-back" href="../../../pv_evaluation.estimators.html#pv_evaluation.estimators.pairwise_precision_estimator">[docs]</a><span class="k">def</span> <span class="nf">pairwise_precision_estimator</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Pairwise precision estimates for given sampling mechanisms.</span>
 
 <span class="sd">    Sampling mechanisms considered are:</span>
@@ -256,9 +256,9 @@
 <span class="sd">    Args:</span>
 <span class="sd">        prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</span>
 <span class="sd">        reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</span>
-<span class="sd">        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of &quot;record&quot;, &quot;cluster&quot;, &quot;single_block&quot;, or &quot;cluster_block&quot;.</span>
-<span class="sd">            Note that, for &quot;record&quot; sampling, it is assumed that no two different sampled records had the same associated cluster.</span>
-<span class="sd">        weights (str): sampling probability weights. Should be one of &quot;uniform&quot; or &quot;cluster_size&quot;.</span>
+<span class="sd">        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of &quot;record&quot;, &quot;cluster&quot;, &quot;single_block&quot;, or &quot;cluster_block&quot;. Defaults to &quot;cluster_block&quot;.</span>
+<span class="sd">            Note that, for &quot;record&quot; sampling, it is assumed that no two different sampled records had the same associated cluster. </span>
+<span class="sd">        weights (str): sampling probability weights. Should be one of &quot;uniform&quot; or &quot;cluster_size&quot;. Defaults to &quot;cluster_size&quot;.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        float: pairwise precision estimate.</span>
@@ -272,7 +272,7 @@
     <span class="k">return</span> <span class="n">ratio_estimator</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="pairwise_precision_std"><a class="viewcode-back" href="../../../pv_evaluation.estimators.html#pv_evaluation.estimators.pairwise_precision_std">[docs]</a><span class="k">def</span> <span class="nf">pairwise_precision_std</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+<div class="viewcode-block" id="pairwise_precision_std"><a class="viewcode-back" href="../../../pv_evaluation.estimators.html#pv_evaluation.estimators.pairwise_precision_std">[docs]</a><span class="k">def</span> <span class="nf">pairwise_precision_std</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Standard deviation estimates for the pairwise precision estimator.&quot;&quot;&quot;</span>
     <span class="n">N</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">pairwise_precision_arrays</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">sampling_type</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">std_dev</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span></div>

@@ -286,24 +286,6 @@
 <span class="sd">        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">load_unique_id_series</span><span class="p">(</span><span class="n">INVENTOR_DATA_MODULE</span><span class="p">,</span> <span class="s2">&quot;ens-inventors.csv&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="load_harvard_inventors_benchmark"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.load_harvard_inventors_benchmark">[docs]</a><span class="k">def</span> <span class="nf">load_harvard_inventors_benchmark</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Harvard inventors benchmark.</span>
-
-<span class="sd">    This is a set of disambiguated inventor mentions derived from Morrisson&#39;s Harvard inventors benchmark, </span>
-<span class="sd">    which contains the manual disambiguation of &quot;USPTO patents filed by assignees containing the phrases </span>
-<span class="sd">    ‘harvard college’ and ‘harvard university’ (case insensitive) in the name&quot; (Morrisson et al, 2017).</span>
-
-<span class="sd">    Inventor sequence numbers were added through automated matching and a hand-review process. </span>
-<span class="sd">    Note that errors could have been incorporated through this process.</span>
-
-<span class="sd">    See:</span>
-<span class="sd">        Morrison, G., Riccaboni, M. &amp; Pammolli, F. Disambiguation of patent inventors and assignees using high-resolution geolocation data. Sci Data 4, 170064 (2017). https://doi.org/10.1038/sdata.2017.64</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">load_unique_id_series</span><span class="p">(</span><span class="n">INVENTOR_DATA_MODULE</span><span class="p">,</span> <span class="s2">&quot;harvard-inventors-benchmark.csv&quot;</span><span class="p">)</span></div>
 </pre></div>
 
               </article>

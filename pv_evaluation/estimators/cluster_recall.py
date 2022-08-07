@@ -57,7 +57,7 @@ def cluster_recall_estimator(prediction, reference, sampling_type="cluster_block
     return ratio_estimator(N, D)
 
 
-def cluster_recall_std(prediction, reference, sampling_type, weights):
+def cluster_recall_std(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
     """Standard deviation estimates for the pairwise recall estimator."""
     N, D = cluster_recall_arrays(prediction, reference, sampling_type, weights)
     return std_dev(N, D)

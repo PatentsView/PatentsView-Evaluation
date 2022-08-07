@@ -47,7 +47,7 @@ def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
         raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', 'cluster_block', or 'single_block'")
 
 
-def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
+def pairwise_recall_estimator(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
     """Pairwise recall estimates for given sampling mechanisms.
 
     Sampling mechanisms considered are:
@@ -65,9 +65,9 @@ def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
-        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", "single_block", or "cluster_block".
+        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", "single_block", or "cluster_block". Defaults to "cluster_block".
             Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster.
-        weights (str): sampling probability weights. Should be one of "uniform" or "cluster_size".
+        weights (str): sampling probability weights. Should be one of "uniform" or "cluster_size". Defaults to "cluster_size".
 
     Returns:
         float: pairwise recall estimate.
@@ -81,7 +81,7 @@ def pairwise_recall_estimator(prediction, reference, sampling_type, weights):
     return ratio_estimator(N, D)
 
 
-def pairwise_recall_std(prediction, reference, sampling_type, weights):
+def pairwise_recall_std(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
     """Standard deviation estimates for the pairwise recall estimator."""
     N, D = pairwise_recall_arrays(prediction, reference, sampling_type, weights)
     return std_dev(N, D)

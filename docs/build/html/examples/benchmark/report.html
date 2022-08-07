@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Performance Benchmarks &#8212; PatentsView-Evaluation  documentation</title>
+    <title>📊 Performance Benchmarks &#8212; PatentsView-Evaluation  documentation</title>
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
   document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
@@ -51,8 +51,8 @@
     <script src="../../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="HTML Report Template" href="../templates/templates.html" />
-    <link rel="prev" title="Inventor Disambiguation Summaries" href="../summary/inventor.html" />
+    <link rel="next" title="📑 HTML Report Template" href="../templates/templates.html" />
+    <link rel="prev" title="📑 Inventor Disambiguation Summaries" href="../summary/inventor.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -155,28 +155,33 @@
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../summary/inventor.html">
-   Inventor Disambiguation Summaries
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Performance Benchmarks
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../templates/templates.html">
-   HTML Report Template
+  <a class="reference internal" href="../estimators/introduction.html">
+   🎯 Introduction to Performance Estimators for Entity Resolution Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../estimators/israeli-data.html">
-   Performance Estimates for the Israeli Inventors Dataset
+   🎯 Performance Estimates for the Israeli Inventors Dataset
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../estimators/lai-2011-benchmark.html">
-   Performance Estimates for Lai’s 2011 Benchmark
+   🎯 Performance Estimates for Lai’s 2011 Benchmark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../summary/inventor.html">
+   📑 Inventor Disambiguation Summaries
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   📊 Performance Benchmarks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../templates/templates.html">
+   📑 HTML Report Template
   </a>
  </li>
 </ul>
@@ -233,7 +238,7 @@
               <article class="bd-article" role="main">
                 
   <section id="performance-benchmarks">
-<h1>Performance Benchmarks<a class="headerlink" href="#performance-benchmarks" title="Permalink to this heading">#</a></h1>
+<h1>📊 Performance Benchmarks<a class="headerlink" href="#performance-benchmarks" title="Permalink to this heading">#</a></h1>
 <p>This notebook shows the use of the <strong>benchmark</strong> submodule to obtain key performance metrics.</p>
 <p>Note that the metrics considered here are not representative of full-data performance. They only provide an indication of performance when restricting the disambiguation to the mention IDs which appear in the benchmark data.</p>
 <section id="data-preparation">
@@ -346,7 +351,7 @@
 <p>The inventors benchmark table provides the value of key metrics for each combination of benchmark, metric type, and disambiguation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inventor_benchmark_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inventor_benchmark_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -411,307 +416,6 @@
       <td>current</td>
       <td>0.836364</td>
     </tr>
-    <tr>
-      <th>5</th>
-      <td>patentsview-inventors</td>
-      <td>cluster precision</td>
-      <td>one cluster</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>patentsview-inventors</td>
-      <td>cluster recall</td>
-      <td>current</td>
-      <td>0.985075</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>patentsview-inventors</td>
-      <td>cluster recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>israeli-inventors</td>
-      <td>pairwise precision</td>
-      <td>current</td>
-      <td>0.988997</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>israeli-inventors</td>
-      <td>pairwise precision</td>
-      <td>one cluster</td>
-      <td>0.000927</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>israeli-inventors</td>
-      <td>pairwise recall</td>
-      <td>current</td>
-      <td>0.940984</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>israeli-inventors</td>
-      <td>pairwise recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>israeli-inventors</td>
-      <td>cluster precision</td>
-      <td>current</td>
-      <td>0.986606</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>israeli-inventors</td>
-      <td>cluster precision</td>
-      <td>one cluster</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>israeli-inventors</td>
-      <td>cluster recall</td>
-      <td>current</td>
-      <td>0.943729</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>israeli-inventors</td>
-      <td>cluster recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>lai-benchmark</td>
-      <td>pairwise precision</td>
-      <td>current</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>lai-benchmark</td>
-      <td>pairwise precision</td>
-      <td>one cluster</td>
-      <td>0.026273</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>lai-benchmark</td>
-      <td>pairwise recall</td>
-      <td>current</td>
-      <td>0.898367</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>lai-benchmark</td>
-      <td>pairwise recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>lai-benchmark</td>
-      <td>cluster precision</td>
-      <td>current</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>lai-benchmark</td>
-      <td>cluster precision</td>
-      <td>one cluster</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>lai-benchmark</td>
-      <td>cluster recall</td>
-      <td>current</td>
-      <td>0.715789</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>lai-benchmark</td>
-      <td>cluster recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>als-benchmark</td>
-      <td>pairwise precision</td>
-      <td>current</td>
-      <td>0.997342</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>als-benchmark</td>
-      <td>pairwise precision</td>
-      <td>one cluster</td>
-      <td>0.000049</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>als-benchmark</td>
-      <td>pairwise recall</td>
-      <td>current</td>
-      <td>0.961500</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>als-benchmark</td>
-      <td>pairwise recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>als-benchmark</td>
-      <td>cluster precision</td>
-      <td>current</td>
-      <td>0.995445</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>als-benchmark</td>
-      <td>cluster precision</td>
-      <td>one cluster</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>als-benchmark</td>
-      <td>cluster recall</td>
-      <td>current</td>
-      <td>0.971152</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>als-benchmark</td>
-      <td>cluster recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>ens-benchmark</td>
-      <td>pairwise precision</td>
-      <td>current</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>ens-benchmark</td>
-      <td>pairwise precision</td>
-      <td>one cluster</td>
-      <td>0.001335</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>ens-benchmark</td>
-      <td>pairwise recall</td>
-      <td>current</td>
-      <td>0.956651</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>ens-benchmark</td>
-      <td>pairwise recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>ens-benchmark</td>
-      <td>cluster precision</td>
-      <td>current</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>ens-benchmark</td>
-      <td>cluster precision</td>
-      <td>one cluster</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>ens-benchmark</td>
-      <td>cluster recall</td>
-      <td>current</td>
-      <td>0.901702</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>ens-benchmark</td>
-      <td>cluster recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>harvard-benchmark</td>
-      <td>pairwise precision</td>
-      <td>current</td>
-      <td>0.813476</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>harvard-benchmark</td>
-      <td>pairwise precision</td>
-      <td>one cluster</td>
-      <td>0.003192</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>harvard-benchmark</td>
-      <td>pairwise recall</td>
-      <td>current</td>
-      <td>0.807686</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>harvard-benchmark</td>
-      <td>pairwise recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>harvard-benchmark</td>
-      <td>cluster precision</td>
-      <td>current</td>
-      <td>0.905911</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>harvard-benchmark</td>
-      <td>cluster precision</td>
-      <td>one cluster</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>harvard-benchmark</td>
-      <td>cluster recall</td>
-      <td>current</td>
-      <td>0.894866</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>harvard-benchmark</td>
-      <td>cluster recall</td>
-      <td>one cluster</td>
-      <td>1.000000</td>
-    </tr>
   </tbody>
 </table>
 </div></div></div>
@@ -724,7 +428,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ea90b4bf0b9ce1a10deb3851a28d1b730517cfeff6f8360e92024f985856688e.svg" src="../../_images/ea90b4bf0b9ce1a10deb3851a28d1b730517cfeff6f8360e92024f985856688e.svg" /></div>
+<img alt="../../_images/a764cbffd7da7c2cb0d947658d8804e6eb4f77c241f1eea504f731d565e2f095.svg" src="../../_images/a764cbffd7da7c2cb0d947658d8804e6eb4f77c241f1eea504f731d565e2f095.svg" /></div>
 </div>
 <p>Next, we can look at the tables showcasing two types of errors: predicted clusters which should have been <strong>split</strong>, and predicted cluster which should have been <strong>merged</strong>.</p>
 <div class="cell docutils container">
@@ -737,14 +441,14 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
-#T_3da30_row0_col0, #T_3da30_row0_col1, #T_3da30_row1_col0, #T_3da30_row1_col1, #T_3da30_row9_col0, #T_3da30_row9_col1, #T_3da30_row10_col0, #T_3da30_row10_col1 {
+#T_8d9cd_row0_col0, #T_8d9cd_row0_col1, #T_8d9cd_row1_col0, #T_8d9cd_row1_col1, #T_8d9cd_row9_col0, #T_8d9cd_row9_col1, #T_8d9cd_row10_col0, #T_8d9cd_row10_col1 {
   background-color: white;
 }
-#T_3da30_row2_col0, #T_3da30_row2_col1, #T_3da30_row3_col0, #T_3da30_row3_col1, #T_3da30_row4_col0, #T_3da30_row4_col1, #T_3da30_row5_col0, #T_3da30_row5_col1, #T_3da30_row6_col0, #T_3da30_row6_col1, #T_3da30_row7_col0, #T_3da30_row7_col1, #T_3da30_row8_col0, #T_3da30_row8_col1, #T_3da30_row11_col0, #T_3da30_row11_col1, #T_3da30_row12_col0, #T_3da30_row12_col1, #T_3da30_row13_col0, #T_3da30_row13_col1, #T_3da30_row14_col0, #T_3da30_row14_col1 {
+#T_8d9cd_row2_col0, #T_8d9cd_row2_col1, #T_8d9cd_row3_col0, #T_8d9cd_row3_col1, #T_8d9cd_row4_col0, #T_8d9cd_row4_col1, #T_8d9cd_row5_col0, #T_8d9cd_row5_col1, #T_8d9cd_row6_col0, #T_8d9cd_row6_col1, #T_8d9cd_row7_col0, #T_8d9cd_row7_col1, #T_8d9cd_row8_col0, #T_8d9cd_row8_col1, #T_8d9cd_row11_col0, #T_8d9cd_row11_col1, #T_8d9cd_row12_col0, #T_8d9cd_row12_col1, #T_8d9cd_row13_col0, #T_8d9cd_row13_col1, #T_8d9cd_row14_col0, #T_8d9cd_row14_col1 {
   background-color: #c5dcf5;
 }
 </style>
-<table id="T_3da30_">
+<table id="T_8d9cd_">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
@@ -759,79 +463,79 @@
   </thead>
   <tbody>
     <tr>
-      <th id="T_3da30_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
-      <td id="T_3da30_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_3da30_row0_col1" class="data row0 col1" >472</td>
+      <th id="T_8d9cd_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
+      <td id="T_8d9cd_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
+      <td id="T_8d9cd_row0_col1" class="data row0 col1" >472</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
-      <td id="T_3da30_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_3da30_row1_col1" class="data row1 col1" >470</td>
+      <th id="T_8d9cd_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
+      <td id="T_8d9cd_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
+      <td id="T_8d9cd_row1_col1" class="data row1 col1" >470</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
-      <td id="T_3da30_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_3da30_row2_col1" class="data row2 col1" >16528</td>
+      <th id="T_8d9cd_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
+      <td id="T_8d9cd_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_8d9cd_row2_col1" class="data row2 col1" >16528</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
-      <td id="T_3da30_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_3da30_row3_col1" class="data row3 col1" >16522</td>
+      <th id="T_8d9cd_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
+      <td id="T_8d9cd_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_8d9cd_row3_col1" class="data row3 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
-      <td id="T_3da30_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_3da30_row4_col1" class="data row4 col1" >16522</td>
+      <th id="T_8d9cd_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
+      <td id="T_8d9cd_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_8d9cd_row4_col1" class="data row4 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
-      <td id="T_3da30_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_3da30_row5_col1" class="data row5 col1" >16522</td>
+      <th id="T_8d9cd_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
+      <td id="T_8d9cd_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_8d9cd_row5_col1" class="data row5 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
-      <td id="T_3da30_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_3da30_row6_col1" class="data row6 col1" >16522</td>
+      <th id="T_8d9cd_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
+      <td id="T_8d9cd_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_8d9cd_row6_col1" class="data row6 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
-      <td id="T_3da30_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_3da30_row7_col1" class="data row7 col1" >16522</td>
+      <th id="T_8d9cd_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
+      <td id="T_8d9cd_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_8d9cd_row7_col1" class="data row7 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
-      <td id="T_3da30_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_3da30_row8_col1" class="data row8 col1" >16522</td>
+      <th id="T_8d9cd_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
+      <td id="T_8d9cd_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
+      <td id="T_8d9cd_row8_col1" class="data row8 col1" >16522</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
-      <td id="T_3da30_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_3da30_row9_col1" class="data row9 col1" >307</td>
+      <th id="T_8d9cd_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
+      <td id="T_8d9cd_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
+      <td id="T_8d9cd_row9_col1" class="data row9 col1" >307</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
-      <td id="T_3da30_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_3da30_row10_col1" class="data row10 col1" >306</td>
+      <th id="T_8d9cd_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
+      <td id="T_8d9cd_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
+      <td id="T_8d9cd_row10_col1" class="data row10 col1" >306</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
-      <td id="T_3da30_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_3da30_row11_col1" class="data row11 col1" >2910</td>
+      <th id="T_8d9cd_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
+      <td id="T_8d9cd_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_8d9cd_row11_col1" class="data row11 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
-      <td id="T_3da30_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_3da30_row12_col1" class="data row12 col1" >2910</td>
+      <th id="T_8d9cd_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
+      <td id="T_8d9cd_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_8d9cd_row12_col1" class="data row12 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
-      <td id="T_3da30_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_3da30_row13_col1" class="data row13 col1" >2910</td>
+      <th id="T_8d9cd_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
+      <td id="T_8d9cd_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_8d9cd_row13_col1" class="data row13 col1" >2910</td>
     </tr>
     <tr>
-      <th id="T_3da30_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
-      <td id="T_3da30_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_3da30_row14_col1" class="data row14 col1" >2910</td>
+      <th id="T_8d9cd_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
+      <td id="T_8d9cd_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
+      <td id="T_8d9cd_row14_col1" class="data row14 col1" >2910</td>
     </tr>
   </tbody>
 </table>
@@ -977,13 +681,13 @@
       <i class="fas fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">Inventor Disambiguation Summaries</p>
+          <p class="prev-next-title">📑 Inventor Disambiguation Summaries</p>
       </div>
   </a>
   <a class='right-next' id="next-link" href="../templates/templates.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">HTML Report Template</p>
+      <p class="prev-next-title">📑 HTML Report Template</p>
   </div>
   <i class="fas fa-angle-right"></i>
   </a>
