@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Performance Estimates for Lai’s 2011 Benchmark &#8212; PatentsView-Evaluation  documentation</title>
+    <title>🎯 Performance Estimates for Lai’s 2011 Benchmark &#8212; PatentsView-Evaluation  documentation</title>
 <script>
   document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
   document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
@@ -51,8 +51,8 @@
     <script src="../../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="API Doc" href="../../pv_evaluation.html" />
-    <link rel="prev" title="Performance Estimates for the Israeli Inventors Dataset" href="israeli-data.html" />
+    <link rel="next" title="📑 Inventor Disambiguation Summaries" href="../summary/inventor.html" />
+    <link rel="prev" title="🎯 Performance Estimates for the Israeli Inventors Dataset" href="israeli-data.html" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="docsearch:language" content="en">
   </head>
@@ -155,28 +155,33 @@
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../summary/inventor.html">
-   Inventor Disambiguation Summaries
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../benchmark/report.html">
-   Performance Benchmarks
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../templates/templates.html">
-   HTML Report Template
+  <a class="reference internal" href="introduction.html">
+   🎯 Introduction to Performance Estimators for Entity Resolution Algorithms
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="israeli-data.html">
-   Performance Estimates for the Israeli Inventors Dataset
+   🎯 Performance Estimates for the Israeli Inventors Dataset
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Performance Estimates for Lai’s 2011 Benchmark
+   🎯 Performance Estimates for Lai’s 2011 Benchmark
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../summary/inventor.html">
+   📑 Inventor Disambiguation Summaries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../benchmark/report.html">
+   📊 Performance Benchmarks
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../templates/templates.html">
+   📑 HTML Report Template
   </a>
  </li>
 </ul>
@@ -233,7 +238,7 @@
               <article class="bd-article" role="main">
                 
   <section id="performance-estimates-for-lai-s-2011-benchmark">
-<h1>Performance Estimates for Lai’s 2011 Benchmark<a class="headerlink" href="#performance-estimates-for-lai-s-2011-benchmark" title="Permalink to this heading">#</a></h1>
+<h1>🎯 Performance Estimates for Lai’s 2011 Benchmark<a class="headerlink" href="#performance-estimates-for-lai-s-2011-benchmark" title="Permalink to this heading">#</a></h1>
 <p>This notebook showcases the use of our precision and recall performance estimators in application to Lai’s 2011 benchmark dataset.</p>
 <p>Note that Lai’s 2011 dataset only covers patents granted before 2010. As such, we can only estimate the performance of the current disambiguation algorithm for this time period.</p>
 <p>The sampling process assumed for Lai’s 2011 benchmark is a uniform sample of inventors. This is because inventors from this benchmark were identified from a set of CVs (not from sampling individual patents, which would bias towards large clusters).</p>
@@ -294,7 +299,7 @@
 <p>Precision estimate:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_precision_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_precision_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -306,7 +311,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_precision_std</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_precision_std</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -319,7 +324,7 @@
 <p>Recall estimate:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_recall_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_recall_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -331,7 +336,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_recall_std</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_recall_std</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -356,13 +361,13 @@
       <i class="fas fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">Performance Estimates for the Israeli Inventors Dataset</p>
+          <p class="prev-next-title">🎯 Performance Estimates for the Israeli Inventors Dataset</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="../../pv_evaluation.html" title="next page">
+  <a class='right-next' id="next-link" href="../summary/inventor.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">API Doc</p>
+      <p class="prev-next-title">📑 Inventor Disambiguation Summaries</p>
   </div>
   <i class="fas fa-angle-right"></i>
   </a>

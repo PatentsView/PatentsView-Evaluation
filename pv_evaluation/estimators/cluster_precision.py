@@ -64,7 +64,7 @@ def cluster_precision_estimator(prediction, reference, sampling_type="cluster_bl
     return ratio_estimator(N, D)
 
 
-def cluster_precision_std(prediction, reference, sampling_type, weights):
+def cluster_precision_std(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
     """Standard deviation estimates for the cluster precision estimator."""
     N, D = cluster_precision_arrays(prediction, reference, sampling_type, weights)
     return std_dev(N, D)
