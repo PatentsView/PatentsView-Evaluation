@@ -3,7 +3,13 @@
 
 ## 📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
 
-**pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It has the following submodules:
+**pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It provides summary statistics, performance evaluation metrics, and representative performance estimators.
+
+See the **[project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html)** for full documentation.
+
+### Submodules
+
+pv_evaluation has the following submodules:
 
 - [**summary**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.summary.html): Disambiguation summary statistics.
 - [**metrics**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.metrics.html): Implementation of performance evaluation metrics such as precision and recall.
@@ -12,7 +18,7 @@
 - [**templates**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html): Quarto report templates.
 - [**estimators**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.estimators.html): performance metric *estimators* to estimate full-data performance from biased samples.
 
-The [Examples](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html) page provides real-world examples of the use of **pv_evaluation** submodules. Please refer to the [project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html) for full documentation.
+The [Examples](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html) page provides real-world examples of the use of **pv_evaluation** submodules.
 
 ## Installation
 
@@ -40,14 +46,14 @@ render_inventor_disambiguation_report(".", summary_table_files=["rawinventor.tsv
 
 ### Estimate Precision and Recall
 
-Estimate precision and recall from clusters sampled with probability proportional to their size:
+Estimate precision and recall from true clusters sampled with probability proportional to their size:
 ```python
 from pv_evaluation.estimators import pairwise_precision_estimator
 from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark
 
 current_disambiguation = # TODO: Make this the current disambiguation membership vector
-pairwise_precision_estimator(current_disambiguation, load_lai_2011_inventors_benchmark(), sampling_type="cluster_block", weights="cluster_size")
-pairwise_recall_estimator(current_disambiguation, load_lai_2011_inventors_benchmark(), sampling_type="cluster_block", weights="cluster_size")
+pairwise_precision_estimator(current_disambiguation, load_lai_2011_inventors_benchmark())
+pairwise_recall_estimator(current_disambiguation, load_lai_2011_inventors_benchmark())
 ```
 
 ### Access Benchmark Datasets
@@ -94,6 +100,7 @@ Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Ev
 
 - Olivier Binette (American Institutes for Research, Duke University)
 - Sarvo Madhavan (American Institutes for Research)
+- Siddharth Engineer (American Institutes for Research)
 
 ## References
 
