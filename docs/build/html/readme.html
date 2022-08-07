@@ -180,6 +180,13 @@
   <a class="reference internal nav-link" href="#patentsview-evaluation-benchmark-disambiguation-algorithms">
    📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#submodules">
+     Submodules
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#installation">
@@ -187,7 +194,7 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+  <a class="reference internal nav-link" href="#id3">
    Examples
   </a>
   <ul class="nav section-nav flex-column">
@@ -284,7 +291,11 @@
 <a class="reference external image-reference" href="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment"><img alt="pages-build-deployment" src="https://github.com/PatentsView/PatentsView-Evaluation/actions/workflows/pages/pages-build-deployment/badge.svg" /></a>
 <section id="patentsview-evaluation-benchmark-disambiguation-algorithms">
 <h2>📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms<a class="headerlink" href="#patentsview-evaluation-benchmark-disambiguation-algorithms" title="Permalink to this heading">#</a></h2>
-<p><strong>pv_evaluation</strong> is a Python package for the evaluation and benchmarking of <a class="reference external" href="https://patentsview.org/">PatentsView</a> disambiguation algorithms. It has the following submodules:</p>
+<p><strong>pv_evaluation</strong> is a Python package for the evaluation and benchmarking of <a class="reference external" href="https://patentsview.org/">PatentsView</a> disambiguation algorithms. It provides summary statistics, performance evaluation metrics, and representative performance estimators.</p>
+<p>See the <a href="#id1"><span class="problematic" id="id2">**</span></a><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html">project website</a>** for full documentation.</p>
+<section id="submodules">
+<h3>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h3>
+<p>pv_evaluation has the following submodules:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.summary.html">**summary**</a>: Disambiguation summary statistics.</p></li>
 <li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.metrics.html">**metrics**</a>: Implementation of performance evaluation metrics such as precision and recall.</p></li>
@@ -293,7 +304,8 @@
 <li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html">**templates**</a>: Quarto report templates.</p></li>
 <li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.estimators.html">**estimators**</a>: performance metric <em>estimators</em> to estimate full-data performance from biased samples.</p></li>
 </ul>
-<p>The <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html">Examples</a> page provides real-world examples of the use of <strong>pv_evaluation</strong> submodules. Please refer to the <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html">project website</a> for full documentation.</p>
+<p>The <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html">Examples</a> page provides real-world examples of the use of <strong>pv_evaluation</strong> submodules.</p>
+</section>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
@@ -303,8 +315,8 @@
 </div>
 <p>Rendering reports requires the installation of quarto from <a class="reference external" href="https://quarto.org/docs/get-started/">quarto.org</a>.</p>
 </section>
-<section id="id1">
-<h2>Examples<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<section id="id3">
+<h2>Examples<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
 <p>Note: Working with the full patent data requires large amounts of memory (we suggest having 64GB RAM available).</p>
 <p>See the examples page for complete reproducible examples. The examples below only provide a quick overview of <strong>pv_evaluation</strong>‘s functionality.</p>
 <section id="metrics-and-summary-statistics">
@@ -318,13 +330,13 @@
 </section>
 <section id="estimate-precision-and-recall">
 <h3>Estimate Precision and Recall<a class="headerlink" href="#estimate-precision-and-recall" title="Permalink to this heading">#</a></h3>
-<p>Estimate precision and recall from clusters sampled with probability proportional to their size:</p>
+<p>Estimate precision and recall from true clusters sampled with probability proportional to their size:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.estimators</span> <span class="kn">import</span> <span class="n">pairwise_precision_estimator</span>
 <span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_lai_2011_inventors_benchmark</span>
 
 <span class="n">current_disambiguation</span> <span class="o">=</span> <span class="c1"># TODO: Make this the current disambiguation membership vector</span>
-<span class="n">pairwise_precision_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">)</span>
-<span class="n">pairwise_recall_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">sampling_type</span><span class="o">=</span><span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">)</span>
+<span class="n">pairwise_precision_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">())</span>
+<span class="n">pairwise_recall_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">())</span>
 </pre></div>
 </div>
 </section>
@@ -373,6 +385,7 @@
 <ul class="simple">
 <li><p>Olivier Binette (American Institutes for Research, Duke University)</p></li>
 <li><p>Sarvo Madhavan (American Institutes for Research)</p></li>
+<li><p>Siddharth Engineer (American Institutes for Research)</p></li>
 </ul>
 </section>
 </section>
