@@ -24,4 +24,7 @@ if __name__ == "__main__":
             "jinja2",
             "kaleido",
         ],
+        scripts=[
+            "scripts/hand-disambiguation/process-inventors-hand-disambiguation.py"
+        ],
     )
