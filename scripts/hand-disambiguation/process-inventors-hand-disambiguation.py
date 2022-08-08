@@ -79,4 +79,4 @@ if args.debug:
 else:
     true_clusters = benchmark.apply(lambd, axis=1)
     reference = pd.concat({"inventor_id":benchmark.inventor_id, "mention_id":true_clusters}, axis=1).explode("mention_id").set_index("mention_id")["inventor_id"]
-    reference.to_csv(args.output, index=False)
+    reference.to_csv(args.output)
