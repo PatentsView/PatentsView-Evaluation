@@ -22,6 +22,10 @@ def cluster_recall_arrays(prediction, reference, sampling_type, weights):
             cluster_sizes = inner.reference.value_counts(sort=False).values
 
             return (N / cluster_sizes, D / cluster_sizes)
+    elif sampling_type == "single_block":
+        N = [np.mean(inner.nunique()["prediction"] == 1)]
+        D = [1]
+        return (N, D)
     else:
         raise Exception("Unrecognized 'sampling_type' option. Should be 'cluster_block'.")
 

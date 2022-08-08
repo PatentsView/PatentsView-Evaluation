@@ -35,8 +35,18 @@ def cluster_precision_arrays(prediction, reference, sampling_type, weights):
             cluster_sizes = inner.reference.value_counts(sort=False).values
 
             return (N / cluster_sizes, D / cluster_sizes)
+    elif sampling_type == "single_block":
+        pred_count = outer.nunique(dropna=False)["prediction"]
+
+        contained_within_sample = outer.groupby("prediction").nunique(dropna=False) == 1
+        number_contained = inner.merge(contained_within_sample, on="prediction").query("reference_y == True").nunique()
+
+        N = [np.sum(number_contained)]
+        D = [np.sum(0.5 * (N + pred_count))]
+
+        return (N, D)
     else:
-        raise Exception("Unrecognized 'sampling_type' option. Should be 'cluster_block'.")
+        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'cluster_block' or 'single_block'.")
 
 
 def cluster_precision_estimator(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
@@ -54,7 +64,7 @@ def cluster_precision_estimator(prediction, reference, sampling_type="cluster_bl
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
-        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be "cluster_block".
+        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of 'cluster_block' or 'single_block'.
             Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster.
         weights (str): sampling probability weights. Should be one of "uniform" or "cluster_size".
 
