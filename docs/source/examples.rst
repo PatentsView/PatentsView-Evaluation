@@ -53,6 +53,17 @@ Performance Summaries
 
       Automated html report for the comparison of inventor disambiguation algorithms.
 
+Creating Benchmark Datasets by Hand
+-----------------------------------
+
+.. grid:: 3
+
+    .. grid-item-card:: Creating Inventors Benchmark Datasets
+      :text-align: center
+      :link: https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/hand-disambiguation/creating-inventors-benchmark.html
+      :link-type: url
+      
+      Hand-disambiguation protocol and processing scripts for inventors benchmarks.
 
 
 .. toctree::
@@ -65,3 +76,4 @@ Performance Summaries
     ../../examples/summary/inventor.ipynb
     ../../examples/benchmark/report.ipynb
     ../../examples/templates/templates.ipynb
+    ../../examples/hand-disambiguation/creating-inventors-benchmark.ipynb
