@@ -467,7 +467,7 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
 <p>The debugging pages are shown below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;true_clusters.csv.debug.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Cluster Errors&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;true_clusters.csv.debug.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Cluster Errors&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sequence&quot;</span><span class="p">,</span> <span class="s2">&quot;Unnamed: 9&quot;</span><span class="p">,</span> <span class="s2">&quot;correct&quot;</span><span class="p">,</span> <span class="s2">&quot;notes&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -494,12 +494,8 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <th>inventor_id</th>
       <th>name_first</th>
       <th>name_last</th>
-      <th>sequence</th>
       <th>add</th>
       <th>remove</th>
-      <th>correct</th>
-      <th>notes</th>
-      <th>Unnamed: 9</th>
       <th>remove_errors</th>
       <th>add_errors</th>
     </tr>
@@ -511,10 +507,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:ca_ln:santizo-1</td>
       <td>Carlos Gilberto</td>
       <td>Santizo</td>
-      <td>3</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -526,10 +518,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:ma_ln:flanders-2</td>
       <td>Marguerita E.</td>
       <td>Flanders</td>
-      <td>1</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -541,10 +529,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:ar_ln:gv-1</td>
       <td>Aravind</td>
       <td>Gv</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -556,10 +540,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:th_ln:mealey-1</td>
       <td>Thomas P.</td>
       <td>Mealey</td>
-      <td>2</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -571,21 +551,13 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:p._ln:erman-1</td>
       <td>P. Gregory</td>
       <td>Erman</td>
-      <td>0</td>
       <td>US8561841-0, US7475795-3, US9296603-1,US9738507-1</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
       <td>[]</td>
     </tr>
     <tr>
       <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -601,10 +573,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:jo_ln:bernstein-1</td>
       <td>Joseph Harold</td>
       <td>Bernstein</td>
-      <td>0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -616,10 +584,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:mi_ln:presseau-1</td>
       <td>Michel</td>
       <td>Presseau</td>
-      <td>1</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -631,10 +595,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:an_ln:osborn-5</td>
       <td>Andrew</td>
       <td>Osborn</td>
-      <td>4</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -646,10 +606,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:st_ln:toth-4</td>
       <td>Stefan Karl</td>
       <td>Toth</td>
-      <td>2</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -661,10 +617,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>fl:sh_ln:watanabe-201</td>
       <td>Shunji</td>
       <td>Watanabe</td>
-      <td>2</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>[]</td>
@@ -672,12 +624,12 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     </tr>
   </tbody>
 </table>
-<p>200 rows × 12 columns</p>
+<p>200 rows × 8 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;true_clusters.csv.debug.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Validation of Added Mentions&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;true_clusters.csv.debug.xlsx&quot;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Validation of Added Mentions&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sequence&quot;</span><span class="p">,</span> <span class="s2">&quot;inventor_id&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -701,8 +653,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr style="text-align: right;">
       <th></th>
       <th>patent_id</th>
-      <th>sequence</th>
-      <th>inventor_id</th>
       <th>name_first</th>
       <th>name_last</th>
       <th>added</th>
@@ -714,8 +664,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>0</th>
       <td>RE46143</td>
-      <td>0</td>
-      <td>fl:p._ln:erman-1</td>
       <td>P. Gregory</td>
       <td>Erman</td>
       <td>US7475795-3</td>
@@ -725,8 +673,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>1</th>
       <td>RE46143</td>
-      <td>0</td>
-      <td>fl:p._ln:erman-1</td>
       <td>P. Gregory</td>
       <td>Erman</td>
       <td>US8561841-0</td>
@@ -736,8 +682,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>2</th>
       <td>RE46143</td>
-      <td>0</td>
-      <td>fl:p._ln:erman-1</td>
       <td>P. Gregory</td>
       <td>Erman</td>
       <td>US9296603-1</td>
@@ -747,8 +691,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>3</th>
       <td>RE46143</td>
-      <td>0</td>
-      <td>fl:p._ln:erman-1</td>
       <td>P. Gregory</td>
       <td>Erman</td>
       <td>US9738507-1</td>
@@ -758,8 +700,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>4</th>
       <td>6387460</td>
-      <td>1</td>
-      <td>fl:hi_ln:yoshizawa-11</td>
       <td>Hideo</td>
       <td>Yoshizawa</td>
       <td>US10895827-2</td>
@@ -774,14 +714,10 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
       <td>...</td>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
       <th>227</th>
       <td>5792879</td>
-      <td>0</td>
-      <td>fl:th_ln:gessner-4</td>
       <td>Thomas</td>
       <td>Gessner</td>
       <td>US8963898-4</td>
@@ -791,8 +727,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>228</th>
       <td>5792879</td>
-      <td>0</td>
-      <td>fl:th_ln:gessner-4</td>
       <td>Thomas</td>
       <td>Gessner</td>
       <td>US9005705-2</td>
@@ -802,8 +736,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>229</th>
       <td>5792879</td>
-      <td>0</td>
-      <td>fl:th_ln:gessner-4</td>
       <td>Thomas</td>
       <td>Gessner</td>
       <td>US9291285-2</td>
@@ -813,8 +745,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>230</th>
       <td>10474574</td>
-      <td>15</td>
-      <td>fl:se_ln:lee-1141</td>
       <td>Seung-Beom</td>
       <td>Lee</td>
       <td>US10275371-1</td>
@@ -824,8 +754,6 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     <tr>
       <th>231</th>
       <td>9979878</td>
-      <td>1</td>
-      <td>fl:sa_ln:shroff-3</td>
       <td>Sapna A</td>
       <td>Shroff</td>
       <td>US11042034-2</td>
@@ -834,7 +762,7 @@ process-inventors-hand-disambiguation.py --debug 2022-07-25-Emma-patent-samples-
     </tr>
   </tbody>
 </table>
-<p>232 rows × 8 columns</p>
+<p>232 rows × 6 columns</p>
 </div></div></div>
 </div>
 </section>
