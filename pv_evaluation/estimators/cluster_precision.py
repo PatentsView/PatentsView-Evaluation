@@ -12,12 +12,16 @@ def cluster_precision_arrays(prediction, reference, sampling_type, weights):
 
     inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner")
     K = prediction.isin(inner.prediction)
-    outer = pd.concat({"prediction":prediction[K], "reference":reference}, join="outer", axis=1)
+    outer = pd.concat({"prediction": prediction[K], "reference": reference}, join="outer", axis=1)
     pred_count = outer.groupby("reference").nunique(dropna=False)["prediction"]
 
     contained_within_sample = outer.groupby("prediction").nunique(dropna=False) == 1
-    number_contained_by_reference = inner.merge(contained_within_sample, on="prediction").query("reference_y == True").groupby("reference_x").nunique()
-    data = pd.concat({"pred_count":pred_count, "n_contained":number_contained_by_reference["prediction"]}, join="outer", axis=1)
+    number_contained_by_reference = (
+        inner.merge(contained_within_sample, on="prediction").query("reference_y == True").groupby("reference_x").nunique()
+    )
+    data = pd.concat(
+        {"pred_count": pred_count, "n_contained": number_contained_by_reference["prediction"]}, join="outer", axis=1
+    )
     data.n_contained = data.n_contained.fillna(0)
 
     if sampling_type == "cluster_block":
@@ -30,7 +34,7 @@ def cluster_precision_arrays(prediction, reference, sampling_type, weights):
             (N, D) = cluster_precision_arrays(prediction, reference, sampling_type="cluster_block", weights="uniform")
             cluster_sizes = inner.reference.value_counts(sort=False).values
 
-            return (N/cluster_sizes, D/cluster_sizes)
+            return (N / cluster_sizes, D / cluster_sizes)
     else:
         raise Exception("Unrecognized 'sampling_type' option. Should be 'cluster_block'.")
 

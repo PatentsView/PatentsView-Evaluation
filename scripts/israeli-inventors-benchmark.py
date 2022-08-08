@@ -8,14 +8,16 @@ except:
 
 if not os.path.isfile("rawinventor.tsv"):
     wget.download("https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip")
-    with zipfile.ZipFile("rawinventor.tsv.zip", 'r') as zip_ref:
+    with zipfile.ZipFile("rawinventor.tsv.zip", "r") as zip_ref:
         zip_ref.extractall(".")
     os.remove("rawinventor.tsv.zip")
 
 rawinventor = pd.read_csv("rawinventor.tsv", sep="\t", dtype=str)
 
 data = pd.read_csv("data-raw/israeli-dataset/uniq_pat.csv", dtype=str)
-data["mention_id"] = "US" + data.patent.astype(str).map(lambda x: x.lstrip("0")) + "-" + (data.invseq.astype(int) - 1).astype(str)
+data["mention_id"] = (
+    "US" + data.patent.astype(str).map(lambda x: x.lstrip("0")) + "-" + (data.invseq.astype(int) - 1).astype(str)
+)
 data["unique_id"] = data.id
 
 rawinventor["mention_id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence

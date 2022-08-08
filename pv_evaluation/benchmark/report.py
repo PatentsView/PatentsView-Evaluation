@@ -2,6 +2,8 @@ import itertools
 import pandas as pd
 import plotly.express as px
 
+from pv_evaluation.utils import expand_grid
+
 from pv_evaluation.metrics import (
     pairwise_precision,
     pairwise_recall,
@@ -18,9 +20,31 @@ from pv_evaluation.benchmark import (
     load_als_inventors_benchmark,
     load_ens_inventors_benchmark,
 )
+from pv_evaluation.estimators import (
+    pairwise_precision_estimator,
+    pairwise_precision_std,
+    pairwise_recall_estimator,
+    pairwise_recall_std,
+    cluster_precision_estimator,
+    cluster_precision_std,
+    cluster_recall_estimator,
+    cluster_recall_std,
+)
 
+DEFAULT_ESTIMATORS = {
+    # Point estimates and standard deviation estimates.
+    "pairwise precision": {"point":pairwise_precision_estimator, "std":pairwise_precision_std},
+    "pairwise recall": {"point":pairwise_recall_estimator, "std":pairwise_recall_std},
+    "cluster precision": {"point":cluster_precision_estimator, "std":cluster_precision_std},
+    "cluster recall": {"point":cluster_recall_estimator, "std":cluster_recall_std},
+}
+INVENTORS_SAMPLES = {
+    # Dataset and parameters to pass to the estimator.
+    "lai-sample": (load_lai_2011_inventors_benchmark, {"sampling_type": "cluster_block", "weights": "uniform"}),
+    "israeli-sample": (load_lai_2011_inventors_benchmark, {"sampling_type": "single_block"}),
+}
 # Default benchmarks to run.
-DEFAULT_BENCHMARKS = {
+DEFAULT_INVENTORS_BENCHMARKS = {
     "patentsview-inventors": load_patentsview_inventors_benchmark,
     "israeli-inventors": load_israeli_inventors_benchmark,
     "lai-benchmark": load_lai_2011_inventors_benchmark,
@@ -38,6 +62,74 @@ DEFAULT_METRICS = {
 }
 
 
+def inventor_estimates_table(disambiguations, samples, estimators=None):
+    """Compute performance estimates for given cluster samples.
+
+    Args:
+        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
+            Note that the disambiguated population should match the population from which `samples` have been drawn. For instance, if using the Israeli benchmark dataset
+            which covers granted patents between granted between 1963 and 1999, then `disambiguations` should be subsetted to the same time period.
+        samples (dict): Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See `INVENTORS_SAMPLES` for an example.
+        estimators (dict, optional): Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.
+
+    Returns:
+        DataFrame of estimated performance metrics for every given disambiguation, sample and estimators.
+    """
+    if estimators is None:
+        estimators = DEFAULT_ESTIMATORS
+
+    def compute(sample, estimator, algorithm, type="point"):
+        """Compute metric on benchmark data for a given disambiguation algorithm.
+
+        Args:
+            benchmark (str): benchmark dataset name.
+            metric (str): performance metric name.
+            algorithm (str): algorithm name.
+            type (str): one of "point" for point estimate or "std" for standard deviation estimate.
+
+        Returns:
+            float: Evaluated metric.
+        """
+        data = pd.concat(
+            {"prediction": disambiguations[algorithm], "reference": samples[sample[0]]()}, axis=1, join="inner"
+        )
+        return estimators[estimator][type](data.prediction, data.reference, **sample[1])
+
+    computed_estimates = expand_grid(dict(sample=samples, estimator=estimators, algorithm=disambiguations))
+    computed_estimates["value"] = computed_estimates.apply(lambda x: compute(x.sample, x.estimator, x.algorithm, type="point"), axis=1)
+    computed_estimates["std"] = computed_estimates.apply(lambda x: compute(x.sample, x.estimator, x.algorithm, type="std"), axis=1)
+    return computed_estimates
+
+def inventor_estimates_plot(disambiguations, samples, estimators=None, facet_col_wrap=2, **kwargs):
+    """Plot performance estimates for given cluster samples.
+
+    Args:
+        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
+            Note that the disambiguated population should match the population from which `samples` have been drawn. For instance, if using the Israeli benchmark dataset
+            which covers granted patents between granted between 1963 and 1999, then `disambiguations` should be subsetted to the same time period.
+        samples (dict): Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See `INVENTORS_SAMPLES` for an example.
+        estimators (dict, optional): Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.
+
+    Returns:
+        Plotly bar chart
+    """
+    if estimators is None:
+        estimators = DEFAULT_ESTIMATORS
+
+    computed_metrics = inventor_benchmark_table(disambiguations, samples=samples, estimators=estimators)
+    return px.bar(
+        computed_metrics,
+        y="value",
+        x="metric",
+        error_y="std",
+        color="algorithm",
+        facet_col="benchmark",
+        barmode="group",
+        facet_col_wrap=facet_col_wrap,
+        **kwargs,
+    )
+
+
 def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
     """Compute performance evaluation metrics on benchmark datasets.
 
@@ -52,7 +144,7 @@ def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
     if metrics is None:
         metrics = DEFAULT_METRICS
     if benchmarks is None:
-        benchmarks = DEFAULT_BENCHMARKS
+        benchmarks = DEFAULT_INVENTORS_BENCHMARKS
 
     def compute(benchmark, metric, algorithm):
         """Compute metric on benchmark data for a given disambiguation algorithm.
@@ -69,10 +161,6 @@ def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
             {"prediction": disambiguations[algorithm], "reference": benchmarks[benchmark]()}, axis=1, join="inner"
         )
         return metrics[metric](data.prediction, data.reference)
-
-    def expand_grid(data):
-        rows = itertools.product(*data.values())
-        return pd.DataFrame.from_records(rows, columns=data.keys())
 
     computed_metrics = expand_grid(dict(benchmark=benchmarks, metric=metrics, algorithm=disambiguations))
 
@@ -95,10 +183,19 @@ def inventor_benchmark_plot(disambiguations, metrics=None, benchmarks=None, face
     if metrics is None:
         metrics = DEFAULT_METRICS
     if benchmarks is None:
-        benchmarks = DEFAULT_BENCHMARKS
+        benchmarks = DEFAULT_INVENTORS_BENCHMARKS
 
     computed_metrics = inventor_benchmark_table(disambiguations, metrics=metrics, benchmarks=benchmarks)
-    return px.bar(computed_metrics, y="value", x="metric", color="algorithm", facet_col="benchmark", barmode="group", facet_col_wrap=facet_col_wrap, **kwargs)
+    return px.bar(
+        computed_metrics,
+        y="value",
+        x="metric",
+        color="algorithm",
+        facet_col="benchmark",
+        barmode="group",
+        facet_col_wrap=facet_col_wrap,
+        **kwargs,
+    )
 
 
 def style_cluster_inspection(table, by="prediction"):

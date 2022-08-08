@@ -10,6 +10,8 @@ from pv_evaluation.benchmark.data import (
 )
 
 from pv_evaluation.benchmark.report import (
+    inventor_estimates_table,
+    inventor_estimates_plot,
     inventor_benchmark_table,
     inventor_benchmark_plot,
     inspect_clusters_to_split,
@@ -24,6 +26,8 @@ __all__ = [
     "load_als_inventors_benchmark",
     "load_ens_inventors_benchmark",
     "load_harvard_inventors_benchmark",
+    "inventor_estimates_table",
+    "inventor_estimates_plot",
     "inventor_benchmark_table",
     "inventor_benchmark_plot",
     "inspect_clusters_to_split",

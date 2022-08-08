@@ -1,0 +1,4 @@
+include pv_evaluation/data/inventor/*.csv
+include pv_evaluation/templates/inventor/*.qmd
+include pv_evaluation/templates/inventor/*.html
+include pv_evaluation/templates/inventor/callouts/*.qmd
