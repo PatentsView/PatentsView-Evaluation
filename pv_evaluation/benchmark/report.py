@@ -33,10 +33,10 @@ from pv_evaluation.estimators import (
 
 DEFAULT_ESTIMATORS = {
     # Point estimates and standard deviation estimates.
-    "pairwise precision": {"point":pairwise_precision_estimator, "std":pairwise_precision_std},
-    "pairwise recall": {"point":pairwise_recall_estimator, "std":pairwise_recall_std},
-    "cluster precision": {"point":cluster_precision_estimator, "std":cluster_precision_std},
-    "cluster recall": {"point":cluster_recall_estimator, "std":cluster_recall_std},
+    "pairwise precision": {"point": pairwise_precision_estimator, "std": pairwise_precision_std},
+    "pairwise recall": {"point": pairwise_recall_estimator, "std": pairwise_recall_std},
+    "cluster precision": {"point": cluster_precision_estimator, "std": cluster_precision_std},
+    "cluster recall": {"point": cluster_recall_estimator, "std": cluster_recall_std},
 }
 INVENTORS_SAMPLES = {
     # Dataset and parameters to pass to the estimator.
@@ -90,15 +90,18 @@ def inventor_estimates_table(disambiguations, samples, estimators=None):
         Returns:
             float: Evaluated metric.
         """
-        data = pd.concat(
-            {"prediction": disambiguations[algorithm], "reference": samples[sample[0]]()}, axis=1, join="inner"
-        )
-        return estimators[estimator][type](data.prediction, data.reference, **sample[1])
+        data = pd.concat({"prediction": disambiguations[algorithm], "reference": samples[sample][0]()}, axis=1, join="inner")
+        return estimators[estimator][type](data.prediction, data.reference, **samples[sample][1])
 
-    computed_estimates = expand_grid(dict(sample=samples, estimator=estimators, algorithm=disambiguations))
-    computed_estimates["value"] = computed_estimates.apply(lambda x: compute(x.sample, x.estimator, x.algorithm, type="point"), axis=1)
-    computed_estimates["std"] = computed_estimates.apply(lambda x: compute(x.sample, x.estimator, x.algorithm, type="std"), axis=1)
+    computed_estimates = expand_grid(sample=samples, estimator=estimators, algorithm=disambiguations)
+    computed_estimates["value"] = computed_estimates.apply(
+        lambda x: compute(x["sample"], x["estimator"], x["algorithm"], type="point"), axis=1
+    )
+    computed_estimates["std"] = computed_estimates.apply(
+        lambda x: compute(x["sample"], x["estimator"], x["algorithm"], type="std"), axis=1
+    )
     return computed_estimates
+
 
 def inventor_estimates_plot(disambiguations, samples, estimators=None, facet_col_wrap=2, **kwargs):
     """Plot performance estimates for given cluster samples.
@@ -116,14 +119,14 @@ def inventor_estimates_plot(disambiguations, samples, estimators=None, facet_col
     if estimators is None:
         estimators = DEFAULT_ESTIMATORS
 
-    computed_metrics = inventor_benchmark_table(disambiguations, samples=samples, estimators=estimators)
+    computed_metrics = inventor_estimates_table(disambiguations, samples=samples, estimators=estimators)
     return px.bar(
         computed_metrics,
         y="value",
-        x="metric",
+        x="estimator",
         error_y="std",
         color="algorithm",
-        facet_col="benchmark",
+        facet_col="sample",
         barmode="group",
         facet_col_wrap=facet_col_wrap,
         **kwargs,
@@ -162,9 +165,9 @@ def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
         )
         return metrics[metric](data.prediction, data.reference)
 
-    computed_metrics = expand_grid(dict(benchmark=benchmarks, metric=metrics, algorithm=disambiguations))
+    computed_metrics = expand_grid(benchmark=benchmarks, metric=metrics, algorithm=disambiguations)
 
-    computed_metrics["value"] = computed_metrics.apply(lambda x: compute(x.benchmark, x.metric, x.algorithm), axis=1)
+    computed_metrics["value"] = computed_metrics.apply(lambda x: compute(x["benchmark"], x["metric"], x["algorithm"]), axis=1)
 
     return computed_metrics
 

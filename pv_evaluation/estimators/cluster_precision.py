@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from collections import Counter
 
 from pv_evaluation.metrics.utils import validate_membership
 from pv_evaluation.estimators.ratio_estimators import ratio_estimator, std_dev
@@ -36,15 +37,7 @@ def cluster_precision_arrays(prediction, reference, sampling_type, weights):
 
             return (N / cluster_sizes, D / cluster_sizes)
     elif sampling_type == "single_block":
-        pred_count = outer.nunique(dropna=False)["prediction"]
-
-        contained_within_sample = outer.groupby("prediction").nunique(dropna=False) == 1
-        number_contained = inner.merge(contained_within_sample, on="prediction").query("reference_y == True").nunique()
-
-        N = [np.sum(number_contained)]
-        D = [np.sum(0.5 * (N + pred_count))]
-
-        return (N, D)
+        return ([np.nan], [np.nan])
     else:
         raise Exception("Unrecognized 'sampling_type' option. Should be one of 'cluster_block' or 'single_block'.")
 

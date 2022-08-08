@@ -9,6 +9,9 @@ def ratio_estimator(B, A):
     B_mean = np.mean(B)
     n = len(A)
 
+    if B_mean == 0:
+        return 0
+
     if len(A) == 1:
         adj = 1
     else:
@@ -25,9 +28,14 @@ def std_dev(B, A):
     B_mean = np.mean(B)
     n = len(A)
 
+    if np.allclose(A_mean * B_mean, 0):
+        return np.nan
+
     if n == 1:
         return np.nan
     else:
-        return (B_mean / A_mean) * np.sqrt(
-            np.sum((A / A_mean) ** 2 + (B / B_mean) ** 2 - 2 * (A * B) / (A_mean * B_mean)) / (n * (n - 1))
-        )
+        op = np.sum((A / A_mean) ** 2 + (B / B_mean) ** 2 - 2 * (A * B) / (A_mean * B_mean)) / (n * (n - 1))
+        if op < 0:
+            return np.nan
+        else:
+            return (B_mean / A_mean) * np.sqrt(op)
