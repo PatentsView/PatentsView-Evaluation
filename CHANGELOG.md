@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add script for processing hand-disambiguated inventor benchmark.
 - BREAKING: remove Harvard inventors benchmark (low data quality).
 - BREAKING: change "mention-id" to "mention_id" and "unique-id" to "unique_id" in datasets.
 - Added inventor names to raw csv benchmarkd datasets (useful for validation and debugging).

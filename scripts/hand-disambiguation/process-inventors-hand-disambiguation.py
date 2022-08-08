@@ -74,8 +74,9 @@ if args.debug:
         dat = dat[~dat.added.isna()]
         dat = dat.merge(rawinventor[["mention_id", "name_first", "name_last"]], left_on="added", right_on="mention_id", suffixes=("", "_added"))
         dat = dat[["patent_id", "sequence", "inventor_id", "name_first", "name_last", "added", "name_first_added", "name_last_added"]]
-        dat.to_excel(writer, sheet_name="Validation of Added Mentions")
+        dat.to_excel(writer, sheet_name="Validation of Added Mentions", index=False)
 
 else:
     true_clusters = benchmark.apply(lambd, axis=1)
-    true_clusters.to_csv(args.output)
+    reference = pd.concat({"inventor_id":benchmark.inventor_id, "mention_id":true_clusters}, axis=1).explode("mention_id").set_index("mention_id")["inventor_id"]
+    reference.to_csv(args.output, index=False)
