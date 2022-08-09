@@ -13,6 +13,8 @@ Contents
    inspect_clusters_to_split
    inventor_benchmark_plot
    inventor_benchmark_table
+   inventor_estimates_plot
+   inventor_estimates_table
    load_israeli_inventors_benchmark
    load_lai_2011_inventors_benchmark
    load_patentsview_inventors_benchmark
