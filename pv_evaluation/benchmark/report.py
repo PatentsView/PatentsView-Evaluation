@@ -90,8 +90,7 @@ def inventor_estimates_table(disambiguations, samples, estimators=None):
         Returns:
             float: Evaluated metric.
         """
-        data = pd.concat({"prediction": disambiguations[algorithm], "reference": samples[sample][0]()}, axis=1, join="inner")
-        return estimators[estimator][type](data.prediction, data.reference, **samples[sample][1])
+        return estimators[estimator][type](disambiguations[algorithm], samples[sample][0](), **samples[sample][1])
 
     computed_estimates = expand_grid(sample=samples, estimator=estimators, algorithm=disambiguations)
     computed_estimates["value"] = computed_estimates.apply(
