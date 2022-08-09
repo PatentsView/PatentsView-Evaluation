@@ -64,15 +64,15 @@ html_theme = "pydata_sphinx_theme"
 html_static_path = ["_static"]
 
 html_theme_options = {
-  #"logo_link": "index",
-  "github_url": "https://github.com/patentsview/patentsview-evaluation",
-  #"twitter_url": "https://twitter.com/",
-  "collapse_navigation": True,
-  #"external_links": [
-  #    {"name": "Learn", "url": "https://numpy.org/numpy-tutorials/"}
-  #    ],
-  # Add light/dark mode and documentation version switcher:
-  "navbar_end": ["navbar-icon-links"],
+    # "logo_link": "index",
+    "github_url": "https://github.com/patentsview/patentsview-evaluation",
+    # "twitter_url": "https://twitter.com/",
+    "collapse_navigation": True,
+    # "external_links": [
+    #    {"name": "Learn", "url": "https://numpy.org/numpy-tutorials/"}
+    #    ],
+    # Add light/dark mode and documentation version switcher:
+    "navbar_end": ["navbar-icon-links"],
 }
 
-html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = "%b %d, %Y"

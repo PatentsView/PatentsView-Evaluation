@@ -25,6 +25,7 @@ def test_benchmark_datasets_notebook(tb):
 def test_summary_inventor_notebook(tb):
     pass
 
+
 @testbook("tests/notebooks/estimators/test_estimators.ipynb", execute=True)
 def test_estimators_notebook(tb):
     pass

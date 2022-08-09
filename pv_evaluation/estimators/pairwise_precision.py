@@ -56,9 +56,11 @@ def pairwise_precision_arrays(prediction, reference, sampling_type, weights):
             return (N, D)
         elif weights == "cluster_size":
             (N, D) = pairwise_precision_arrays(prediction, reference, sampling_type="cluster_block", weights="uniform")
-            return (N/cluster_sizes, D/cluster_sizes)
+            return (N / cluster_sizes, D / cluster_sizes)
     else:
-        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', 'cluster_block' or 'single_block'")
+        raise Exception(
+            "Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', 'cluster_block' or 'single_block'"
+        )
 
 
 def pairwise_precision_estimator(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
@@ -80,7 +82,7 @@ def pairwise_precision_estimator(prediction, reference, sampling_type="cluster_b
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
         sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of "record", "cluster", "single_block", or "cluster_block". Defaults to "cluster_block".
-            Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster. 
+            Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster.
         weights (str): sampling probability weights. Should be one of "uniform" or "cluster_size". Defaults to "cluster_size".
 
     Returns:
