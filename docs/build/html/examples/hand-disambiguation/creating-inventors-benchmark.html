@@ -233,6 +233,16 @@
    More Information
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#makefile-template">
+   Makefile Template
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#template-to-obtain-performance-estimates">
+   Template to obtain performance estimates
+  </a>
+ </li>
 </ul>
 
 </nav>
@@ -916,6 +926,102 @@ optional arguments:
 </pre></div>
 </div>
 </div>
+</div>
+</section>
+<section id="makefile-template">
+<h2>Makefile Template<a class="headerlink" href="#makefile-template" title="Permalink to this heading">#</a></h2>
+<p>The following makefile can be used to facilitate the processing of inventors hand-disambiguation files. Simply put the reviewed Excel spreadsheet in a folder called “input” and create an empty “output” folder. Then run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">debug</span></code> to generate debugging sheets and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> to generate final benchmark csv files.</p>
+<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">## Process inventors hand-disambiguation data</span>
+<span class="c">##</span>
+<span class="c">## Usage:</span>
+<span class="c">## 		make &lt;target&gt;</span>
+<span class="c">##</span>
+<span class="c">## Targets:</span>
+<span class="c">## 		help:		Show this help message.</span>
+<span class="c">##		debug:		Create debugging spreadsheet for inventors hand-disambiguation</span>
+<span class="c">##		all:		Create benchmark csv files for inventors hand-disambiguation</span>
+<span class="nv">RAWINVENTOR_S3_URL</span><span class="o">=</span>https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip
+<span class="nv">INPUT</span> <span class="o">=</span> <span class="k">$(</span>wildcard input/*.xlsx<span class="k">)</span>
+
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">help</span> <span class="n">env</span> <span class="n">all</span> <span class="n">debug</span>
+
+<span class="nf">debug</span><span class="o">:</span> <span class="k">$(</span><span class="nv">patsubst</span> <span class="nv">input</span>/%<span class="nv">.xlsx</span>,<span class="nv">output</span>/%<span class="nv">-true-clusters.csv.debug.xlsx</span>,<span class="k">$(</span><span class="nv">INPUT</span><span class="k">))</span>
+	<span class="nb">echo</span>
+
+<span class="nf">all</span><span class="o">:</span> <span class="k">$(</span><span class="nv">patsubst</span> <span class="nv">input</span>/%<span class="nv">.xlsx</span>,<span class="nv">output</span>/%<span class="nv">-true-clusters.csv</span>,<span class="k">$(</span><span class="nv">INPUT</span><span class="k">))</span>
+
+<span class="nf">help</span><span class="o">:</span> <span class="n">makefile</span>
+	@sed -n <span class="s2">&quot;s/^##//p&quot;</span> $&lt;
+
+<span class="nf">rawinventor.tsv.zip</span><span class="o">:</span>
+	wget -nc <span class="si">${</span><span class="nv">RAWINVENTOR_S3_URL</span><span class="si">}</span>
+
+<span class="nf">rawinventor.tsv</span><span class="o">:</span> <span class="n">rawinventor</span>.<span class="n">tsv</span>.<span class="n">zip</span>
+	unzip -o rawinventor.tsv.zip
+
+<span class="nf">output/%-true-clusters.csv.debug.xlsx</span><span class="o">:</span> <span class="n">input</span>/%.<span class="n">xlsx</span> <span class="n">rawinventor</span>.<span class="n">tsv</span>
+	mkdir -p <span class="k">$(</span>@D<span class="k">)</span>
+	process-inventors-hand-disambiguation.py --debug $&lt; rawinventor.tsv -o <span class="nv">$@</span>
+
+<span class="nf">output/%-true-clusters.csv</span><span class="o">:</span> <span class="n">input</span>/%.<span class="n">xlsx</span> <span class="n">rawinventor</span>.<span class="n">tsv</span>
+	mkdir -p <span class="k">$(</span>@D<span class="k">)</span>
+	process-inventors-hand-disambiguation.py $&lt; rawinventor.tsv -o <span class="nv">$@</span>
+</pre></div>
+</div>
+</section>
+<section id="template-to-obtain-performance-estimates">
+<h2>Template to obtain performance estimates<a class="headerlink" href="#template-to-obtain-performance-estimates" title="Permalink to this heading">#</a></h2>
+<p>The following Python code can be used to generate performance estimates following the processing of hand-disambiguation data.</p>
+<p>First recover the current disambiguation and subset it to match the timeframe of the hand-disambiguated data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">wget</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">):</span>
+    <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv.zip&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;patent.tsv&quot;</span><span class="p">):</span>
+    <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://s3.amazonaws.com/data.patentsview.org/download/patent.tsv.zip&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;patent.tsv.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;patent.tsv.zip&quot;</span><span class="p">)</span>
+
+<span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">patent</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;patent.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">rawinventor</span> <span class="o">=</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">patent</span><span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">]],</span> <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;patent_id&quot;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="s2">&quot;many_to_one&quot;</span><span class="p">)</span>
+
+<span class="n">rawinventor</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;date &lt; &#39;2022-01-01&#39;&quot;</span><span class="p">)</span>
+<span class="n">current_disambiguation</span> <span class="o">=</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Then, print out a table and plot with the performance estimates:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_israeli_inventors_benchmark</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span>
+<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">inventor_estimates_table</span><span class="p">,</span> <span class="n">inventor_estimates_plot</span>
+
+<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;staff1&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="k">lambda</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/2022-07-25-Aida-patent-samples-part-2-true-clusters.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">],</span> 
+        <span class="p">{</span><span class="s2">&quot;sampling_type&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">:</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">}</span>
+        <span class="p">),</span>
+    <span class="s2">&quot;staff2&quot;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="k">lambda</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/2022-07-25-Emma-patent-samples-part-2-true-clusters.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">],</span> 
+        <span class="p">{</span><span class="s2">&quot;sampling_type&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">:</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">}</span>
+        <span class="p">),</span>
+<span class="p">}</span>
+<span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;current&quot;</span><span class="p">:</span> <span class="n">current_disambiguation</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">inventor_estimates_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples</span><span class="p">))</span>
+<span class="n">inventor_estimates_plot</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
+</pre></div>
 </div>
 </section>
 </section>

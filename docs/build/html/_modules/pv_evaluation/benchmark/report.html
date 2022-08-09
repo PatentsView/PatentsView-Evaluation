@@ -179,6 +179,8 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 
+<span class="kn">from</span> <span class="nn">pv_evaluation.utils</span> <span class="kn">import</span> <span class="n">expand_grid</span>
+
 <span class="kn">from</span> <span class="nn">pv_evaluation.metrics</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">pairwise_precision</span><span class="p">,</span>
     <span class="n">pairwise_recall</span><span class="p">,</span>
@@ -195,9 +197,31 @@
     <span class="n">load_als_inventors_benchmark</span><span class="p">,</span>
     <span class="n">load_ens_inventors_benchmark</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pv_evaluation.estimators</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">pairwise_precision_estimator</span><span class="p">,</span>
+    <span class="n">pairwise_precision_std</span><span class="p">,</span>
+    <span class="n">pairwise_recall_estimator</span><span class="p">,</span>
+    <span class="n">pairwise_recall_std</span><span class="p">,</span>
+    <span class="n">cluster_precision_estimator</span><span class="p">,</span>
+    <span class="n">cluster_precision_std</span><span class="p">,</span>
+    <span class="n">cluster_recall_estimator</span><span class="p">,</span>
+    <span class="n">cluster_recall_std</span><span class="p">,</span>
+<span class="p">)</span>
 
+<span class="n">DEFAULT_ESTIMATORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Point estimates and standard deviation estimates.</span>
+    <span class="s2">&quot;pairwise precision&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;point&quot;</span><span class="p">:</span> <span class="n">pairwise_precision_estimator</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">pairwise_precision_std</span><span class="p">},</span>
+    <span class="s2">&quot;pairwise recall&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;point&quot;</span><span class="p">:</span> <span class="n">pairwise_recall_estimator</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">pairwise_recall_std</span><span class="p">},</span>
+    <span class="s2">&quot;cluster precision&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;point&quot;</span><span class="p">:</span> <span class="n">cluster_precision_estimator</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">cluster_precision_std</span><span class="p">},</span>
+    <span class="s2">&quot;cluster recall&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;point&quot;</span><span class="p">:</span> <span class="n">cluster_recall_estimator</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">:</span> <span class="n">cluster_recall_std</span><span class="p">},</span>
+<span class="p">}</span>
+<span class="n">INVENTORS_SAMPLES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Dataset and parameters to pass to the estimator.</span>
+    <span class="s2">&quot;lai-sample&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">load_lai_2011_inventors_benchmark</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;sampling_type&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">:</span> <span class="s2">&quot;uniform&quot;</span><span class="p">}),</span>
+    <span class="s2">&quot;israeli-sample&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">load_lai_2011_inventors_benchmark</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;sampling_type&quot;</span><span class="p">:</span> <span class="s2">&quot;single_block&quot;</span><span class="p">}),</span>
+<span class="p">}</span>
 <span class="c1"># Default benchmarks to run.</span>
-<span class="n">DEFAULT_BENCHMARKS</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">DEFAULT_INVENTORS_BENCHMARKS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;patentsview-inventors&quot;</span><span class="p">:</span> <span class="n">load_patentsview_inventors_benchmark</span><span class="p">,</span>
     <span class="s2">&quot;israeli-inventors&quot;</span><span class="p">:</span> <span class="n">load_israeli_inventors_benchmark</span><span class="p">,</span>
     <span class="s2">&quot;lai-benchmark&quot;</span><span class="p">:</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">,</span>
@@ -215,6 +239,76 @@
 <span class="p">}</span>
 
 
+<div class="viewcode-block" id="inventor_estimates_table"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_estimates_table">[docs]</a><span class="k">def</span> <span class="nf">inventor_estimates_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute performance estimates for given cluster samples.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
+<span class="sd">            Note that the disambiguated population should match the population from which `samples` have been drawn. For instance, if using the Israeli benchmark dataset</span>
+<span class="sd">            which covers granted patents between granted between 1963 and 1999, then `disambiguations` should be subsetted to the same time period.</span>
+<span class="sd">        samples (dict): Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See `INVENTORS_SAMPLES` for an example.</span>
+<span class="sd">        estimators (dict, optional): Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame of estimated performance metrics for every given disambiguation, sample and estimators.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">estimators</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">estimators</span> <span class="o">=</span> <span class="n">DEFAULT_ESTIMATORS</span>
+
+    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute metric on benchmark data for a given disambiguation algorithm.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            benchmark (str): benchmark dataset name.</span>
+<span class="sd">            metric (str): performance metric name.</span>
+<span class="sd">            algorithm (str): algorithm name.</span>
+<span class="sd">            type (str): one of &quot;point&quot; for point estimate or &quot;std&quot; for standard deviation estimate.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Evaluated metric.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">estimators</span><span class="p">[</span><span class="n">estimator</span><span class="p">][</span><span class="nb">type</span><span class="p">](</span><span class="n">disambiguations</span><span class="p">[</span><span class="n">algorithm</span><span class="p">],</span> <span class="n">samples</span><span class="p">[</span><span class="n">sample</span><span class="p">][</span><span class="mi">0</span><span class="p">](),</span> <span class="o">**</span><span class="n">samples</span><span class="p">[</span><span class="n">sample</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">computed_estimates</span> <span class="o">=</span> <span class="n">expand_grid</span><span class="p">(</span><span class="n">sample</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="n">estimators</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">disambiguations</span><span class="p">)</span>
+    <span class="n">computed_estimates</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">computed_estimates</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">compute</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;sample&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;algorithm&quot;</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="n">computed_estimates</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">computed_estimates</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">compute</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;sample&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;algorithm&quot;</span><span class="p">],</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;std&quot;</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">computed_estimates</span></div>
+
+
+<div class="viewcode-block" id="inventor_estimates_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_estimates_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_estimates_plot</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">facet_col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot performance estimates for given cluster samples.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
+<span class="sd">            Note that the disambiguated population should match the population from which `samples` have been drawn. For instance, if using the Israeli benchmark dataset</span>
+<span class="sd">            which covers granted patents between granted between 1963 and 1999, then `disambiguations` should be subsetted to the same time period.</span>
+<span class="sd">        samples (dict): Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See `INVENTORS_SAMPLES` for an example.</span>
+<span class="sd">        estimators (dict, optional): Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Plotly bar chart</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">estimators</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">estimators</span> <span class="o">=</span> <span class="n">DEFAULT_ESTIMATORS</span>
+
+    <span class="n">computed_metrics</span> <span class="o">=</span> <span class="n">inventor_estimates_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="n">estimators</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+        <span class="n">computed_metrics</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;estimator&quot;</span><span class="p">,</span>
+        <span class="n">error_y</span><span class="o">=</span><span class="s2">&quot;std&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;algorithm&quot;</span><span class="p">,</span>
+        <span class="n">facet_col</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+        <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
+        <span class="n">facet_col_wrap</span><span class="o">=</span><span class="n">facet_col_wrap</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="inventor_benchmark_table"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_benchmark_table">[docs]</a><span class="k">def</span> <span class="nf">inventor_benchmark_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">benchmarks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute performance evaluation metrics on benchmark datasets.</span>
 
@@ -229,7 +323,7 @@
     <span class="k">if</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">metrics</span> <span class="o">=</span> <span class="n">DEFAULT_METRICS</span>
     <span class="k">if</span> <span class="n">benchmarks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">benchmarks</span> <span class="o">=</span> <span class="n">DEFAULT_BENCHMARKS</span>
+        <span class="n">benchmarks</span> <span class="o">=</span> <span class="n">DEFAULT_INVENTORS_BENCHMARKS</span>
 
     <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">benchmark</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compute metric on benchmark data for a given disambiguation algorithm.</span>
@@ -247,13 +341,9 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">metrics</span><span class="p">[</span><span class="n">metric</span><span class="p">](</span><span class="n">data</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">reference</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">expand_grid</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-        <span class="n">rows</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">computed_metrics</span> <span class="o">=</span> <span class="n">expand_grid</span><span class="p">(</span><span class="n">benchmark</span><span class="o">=</span><span class="n">benchmarks</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">disambiguations</span><span class="p">)</span>
 
-    <span class="n">computed_metrics</span> <span class="o">=</span> <span class="n">expand_grid</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">benchmark</span><span class="o">=</span><span class="n">benchmarks</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">disambiguations</span><span class="p">))</span>
-
-    <span class="n">computed_metrics</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">computed_metrics</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">compute</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">benchmark</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">metric</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">algorithm</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">computed_metrics</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">computed_metrics</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">compute</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;benchmark&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;metric&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;algorithm&quot;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">computed_metrics</span></div>
 
@@ -272,10 +362,19 @@
     <span class="k">if</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">metrics</span> <span class="o">=</span> <span class="n">DEFAULT_METRICS</span>
     <span class="k">if</span> <span class="n">benchmarks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">benchmarks</span> <span class="o">=</span> <span class="n">DEFAULT_BENCHMARKS</span>
+        <span class="n">benchmarks</span> <span class="o">=</span> <span class="n">DEFAULT_INVENTORS_BENCHMARKS</span>
 
     <span class="n">computed_metrics</span> <span class="o">=</span> <span class="n">inventor_benchmark_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">benchmarks</span><span class="o">=</span><span class="n">benchmarks</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">computed_metrics</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;metric&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;algorithm&quot;</span><span class="p">,</span> <span class="n">facet_col</span><span class="o">=</span><span class="s2">&quot;benchmark&quot;</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span> <span class="n">facet_col_wrap</span><span class="o">=</span><span class="n">facet_col_wrap</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
+        <span class="n">computed_metrics</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;metric&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;algorithm&quot;</span><span class="p">,</span>
+        <span class="n">facet_col</span><span class="o">=</span><span class="s2">&quot;benchmark&quot;</span><span class="p">,</span>
+        <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
+        <span class="n">facet_col_wrap</span><span class="o">=</span><span class="n">facet_col_wrap</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="style_cluster_inspection"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.style_cluster_inspection">[docs]</a><span class="k">def</span> <span class="nf">style_cluster_inspection</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">):</span>

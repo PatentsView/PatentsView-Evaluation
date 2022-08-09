@@ -356,6 +356,46 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_estimates_plot">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_estimates_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_col_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_estimates_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_estimates_plot" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot performance estimates for given cluster samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).
+Note that the disambiguated population should match the population from which <cite>samples</cite> have been drawn. For instance, if using the Israeli benchmark dataset
+which covers granted patents between granted between 1963 and 1999, then <cite>disambiguations</cite> should be subsetted to the same time period.</p></li>
+<li><p><strong>samples</strong> (<em>dict</em>) – Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See <cite>INVENTORS_SAMPLES</cite> for an example.</p></li>
+<li><p><strong>estimators</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Plotly bar chart</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_estimates_table">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_estimates_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_estimates_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_estimates_table" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute performance estimates for given cluster samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).
+Note that the disambiguated population should match the population from which <cite>samples</cite> have been drawn. For instance, if using the Israeli benchmark dataset
+which covers granted patents between granted between 1963 and 1999, then <cite>disambiguations</cite> should be subsetted to the same time period.</p></li>
+<li><p><strong>samples</strong> (<em>dict</em>) – Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See <cite>INVENTORS_SAMPLES</cite> for an example.</p></li>
+<li><p><strong>estimators</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DataFrame of estimated performance metrics for every given disambiguation, sample and estimators.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_als_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_als_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_als_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_als_inventors_benchmark" title="Permalink to this definition">#</a></dt>
 <dd><p>Academic Life Sciences inventors benchmark.</p>
