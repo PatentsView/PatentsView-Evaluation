@@ -287,7 +287,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>prediction</strong> (<em>Series</em>) – membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.</p></li>
 <li><p><strong>reference</strong> (<em>Series</em>) – membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.</p></li>
-<li><p><strong>sampling_type</strong> (<em>str</em>) – sampling mechanism used to obtain reference clusters. Should be “cluster_block”.
+<li><p><strong>sampling_type</strong> (<em>str</em>) – sampling mechanism used to obtain reference clusters. Should be one of ‘cluster_block’ or ‘single_block’.
 Note that, for “record” sampling, it is assumed that no two different sampled records had the same associated cluster.</p></li>
 <li><p><strong>weights</strong> (<em>str</em>) – sampling probability weights. Should be one of “uniform” or “cluster_size”.</p></li>
 </ul>

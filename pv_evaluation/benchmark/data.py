@@ -20,6 +20,7 @@ def load_full_benchmark(module, filename):
     cols = ["unique_id", "mention_id", "name_first", "name_last"]
     return data[cols]
 
+
 def load_unique_id_series(module, filename):
     """Load disambiguation series from csv file with columns "unique_id" and "mention_id".
 
@@ -82,19 +83,21 @@ def load_patentsview_inventors_benchmark():
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "patentsview-inventors-benchmark.csv")
 
+
 def load_als_inventors_benchmark():
     """Academic Life Sciences inventors benchmark.
 
-    This is a set of disambiguated inventor mentions derived from Pierre Azoulay's Academic Life Sciences dataset, 
+    This is a set of disambiguated inventor mentions derived from Pierre Azoulay's Academic Life Sciences dataset,
     which covers US patents granted between 1970 and 2005. At this time, no further information is available regarding this dataset.
 
-    Note that inventor sequence numbers were obtained using a computer matching procedure which may have introduced errors. 
+    Note that inventor sequence numbers were obtained using a computer matching procedure which may have introduced errors.
     Rows with unresolved sequence numbers were removed.
 
     Returns:
         Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "als-inventors.csv")
+
 
 def load_ens_inventors_benchmark():
     """Engineering and Sciences inventors benchmark.

@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from collections import Counter
 
 from pv_evaluation.metrics.utils import validate_membership
 from pv_evaluation.estimators.ratio_estimators import ratio_estimator, std_dev
@@ -12,12 +13,16 @@ def cluster_precision_arrays(prediction, reference, sampling_type, weights):
 
     inner = pd.concat({"prediction": prediction, "reference": reference}, axis=1, join="inner")
     K = prediction.isin(inner.prediction)
-    outer = pd.concat({"prediction":prediction[K], "reference":reference}, join="outer", axis=1)
+    outer = pd.concat({"prediction": prediction[K], "reference": reference}, join="outer", axis=1)
     pred_count = outer.groupby("reference").nunique(dropna=False)["prediction"]
 
     contained_within_sample = outer.groupby("prediction").nunique(dropna=False) == 1
-    number_contained_by_reference = inner.merge(contained_within_sample, on="prediction").query("reference_y == True").groupby("reference_x").nunique()
-    data = pd.concat({"pred_count":pred_count, "n_contained":number_contained_by_reference["prediction"]}, join="outer", axis=1)
+    number_contained_by_reference = (
+        inner.merge(contained_within_sample, on="prediction").query("reference_y == True").groupby("reference_x").nunique()
+    )
+    data = pd.concat(
+        {"pred_count": pred_count, "n_contained": number_contained_by_reference["prediction"]}, join="outer", axis=1
+    )
     data.n_contained = data.n_contained.fillna(0)
 
     if sampling_type == "cluster_block":
@@ -30,9 +35,11 @@ def cluster_precision_arrays(prediction, reference, sampling_type, weights):
             (N, D) = cluster_precision_arrays(prediction, reference, sampling_type="cluster_block", weights="uniform")
             cluster_sizes = inner.reference.value_counts(sort=False).values
 
-            return (N/cluster_sizes, D/cluster_sizes)
+            return (N / cluster_sizes, D / cluster_sizes)
+    elif sampling_type == "single_block":
+        return ([np.nan], [np.nan])
     else:
-        raise Exception("Unrecognized 'sampling_type' option. Should be 'cluster_block'.")
+        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'cluster_block' or 'single_block'.")
 
 
 def cluster_precision_estimator(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
@@ -50,7 +57,7 @@ def cluster_precision_estimator(prediction, reference, sampling_type="cluster_bl
     Args:
         prediction (Series):  membership vector for predicted clusters, i.e. a pandas Series indexed by mention ids and with values representing predicted cluster assignment.
         reference (Series):  membership vector for sampled reference clusters, i.e. a pandas Series indexed by mention ids and with values representing reference cluster assignment.
-        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be "cluster_block".
+        sampling_type (str): sampling mechanism used to obtain reference clusters. Should be one of 'cluster_block' or 'single_block'.
             Note that, for "record" sampling, it is assumed that no two different sampled records had the same associated cluster.
         weights (str): sampling probability weights. Should be one of "uniform" or "cluster_size".
 

@@ -44,7 +44,9 @@ def pairwise_recall_arrays(prediction, reference, sampling_type, weights):
             D = sp.comb(cluster_sizes, 2) / cluster_sizes
             return (N, D)
     else:
-        raise Exception("Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', 'cluster_block', or 'single_block'")
+        raise Exception(
+            "Unrecognized 'sampling_type' option. Should be one of 'record', 'cluster', 'cluster_block', or 'single_block'"
+        )
 
 
 def pairwise_recall_estimator(prediction, reference, sampling_type="cluster_block", weights="cluster_size"):
