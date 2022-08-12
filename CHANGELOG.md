@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added patents links and preview tooltips to automated reports.
 - Added estimates table and plots.
 - FIX: Install from Github now includes necessary csv files.
 - Added script for processing hand-disambiguated inventor benchmark.
