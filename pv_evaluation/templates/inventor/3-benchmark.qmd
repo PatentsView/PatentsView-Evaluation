@@ -81,7 +81,8 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_israeli_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
     by="prediction")
 ```
 
@@ -93,7 +94,8 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_patentsview_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="prediction")
 ```
 
@@ -105,7 +107,8 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_lai_2011_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="prediction")
 ```
 
@@ -117,7 +120,8 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_als_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="prediction")
 ```
 
@@ -129,7 +133,8 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_ens_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="prediction")
 ```
 
@@ -159,7 +164,8 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_israeli_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="reference")
 ```
 
@@ -171,7 +177,8 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_patentsview_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="reference")
 ``` 
 
@@ -183,7 +190,8 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_lai_2011_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="reference")
 ``` 
 
@@ -195,7 +203,8 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_als_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="reference")
 ```
 
@@ -207,7 +216,8 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_ens_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"]), 
+        join_with=dataframes["{{ filename }}"],
+        links=True), 
         by="reference")
 ```
 

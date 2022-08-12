@@ -223,7 +223,23 @@ def style_cluster_inspection(table, by="prediction"):
     return table.style.apply(format_color_groups, axis=None)
 
 
-def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
+def add_links(table, type="patentsview"):
+    """Add Google Patents links to table with mention IDs as index. 
+
+    Args:
+        table (DataFrame): pandas DataFrame with mention IDs as an index.
+
+    Returns:
+        DataFrame: table with added Google Patents links.
+    """
+
+    if len(table) > 0:
+        patent_codes = table.index.str.split("-", expand=True).droplevel(1).str.lstrip("US").values
+        table["link"] = [f"<a class='previewbox-anchor' href='https://datatool.patentsview.org/#detail/patent/{x}'>🔗</a>" for x in patent_codes]
+    return table
+
+
+def inspect_clusters_to_split(disambiguation, benchmark, join_with=None, links=False):
     """Get table of cluster assignment errors on the given benchmark.
 
     Args:
@@ -244,12 +260,17 @@ def inspect_clusters_to_split(disambiguation, benchmark, join_with=None):
     )
 
     if join_with is not None:
-        return clusters_to_split.join(join_with, rsuffix="_joined")
+        table = clusters_to_split.join(join_with, rsuffix="_joined")
     else:
-        return clusters_to_split
+        table = clusters_to_split
+
+    if links:
+        table = add_links(table)
+
+    return table
 
 
-def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None):
+def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None, links=False):
     """Get table to inspect missing cluster links given a benchmark dataset.
 
     Args:
@@ -264,6 +285,11 @@ def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None):
     clusters_to_merge.rename(columns={"prediction": "reference", "reference": "prediction"}, inplace=True)
 
     if join_with is not None:
-        return clusters_to_merge.join(join_with, rsuffix="_joined")
+        table = clusters_to_merge.join(join_with, rsuffix="_joined")
     else:
-        return clusters_to_merge
+        table = clusters_to_merge
+
+    if links:
+        table = add_links(table)
+
+    return table

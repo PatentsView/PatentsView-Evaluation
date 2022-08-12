@@ -400,7 +400,23 @@
     <span class="k">return</span> <span class="n">table</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">format_color_groups</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="inspect_clusters_to_split"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inspect_clusters_to_split">[docs]</a><span class="k">def</span> <span class="nf">inspect_clusters_to_split</span><span class="p">(</span><span class="n">disambiguation</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">join_with</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">add_links</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;patentsview&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add Google Patents links to table with mention IDs as index. </span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        table (DataFrame): pandas DataFrame with mention IDs as an index.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame: table with added Google Patents links.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">patent_codes</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;US&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">table</span><span class="p">[</span><span class="s2">&quot;link&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;&lt;a class=&#39;previewbox-anchor&#39; href=&#39;https://datatool.patentsview.org/#detail/patent/</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#39;&gt;🔗&lt;/a&gt;&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">patent_codes</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">table</span>
+
+
+<div class="viewcode-block" id="inspect_clusters_to_split"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inspect_clusters_to_split">[docs]</a><span class="k">def</span> <span class="nf">inspect_clusters_to_split</span><span class="p">(</span><span class="n">disambiguation</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">join_with</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">links</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get table of cluster assignment errors on the given benchmark.</span>
 
 <span class="sd">    Args:</span>
@@ -421,12 +437,17 @@
     <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">join_with</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">clusters_to_split</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">join_with</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s2">&quot;_joined&quot;</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">clusters_to_split</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">join_with</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s2">&quot;_joined&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">clusters_to_split</span></div>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">clusters_to_split</span>
+
+    <span class="k">if</span> <span class="n">links</span><span class="p">:</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">add_links</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">table</span></div>
 
 
-<div class="viewcode-block" id="inspect_clusters_to_merge"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inspect_clusters_to_merge">[docs]</a><span class="k">def</span> <span class="nf">inspect_clusters_to_merge</span><span class="p">(</span><span class="n">disambiguation</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">join_with</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="inspect_clusters_to_merge"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inspect_clusters_to_merge">[docs]</a><span class="k">def</span> <span class="nf">inspect_clusters_to_merge</span><span class="p">(</span><span class="n">disambiguation</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">join_with</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">links</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get table to inspect missing cluster links given a benchmark dataset.</span>
 
 <span class="sd">    Args:</span>
@@ -441,9 +462,14 @@
     <span class="n">clusters_to_merge</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;prediction&quot;</span><span class="p">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span> <span class="s2">&quot;reference&quot;</span><span class="p">:</span> <span class="s2">&quot;prediction&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">join_with</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">clusters_to_merge</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">join_with</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s2">&quot;_joined&quot;</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">clusters_to_merge</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">join_with</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s2">&quot;_joined&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">clusters_to_merge</span></div>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">clusters_to_merge</span>
+
+    <span class="k">if</span> <span class="n">links</span><span class="p">:</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">add_links</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">table</span></div>
 </pre></div>
 
               </article>

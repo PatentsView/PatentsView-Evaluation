@@ -438,114 +438,131 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/74e3f17c790cef5df1c72ebe48c138133b6d2d7547e38020fd0c6dbb6570d9d1.svg" src="../../_images/74e3f17c790cef5df1c72ebe48c138133b6d2d7547e38020fd0c6dbb6570d9d1.svg" /></div>
+<img alt="../../_images/df7a42a209c948ea94974a16c8d3dcbbbae3f0a674f271e3b53465113073e0ce.svg" src="../../_images/df7a42a209c948ea94974a16c8d3dcbbbae3f0a674f271e3b53465113073e0ce.svg" /></div>
 </div>
 <p>Next, we can look at the tables showcasing two types of errors: predicted clusters which should have been <strong>split</strong>, and predicted cluster which should have been <strong>merged</strong>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">inspect_clusters_to_split</span><span class="p">,</span> <span class="n">inspect_clusters_to_merge</span><span class="p">,</span> <span class="n">load_israeli_inventors_benchmark</span><span class="p">,</span> <span class="n">style_cluster_inspection</span>
 
-<span class="n">style_cluster_inspection</span><span class="p">(</span><span class="n">inspect_clusters_to_split</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">load_israeli_inventors_benchmark</span><span class="p">())</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">style_cluster_inspection</span><span class="p">(</span><span class="n">inspect_clusters_to_split</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">load_israeli_inventors_benchmark</span><span class="p">(),</span> <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
-#T_11418_row0_col0, #T_11418_row0_col1, #T_11418_row1_col0, #T_11418_row1_col1, #T_11418_row9_col0, #T_11418_row9_col1, #T_11418_row10_col0, #T_11418_row10_col1 {
+#T_3264b_row0_col0, #T_3264b_row0_col1, #T_3264b_row0_col2, #T_3264b_row1_col0, #T_3264b_row1_col1, #T_3264b_row1_col2, #T_3264b_row9_col0, #T_3264b_row9_col1, #T_3264b_row9_col2, #T_3264b_row10_col0, #T_3264b_row10_col1, #T_3264b_row10_col2 {
   background-color: white;
 }
-#T_11418_row2_col0, #T_11418_row2_col1, #T_11418_row3_col0, #T_11418_row3_col1, #T_11418_row4_col0, #T_11418_row4_col1, #T_11418_row5_col0, #T_11418_row5_col1, #T_11418_row6_col0, #T_11418_row6_col1, #T_11418_row7_col0, #T_11418_row7_col1, #T_11418_row8_col0, #T_11418_row8_col1, #T_11418_row11_col0, #T_11418_row11_col1, #T_11418_row12_col0, #T_11418_row12_col1, #T_11418_row13_col0, #T_11418_row13_col1, #T_11418_row14_col0, #T_11418_row14_col1 {
+#T_3264b_row2_col0, #T_3264b_row2_col1, #T_3264b_row2_col2, #T_3264b_row3_col0, #T_3264b_row3_col1, #T_3264b_row3_col2, #T_3264b_row4_col0, #T_3264b_row4_col1, #T_3264b_row4_col2, #T_3264b_row5_col0, #T_3264b_row5_col1, #T_3264b_row5_col2, #T_3264b_row6_col0, #T_3264b_row6_col1, #T_3264b_row6_col2, #T_3264b_row7_col0, #T_3264b_row7_col1, #T_3264b_row7_col2, #T_3264b_row8_col0, #T_3264b_row8_col1, #T_3264b_row8_col2, #T_3264b_row11_col0, #T_3264b_row11_col1, #T_3264b_row11_col2, #T_3264b_row12_col0, #T_3264b_row12_col1, #T_3264b_row12_col2, #T_3264b_row13_col0, #T_3264b_row13_col1, #T_3264b_row13_col2, #T_3264b_row14_col0, #T_3264b_row14_col1, #T_3264b_row14_col2 {
   background-color: #c5dcf5;
 }
 </style>
-<table id="T_11418_">
+<table id="T_3264b_">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th class="col_heading level0 col0" >prediction</th>
-      <th class="col_heading level0 col1" >reference</th>
+      <th class="col_heading level0 col0" >link</th>
+      <th class="col_heading level0 col1" >prediction</th>
+      <th class="col_heading level0 col2" >reference</th>
     </tr>
     <tr>
       <th class="index_name level0" >mention_id</th>
       <th class="blank col0" >&nbsp;</th>
       <th class="blank col1" >&nbsp;</th>
+      <th class="blank col2" >&nbsp;</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_11418_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
-      <td id="T_11418_row0_col0" class="data row0 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_11418_row0_col1" class="data row0 col1" >472</td>
+      <th id="T_3264b_level0_row0" class="row_heading level0 row0" >US4647259-3</th>
+      <td id="T_3264b_row0_col0" class="data row0 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4647259'>🔗</a></td>
+      <td id="T_3264b_row0_col1" class="data row0 col1" >fl:ab_ln:amiel-1</td>
+      <td id="T_3264b_row0_col2" class="data row0 col2" >472</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
-      <td id="T_11418_row1_col0" class="data row1 col0" >fl:ab_ln:amiel-1</td>
-      <td id="T_11418_row1_col1" class="data row1 col1" >470</td>
+      <th id="T_3264b_level0_row1" class="row_heading level0 row1" >US4437263-1</th>
+      <td id="T_3264b_row1_col0" class="data row1 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4437263'>🔗</a></td>
+      <td id="T_3264b_row1_col1" class="data row1 col1" >fl:ab_ln:amiel-1</td>
+      <td id="T_3264b_row1_col2" class="data row1 col2" >470</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
-      <td id="T_11418_row2_col0" class="data row2 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_11418_row2_col1" class="data row2 col1" >16528</td>
+      <th id="T_3264b_level0_row2" class="row_heading level0 row2" >US5706062-0</th>
+      <td id="T_3264b_row2_col0" class="data row2 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US5706062'>🔗</a></td>
+      <td id="T_3264b_row2_col1" class="data row2 col1" >fl:ad_ln:stolov-1</td>
+      <td id="T_3264b_row2_col2" class="data row2 col2" >16528</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
-      <td id="T_11418_row3_col0" class="data row3 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_11418_row3_col1" class="data row3 col1" >16522</td>
+      <th id="T_3264b_level0_row3" class="row_heading level0 row3" >US4927240-1</th>
+      <td id="T_3264b_row3_col0" class="data row3 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4927240'>🔗</a></td>
+      <td id="T_3264b_row3_col1" class="data row3 col1" >fl:ad_ln:stolov-1</td>
+      <td id="T_3264b_row3_col2" class="data row3 col2" >16522</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
-      <td id="T_11418_row4_col0" class="data row4 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_11418_row4_col1" class="data row4 col1" >16522</td>
+      <th id="T_3264b_level0_row4" class="row_heading level0 row4" >US4580876-1</th>
+      <td id="T_3264b_row4_col0" class="data row4 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4580876'>🔗</a></td>
+      <td id="T_3264b_row4_col1" class="data row4 col1" >fl:ad_ln:stolov-1</td>
+      <td id="T_3264b_row4_col2" class="data row4 col2" >16522</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
-      <td id="T_11418_row5_col0" class="data row5 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_11418_row5_col1" class="data row5 col1" >16522</td>
+      <th id="T_3264b_level0_row5" class="row_heading level0 row5" >US4560241-1</th>
+      <td id="T_3264b_row5_col0" class="data row5 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4560241'>🔗</a></td>
+      <td id="T_3264b_row5_col1" class="data row5 col1" >fl:ad_ln:stolov-1</td>
+      <td id="T_3264b_row5_col2" class="data row5 col2" >16522</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
-      <td id="T_11418_row6_col0" class="data row6 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_11418_row6_col1" class="data row6 col1" >16522</td>
+      <th id="T_3264b_level0_row6" class="row_heading level0 row6" >US4696347-2</th>
+      <td id="T_3264b_row6_col0" class="data row6 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4696347'>🔗</a></td>
+      <td id="T_3264b_row6_col1" class="data row6 col1" >fl:ad_ln:stolov-1</td>
+      <td id="T_3264b_row6_col2" class="data row6 col2" >16522</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
-      <td id="T_11418_row7_col0" class="data row7 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_11418_row7_col1" class="data row7 col1" >16522</td>
+      <th id="T_3264b_level0_row7" class="row_heading level0 row7" >US5617152-0</th>
+      <td id="T_3264b_row7_col0" class="data row7 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US5617152'>🔗</a></td>
+      <td id="T_3264b_row7_col1" class="data row7 col1" >fl:ad_ln:stolov-1</td>
+      <td id="T_3264b_row7_col2" class="data row7 col2" >16522</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
-      <td id="T_11418_row8_col0" class="data row8 col0" >fl:ad_ln:stolov-1</td>
-      <td id="T_11418_row8_col1" class="data row8 col1" >16522</td>
+      <th id="T_3264b_level0_row8" class="row_heading level0 row8" >US4410887-1</th>
+      <td id="T_3264b_row8_col0" class="data row8 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4410887'>🔗</a></td>
+      <td id="T_3264b_row8_col1" class="data row8 col1" >fl:ad_ln:stolov-1</td>
+      <td id="T_3264b_row8_col2" class="data row8 col2" >16522</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
-      <td id="T_11418_row9_col0" class="data row9 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_11418_row9_col1" class="data row9 col1" >307</td>
+      <th id="T_3264b_level0_row9" class="row_heading level0 row9" >US4378342-2</th>
+      <td id="T_3264b_row9_col0" class="data row9 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4378342'>🔗</a></td>
+      <td id="T_3264b_row9_col1" class="data row9 col1" >fl:am_ln:alexandron-1</td>
+      <td id="T_3264b_row9_col2" class="data row9 col2" >307</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
-      <td id="T_11418_row10_col0" class="data row10 col0" >fl:am_ln:alexandron-1</td>
-      <td id="T_11418_row10_col1" class="data row10 col1" >306</td>
+      <th id="T_3264b_level0_row10" class="row_heading level0 row10" >US4364914-2</th>
+      <td id="T_3264b_row10_col0" class="data row10 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4364914'>🔗</a></td>
+      <td id="T_3264b_row10_col1" class="data row10 col1" >fl:am_ln:alexandron-1</td>
+      <td id="T_3264b_row10_col2" class="data row10 col2" >306</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
-      <td id="T_11418_row11_col0" class="data row11 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_11418_row11_col1" class="data row11 col1" >2910</td>
+      <th id="T_3264b_level0_row11" class="row_heading level0 row11" >US5636797-0</th>
+      <td id="T_3264b_row11_col0" class="data row11 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US5636797'>🔗</a></td>
+      <td id="T_3264b_row11_col1" class="data row11 col1" >fl:am_ln:cohen-12</td>
+      <td id="T_3264b_row11_col2" class="data row11 col2" >2910</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
-      <td id="T_11418_row12_col0" class="data row12 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_11418_row12_col1" class="data row12 col1" >2910</td>
+      <th id="T_3264b_level0_row12" class="row_heading level0 row12" >US4886211-0</th>
+      <td id="T_3264b_row12_col0" class="data row12 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US4886211'>🔗</a></td>
+      <td id="T_3264b_row12_col1" class="data row12 col1" >fl:am_ln:cohen-12</td>
+      <td id="T_3264b_row12_col2" class="data row12 col2" >2910</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
-      <td id="T_11418_row13_col0" class="data row13 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_11418_row13_col1" class="data row13 col1" >2910</td>
+      <th id="T_3264b_level0_row13" class="row_heading level0 row13" >US5829686-0</th>
+      <td id="T_3264b_row13_col0" class="data row13 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US5829686'>🔗</a></td>
+      <td id="T_3264b_row13_col1" class="data row13 col1" >fl:am_ln:cohen-12</td>
+      <td id="T_3264b_row13_col2" class="data row13 col2" >2910</td>
     </tr>
     <tr>
-      <th id="T_11418_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
-      <td id="T_11418_row14_col0" class="data row14 col0" >fl:am_ln:cohen-12</td>
-      <td id="T_11418_row14_col1" class="data row14 col1" >2910</td>
+      <th id="T_3264b_level0_row14" class="row_heading level0 row14" >US5634594-0</th>
+      <td id="T_3264b_row14_col0" class="data row14 col0" ><a href='https://datatool.patentsview.org/#detail/patent/US5634594'>🔗</a></td>
+      <td id="T_3264b_row14_col1" class="data row14 col1" >fl:am_ln:cohen-12</td>
+      <td id="T_3264b_row14_col2" class="data row14 col2" >2910</td>
     </tr>
   </tbody>
 </table>
@@ -721,16 +738,16 @@
       <td>lai-sample</td>
       <td>pairwise precision</td>
       <td>current</td>
-      <td>1.000000</td>
-      <td>NaN</td>
+      <td>0.658469</td>
+      <td>3.105778e-02</td>
     </tr>
     <tr>
       <th>1</th>
       <td>lai-sample</td>
       <td>pairwise precision</td>
       <td>one cluster</td>
-      <td>0.027208</td>
-      <td>8.664520e-03</td>
+      <td>0.000002</td>
+      <td>5.816786e-07</td>
     </tr>
     <tr>
       <th>2</th>
@@ -753,8 +770,8 @@
       <td>lai-sample</td>
       <td>cluster precision</td>
       <td>current</td>
-      <td>1.000000</td>
-      <td>NaN</td>
+      <td>0.545451</td>
+      <td>4.741101e-02</td>
     </tr>
     <tr>
       <th>5</th>
@@ -785,7 +802,7 @@
       <td>israeli-sample</td>
       <td>pairwise precision</td>
       <td>current</td>
-      <td>1.000000</td>
+      <td>0.652472</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -793,7 +810,7 @@
       <td>israeli-sample</td>
       <td>pairwise precision</td>
       <td>one cluster</td>
-      <td>0.026273</td>
+      <td>0.000002</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -932,9 +949,9 @@ e.exports=function(t){return null!=t&&(n(t)||function(t){return"function"==typeo
         });
         }
         </script>
-        </div><div class="output text_html"><div>                            <div id="7b3f214a-6a9d-45ba-bf75-b86c1853a167" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("7b3f214a-6a9d-45ba-bf75-b86c1853a167")) {                    Plotly.newPlot(                        "7b3f214a-6a9d-45ba-bf75-b86c1853a167",                        [{"alignmentgroup":"True","error_y":{"array":[null,0.04991146441646567,null,0.04652097479896197]},"hovertemplate":"algorithm=current<br>sample=lai-sample<br>estimator=%{x}<br>value=%{y}<extra></extra>","legendgroup":"current","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"current","offsetgroup":"current","orientation":"v","showlegend":true,"textposition":"auto","x":["pairwise precision","pairwise recall","cluster precision","cluster recall"],"xaxis":"x","y":[1.0,0.9098329627602151,1.0,0.7157894736842105],"yaxis":"y","type":"bar"},{"alignmentgroup":"True","error_y":{"array":[null,null,null,null]},"hovertemplate":"algorithm=current<br>sample=israeli-sample<br>estimator=%{x}<br>value=%{y}<extra></extra>","legendgroup":"current","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"current","offsetgroup":"current","orientation":"v","showlegend":false,"textposition":"auto","x":["pairwise precision","pairwise recall","cluster precision","cluster recall"],"xaxis":"x2","y":[1.0,0.8983666856417217,null,null],"yaxis":"y2","type":"bar"},{"alignmentgroup":"True","error_y":{"array":[0.008664519746883516,2.6004098354518386e-09,null,0.0]},"hovertemplate":"algorithm=one cluster<br>sample=lai-sample<br>estimator=%{x}<br>value=%{y}<extra></extra>","legendgroup":"one cluster","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"one cluster","offsetgroup":"one cluster","orientation":"v","showlegend":true,"textposition":"auto","x":["pairwise precision","pairwise recall","cluster precision","cluster recall"],"xaxis":"x","y":[0.02720789749896744,1.0,0.0,1.0],"yaxis":"y","type":"bar"},{"alignmentgroup":"True","error_y":{"array":[null,null,null,null]},"hovertemplate":"algorithm=one cluster<br>sample=israeli-sample<br>estimator=%{x}<br>value=%{y}<extra></extra>","legendgroup":"one cluster","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"one cluster","offsetgroup":"one cluster","orientation":"v","showlegend":false,"textposition":"auto","x":["pairwise precision","pairwise recall","cluster precision","cluster recall"],"xaxis":"x2","y":[0.026272950147315816,1.0,null,null],"yaxis":"y2","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"bgcolor":"white","angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"ternary":{"bgcolor":"white","aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"white","subunitcolor":"#C8D4E3","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,0.49],"title":{"text":"estimator"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"value"}},"xaxis2":{"anchor":"y2","domain":[0.51,1.0],"matches":"x","title":{"text":"estimator"}},"yaxis2":{"anchor":"x2","domain":[0.0,1.0],"matches":"y","showticklabels":false},"annotations":[{"font":{},"showarrow":false,"text":"sample=lai-sample","x":0.245,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{},"showarrow":false,"text":"sample=israeli-sample","x":0.755,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"}],"legend":{"title":{"text":"algorithm"},"tracegroupgap":0},"margin":{"t":60},"barmode":"group"},                        {"responsive": true}                    ).then(function(){
+        </div><div class="output text_html"><div>                            <div id="5e3f3155-5c14-43eb-a2c9-831e6a8ca61c" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("5e3f3155-5c14-43eb-a2c9-831e6a8ca61c")) {                    Plotly.newPlot(                        "5e3f3155-5c14-43eb-a2c9-831e6a8ca61c",                        [{"alignmentgroup":"True","error_y":{"array":[0.03105777557236889,0.04991146441646567,0.04741100662781161,0.04652097479896197]},"hovertemplate":"algorithm=current<br>sample=lai-sample<br>estimator=%{x}<br>value=%{y}<extra></extra>","legendgroup":"current","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"current","offsetgroup":"current","orientation":"v","showlegend":true,"textposition":"auto","x":["pairwise precision","pairwise recall","cluster precision","cluster recall"],"xaxis":"x","y":[0.6584691721391195,0.9098329627602151,0.5454510281560342,0.7157894736842105],"yaxis":"y","type":"bar"},{"alignmentgroup":"True","error_y":{"array":[null,null,null,null]},"hovertemplate":"algorithm=current<br>sample=israeli-sample<br>estimator=%{x}<br>value=%{y}<extra></extra>","legendgroup":"current","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"current","offsetgroup":"current","orientation":"v","showlegend":false,"textposition":"auto","x":["pairwise precision","pairwise recall","cluster precision","cluster recall"],"xaxis":"x2","y":[0.6524718940321529,0.8983666856417217,null,null],"yaxis":"y2","type":"bar"},{"alignmentgroup":"True","error_y":{"array":[5.816785662749402e-07,2.6004098354518386e-09,null,0.0]},"hovertemplate":"algorithm=one cluster<br>sample=lai-sample<br>estimator=%{x}<br>value=%{y}<extra></extra>","legendgroup":"one cluster","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"one cluster","offsetgroup":"one cluster","orientation":"v","showlegend":true,"textposition":"auto","x":["pairwise precision","pairwise recall","cluster precision","cluster recall"],"xaxis":"x","y":[1.8265583403220185e-06,1.0,0.0,1.0],"yaxis":"y","type":"bar"},{"alignmentgroup":"True","error_y":{"array":[null,null,null,null]},"hovertemplate":"algorithm=one cluster<br>sample=israeli-sample<br>estimator=%{x}<br>value=%{y}<extra></extra>","legendgroup":"one cluster","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"one cluster","offsetgroup":"one cluster","orientation":"v","showlegend":false,"textposition":"auto","x":["pairwise precision","pairwise recall","cluster precision","cluster recall"],"xaxis":"x2","y":[1.7637921569744787e-06,1.0,null,null],"yaxis":"y2","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"bgcolor":"white","angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"ternary":{"bgcolor":"white","aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"white","subunitcolor":"#C8D4E3","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,0.49],"title":{"text":"estimator"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"value"}},"xaxis2":{"anchor":"y2","domain":[0.51,1.0],"matches":"x","title":{"text":"estimator"}},"yaxis2":{"anchor":"x2","domain":[0.0,1.0],"matches":"y","showticklabels":false},"annotations":[{"font":{},"showarrow":false,"text":"sample=lai-sample","x":0.245,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{},"showarrow":false,"text":"sample=israeli-sample","x":0.755,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"}],"legend":{"title":{"text":"algorithm"},"tracegroupgap":0},"margin":{"t":60},"barmode":"group"},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('7b3f214a-6a9d-45ba-bf75-b86c1853a167');
+var gd = document.getElementById('5e3f3155-5c14-43eb-a2c9-831e6a8ca61c');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
