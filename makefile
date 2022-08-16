@@ -29,7 +29,10 @@ data: env\
 	pv_evaluation/data/inventor/patentsview-inventors-benchmark.csv\
 	pv_evaluation/data/inventor/lai-2011-benchmark.csv\
 	pv_evaluation/data/inventor/ens-inventors.csv\
-	pv_evaluation/data/inventor/als-inventors.csv
+	pv_evaluation/data/inventor/als-inventors.csv\
+	pv_evaluation/data/assignee/air-umass-assignees-benchmark.csv\
+	pv_evaluation/data/assignee/nber-subset-assignees-benchmark.csv\
+
 
 data-raw.zip:
 	wget $(DATA_RAW_S3_URL)
@@ -38,7 +41,10 @@ data-raw/.tag: data-raw.zip
 	unzip data-raw.zip
 	touch data-raw/.tag
 
-pv_evaluation/data/inventor/%.csv: scripts/%.py data-raw/.tag
+pv_evaluation/data/inventor/%.csv: scripts/inventor/%.py data-raw/.tag
+	conda run -n $(ENV) python3 $<
+
+pv_evaluation/data/assignee/%.csv: scripts/assignee/%.py data-raw/.tag
 	conda run -n $(ENV) python3 $<
 
 docs:

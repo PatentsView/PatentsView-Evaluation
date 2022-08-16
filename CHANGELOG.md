@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added assignee benchmark datasets
 - Added patents links and preview tooltips to automated reports.
 - Added estimates table and plots.
 - FIX: Install from Github now includes necessary csv files.
