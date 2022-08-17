@@ -13,6 +13,10 @@ Contents
    pairwise_precision_std
    pairwise_recall_estimator
    pairwise_recall_std
+   cluster_precision_estimator
+   cluster_precision_std
+   cluster_recall_estimator
+   cluster_recall_std
 
 Documentation
 -------------
