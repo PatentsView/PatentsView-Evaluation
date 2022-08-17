@@ -179,6 +179,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="n">INVENTOR_DATA_MODULE</span> <span class="o">=</span> <span class="s2">&quot;pv_evaluation.data.inventor&quot;</span>
+<span class="n">ASSIGNEE_DATA_MODULE</span> <span class="o">=</span> <span class="s2">&quot;pv_evaluation.data.assignee&quot;</span>
 
 
 <span class="k">def</span> <span class="nf">load_full_benchmark</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
@@ -289,6 +290,51 @@
 <span class="sd">        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">load_unique_id_series</span><span class="p">(</span><span class="n">INVENTOR_DATA_MODULE</span><span class="p">,</span> <span class="s2">&quot;ens-inventors.csv&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="load_air_umass_assignees_benchmark"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.load_air_umass_assignees_benchmark">[docs]</a><span class="k">def</span> <span class="nf">load_air_umass_assignees_benchmark</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;AIR-UMASS assigness benchmark.</span>
+
+<span class="sd">    The dataset is described as follows in [1]:</span>
+
+<span class="sd">    &#39;The PatentsView team created a hand-labeled set of disambiguated</span>
+<span class="sd">    assignee records. The data were created by sampling records of each assignee type</span>
+<span class="sd">    (universities, federal government entities, private companies, states, and local government</span>
+<span class="sd">    agencies). We used those records as queries for annotators to find all other records</span>
+<span class="sd">    referring to the same assignee. Team members annotated the labeled records according to</span>
+<span class="sd">    string similarity. In cases where an identity could not be confirmed or was uncertain,</span>
+<span class="sd">    annotators did not create a link. We intended this dataset to have a larger coverage of</span>
+<span class="sd">    name varieties of the entities than the NBER dataset, which was important for us to</span>
+<span class="sd">    evaluate the more difficult-to-disambiguate cases. Annotators attempted to label parent</span>
+<span class="sd">    companies separately from subsidiaries, but the process was more likely to associate</span>
+<span class="sd">    similarly named child and parent companies than more distinctive ones.&#39;</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Series: pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        [1] Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_unique_id_series</span><span class="p">(</span><span class="n">ASSIGNEE_DATA_MODULE</span><span class="p">,</span> <span class="s2">&quot;air-umass-assignees-benchmark.csv&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_nber_subset_assignees_benchmark"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.load_nber_subset_assignees_benchmark">[docs]</a><span class="k">def</span> <span class="nf">load_nber_subset_assignees_benchmark</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;AIR-UMASS assigness benchmark.</span>
+
+<span class="sd">    The dataset is described as follows in [1]:</span>
+
+<span class="sd">    &#39;The National Bureau of Economic Research provides disambiguated assignee data.</span>
+<span class="sd">    These data are created semiautomatically with manual correction and labeling of assignee</span>
+<span class="sd">    coreference decisions produced by string similarity. We grouped the assignee mentions by</span>
+<span class="sd">    four-letter prefixes and focused on five prefix groups {Moto, Amer, Gene, Solu, Airc} that</span>
+<span class="sd">    were both common and ambiguous.&#39;</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Series: pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        [1] Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_unique_id_series</span><span class="p">(</span><span class="n">ASSIGNEE_DATA_MODULE</span><span class="p">,</span> <span class="s2">&quot;air-umass-assignees-benchmark.csv&quot;</span><span class="p">)</span></div>
 </pre></div>
 
               </article>

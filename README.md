@@ -67,6 +67,8 @@ load_israeli_inventors_benchmark()
 load_patentsview_inventors_benchmark()
 load_als_inventors_benchmark()
 load_ens_inventors_benchmark()
+load_air_umass_assignees_benchmark()
+load_nber_subset_assignees_benchmark()
 ```
 
 ## Contributing
