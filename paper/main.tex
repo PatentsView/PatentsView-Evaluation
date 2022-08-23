@@ -64,7 +64,7 @@
 \newtheorem{example}{Example}
 \newtheorem{remark}{Remark}
 
-\title{Practical Performance Evaluation of Entity Resolution Algorithms: Lessons Learned at PatentsView.org}
+\title{Estimating the Performance of Entity Resolution Algorithms: New Approach and a Case Study at PatentsView.org}
 
 \author[1,2]{Olivier Binette}
 \author[2]{Sokhna A York}
@@ -131,7 +131,7 @@ Much of the past literature has focused on defining and using relevant clusterin
 
 \paragraph{Metrics}
 
-Pairwise precision and recall metrics were first reported in \cite{Newcombe1959}, with \cite{Bilenko2003} and \cite{Christen2007} emphasizing the importance of precision-recall curves for algorithm evaluation. However, there are issues with the use of pairwise precision and recall in entity resolution applications, such as the large relative importance of large clusters. As such, other clustering metrics have been proposed, including cluster precision and recall, cluster homogeneity and completeness, and generalized merge distances \citep{Michelson2009, Menestrina2010, Maidasani2012, Barnes2015}. Important practical issues regarding the use of aggregate metrics are discussed in \cite{Hand2018}.
+Pairwise precision and recall metrics were first reported in \cite{Newcombe1959}, with \cite{Bilenko2003} and \cite{Christen2007} emphasizing the importance of precision-recall curves for algorithm evaluation. However, there are issues with the use of pairwise precision and recall in entity resolution applications, such as the large relative importance of large clusters. As such, other clustering metrics have been proposed, including cluster precision and recall, cluster homogeneity and completeness, the B$^3$ metric \citep{bagga1998algorithms}, and generalized merge distances \citep{Michelson2009, Menestrina2010, Maidasani2012, Barnes2015}. Important practical issues regarding the use of aggregate metrics are discussed in \cite{Hand2018}.
 
 {While our work focuses on estimating pairwise precision and recall, the general approach also applies to any cluster-based performance evaluation metrics, such as those described in \cite{Michelson2009}.}
 
@@ -412,7 +412,7 @@ All data and code used for this paper are available as part of the PatentsView-E
 
 Olivier Binette led the evaluation project and wrote most of this manuscript. Sokhna A York and Emma Hickerson carried out the data collection by manually reviewing inventor clusters. Youngsoo Baek provided bias adjustment and uncertainty quantification for ratio estimators. Sarvo Madhavan was a technical advisor and contributed to code. Christina Jones was an advisor and project manager. All authors provided input on the manuscript.
 
-
+\nocite{Subramanian2021}
 \bibliographystyle{chicago}
 \bibliography{biblio}
 
