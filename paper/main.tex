@@ -64,7 +64,8 @@
 \newtheorem{example}{Example}
 \newtheorem{remark}{Remark}
 
-\title{Estimating the Performance of Entity Resolution Algorithms: New Approach and a Case Study at PatentsView.org}
+\title{Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org}
+%\title{Estimating the Performance of Entity Resolution Algorithms: New Approach and a Case Study for PatentsView.org}
 
 \author[1,2]{Olivier Binette}
 \author[2]{Sokhna A York}
@@ -313,9 +314,9 @@ Figure \ref{fig:sim_records_precision} shows the distribution of the three preci
 \end{figure}
 
 
-\begin{table}\label{tab:precision_results}
+\begin{table}
     \centering
-    \caption{\centering Bias and root mean squared error (rmse) of precision estimators for the simulation study described in section \ref{sec:simulation_study}. The \texttt{rate} variable represents the percentage misattribution rate.}
+    \caption{\label{tab:precision_results}\centering Bias and root mean squared error (rmse) of precision estimators for the simulation study described in section \ref{sec:simulation_study}. The \texttt{rate} variable represents the percentage misattribution rate.}
 \begin{tabular}{llccccccccc}
 \toprule
 {} & \hfill{\textbf{rate}} & \multicolumn{3}{c}{5} & \multicolumn{3}{c}{10} & \multicolumn{3}{c}{20} \\
@@ -342,9 +343,9 @@ Regarding recall, figure \ref{fig:recall_results} shows the distribution of the 
     \label{fig:recall_results}
 \end{figure}
 
-\begin{table}\label{tab:recall_results}
+\begin{table}
     \centering
-    \caption{\centering Bias and root mean squared error of recall estimators for the simulation study described in section \ref{sec:simulation_study}. The \texttt{rate} variable represents the percentage misattribution rate.}
+    \caption{\label{tab:recall_results}\centering Bias and root mean squared error of recall estimators for the simulation study described in section \ref{sec:simulation_study}. The \texttt{rate} variable represents the percentage misattribution rate.}
 \begin{tabular}{llccccccccc}
 \toprule
 {} & {\textbf{rate}} & \multicolumn{3}{c}{{5}} & \multicolumn{3}{c}{10} & \multicolumn{3}{c}{20} \\
@@ -523,7 +524,7 @@ By breaking down $\mathcal{P}$ and $\mathcal{T}$ over predicted clusters, we fin
 \end{equation}
 Now writing $\sum_{c \in \mathcal{C}} \sum_{\hat c \in \widehat{\mathcal{C}}}{\lvert c \cap \hat c \rvert \choose 2} = \sum_{i=1}^{N} \frac{1}{\lvert c(i) \rvert} \sum_{\hat c \in \widehat{\mathcal{C}}} {\lvert c(i) \cap \hat c \rvert \choose 2}$ and substituting $g(c(i), \widehat{\mathcal{C}})$, we obtain
 \begin{equation}
-    P = \sum_{i=1}^N p_i \frac{g(c(i)), \widehat{\mathcal{C}})}{p_i \lvert c(i) \rvert} = \mathbb{E}\left[ \frac{g(c(i)), \widehat{\mathcal{C}}}{p_i \lvert c(i) \rvert} \right].
+    P = \sum_{i=1}^N p_i \frac{g(c(i)), \widehat{\mathcal{C}})}{p_i \lvert c(i) \rvert} = \mathbb{E}\left[ \frac{g(c(i), \widehat{\mathcal{C}})}{p_i \lvert c(i) \rvert} \right].
 \end{equation}
 For recall, write 
 \begin{equation}\label{eq:recall_cluster_form}
