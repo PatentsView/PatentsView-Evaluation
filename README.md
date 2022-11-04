@@ -22,7 +22,7 @@ The [Examples](https://patentsview.github.io/PatentsView-Evaluation/build/html/e
 
 ## Installation
 
-Install **pv_evaluation** in editable mode using
+Install the released version of **pv_evaluation** from GitHub using
 ```shell
 pip install git+https://github.com/PatentsView/PatentsView-Evaluation.git@release
 ```
