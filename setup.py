@@ -4,7 +4,8 @@ from setuptools import setup, find_packages
 if __name__ == "__main__":
     setup(
         name="pv_evaluation",
-        version="0.0.1",
+        version="1.0.0",
+        license_files = ('LICENSE.txt',),
         author="Olivier Binette, Sarvo Madhavan",
         author_email="olivier.binette@gmail.com",
         description="Tools to evaluate disambiguation algorithms",
@@ -23,6 +24,7 @@ if __name__ == "__main__":
             "quarto",
             "jinja2",
             "kaleido",
+            "openpyxl",
         ],
         scripts=["scripts/hand-disambiguation/process-inventors-hand-disambiguation.py"],
     )

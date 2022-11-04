@@ -5,7 +5,7 @@
 
 **pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It provides summary statistics, performance evaluation metrics, and representative performance estimators.
 
-See the **[project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html)** for full documentation.
+See the **[project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html)** for full documentation and our paper [(Binette et al, 2022)](https://arxiv.org/abs/2210.01230) for a description of the statistical methodology.
 
 ### Submodules
 
@@ -105,6 +105,10 @@ Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Ev
 - Siddharth Engineer (American Institutes for Research)
 
 ## References
+
+### Citation
+
+- [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org. arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)
 
 ### Methodology
 
