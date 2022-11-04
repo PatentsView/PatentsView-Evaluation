@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.0 (November 4, 2022)
 
 - Added assignee benchmark datasets
 - Added patents links and preview tooltips to automated reports.
@@ -12,6 +12,7 @@
 - Added inventor names to raw csv benchmarkd datasets (useful for validation and debugging).
 - Added cluster precision and cluster recall estimators (for cluster block sampling).
 - Added additional inventor benchmark datasets.
+- Added license file (GPL3)
 
 ## 0.0.1 (June 27, 2022)
 

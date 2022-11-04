@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+title: PatentsView-Evaluation
+message: >-
+  If you use this software, please cite both the article from preferred-citation and the software itself.
+type: software
+authors:
+  - given-names: Olivier
+    family-names: Binette
+    orcid: 'https://orcid.org/0000-0001-6009-5206'
+    affiliation: Duke University
+    email: olivier.binette@gmail.com
+  - given-names: Sarvo
+    family-names: Madhavan
+    affiliation: American Institutes for Research
+preferred-citation:
+  authors:
+    - family-names: Binette
+      given-names: Olivier
+    - family-names: York
+      given-names: Sokhna A
+    - family-names: Hickerson
+      given-names: Emma
+    - family-names: Baek
+      given-names: Youngsoo
+    - family-names: Madhavan
+      given-names: Sarvo
+    - family-names: Jones
+      given-names: Christina
+  title: "Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org"
+  journal: arxiv e-prints
+  notes: arxiv:2210.01230
+  year: 2022
+  type: article
+repository-code: >-
+  https://github.com/PatentsView/PatentsView-Evaluation/
+url: >-
+  https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html
+license: GPL-3.0-or-later

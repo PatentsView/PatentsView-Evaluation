@@ -20,7 +20,7 @@ $$
     H_1 = \exp \left ( - \sum_{i=1}^{\infty} p_i \log p_i \right ).
 $$
 
-For $q=2$, the Hill number is the probability that two randomly sampled inventors have the same number of authored patents:
+For $q=2$, the Hill number is the inverse of the probability that two randomly sampled inventors have the same number of authored patents:
 $$
     H_2 = \sum_{i=1}^{\infty} p_i^2.
 $$
