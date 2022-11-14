@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 if __name__ == "__main__":
     setup(
         name="pv_evaluation",
-        version="1.0.0",
+        version="1.0.1",
         license_files = ('LICENSE.txt',),
         author="Olivier Binette, Sarvo Madhavan",
         author_email="olivier.binette@gmail.com",
@@ -20,7 +20,8 @@ if __name__ == "__main__":
             "python-snappy",
             "numpy",
             "plotly",
-            "sklearn",
+            "scikit-learn",
+            "scipy",
             "quarto",
             "jinja2",
             "kaleido",
