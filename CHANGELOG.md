@@ -1,8 +1,8 @@
 # Changelog
 
-## Unreleased
+## 1.0.1 (November 14, 2022)
 
-- Replace sklearn dependency with scikit-learn. Add scipy dependency.
+- FIX: Replace sklearn dependency with scikit-learn. Add scipy dependency.
 
 ## 1.0.0 (November 4, 2022)
 
