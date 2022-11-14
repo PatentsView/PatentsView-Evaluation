@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Replace sklearn dependency with scikit-learn. Add scipy dependency.
+
 ## 1.0.0 (November 4, 2022)
 
 - Added assignee benchmark datasets
