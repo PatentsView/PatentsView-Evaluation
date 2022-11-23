@@ -22,6 +22,7 @@ dependencies:
     - black
     - kaleido
     - sklearn
+    - er-evaluation
     - testbook
     - pytest
     - testbook

@@ -4,31 +4,12 @@ import plotly.express as px
 
 from pv_evaluation.utils import expand_grid
 
-from pv_evaluation.metrics import (
-    pairwise_precision,
-    pairwise_recall,
-    pairwise_fscore,
-    cluster_precision,
-    cluster_recall,
-    cluster_fscore,
-    rand_score,
-)
 from pv_evaluation.benchmark import (
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark,
     load_lai_2011_inventors_benchmark,
     load_als_inventors_benchmark,
     load_ens_inventors_benchmark,
-)
-from pv_evaluation.estimators import (
-    pairwise_precision_estimator,
-    pairwise_precision_std,
-    pairwise_recall_estimator,
-    pairwise_recall_std,
-    cluster_precision_estimator,
-    cluster_precision_std,
-    cluster_recall_estimator,
-    cluster_recall_std,
 )
 
 DEFAULT_ESTIMATORS = {
@@ -61,45 +42,6 @@ DEFAULT_METRICS = {
     # "rand index": rand_score,
 }
 
-
-def inventor_estimates_table(disambiguations, samples, estimators=None):
-    """Compute performance estimates for given cluster samples.
-
-    Args:
-        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
-            Note that the disambiguated population should match the population from which `samples` have been drawn. For instance, if using the Israeli benchmark dataset
-            which covers granted patents between granted between 1963 and 1999, then `disambiguations` should be subsetted to the same time period.
-        samples (dict): Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See `INVENTORS_SAMPLES` for an example.
-        estimators (dict, optional): Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.
-
-    Returns:
-        DataFrame of estimated performance metrics for every given disambiguation, sample and estimators.
-    """
-    if estimators is None:
-        estimators = DEFAULT_ESTIMATORS
-
-    def compute(sample, estimator, algorithm, type="point"):
-        """Compute metric on benchmark data for a given disambiguation algorithm.
-
-        Args:
-            benchmark (str): benchmark dataset name.
-            metric (str): performance metric name.
-            algorithm (str): algorithm name.
-            type (str): one of "point" for point estimate or "std" for standard deviation estimate.
-
-        Returns:
-            float: Evaluated metric.
-        """
-        return estimators[estimator][type](disambiguations[algorithm], samples[sample][0](), **samples[sample][1])
-
-    computed_estimates = expand_grid(sample=samples, estimator=estimators, algorithm=disambiguations)
-    computed_estimates["value"] = computed_estimates.apply(
-        lambda x: compute(x["sample"], x["estimator"], x["algorithm"], type="point"), axis=1
-    )
-    computed_estimates["std"] = computed_estimates.apply(
-        lambda x: compute(x["sample"], x["estimator"], x["algorithm"], type="std"), axis=1
-    )
-    return computed_estimates
 
 
 def inventor_estimates_plot(disambiguations, samples, estimators=None, facet_col_wrap=2, **kwargs):

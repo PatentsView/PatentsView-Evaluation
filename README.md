@@ -3,22 +3,25 @@
 
 ## 📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
 
-**pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It provides summary statistics, performance evaluation metrics, and representative performance estimators.
+**pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It provides:
 
-See the **[project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html)** for full documentation and our paper [(Binette et al, 2022)](https://arxiv.org/abs/2210.01230) for a description of the statistical methodology.
+1. A large set of benchmark datasets for inventor name disambiguation on U.S. patents.
+2. Disambiguation summary statistics and performance estimates through the [ER-Evaluation Python package](https://github.com/olivierBinette/er-evaluation).
+
+See the **[project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html)** for full documentation. The [Examples](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html) page provides real-world examples of the use of **pv_evaluation** submodules.
 
 ### Submodules
 
-pv_evaluation has the following submodules:
+**pv_evaluation** has the following submodules:
 
-- [**summary**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.summary.html): Disambiguation summary statistics.
-- [**metrics**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.metrics.html): Implementation of performance evaluation metrics such as precision and recall.
-- [**benchmark**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Access to evaluation datasets and standardized comparison benchmarks. 
-- [**data**](https://github.com/PatentsView/PatentsView-Evaluation/tree/main/pv_evaluation/data): Processed data used in this package. Use `make data` to re-generate processed data from original datasets.
-- [**templates**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html): Quarto report templates.
-- [**estimators**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.estimators.html): performance metric *estimators* to estimate full-data performance from biased samples.
-
-The [Examples](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html) page provides real-world examples of the use of **pv_evaluation** submodules.
+- [**benchmark**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Access to evaluation datasets and standardized comparison benchmarks. The following benchmark datasets are available:
+    - Academic Life Sciences (ALS) inventors benchmark.
+    - Israeli inventors benchmark.
+    - Engineering and Sciences (ENS) inventors benchmark.
+    - Lai's 2011 inventors benchmark.
+    - PatentsView's 2021 inventors benchmark.
+    - Binette et al.'s 2022 inventors benchmark.
+- [**templates**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html): Templated performance summary reports.
 
 ## Installation
 
@@ -42,18 +45,6 @@ Generate an html report summarizing properties of the current disambiguation alg
 from pv_evaluation.templates import render_inventor_disambiguation_report
 
 render_inventor_disambiguation_report(".", summary_table_files=["rawinventor.tsv"])
-```
-
-### Estimate Precision and Recall
-
-Estimate precision and recall from true clusters sampled with probability proportional to their size:
-```python
-from pv_evaluation.estimators import pairwise_precision_estimator
-from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark
-
-current_disambiguation = # TODO: Make this the current disambiguation membership vector
-pairwise_precision_estimator(current_disambiguation, load_lai_2011_inventors_benchmark())
-pairwise_recall_estimator(current_disambiguation, load_lai_2011_inventors_benchmark())
 ```
 
 ### Access Benchmark Datasets
@@ -109,15 +100,6 @@ Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Ev
 ### Citation
 
 - [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org. arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)
-
-### Methodology
-
-- Menestrina, D., Whang, S. E., & Garciamolina, H. (2010). Evaluating entity resolution results. Proceedings of the VLDB Endowment, 3(1), 208–219. https://doi.org/10.14778/1920841.1920871
-- Michelson, M., & Macskassy, S. A. (2009). Record linkage measures in an entity centric world. Proceedings of the 4th Workshop on Evaluation Methods for Machine Learning.
-- Ferreira, A. A., Gonçalves, M. A., & Laender, A. H. (2012). A brief survey of automatic methods for author name disambiguation. Acm Sigmod Record, 41(2), 15-26. [[link]](https://s3.amazonaws.com/data.patentsview.org/USPTO_Entity_Resolution_Symposium/Ferreira+et+al_2012_A+Brief+Survey+of+Automatic+Methods+for+Author+Name+Disambiguation.pdf)
-- Pfitzner, D., Leibbrandt, R., & Powers, D. (2009). Characterization and evaluation of similarity measures for pairs of clusterings. Knowledge and Information Systems, 19(3), 361-394. [[link]](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.214.7233&rep=rep1&type=pdf)
-- Barnes, M. (2015). A Practioner’s Guide to Evaluating Entity Resolution Results. 1–6. http://arxiv.org/abs/1509.04238
-- Marchant, N. G., & Rubinstein, B. I. P. (2017). In search of an entity resolution OASIS: Optimal asymptotic sequential importance sampling. Proceedings of the VLDB Endowment, 10(11), 1322–1333. https://doi.org/10.14778/3137628.3137642
 
 ### Datasets
 
