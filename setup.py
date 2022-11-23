@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-from setuptools import setup, find_packages
+from setuptools import setup
 
 if __name__ == "__main__":
     setup(
         name="pv_evaluation",
-        version="1.0.1",
+        version="2.0.0",
         license_files = ('LICENSE.txt',),
         author="Olivier Binette, Sarvo Madhavan",
         author_email="olivier.binette@gmail.com",
-        description="Tools to evaluate disambiguation algorithms",
+        description="Tools to evaluate PatentsView's disambiguation algorithms",
         url="https://github.com/OlivierBinette/PatentsView-Evaluation",
         include_package_data=True,
-        packages=find_packages(),
+        packages=["pv_evaluation"],
         install_requires=[
             "pandas",
             "dask",
@@ -26,6 +26,7 @@ if __name__ == "__main__":
             "jinja2",
             "kaleido",
             "openpyxl",
+            "er-evaluation",
         ],
         scripts=["scripts/hand-disambiguation/process-inventors-hand-disambiguation.py"],
     )
