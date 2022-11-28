@@ -3,10 +3,10 @@
 
 ## 📊 PatentsView-Evaluation: Benchmark Disambiguation Algorithms
 
-**pv_evaluation** is a Python package for the evaluation and benchmarking of [PatentsView](https://patentsview.org/) disambiguation algorithms. It provides:
+**pv_evaluation** is a Python package built to help advance research on **author/inventor name disambiguation** systems such as [PatentsView](https://patentsview.org/). It provides:
 
-1. A large set of benchmark datasets for inventor name disambiguation on U.S. patents.
-2. Disambiguation summary statistics and performance estimates through the [ER-Evaluation Python package](https://github.com/olivierBinette/er-evaluation).
+1. A large set of benchmark datasets for U.S. patents inventor name disambiguation.
+2. Disambiguation summary statistics, evaluation methodology, and performance estimators through the [ER-Evaluation Python package](https://github.com/olivierBinette/er-evaluation). 
 
 See the **[project website](https://patentsview.github.io/PatentsView-Evaluation/build/html/index.html)** for full documentation. The [Examples](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples.html) page provides real-world examples of the use of **pv_evaluation** submodules.
 

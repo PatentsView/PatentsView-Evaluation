@@ -10,8 +10,16 @@ parser.add_argument(
     help="Excel spreadsheet with sampled inventor mentions, the corresponding predicted cluster, and lists of inventor mentions to add to and remove from the predicted clusters. This spreadsheet should contain the columns 'patent_id', 'sequence', 'inventor_id', 'add', and 'remove'. The 'add' and 'remove' columns should contain comma-separated inventor mentions in the format US<patent_number>-<sequence_number>.",
 )
 parser.add_argument(
-    "rawinventor",
-    help="File with reference inventor mentions and predicted clusters. It should contain the columns 'patent_id', 'sequence', and 'inventor_id'.",
+    "inventor_not_disambiguated",
+    help="File with reference inventor mentions and predicted clusters. It should contain the columns 'patent_id', 'inventor_sequence', and 'inventor_id'.",
+)
+parser.add_argument(
+    "persistent_inventor",
+    help="File with connection from past data update inventor ids to current ids. Should map mention IDs to disambiguated inventor IDs from past disambiguations",
+)
+parser.add_argument(
+    "disambiguation_id",
+    help="Disambiguation identifier, e.g. 'disamb_inventor_id_20211230'.",
 )
 parser.add_argument(
     "-o",
@@ -33,24 +41,32 @@ import pandas as pd
 import numpy as np
 
 
-def read_auto(datapath):
+def read_auto(datapath, dtype):
     _, ext = os.path.splitext(datapath)
 
     if ext == ".csv":
-        return pd.read_csv(datapath)
+        return pd.read_csv(datapath, dtype=dtype)
     elif ext == ".tsv":
-        return pd.read_csv(datapath, sep="\t")
+        return pd.read_csv(datapath, sep="\t", dtype=dtype)
     elif ext in [".parquet", ".pq", ".parq"]:
-        return pd.read_parquet(datapath)
+        return pd.read_parquet(datapath, dtype=dtype)
     elif ext in [".xlsx", ".xls"]:
-        return pd.read_excel(datapath)
+        return pd.read_excel(datapath, dtype=dtype)
     else:
         raise Exception("Unsupported file type. Should be one of csv, tsv, parquet, or xlsx.")
 
 
-rawinventor = read_auto(args.rawinventor)
-rawinventor["mention_id"] = "US" + rawinventor.patent_id.astype(str) + "-" + rawinventor.sequence.astype(str)
-disambiguation = rawinventor.set_index("mention_id")["inventor_id"]
+inventor_not_disambiguated = read_auto(args.inventor_not_disambiguated, dtype=str)
+inventor_not_disambiguated["mention_id"] = (
+    "US" + inventor_not_disambiguated.patent_id.astype(str) + "-" + inventor_not_disambiguated["inventor_sequence"].astype(str)
+)
+
+persistent_inventor = read_auto(args.persistent_inventor, dtype=str)
+persistent_inventor["mention_id"] = (
+    "US" + persistent_inventor.patent_id.astype(str) + "-" + persistent_inventor.sequence.astype(str)
+)
+
+disambiguation = persistent_inventor.set_index("mention_id")[args.disambiguation_id]
 
 
 def lambd(x):
@@ -90,10 +106,11 @@ def lambd_add_errors(x):
         return []
 
 
-benchmark = read_auto(args.hand_disambiguation).fillna("")
+benchmark = read_auto(args.hand_disambiguation, dtype=str).fillna("")
 assert all(col in benchmark.columns for col in ["add", "remove", "inventor_id"])
 
 if args.debug:
+
     with pd.ExcelWriter(f"{args.output}.debug.xlsx") as writer:
         benchmark["remove_errors"] = benchmark.apply(lambd_remove_errors, axis=1)
         benchmark["add_errors"] = benchmark.apply(lambd_add_errors, axis=1)
@@ -105,13 +122,23 @@ if args.debug:
         dat = benchmark.explode("added")
         dat = dat[~dat.added.isna()]
         dat = dat.merge(
-            rawinventor[["mention_id", "name_first", "name_last"]],
+            inventor_not_disambiguated[["mention_id", "raw_inventor_name_first", "raw_inventor_name_last"]],
             left_on="added",
             right_on="mention_id",
             suffixes=("", "_added"),
+            how="left",
         )
         dat = dat[
-            ["patent_id", "sequence", "inventor_id", "name_first", "name_last", "added", "name_first_added", "name_last_added"]
+            [
+                "patent_id",
+                "sequence",
+                "inventor_id",
+                "name_first",
+                "name_last",
+                "added",
+                "raw_inventor_name_first",
+                "raw_inventor_name_last",
+            ]
         ]
         dat.to_excel(writer, sheet_name="Validation of Added Mentions", index=False)
 

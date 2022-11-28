@@ -7,24 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>pv_evaluation.benchmark &#8212; PatentsView-Evaluation  documentation</title>
-  <script>
+  
+  
+  
+  <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
   
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/6.1.2/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -35,7 +35,8 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -62,6 +63,10 @@
   
   
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   
   <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
@@ -124,32 +129,32 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="readme.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="readme.html">
                         README
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="concepts.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="concepts.html">
                         Key Concepts
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="examples.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
                         Examples
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item current active">
-                    <a class="nav-link" href="pv_evaluation.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="pv_evaluation.html">
                         API Doc
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -158,12 +163,14 @@
     </div>
 
     <div id="navbar-end">
-      <div class="navbar-end-item navbar-end__search-button-container">
-        
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-      </div>
+        </div>
+      
       
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
@@ -186,11 +193,13 @@
 
 
   
-  <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-  </div>
+    </div>
+  
 
   
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
@@ -220,32 +229,32 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="readme.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="readme.html">
                         README
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="concepts.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="concepts.html">
                         Key Concepts
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="examples.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
                         Examples
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item current active">
-                    <a class="nav-link" href="pv_evaluation.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="pv_evaluation.html">
                         API Doc
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -306,8 +315,11 @@
     </div>
   </div>
 
+  
+  <div id="rtd-footer-container"></div>
+
       </div>
-      <main class="bd-main">
+      <main id="main-content" class="bd-main">
         
         
         <div class="bd-content">
@@ -326,336 +338,11 @@
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading">#</a></h2>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inspect_clusters_to_merge" title="pv_evaluation.benchmark.inspect_clusters_to_merge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_clusters_to_merge</span></code></a></p></td>
-<td><p>Get table to inspect missing cluster links given a benchmark dataset.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inspect_clusters_to_split" title="pv_evaluation.benchmark.inspect_clusters_to_split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inspect_clusters_to_split</span></code></a></p></td>
-<td><p>Get table of cluster assignment errors on the given benchmark.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_benchmark_plot" title="pv_evaluation.benchmark.inventor_benchmark_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_benchmark_plot</span></code></a></p></td>
-<td><p>Bar plot of performance evaluation metrics on benchmark datasets.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_benchmark_table" title="pv_evaluation.benchmark.inventor_benchmark_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_benchmark_table</span></code></a></p></td>
-<td><p>Compute performance evaluation metrics on benchmark datasets.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_estimates_plot" title="pv_evaluation.benchmark.inventor_estimates_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_estimates_plot</span></code></a></p></td>
-<td><p>Plot performance estimates for given cluster samples.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_estimates_table" title="pv_evaluation.benchmark.inventor_estimates_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_estimates_table</span></code></a></p></td>
-<td><p>Compute performance estimates for given cluster samples.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark" title="pv_evaluation.benchmark.load_israeli_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_israeli_inventors_benchmark</span></code></a></p></td>
-<td><p>Israeli inventors benchmark dataset.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_patentsview_inventors_benchmark" title="pv_evaluation.benchmark.load_patentsview_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_patentsview_inventors_benchmark</span></code></a></p></td>
-<td><p>PatentsView hand-disambiguated inventors benchmark.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_lai_2011_inventors_benchmark" title="pv_evaluation.benchmark.load_lai_2011_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_lai_2011_inventors_benchmark</span></code></a></p></td>
-<td><p>Lai's 2011 inventors benchmark dataset (also referred to as as Lai's 2014 inventors benchmark).</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_als_inventors_benchmark" title="pv_evaluation.benchmark.load_als_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_als_inventors_benchmark</span></code></a></p></td>
-<td><p>Academic Life Sciences inventors benchmark.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_ens_inventors_benchmark" title="pv_evaluation.benchmark.load_ens_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_ens_inventors_benchmark</span></code></a></p></td>
-<td><p>Engineering and Sciences inventors benchmark.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_air_umass_assignees_benchmark" title="pv_evaluation.benchmark.load_air_umass_assignees_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_air_umass_assignees_benchmark</span></code></a></p></td>
-<td><p>AIR-UMASS assigness benchmark.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_nber_subset_assignees_benchmark" title="pv_evaluation.benchmark.load_nber_subset_assignees_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_nber_subset_assignees_benchmark</span></code></a></p></td>
-<td><p>AIR-UMASS assigness benchmark.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.style_cluster_inspection" title="pv_evaluation.benchmark.style_cluster_inspection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">style_cluster_inspection</span></code></a></p></td>
-<td><p>Style table to highlight groups with alternating colors.</p></td>
-</tr>
 </tbody>
 </table>
 </section>
-<section id="module-pv_evaluation.benchmark">
-<span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-pv_evaluation.benchmark" title="Permalink to this heading">#</a></h2>
-<p>Evaluation datasets and standardized benchmarks</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.inspect_clusters_to_merge">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inspect_clusters_to_merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">links</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inspect_clusters_to_merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inspect_clusters_to_merge" title="Permalink to this definition">#</a></dt>
-<dd><p>Get table to inspect missing cluster links given a benchmark dataset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguation</strong> (<em>Series</em>) – disambiguation result Series (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).</p></li>
-<li><p><strong>benchmark</strong> (<em>Series</em>) – reference disambiguation Series.</p></li>
-<li><p><strong>join_with</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – DataFrame to join based on “mention_id”. Defaults to None.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame containing missing cluster links according to the given benchmark.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.inspect_clusters_to_split">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inspect_clusters_to_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">links</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inspect_clusters_to_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inspect_clusters_to_split" title="Permalink to this definition">#</a></dt>
-<dd><p>Get table of cluster assignment errors on the given benchmark.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguation</strong> (<em>Series</em>) – disambiguation result Series (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).</p></li>
-<li><p><strong>benchmark</strong> (<em>Series</em>) – reference disambiguation Series.</p></li>
-<li><p><strong>join_with</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – DataFrame to join based on “mention_id”. Defaults to None.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame containing erroneous cluster assignments according to the given benchmark.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_benchmark_plot">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmarks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_col_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_benchmark_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_plot" title="Permalink to this definition">#</a></dt>
-<dd><p>Bar plot of performance evaluation metrics on benchmark datasets.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).</p></li>
-<li><p><strong>metrics</strong> (<em>dict</em><em>, </em><em>optional</em>) – dictionary of metrics (from the metrics submodule) to compute. Defaults to <cite>DEFAULT_METRICS</cite>.</p></li>
-<li><p><strong>benchmarks</strong> (<em>dict</em><em>, </em><em>optional</em>) – benchmark datasets loading functions (from the benchmark submodule) to use. Defaults to <cite>DEFAULT_BENCHMARK</cite>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>plotly graph object</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_benchmark_table">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmarks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_benchmark_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_table" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute performance evaluation metrics on benchmark datasets.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).</p></li>
-<li><p><strong>metrics</strong> (<em>dict</em><em>, </em><em>optional</em>) – dictionary of metrics (from the metrics submodule) to compute. Defaults to <cite>DEFAULT_METRICS</cite>.</p></li>
-<li><p><strong>benchmarks</strong> (<em>dict</em><em>, </em><em>optional</em>) – benchmark datasets loading functions to use from the benchmark submodule. Defaults to <cite>DEFAULT_BENCHMARK</cite>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame of computed metrics for every disambiguations and every benchmark dataset.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_estimates_plot">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_estimates_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_col_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_estimates_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_estimates_plot" title="Permalink to this definition">#</a></dt>
-<dd><p>Plot performance estimates for given cluster samples.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).
-Note that the disambiguated population should match the population from which <cite>samples</cite> have been drawn. For instance, if using the Israeli benchmark dataset
-which covers granted patents between granted between 1963 and 1999, then <cite>disambiguations</cite> should be subsetted to the same time period.</p></li>
-<li><p><strong>samples</strong> (<em>dict</em>) – Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See <cite>INVENTORS_SAMPLES</cite> for an example.</p></li>
-<li><p><strong>estimators</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Plotly bar chart</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_estimates_table">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_estimates_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_estimates_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_estimates_table" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute performance estimates for given cluster samples.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).
-Note that the disambiguated population should match the population from which <cite>samples</cite> have been drawn. For instance, if using the Israeli benchmark dataset
-which covers granted patents between granted between 1963 and 1999, then <cite>disambiguations</cite> should be subsetted to the same time period.</p></li>
-<li><p><strong>samples</strong> (<em>dict</em>) – Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See <cite>INVENTORS_SAMPLES</cite> for an example.</p></li>
-<li><p><strong>estimators</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame of estimated performance metrics for every given disambiguation, sample and estimators.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.load_air_umass_assignees_benchmark">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_air_umass_assignees_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_air_umass_assignees_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_air_umass_assignees_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>AIR-UMASS assigness benchmark.</p>
-<p>The dataset is described as follows in [1]:</p>
-<p>‘The PatentsView team created a hand-labeled set of disambiguated
-assignee records. The data were created by sampling records of each assignee type
-(universities, federal government entities, private companies, states, and local government
-agencies). We used those records as queries for annotators to find all other records
-referring to the same assignee. Team members annotated the labeled records according to
-string similarity. In cases where an identity could not be confirmed or was uncertain,
-annotators did not create a link. We intended this dataset to have a larger coverage of
-name varieties of the entities than the NBER dataset, which was important for us to
-evaluate the more difficult-to-disambiguate cases. Annotators attempted to label parent
-companies separately from subsidiaries, but the process was more likely to associate
-similarly named child and parent companies than more distinctive ones.’</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Series</p>
-</dd>
-</dl>
-<p class="rubric">References</p>
-<p>[1] Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.load_als_inventors_benchmark">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_als_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_als_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_als_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Academic Life Sciences inventors benchmark.</p>
-<p>This is a set of disambiguated inventor mentions derived from Pierre Azoulay’s Academic Life Sciences dataset,
-which covers US patents granted between 1970 and 2005. At this time, no further information is available regarding this dataset.</p>
-<p>Note that inventor sequence numbers were obtained using a computer matching procedure which may have introduced errors.
-Rows with unresolved sequence numbers were removed.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Series</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.load_ens_inventors_benchmark">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_ens_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_ens_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_ens_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Engineering and Sciences inventors benchmark.</p>
-<p>This is a set of disambiguated inventor mentions derived from Png’s LinkedIn-Patent Inventors Dataset for the 2015 PatentsView Disambiguation Workshop.
-No further information regarding this dataset is available at this time.</p>
-<dl class="simple">
-<dt>See:</dt><dd><p>Ge, Chunmian, Ke-wei Huang, and Ivan P.L. Png, “Engineer/Scientist Careers: Patents, Online Profiles, and Misclassification”, Strategic Management Journal, Vol 37 No 1, January 2016, 232-253.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Series</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.load_israeli_inventors_benchmark">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_israeli_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_israeli_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Israeli inventors benchmark dataset.</p>
-<p>This is adapted from Trajenberg and Shiff (2008). The data covers U.S. patents granted between 1963 and 1999 for Israeli inventors.</p>
-<dl class="simple">
-<dt>See:</dt><dd><p>Trajtenberg, M., &amp; Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Series</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.load_lai_2011_inventors_benchmark">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_lai_2011_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_lai_2011_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_lai_2011_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Lai’s 2011 inventors benchmark dataset (also referred to as as Lai’s 2014 inventors benchmark).</p>
-<p>This is adapted from the benchmark dataset reported in Li et al. (2014) to evaluate their disambiguation of the  U.S. Patent Inventor Database (1975-2010).</p>
-<dl class="simple">
-<dt>See:</dt><dd><p>Li, G. C., Lai, R., D’Amour, A., Doolin, D. M., Sun, Y., Torvik, V. I., … &amp; Fleming, L. (2014). Disambiguation and co-authorship networks of the US patent inventor database (1975-2010). Research Policy, 43(6), 941-955.</p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Series</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<ul class="simple">
-<li><p>A number of patent IDs which could not be found were removed from Lai’s original dataset.</p></li>
-<li><p>Inventor sequence numbers were assigned through automatic matching and manual review. There could be some errors.</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.load_nber_subset_assignees_benchmark">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_nber_subset_assignees_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_nber_subset_assignees_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_nber_subset_assignees_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>AIR-UMASS assigness benchmark.</p>
-<p>The dataset is described as follows in [1]:</p>
-<p>‘The National Bureau of Economic Research provides disambiguated assignee data.
-These data are created semiautomatically with manual correction and labeling of assignee
-coreference decisions produced by string similarity. We grouped the assignee mentions by
-four-letter prefixes and focused on five prefix groups {Moto, Amer, Gene, Solu, Airc} that
-were both common and ambiguous.’</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Series</p>
-</dd>
-</dl>
-<p class="rubric">References</p>
-<p>[1] Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.load_patentsview_inventors_benchmark">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_patentsview_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_patentsview_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_patentsview_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>PatentsView hand-disambiguated inventors benchmark.</p>
-<p>This is the hand-disambiguation of a set of particularly ambiguous inventor names.</p>
-<dl class="simple">
-<dt>See:</dt><dd><p>Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p>
-</dd>
-</dl>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Series</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.style_cluster_inspection">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">style_cluster_inspection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prediction'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#style_cluster_inspection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.style_cluster_inspection" title="Permalink to this definition">#</a></dt>
-<dd><p>Style table to highlight groups with alternating colors.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>table</strong> (<em>dataframe</em>) – DataFrame to style.</p></li>
-<li><p><strong>by</strong> (<em>str</em><em>, </em><em>optional</em>) – column to color by. Defaults to “prediction”.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -703,137 +390,9 @@ were both common and ambiguous.’</p>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-pv_evaluation.benchmark">
+  <a class="reference internal nav-link" href="#documentation">
    Documentation
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inspect_clusters_to_merge">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       inspect_clusters_to_merge()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inspect_clusters_to_split">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       inspect_clusters_to_split()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_benchmark_plot">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       inventor_benchmark_plot()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_benchmark_table">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       inventor_benchmark_table()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_estimates_plot">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       inventor_estimates_plot()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_estimates_table">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       inventor_estimates_table()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.load_air_umass_assignees_benchmark">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       load_air_umass_assignees_benchmark()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.load_als_inventors_benchmark">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       load_als_inventors_benchmark()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.load_ens_inventors_benchmark">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       load_ens_inventors_benchmark()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       load_israeli_inventors_benchmark()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.load_lai_2011_inventors_benchmark">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       load_lai_2011_inventors_benchmark()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.load_nber_subset_assignees_benchmark">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       load_nber_subset_assignees_benchmark()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.load_patentsview_inventors_benchmark">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       load_patentsview_inventors_benchmark()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.style_cluster_inspection">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       style_cluster_inspection()
-      </span>
-     </code>
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -876,7 +435,8 @@ were both common and ambiguous.’</p>
   
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   <footer class="bd-footer"><div class="bd-footer__inner container">
   
@@ -888,6 +448,16 @@ were both common and ambiguous.’</p>
 
 </p>
 
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
   </div>
   
   <div class="footer-item">
