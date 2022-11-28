@@ -6,13 +6,13 @@ from pkg_resources import resource_filename
 from datetime import datetime
 
 
-def render_inventor_disambiguation_report(outdir, summary_table_files, cache=True, **kwargs):
+def render_inventor_disambiguation_report(outdir, disambiguation_files, inventor_not_disambiguated, cache=True, **kwargs):
     """Create html report based on disambiguation results.
 
     Args:
         outdir (str): directory where to output html files.
-        summary_table_files (list): list of paths to disambiguation table files (tables with the five columns "mention_id", "inventor_id", "patent_id", "name_first", and "name_last").
-            File format can be one of tsv, csv, or parquet.
+        disambiguation_files (list): list of string paths to disambiguation files (tables with the two columns "mention_id" and "inventor_id"). Files format can be one of tsv, csv, or parquet.
+        inventor_not_disambiguated (str): string path to a file containing the columns "patent_id", "inventor_sequence", "raw_inventor_name_first", and "raw_inventor_name_last".
         cache (bool, optional): whether or not to cache jupyter chunk execution between runs. Defaults to True.
 
     Notes:

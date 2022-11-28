@@ -5,7 +5,7 @@ if __name__ == "__main__":
     setup(
         name="pv_evaluation",
         version="2.0.0",
-        license_files = ('LICENSE.txt',),
+        license_files=("LICENSE.txt",),
         author="Olivier Binette, Sarvo Madhavan",
         author_email="olivier.binette@gmail.com",
         description="Tools to evaluate PatentsView's disambiguation algorithms",

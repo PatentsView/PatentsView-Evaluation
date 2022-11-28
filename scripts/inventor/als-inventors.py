@@ -6,20 +6,26 @@ try:
 except:
     raise Exception("Unable to import required dependencies.")
 
-if not os.path.isfile("rawinventor.tsv"):
-    wget.download("https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip")
-    with zipfile.ZipFile("rawinventor.tsv.zip", "r") as zip_ref:
+if not os.path.isfile("g_inventor_not_disambiguated.tsv"):
+    wget.download("https://s3.amazonaws.com/data.patentsview.org/download/g_inventor_not_disambiguated.tsv.zip")
+    with zipfile.ZipFile("g_inventor_not_disambiguated.tsv.zip", "r") as zip_ref:
         zip_ref.extractall(".")
-    os.remove("rawinventor.tsv.zip")
+    os.remove("g_inventor_not_disambiguated.tsv.zip")
 
-rawinventor = pd.read_csv("rawinventor.tsv", sep="\t", dtype=str)
+g_inventor_not_disambiguated = pd.read_csv("g_inventor_not_disambiguated.tsv", sep="\t", dtype=str)
 
 data = pd.read_csv("data-raw/ALS-dataset/als-inventors.csv", dtype=str)
 data.rename(columns={"inventor-id": "unique_id", "mention-id": "mention_id"}, inplace=True)
 data = data[~data["mention_id"].duplicated(keep="first")]
 
-rawinventor["mention_id"] = "US" + rawinventor.patent_id + "-" + rawinventor.sequence
-data = data.merge(rawinventor[["mention_id", "name_first", "name_last"]], on="mention_id", how="left")
+g_inventor_not_disambiguated["mention_id"] = (
+    "US" + g_inventor_not_disambiguated.patent_id + "-" + g_inventor_not_disambiguated["inventor_sequence"]
+)
+data = data.merge(
+    g_inventor_not_disambiguated[["mention_id", "raw_inventor_name_first", "raw_inventor_name_last"]],
+    on="mention_id",
+    how="left",
+)
 
-cols = ["mention_id", "unique_id", "name_first", "name_last"]
+cols = ["mention_id", "unique_id", "raw_inventor_name_first", "raw_inventor_name_last"]
 data[cols].to_csv("pv_evaluation/data/inventor/als-inventors.csv", index=False)

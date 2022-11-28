@@ -1,4 +1,4 @@
-mention_id,unique_id,name_first,name_last
+mention_id,unique_id,raw_inventor_name_first,raw_inventor_name_last
 US3858246-0,11797,,
 US3858578-0,11797,,
 US3858674-0,16606,,
