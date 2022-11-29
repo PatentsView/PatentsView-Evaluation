@@ -159,7 +159,7 @@ def inspect_clusters_to_split(disambiguation, benchmark, join_with=None, links=F
     Args:
         disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
         benchmark (Series): reference disambiguation Series.
-        join_with (DataFrame, optional): DataFrame to join based on "mention_id". Defaults to None.
+        join_with (DataFrame, optional): DataFrame indexed by "mention_id". Defaults to None.
 
     Returns:
         DataFrame: DataFrame containing erroneous cluster assignments according to the given benchmark.
@@ -190,7 +190,7 @@ def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None, links=F
     Args:
         disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
         benchmark (Series): reference disambiguation Series.
-        join_with (DataFrame, optional): DataFrame to join based on "mention_id". Defaults to None.
+        join_with (DataFrame, optional): DataFrame indexed by "mention_id". Defaults to None.
 
     Returns:
         DataFrame: DataFrame containing missing cluster links according to the given benchmark.
