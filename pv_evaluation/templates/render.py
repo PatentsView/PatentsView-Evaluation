@@ -28,8 +28,11 @@ def render_inventor_disambiguation_report(outdir, disambiguation_files, inventor
 
     with open(qmdpath, "w+") as file:
         file.write(
-            template.render(disambiguation_files=disambiguation_files, 
-            inventor_not_disambiguated_file=inventor_not_disambiguated_file, datetime=datetime.now().strftime("%I:%M%p on %B %d, %Y"))
+            template.render(
+                disambiguation_files=disambiguation_files,
+                inventor_not_disambiguated_file=inventor_not_disambiguated_file,
+                datetime=datetime.now().strftime("%I:%M%p on %B %d, %Y"),
+            )
         )
 
     if quarto.path() is None:
