@@ -3,15 +3,15 @@
 
 ::: {.panel-tabset}
 
-## Evaluation Results
+## Metrics for Benchmark Datasets (Non-Representative)
 
 {% include 'inventor/callouts/metrics-tips.qmd' %}
 
 :::{.column-body-outset}
 ```{python}
-#fig = inventor_benchmark_plot(disambiguations)
-#fig.update_layout(autosize=False, width=800)
-#fig.show()
+fig = inventor_benchmark_plot(disambiguations)
+fig.update_layout(autosize=False, width=800)
+fig.show()
 ```
 :::
 
@@ -41,7 +41,7 @@ def style_and_display(table, by="prediction"):
 
 {% for filename in disambiguation_files %}
 
-### {{filename}}
+### {{ filename }}
 
 ::: {.panel-tabset}
 
@@ -199,4 +199,14 @@ style_and_display(
 
 :::
 
+:::
+
+# Representative Performance Estimates
+
+:::{.column-body-outset}
+```{python}
+fig = inventor_estimates_plot(disambiguations)
+fig.update_layout(autosize=False, width=800)
+fig.show()
+```
 :::

@@ -4,8 +4,24 @@ import pandas as pd
 import plotly.io as pio
 pio.templates.default = "plotly_white" # Set plotly theme
 
-from er_evaluation.plots import compare_plots, plot_cluster_sizes_distribution
-from pv_evaluation.benchmark import inventor_benchmark_plot
+from er_evaluation.summary import (
+    homonimy_rate,
+    name_variation_rate,
+)
+from er_evaluation.plots import (
+    compare_plots, 
+    plot_cluster_sizes_distribution,
+    plot_entropy_curve,
+)
+from pv_evaluation.benchmark import (
+    inventor_benchmark_plot,
+    inventor_estimates_plot,
+    plot_entropy_curves,
+    top_inventors,
+    plot_cluster_sizes,
+    plot_homonimy_rates,
+    plot_name_variation_rates,
+)
 ```
 
 # Summary Statistics
@@ -29,7 +45,8 @@ def load_disambiguation(filename):
     data = read_auto(filename, dtype=str)
     data.set_index("mention_id", inplace=True)
     disambiguation = data.iloc[:, 0]
-    disambiguation.rename(data.columns.values[0], inplace=True)
+    disambiguation.rename(filename, inplace=True)
+
     return disambiguation
 
 disambiguations = {filename: load_disambiguation(filename) for filename in {{ disambiguation_files }}}
@@ -37,6 +54,9 @@ disambiguations = {filename: load_disambiguation(filename) for filename in {{ di
 inventor_not_disambiguated = read_auto("{{ inventor_not_disambiguated_file }}", dtype=str)
 inventor_not_disambiguated["mention_id"] = "US" + inventor_not_disambiguated.patent_id + "-" + inventor_not_disambiguated.inventor_sequence
 inventor_not_disambiguated.set_index("mention_id", inplace=True)
+
+full_names = inventor_not_disambiguated.raw_inventor_name_first + " " + inventor_not_disambiguated.raw_inventor_name_last
+full_names = full_names.rename("full_name")
 ```
 
 ::: {.panel-tabset}
@@ -47,11 +67,7 @@ inventor_not_disambiguated.set_index("mention_id", inplace=True)
 
 :::{.column-body-outset}
 ```{python}
-fig = compare_plots(*[plot_cluster_sizes_distribution(d, name=k, normalize=True) for k, d in disambiguations.items()])
-fig.update_layout(autosize=False, width=800)
-fig.update_xaxes(range=(0, 20))
-fig.update_yaxes(autorange=True)
-fig.show()
+plot_cluster_sizes(disambiguations)
 ```
 :::
 
@@ -61,12 +77,14 @@ fig.show()
 
 ::: {.panel-tabset}
 
-{% for filename in  summary_table_files%}
+{% for filename in  disambiguation_files%}
 
 ## {{ filename }}
 
 ```{python}
-# Top inventors dataframe
+from IPython.core.display import display, HTML
+
+display(HTML(top_inventors(disambiguations["{{ filename }}"], full_names)))
 ```
 
 {% endfor %}
@@ -79,11 +97,7 @@ fig.show()
 
 :::{.column-body-outset}
 ```{python}
-#fig = compare_plots(*[plot_cluster_sizes_distribution(d, name=k, normalize=True) for k, d in disambiguations.items()])
-#fig.update_layout(autosize=False, width=800)
-#fig.update_xaxes(range=(0, 20))
-#fig.update_yaxes(autorange=True)
-#fig.show()
+plot_entropy_curves(disambiguations)
 ```
 :::
 
@@ -93,9 +107,7 @@ fig.show()
 
 :::{.column-body-outset}
 ```{python}
-#fig = # Plot unique cluster size distribution
-#fig.update_layout(autosize=False, width=800)
-#fig.show()
+plot_name_variation_rates(disambiguations, full_names)
 ```
 :::
 
@@ -105,9 +117,7 @@ fig.show()
 
 :::{.column-body-outset}
 ```{python}
-#fig = compare_plots(*[s.plot_homonymy_rate_distribution() for s in summarizers.values()])
-#fig.update_layout(autosize=False, width=800)
-#fig.show()
+plot_homonimy_rates(disambiguations, full_names)
 ```
 :::
 
