@@ -55,7 +55,6 @@
     <script src="_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pv_evaluation.estimators" href="pv_evaluation.estimators.html" />
     <link rel="prev" title="pv_evaluation.benchmark" href="pv_evaluation.benchmark.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
@@ -295,12 +294,8 @@
   </p>
   <div class="bd-toc-item navbar-nav">
     <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="pv_evaluation.summary.html">pv_evaluation.summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pv_evaluation.metrics.html">pv_evaluation.metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pv_evaluation.benchmark.html">pv_evaluation.benchmark</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">pv_evaluation.templates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pv_evaluation.estimators.html">pv_evaluation.estimators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pv_evaluation.utils.html">pv_evaluation.utils</a></li>
 </ul>
 
   </div>
@@ -349,14 +344,14 @@
 <p>HTML report templates.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.templates.render_inventor_disambiguation_report">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.templates.</span></span><span class="sig-name descname"><span class="pre">render_inventor_disambiguation_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disambiguation_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inventor_not_disambiguated</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/templates/render.html#render_inventor_disambiguation_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.templates.render_inventor_disambiguation_report" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.templates.</span></span><span class="sig-name descname"><span class="pre">render_inventor_disambiguation_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disambiguation_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inventor_not_disambiguated_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/templates/render.html#render_inventor_disambiguation_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.templates.render_inventor_disambiguation_report" title="Permalink to this definition">#</a></dt>
 <dd><p>Create html report based on disambiguation results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>outdir</strong> (<em>str</em>) – directory where to output html files.</p></li>
 <li><p><strong>disambiguation_files</strong> (<em>list</em>) – list of string paths to disambiguation files (tables with the two columns “mention_id” and “inventor_id”). Files format can be one of tsv, csv, or parquet.</p></li>
-<li><p><strong>inventor_not_disambiguated</strong> (<em>str</em>) – string path to a file containing the columns “patent_id”, “inventor_sequence”, “raw_inventor_name_first”, and “raw_inventor_name_last”.</p></li>
+<li><p><strong>inventor_not_disambiguated</strong> (<em>str</em>) – string path to a file containing the columns “patent_id”, “inventor_sequence”, “raw_inventor_name_first”, and “raw_inventor_name_last”. For granted patents, this should be the file “g_inventor_not_disambiguated.tsv” from PatentsView’s bulk data downloads.</p></li>
 <li><p><strong>cache</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether or not to cache jupyter chunk execution between runs. Defaults to True.</p></li>
 </ul>
 </dd>
@@ -384,13 +379,6 @@
           <p class="prev-next-subtitle">previous</p>
           <p class="prev-next-title">pv_evaluation.benchmark</p>
       </div>
-  </a>
-  <a class='right-next' id="next-link" href="pv_evaluation.estimators.html" title="next page">
-  <div class="prev-next-info">
-      <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">pv_evaluation.estimators</p>
-  </div>
-  <i class="fa-solid fa-angle-right"></i>
   </a>
 </div>
             </footer>

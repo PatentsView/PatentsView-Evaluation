@@ -56,7 +56,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="✍️ Creating Inventors Benchmark Datasets by Hand" href="../hand-disambiguation/creating-inventors-benchmark.html" />
-    <link rel="prev" title="📊 Performance Benchmarks" href="../benchmark/report.html" />
+    <link rel="prev" title="🎯 Performance Estimates for Lai’s 2011 Benchmark" href="../estimators/binette-2022-benchmark.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
   </head>
@@ -295,11 +295,8 @@
   </p>
   <div class="bd-toc-item navbar-nav">
     <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../estimators/introduction.html">🎯 Introduction to Performance Estimators for Entity Resolution Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../estimators/israeli-data.html">🎯 Performance Estimates for the Israeli Inventors Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../estimators/lai-2011-benchmark.html">🎯 Performance Estimates for Lai’s 2011 Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../summary/inventor.html">📑 Inventor Disambiguation Summaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../benchmark/report.html">📊 Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../estimators/binette-2022-benchmark.html">🎯 Performance Estimates for Lai’s 2011 Benchmark</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">📑 HTML Report Template</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hand-disambiguation/creating-inventors-benchmark.html">✍️ Creating Inventors Benchmark Datasets by Hand</a></li>
 </ul>
@@ -335,16 +332,16 @@
               
   <section id="html-report-template">
 <h1>📑 HTML Report Template<a class="headerlink" href="#html-report-template" title="Permalink to this heading">#</a></h1>
-<p>This document shows the use of <strong>pv_evaluation</strong> to automatically report on a disambiguation’s performance.</p>
-<p>The key assumption is that the disambiguation algorithm has resulted in a table with one row for each inventor mention and with the following five columns:</p>
+<p>This document shows the use of <strong>pv_evaluation</strong> to automatically report on a disambiguation’s performance using the <code class="docutils literal notranslate"><span class="pre">pv_evaluation.templates.render_inventor_disambiguation_report()</span></code> function.</p>
+<p>This function requires:</p>
 <ul class="simple">
-<li><p><strong>mention_id</strong>: the inventor mention ID, in the form of US&lt;patent_number&gt;-&lt;sequence_number&gt;, such as “US6584128-0”.</p></li>
-<li><p><strong>patent_id</strong>: the inventor mention’s patent number</p></li>
-<li><p><strong>inventor_id</strong>: the inventor unique id assigned by the disambiguation algorithm</p></li>
-<li><p><strong>name_first</strong>: the inventor mention’s first name</p></li>
-<li><p><strong>name_last</strong>: the inventor mention’s last name</p></li>
+<li><p>A list of disambiguations saved to file (tables with a “mention_id” column and a second column representing cluster ID assignment).</p></li>
+<li><p>A “inventor_not_disambiguated” file with the columns “patent_id”, “inventor_sequence”, “raw_inventor_name_first”, and “raw_inventor_name_last”. For granted patents, this should be the “g_inventor_not_disambiguated.tsv” file from PatentsView’s bulk data downloads.</p></li>
 </ul>
-<p>For instance, we can use the “rawinventor.tsv” file from <a class="reference external" href="https://patentsview.org/download/data-download-tables">PatentsView’s bulk data download</a> as containing the current inventor disambiguation. Below, this dataset is downloaded and the “mention_id” field is added from patent numbers and inventor sequence numbers:</p>
+<p>Below, we download “g_inventor_not_disambiguated.tsv” and prepare a set of disambiguations to evaluate.</p>
+<section id="data-preparation">
+<h2>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading">#</a></h2>
+<p>Downloading “g_inventor_not_disambiguated.tsv” and the file containing persistent inventor disambiguations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -352,157 +349,52 @@
 <span class="kn">import</span> <span class="nn">zipfile</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">):</span>
-    <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip&quot;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;g_inventor_not_disambiguated.tsv&quot;</span><span class="p">):</span>
+    <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://s3.amazonaws.com/data.patentsview.org/download/g_inventor_not_disambiguated.tsv.zip&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;g_inventor_not_disambiguated.tsv.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
         <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv.zip&quot;</span><span class="p">)</span>
-    <span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-    <span class="n">rawinventor</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;g_inventor_not_disambiguated.tsv.zip&quot;</span><span class="p">)</span>
 
-<span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">rawinventor</span><span class="p">[[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="s2">&quot;inventor_id&quot;</span><span class="p">,</span> <span class="s2">&quot;patent_id&quot;</span><span class="p">,</span> <span class="s2">&quot;name_first&quot;</span><span class="p">,</span> <span class="s2">&quot;name_last&quot;</span><span class="p">]]</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;g_persistent_inventor.tsv&quot;</span><span class="p">):</span>
+    <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://s3.amazonaws.com/data.patentsview.org/download/g_persistent_inventor.tsv.zip&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;g_persistent_inventor.tsv.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;g_persistent_inventor.tsv.zip&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>mention_id</th>
-      <th>inventor_id</th>
-      <th>patent_id</th>
-      <th>name_first</th>
-      <th>name_last</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>US6584128-0</td>
-      <td>fl:ri_ln:kroeger-1</td>
-      <td>6584128</td>
-      <td>Richard</td>
-      <td>Kroeger</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>US4789863-0</td>
-      <td>fl:th_ln:bush-1</td>
-      <td>4789863</td>
-      <td>Thomas A.</td>
-      <td>Bush</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>US11161990-1</td>
-      <td>fl:ma_ln:boudreaux-4</td>
-      <td>11161990</td>
-      <td>Matthew F.</td>
-      <td>Boudreaux</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>US6795487-1</td>
-      <td>fl:ge_ln:whitworth-1</td>
-      <td>6795487</td>
-      <td>Gerald</td>
-      <td>Whitworth</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>USD474886-0</td>
-      <td>fl:th_ln:fleming-3</td>
-      <td>D474886</td>
-      <td>Thomas W.</td>
-      <td>Fleming</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>Preparing a set of distinct disambiguations saved to file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">):</span>
+    <span class="n">g_persistent_inventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;g_persistent_inventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">g_persistent_inventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">g_persistent_inventor</span><span class="o">.</span><span class="n">patent_id</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">g_persistent_inventor</span><span class="o">.</span><span class="n">sequence</span>
+
+    <span class="n">g_persistent_inventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">disamb_inventor_id_20211230</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">g_persistent_inventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">disamb_inventor_id_20220630</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="rendering-report">
 <h2>Rendering Report<a class="headerlink" href="#rendering-report" title="Permalink to this heading">#</a></h2>
 <p>We can now generate the report using the <code class="docutils literal notranslate"><span class="pre">render_inventor_disambiguation_report()</span></code> function. The results are saved to the current folder “.”.</p>
-<p>Note that, if we wish to compare multiple disambiguations, then we can add more files to the list <code class="docutils literal notranslate"><span class="pre">summary_table_files</span></code>. Each file in this list should be a table with the five columns “mention_id”, “inventor_id”, “patent_id”, “name_first”, and “name_last”.</p>
+<p>Note that, if we wish to compare more disambiguations, then we can add more files to the list <code class="docutils literal notranslate"><span class="pre">disambiguation_files</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.templates</span> <span class="kn">import</span> <span class="n">render_inventor_disambiguation_report</span>
 
 <span class="n">summary_table_files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">]</span>
 
-<span class="n">render_inventor_disambiguation_report</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">summary_table_files</span><span class="o">=</span><span class="n">summary_table_files</span><span class="p">)</span>
+<span class="n">render_inventor_disambiguation_report</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">disambiguation_files</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span>
+<span class="n">inventor_not_disambiguated_file</span><span class="o">=</span><span class="s2">&quot;g_inventor_not_disambiguated.tsv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting python3 kernel...Done
-
-Executing &#39;index.ipynb&#39;
-  Cell 1/20...Done
-  Cell 2/20...Done
-  Cell 3/20...Done
-  Cell 4/20...Done
-  Cell 5/20...Done
-  Cell 6/20...Done
-  Cell 7/20...Done
-  Cell 8/20...Done
-  Cell 9/20...Done
-  Cell 10/20...Done
-  Cell 11/20...Done
-  Cell 12/20...Done
-  Cell 13/20...Done
-  Cell 14/20...Done
-  Cell 15/20...Done
-  Cell 16/20...Done
-  Cell 17/20...Done
-  Cell 18/20...Done
-  Cell 19/20...Done
-  Cell 20/20...Done
-
-<span class=" -Color -Color-Bold">pandoc --output index.html</span>
-  to: html
-  standalone: true
-  self-contained: true
-  section-divs: true
-  html-math-method: mathjax
-  wrap: none
-  default-image-extension: png
-  toc: true
-  toc-depth: 3
-  
-<span class=" -Color -Color-Bold">metadata</span>
-  document-css: false
-  link-citations: true
-  date-format: long
-  lang: en
-  title: Inventor Disambiguation Report
-  date: today
-  author: PatentsView-Evaluation
-  toc-location: left
-  jupyter: python3
-  theme: cosmo
-  fig-cap-location: margin
-  code-block-border-left: &#39;#31BAE9&#39;
-  code-copy: true
-  
-Output created: index.html
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting python3 kernel...
 </pre></div>
 </div>
 </div>
@@ -522,11 +414,11 @@ Output created: index.html
             <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="../benchmark/report.html" title="previous page">
+  <a class='left-prev' id="prev-link" href="../estimators/binette-2022-benchmark.html" title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">📊 Performance Benchmarks</p>
+          <p class="prev-next-title">🎯 Performance Estimates for Lai’s 2011 Benchmark</p>
       </div>
   </a>
   <a class='right-next' id="next-link" href="../hand-disambiguation/creating-inventors-benchmark.html" title="next page">
@@ -552,6 +444,11 @@ Output created: index.html
 </div>
 <nav id="bd-toc-nav" class="page-toc">
     <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-preparation">
+   Data Preparation
+  </a>
+ </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#rendering-report">
    Rendering Report
