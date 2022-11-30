@@ -342,8 +342,11 @@
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">qmdpath</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-            <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">disambiguation_files</span><span class="o">=</span><span class="n">disambiguation_files</span><span class="p">,</span> 
-            <span class="n">inventor_not_disambiguated_file</span><span class="o">=</span><span class="n">inventor_not_disambiguated_file</span><span class="p">,</span> <span class="n">datetime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%I:%M%p on %B </span><span class="si">%d</span><span class="s2">, %Y&quot;</span><span class="p">))</span>
+            <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+                <span class="n">disambiguation_files</span><span class="o">=</span><span class="n">disambiguation_files</span><span class="p">,</span>
+                <span class="n">inventor_not_disambiguated_file</span><span class="o">=</span><span class="n">inventor_not_disambiguated_file</span><span class="p">,</span>
+                <span class="n">datetime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%I:%M%p on %B </span><span class="si">%d</span><span class="s2">, %Y&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">quarto</span><span class="o">.</span><span class="n">path</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

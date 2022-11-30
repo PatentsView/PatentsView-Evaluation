@@ -318,11 +318,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">er_evaluation.utils</span> <span class="kn">import</span> <span class="n">expand_grid</span>
-<span class="kn">from</span> <span class="nn">er_evaluation.estimators</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">estimates_table</span><span class="p">,</span>
-    <span class="n">pairwise_precision_design_estimate</span><span class="p">,</span>
-    <span class="n">pairwise_recall_design_estimate</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">er_evaluation.estimators</span> <span class="kn">import</span> <span class="n">estimates_table</span><span class="p">,</span> <span class="n">pairwise_precision_design_estimate</span><span class="p">,</span> <span class="n">pairwise_recall_design_estimate</span>
 <span class="kn">from</span> <span class="nn">er_evaluation.summary</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">cluster_sizes</span><span class="p">,</span>
     <span class="n">name_variation_rate</span><span class="p">,</span>
@@ -355,7 +351,10 @@
 <span class="p">}</span>
 <span class="n">DEFAULT_INVENTORS_SAMPLES_WEIGHTS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># Dataset and parameters to pass to the estimator.</span>
-    <span class="s2">&quot;binette-sample&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sample&quot;</span><span class="p">:</span><span class="n">load_binette_2022_inventors_benchmark</span><span class="p">(),</span> <span class="s2">&quot;weights&quot;</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="n">cluster_sizes</span><span class="p">(</span><span class="n">load_binette_2022_inventors_benchmark</span><span class="p">())},</span>
+    <span class="s2">&quot;binette-sample&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;sample&quot;</span><span class="p">:</span> <span class="n">load_binette_2022_inventors_benchmark</span><span class="p">(),</span>
+        <span class="s2">&quot;weights&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">cluster_sizes</span><span class="p">(</span><span class="n">load_binette_2022_inventors_benchmark</span><span class="p">()),</span>
+    <span class="p">},</span>
 <span class="p">}</span>
 <span class="c1"># Default benchmarks to run.</span>
 <span class="n">DEFAULT_INVENTORS_BENCHMARKS</span> <span class="o">=</span> <span class="p">{</span>
@@ -370,6 +369,7 @@
     <span class="s2">&quot;pairwise precision&quot;</span><span class="p">:</span> <span class="n">pairwise_precision</span><span class="p">,</span>
     <span class="s2">&quot;pairwise recall&quot;</span><span class="p">:</span> <span class="n">pairwise_recall</span><span class="p">,</span>
 <span class="p">}</span>
+
 
 <div class="viewcode-block" id="inventor_estimates_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_estimates_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_estimates_plot</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">facet_col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Plot performance estimates for given cluster samples.</span>
@@ -564,13 +564,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">compare_plots</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">plot_entropy_curve</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">disambiguations</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
-        <span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> 
-        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Hill numbers Curve&quot;</span><span class="p">,</span> 
-        <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span>
-        <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Hill number of order q&quot;</span>
+        <span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Hill numbers Curve&quot;</span><span class="p">,</span> <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;q&quot;</span><span class="p">,</span> <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Hill number of order q&quot;</span>
     <span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">autorange</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span></div>
+
 
 <div class="viewcode-block" id="plot_cluster_sizes"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.plot_cluster_sizes">[docs]</a><span class="k">def</span> <span class="nf">plot_cluster_sizes</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -578,20 +576,18 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">        Plotly figure.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">compare_plots</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">plot_cluster_sizes_distribution</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">disambiguations</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
-        <span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> 
-        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cluster Sizes Distribution&quot;</span><span class="p">,</span> 
-        <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Cluster size&quot;</span><span class="p">,</span>
-        <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Proportion&quot;</span>
+        <span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Cluster Sizes Distribution&quot;</span><span class="p">,</span> <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Cluster size&quot;</span><span class="p">,</span> <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Proportion&quot;</span>
     <span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">autorange</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span></div>
+
 
 <div class="viewcode-block" id="plot_name_variation_rates"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.plot_name_variation_rates">[docs]</a><span class="k">def</span> <span class="nf">plot_name_variation_rates</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -606,13 +602,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rates</span> <span class="o">=</span> <span class="p">[</span><span class="n">name_variation_rate</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">disambiguations</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
 
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Name variation rate&quot;</span><span class="p">:</span> <span class="n">rates</span><span class="p">,</span> <span class="s2">&quot;Disambiguation&quot;</span><span class="p">:</span> <span class="n">disambiguations</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">})</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Name variation rate&quot;</span><span class="p">:</span> <span class="n">rates</span><span class="p">,</span> <span class="s2">&quot;Disambiguation&quot;</span><span class="p">:</span> <span class="n">disambiguations</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Name variation rate&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Disambiguation&#39;</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Name variation rate&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Disambiguation&quot;</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Name variation rate&quot;</span><span class="p">,</span> <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">fig</span></div>
-    
+
+
 <div class="viewcode-block" id="plot_homonimy_rates"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.plot_homonimy_rates">[docs]</a><span class="k">def</span> <span class="nf">plot_homonimy_rates</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot homonimy rates for a set of given disambiguations</span>
@@ -626,11 +623,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">rates</span> <span class="o">=</span> <span class="p">[</span><span class="n">homonimy_rate</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">[</span><span class="n">f</span><span class="p">],</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">disambiguations</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Homonimy rate&quot;</span><span class="p">:</span> <span class="n">rates</span><span class="p">,</span> <span class="s2">&quot;Disambiguation&quot;</span><span class="p">:</span> <span class="n">disambiguations</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">})</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Homonimy rate&quot;</span><span class="p">:</span> <span class="n">rates</span><span class="p">,</span> <span class="s2">&quot;Disambiguation&quot;</span><span class="p">:</span> <span class="n">disambiguations</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">})</span>
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Homonimy rate&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;Disambiguation&#39;</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Homonimy rate&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Disambiguation&quot;</span><span class="p">,</span> <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">)</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Homonimy rate&quot;</span><span class="p">,</span> <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">fig</span></div>
 </pre></div>
 
