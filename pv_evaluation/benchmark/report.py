@@ -4,11 +4,7 @@ import plotly.express as px
 import numpy as np
 
 from er_evaluation.utils import expand_grid
-from er_evaluation.estimators import (
-    estimates_table,
-    pairwise_precision_design_estimate,
-    pairwise_recall_design_estimate
-)
+from er_evaluation.estimators import estimates_table, pairwise_precision_design_estimate, pairwise_recall_design_estimate
 from er_evaluation.summary import (
     cluster_sizes,
     name_variation_rate,
@@ -41,7 +37,10 @@ DEFAULT_ESTIMATORS = {
 }
 DEFAULT_INVENTORS_SAMPLES_WEIGHTS = {
     # Dataset and parameters to pass to the estimator.
-    "binette-sample": {"sample":load_binette_2022_inventors_benchmark(), "weights":1/cluster_sizes(load_binette_2022_inventors_benchmark())},
+    "binette-sample": {
+        "sample": load_binette_2022_inventors_benchmark(),
+        "weights": 1 / cluster_sizes(load_binette_2022_inventors_benchmark()),
+    },
 }
 # Default benchmarks to run.
 DEFAULT_INVENTORS_BENCHMARKS = {
@@ -56,6 +55,7 @@ DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
     "pairwise recall": pairwise_recall,
 }
+
 
 def inventor_estimates_plot(disambiguations, samples_weights=None, estimators=None, facet_col_wrap=2, **kwargs):
     """Plot performance estimates for given cluster samples.
@@ -250,13 +250,11 @@ def plot_entropy_curves(disambiguations):
     """
     fig = compare_plots(*[plot_entropy_curve(d, name=k) for k, d in disambiguations.items()])
     fig.update_layout(
-        autosize=False, width=800, 
-        title="Hill numbers Curve", 
-        xaxis_title="q",
-        yaxis_title="Hill number of order q"
+        autosize=False, width=800, title="Hill numbers Curve", xaxis_title="q", yaxis_title="Hill number of order q"
     )
     fig.update_yaxes(autorange=True)
     return fig
+
 
 def plot_cluster_sizes(disambiguations):
     """
@@ -264,20 +262,18 @@ def plot_cluster_sizes(disambiguations):
 
     Args:
         disambiguations (Dict): Dictionary of membership vectors representing given disambiguations.
-    
+
     Returns:
         Plotly figure.
     """
     fig = compare_plots(*[plot_cluster_sizes_distribution(d, name=k, normalize=True) for k, d in disambiguations.items()])
     fig.update_layout(
-        autosize=False, width=800, 
-        title="Cluster Sizes Distribution", 
-        xaxis_title="Cluster size",
-        yaxis_title="Proportion"
+        autosize=False, width=800, title="Cluster Sizes Distribution", xaxis_title="Cluster size", yaxis_title="Proportion"
     )
     fig.update_xaxes(range=(0, 20))
     fig.update_yaxes(autorange=True)
     return fig
+
 
 def plot_name_variation_rates(disambiguations, names):
     """
@@ -292,13 +288,14 @@ def plot_name_variation_rates(disambiguations, names):
     """
     rates = [name_variation_rate(disambiguations[f], names=names) for f in disambiguations.keys()]
 
-    data = pd.DataFrame({"Name variation rate": rates, "Disambiguation": disambiguations.keys(), "none":""})
+    data = pd.DataFrame({"Name variation rate": rates, "Disambiguation": disambiguations.keys(), "none": ""})
 
-    fig = px.bar(data, x="none", y="Name variation rate", color='Disambiguation', barmode="group")
+    fig = px.bar(data, x="none", y="Name variation rate", color="Disambiguation", barmode="group")
     fig.update_layout(title="Name variation rate", xaxis_title="")
-    fig.update_yaxes(range=(0,1))
+    fig.update_yaxes(range=(0, 1))
     return fig
-    
+
+
 def plot_homonimy_rates(disambiguations, names):
     """
     Plot homonimy rates for a set of given disambiguations
@@ -312,9 +309,9 @@ def plot_homonimy_rates(disambiguations, names):
     """
 
     rates = [homonimy_rate(disambiguations[f], names=names) for f in disambiguations.keys()]
-    data = pd.DataFrame({"Homonimy rate": rates, "Disambiguation": disambiguations.keys(), "none":""})
+    data = pd.DataFrame({"Homonimy rate": rates, "Disambiguation": disambiguations.keys(), "none": ""})
 
-    fig = px.bar(data, x="none", y="Homonimy rate", color='Disambiguation', barmode="group")
+    fig = px.bar(data, x="none", y="Homonimy rate", color="Disambiguation", barmode="group")
     fig.update_layout(title="Homonimy rate", xaxis_title="")
-    fig.update_yaxes(range=(0,1))
+    fig.update_yaxes(range=(0, 1))
     return fig
