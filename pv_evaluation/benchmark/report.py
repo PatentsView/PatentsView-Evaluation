@@ -1,6 +1,7 @@
 import itertools
 import pandas as pd
 import plotly.express as px
+import numpy as np
 
 from er_evaluation.utils import expand_grid
 from er_evaluation.estimators import (
@@ -9,12 +10,19 @@ from er_evaluation.estimators import (
     pairwise_recall_design_estimate
 )
 from er_evaluation.summary import (
-    cluster_sizes
+    cluster_sizes,
+    name_variation_rate,
+    homonimy_rate,
 )
 from er_evaluation.metrics import (
     metrics_table,
     pairwise_precision,
     pairwise_recall,
+)
+from er_evaluation.plots import (
+    compare_plots,
+    plot_entropy_curve,
+    plot_cluster_sizes_distribution,
 )
 
 from pv_evaluation.benchmark import (
@@ -33,7 +41,7 @@ DEFAULT_ESTIMATORS = {
 }
 DEFAULT_INVENTORS_SAMPLES_WEIGHTS = {
     # Dataset and parameters to pass to the estimator.
-    "lai-sample": {"sample":load_lai_2011_inventors_benchmark(), "weights":1/cluster_sizes(load_lai_2011_inventors_benchmark())},
+    "lai-sample": {"sample":load_lai_2011_inventors_benchmark(), "weights": 1 + 0*cluster_sizes(load_lai_2011_inventors_benchmark())},
     "binette-sample": {"sample":load_binette_2022_inventors_benchmark(), "weights":1/cluster_sizes(load_binette_2022_inventors_benchmark())},
 }
 # Default benchmarks to run.
@@ -50,7 +58,7 @@ DEFAULT_METRICS = {
     "pairwise recall": pairwise_recall,
 }
 
-def inventor_estimates_plot(disambiguations, samples_weights, estimators=None, facet_col_wrap=2, **kwargs):
+def inventor_estimates_plot(disambiguations, samples_weights=None, estimators=None, facet_col_wrap=2, **kwargs):
     """Plot performance estimates for given cluster samples.
 
     Args:
@@ -74,8 +82,8 @@ def inventor_estimates_plot(disambiguations, samples_weights, estimators=None, f
         y="value",
         x="estimator",
         error_y="std",
-        color="algorithm",
-        facet_col="sample",
+        color="prediction",
+        facet_col="sample_weights",
         barmode="group",
         facet_col_wrap=facet_col_wrap,
         **kwargs,
@@ -103,8 +111,8 @@ def inventor_benchmark_plot(predictions, references=None, metrics=None, facet_co
         computed_metrics,
         y="value",
         x="metric",
-        color="algorithm",
-        facet_col="benchmark",
+        color="prediction",
+        facet_col="reference",
         barmode="group",
         facet_col_wrap=facet_col_wrap,
         **kwargs,
@@ -207,3 +215,104 @@ def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None, links=F
         table = add_links(table)
 
     return table
+
+
+def top_inventors(disambiguation, names, n=10):
+    """
+    Table of most prolific inventors
+
+    Args:
+        disambiguation (Series): Membership vector, indexed by mention IDs, representing a given disambiguation.
+        names (Series): Pandas Series indexed by mention IDs and with values corresponding to inventor name.
+        n (int, optional): Number of rows to display. Defaults to 10.
+
+    Returns:
+        DataFrame: Table with top n most prolific inventors.
+    """
+    largest = cluster_sizes(disambiguation).sort_values(ascending=False).head(n)
+    largest_mentions = disambiguation[np.isin(disambiguation.values, largest.index.values)]
+    largest_with_names = pd.merge(largest_mentions, names, how="left", left_index=True, right_index=True)
+
+    return largest_with_names.groupby(disambiguation.name).first()
+
+
+def plot_entropy_curves(disambiguations):
+    """
+    Plot entropy curves for a set of disambiguations
+
+    Args:
+        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations
+
+    Returns:
+        Plotly figure.
+    """
+    fig = compare_plots(*[plot_entropy_curve(d, name=k) for k, d in disambiguations.items()])
+    fig.update_layout(
+        autosize=False, width=800, 
+        title="Hill numbers Curve", 
+        xaxis_title="q",
+        yaxis_title="Hill number of order q"
+    )
+    fig.update_yaxes(autorange=True)
+    return fig
+
+def plot_cluster_sizes(disambiguations):
+    """
+    Plot cluster sizes for a set of disambiguations
+
+    Args:
+        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations.
+    
+    Returns:
+        Plotly figure.
+    """
+    fig = compare_plots(*[plot_cluster_sizes_distribution(d, name=k, normalize=True) for k, d in disambiguations.items()])
+    fig.update_layout(
+        autosize=False, width=800, 
+        title="Cluster Sizes Distribution", 
+        xaxis_title="Cluster size",
+        yaxis_title="Proportion"
+    )
+    fig.update_xaxes(range=(0, 20))
+    fig.update_yaxes(autorange=True)
+    return fig
+
+def plot_name_variation_rates(disambiguations, names):
+    """
+    Plot name variation rates for a set of given disambiguations
+
+    Args:
+        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations.
+        names (Series): Pandas Series indexed by mention IDs and with values corresponding to inventor name.
+
+    Returns:
+        Plotly figure.
+    """
+    rates = [name_variation_rate(disambiguations[f], names=names) for f in disambiguations.keys()]
+
+    data = pd.DataFrame({"Name variation rate": rates, "Disambiguation": disambiguations.keys(), "none":""})
+
+    fig = px.bar(data, x="none", y="Name variation rate", color='Disambiguation', barmode="group")
+    fig.update_layout(title="Name variation rate", xaxis_title="")
+    fig.update_yaxes(range=(0,1))
+    return fig
+    
+def plot_homonimy_rates(disambiguations, names):
+    """
+    Plot homonimy rates for a set of given disambiguations
+
+    Args:
+        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations.
+        names (Series): Pandas Series indexed by mention IDs and with values corresponding to inventor name.
+
+    Returns:
+        Plotly figure.
+    """
+
+    rates = [homonimy_rate(disambiguations[f], names=names) for f in disambiguations.keys()]
+    data = pd.DataFrame({"Homonimy rate": rates, "Disambiguation": disambiguations.keys(), "none":""})
+
+    fig = px.bar(data, x="none", y="Homonimy rate", color='Disambiguation', barmode="group")
+    fig.update_layout(title="Homonimy rate", xaxis_title="")
+    fig.update_yaxes(range=(0,1))
+    return fig
