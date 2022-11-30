@@ -55,8 +55,8 @@
     <script src="../../_static/design-tabs.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="📑 Inventor Disambiguation Summaries" href="../summary/inventor.html" />
-    <link rel="prev" title="🎯 Performance Estimates for the Israeli Inventors Dataset" href="israeli-data.html" />
+    <link rel="next" title="🎯 Performance Estimates for Lai’s 2011 Benchmark" href="binette-2022-benchmark.html" />
+    <link rel="prev" title="Examples" href="../../examples.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
   </head>
@@ -295,11 +295,8 @@
   </p>
   <div class="bd-toc-item navbar-nav">
     <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">🎯 Introduction to Performance Estimators for Entity Resolution Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="israeli-data.html">🎯 Performance Estimates for the Israeli Inventors Dataset</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">🎯 Performance Estimates for Lai’s 2011 Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../summary/inventor.html">📑 Inventor Disambiguation Summaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../benchmark/report.html">📊 Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binette-2022-benchmark.html">🎯 Performance Estimates for Lai’s 2011 Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../templates/templates.html">📑 HTML Report Template</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../hand-disambiguation/creating-inventors-benchmark.html">✍️ Creating Inventors Benchmark Datasets by Hand</a></li>
 </ul>
@@ -343,10 +340,7 @@
 <p>First we import required modules and recover the current disambiguation from <code class="docutils literal notranslate"><span class="pre">rawinventor.tsv</span></code>. The current disambiguation is filtered to only contain inventor mentions for granted patents between 1975 and 2010.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.estimators</span> <span class="kn">import</span> <span class="n">pairwise_precision_estimator</span><span class="p">,</span> <span class="n">pairwise_recall_estimator</span><span class="p">,</span> <span class="n">pairwise_precision_std</span><span class="p">,</span> <span class="n">pairwise_recall_std</span>
-<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_lai_2011_inventors_benchmark</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">wget</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
@@ -391,53 +385,37 @@
 </section>
 <section id="precision-and-recall-estimates">
 <h2>Precision and Recall Estimates<a class="headerlink" href="#precision-and-recall-estimates" title="Permalink to this heading">#</a></h2>
-<p>We can now estimate precision and recall using the “cluster_block” estimator (a sample of true clusters has been sampled) and with uniform probability weights.</p>
-<p>Precision estimate:</p>
+<p>We can now estimate precision and recall with uniform probability weights.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_precision_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">er_evaluation.estimators</span> <span class="kn">import</span> <span class="n">pairwise_precision_design_estimate</span><span class="p">,</span> <span class="n">pairwise_recall_design_estimate</span>
+<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_lai_2011_inventors_benchmark</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Precision estimate and standard deviation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_precision_design_estimate</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">load_lai_2011_inventors_benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9061700591403344
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.9061700591403344, 0.02694415809739732)
 </pre></div>
 </div>
 </div>
 </div>
+<p>Recall estimate and standard deviation:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_precision_std</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_recall_design_estimate</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">load_lai_2011_inventors_benchmark</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02694415809739732
-</pre></div>
-</div>
-</div>
-</div>
-<p>Recall estimate:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_recall_estimator</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9096034933749487
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairwise_recall_std</span><span class="p">(</span><span class="n">current_disambiguation</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05017639288406865
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.9096034933749487, 0.05017639288406865)
 </pre></div>
 </div>
 </div>
@@ -453,17 +431,17 @@
             <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="israeli-data.html" title="previous page">
+  <a class='left-prev' id="prev-link" href="../../examples.html" title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">🎯 Performance Estimates for the Israeli Inventors Dataset</p>
+          <p class="prev-next-title">Examples</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="../summary/inventor.html" title="next page">
+  <a class='right-next' id="next-link" href="binette-2022-benchmark.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">📑 Inventor Disambiguation Summaries</p>
+      <p class="prev-next-title">🎯 Performance Estimates for Lai’s 2011 Benchmark</p>
   </div>
   <i class="fa-solid fa-angle-right"></i>
   </a>

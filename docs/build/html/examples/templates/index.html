@@ -1,0 +1,1304 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Summary Statistics &#8212; PatentsView-Evaluation  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_lesson.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/minipres.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+    <p class="title logo__title">PatentsView-Evaluation  documentation</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../readme.html">
+                        README
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../concepts.html">
+                        Key Concepts
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../pv_evaluation.html">
+                        API Doc
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/patentsview/patentsview-evaluation" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../readme.html">
+                        README
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../concepts.html">
+                        Key Concepts
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../examples.html">
+                        Examples
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../pv_evaluation.html">
+                        API Doc
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/patentsview/patentsview-evaluation" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <p>This is report has been automatically generated for the following data source(s) at 09:55PM on November 30, 2022:</p>
+<p>For more information, please refer to the <a class="reference external" href="https://github.com/PatentsView/PatentsView-Evaluation/">PatentsView-Evaluation project homepage</a> or to the report <span class="xref myst">source code</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.io</span> <span class="k">as</span> <span class="nn">pio</span>
+<span class="n">pio</span><span class="o">.</span><span class="n">templates</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;plotly_white&quot;</span> <span class="c1"># Set plotly theme</span>
+
+<span class="kn">from</span> <span class="nn">er_evaluation.summary</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">homonimy_rate</span><span class="p">,</span>
+    <span class="n">name_variation_rate</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">er_evaluation.plots</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">compare_plots</span><span class="p">,</span> 
+    <span class="n">plot_cluster_sizes_distribution</span><span class="p">,</span>
+    <span class="n">plot_entropy_curve</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">inventor_benchmark_plot</span><span class="p">,</span>
+    <span class="n">inventor_estimates_plot</span><span class="p">,</span>
+    <span class="n">plot_entropy_curves</span><span class="p">,</span>
+    <span class="n">top_inventors</span><span class="p">,</span>
+    <span class="n">plot_cluster_sizes</span><span class="p">,</span>
+    <span class="n">plot_homonimy_rates</span><span class="p">,</span>
+    <span class="n">plot_name_variation_rates</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="summary-statistics">
+<h1>Summary Statistics<a class="headerlink" href="#summary-statistics" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">read_auto</span><span class="p">(</span><span class="n">datapath</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">datapath</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;.csv&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datapath</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;.tsv&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datapath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.parquet&quot;</span><span class="p">,</span> <span class="s2">&quot;.pq&quot;</span><span class="p">,</span> <span class="s2">&quot;.parq&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">datapath</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.xlsx&quot;</span><span class="p">,</span> <span class="s2">&quot;.xls&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">datapath</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unsupported file type. Should be one of csv, tsv, parquet, or xlsx.&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">load_disambiguation</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_auto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">disambiguation</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">disambiguation</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">disambiguation</span>
+
+<span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span><span class="n">filename</span><span class="p">:</span> <span class="n">load_disambiguation</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;disambiguation_20211230.tsv&#39;</span><span class="p">,</span> <span class="s1">&#39;disambiguation_20220630.tsv&#39;</span><span class="p">]}</span>
+
+<span class="n">inventor_not_disambiguated</span> <span class="o">=</span> <span class="n">read_auto</span><span class="p">(</span><span class="s2">&quot;g_inventor_not_disambiguated.tsv&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+<span class="n">inventor_not_disambiguated</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">inventor_not_disambiguated</span><span class="o">.</span><span class="n">patent_id</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">inventor_not_disambiguated</span><span class="o">.</span><span class="n">inventor_sequence</span>
+<span class="n">inventor_not_disambiguated</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">full_names</span> <span class="o">=</span> <span class="n">inventor_not_disambiguated</span><span class="o">.</span><span class="n">raw_inventor_name_first</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">inventor_not_disambiguated</span><span class="o">.</span><span class="n">raw_inventor_name_last</span>
+<span class="n">full_names</span> <span class="o">=</span> <span class="n">full_names</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;full_name&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>::: {.panel-tabset}</p>
+<section id="cluster-sizes">
+<h2>Cluster Sizes<a class="headerlink" href="#cluster-sizes" title="Permalink to this heading">#</a></h2>
+<p>:::{.callout-tip collapse=”true”}</p>
+</section>
+<section id="detailed-explanation-click-to-expand">
+<h2>Detailed Explanation (click to expand)<a class="headerlink" href="#detailed-explanation-click-to-expand" title="Permalink to this heading">#</a></h2>
+<p>The plot below provides the number of inventors with a given number of (co-)authored patents.</p>
+<p>We can read from the plot the number of inventors with a single authored patent, with exactly two authored patents, and so forth. This distribution of the number of authored patents patents per inventor is called the <strong>cluster sizes distribution</strong> of the disambiguation.</p>
+<p>When comparing disambiguation results, look for shifts in shape of the cluster sizes distribution. Is one of the distribution more skewed to the left than another? This could indicate that one of the disambiguation favors smaller clusters, possibly resulting in higher precision but lower recall.</p>
+<p>:::</p>
+<p>:::{.column-body-outset}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_cluster_sizes</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="top-inventors">
+<h2>Top Inventors<a class="headerlink" href="#top-inventors" title="Permalink to this heading">#</a></h2>
+<p>:::{.callout-tip collapse=”true”}</p>
+</section>
+<section id="id1">
+<h2>Detailed Explanation (click to expand)<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>The table below provides the inventors with the largest number of authored patents.</p>
+<p>Make sure to sort the table by number of patents.</p>
+<p>When comparing disambiguation results, look for large changes in the ranking of inventors. Large changes in the estimated numbers of authored patents may also warrant the need to investigate the behavior of the disambiguation for these prolific inventors.</p>
+<p>:::</p>
+<p>::: {.panel-tabset}</p>
+</section>
+<section id="disambiguation-20211230-tsv">
+<h2>disambiguation_20211230.tsv<a class="headerlink" href="#disambiguation-20211230-tsv" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">top_inventors</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> <span class="n">full_names</span><span class="p">)</span><span class="o">.</span><span class="n">to_html</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="disambiguation-20220630-tsv">
+<h2>disambiguation_20220630.tsv<a class="headerlink" href="#disambiguation-20220630-tsv" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">top_inventors</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> <span class="n">full_names</span><span class="p">)</span><span class="o">.</span><span class="n">to_html</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="entropy-curve">
+<h2>Entropy Curve<a class="headerlink" href="#entropy-curve" title="Permalink to this heading">#</a></h2>
+<p>:::{.callout-tip collapse=”true”}</p>
+</section>
+<section id="id2">
+<h2>Detailed Explanation (click to expand)<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>The Hill Numbers entropy curve is a characterization of the cluster sizes distribution.</p>
+<p>It is based on <a class="reference external" href="https://en.wikipedia.org/wiki/Diversity_index">Hill Numbers</a> of order $q$, which are exponentiated Rényi $q$-entropy. That is, for a given $q &gt; 0$ and for $p_i$ the proportion of inventors with $i$ authored patents, the corresponding Hills Number is defined as
+$$
+H_q = \left ( \sum_{i=1}^{\infty} p_i^{q}\right )^{1/(1-q)}
+$$
+The Hill Numbers entropy curve is the plot of Hill Numbers as a function of $q &gt; 0$.</p>
+<p>For $q=0$, the Hill Number is defined as the number of indices $i$ such that $p_i &gt; 0$. This is the size of the support of the cluster sizes distribution
+$$
+H_0 = # \left{ i &gt; 0 ,:, p_i &gt; 0  \right}.
+$$</p>
+<p>For $q=1$, the Hill Number is defined as the exponentiated Shannon entropy
+$$
+H_1 = \exp \left ( - \sum_{i=1}^{\infty} p_i \log p_i \right ).
+$$</p>
+<p>For $q=2$, the Hill number is the inverse of the probability that two randomly sampled inventors have the same number of authored patents:
+$$
+H_2 = \sum_{i=1}^{\infty} p_i^2.
+$$</p>
+<p>When comparing disambiguation results, look for major relative differences between entropy curves. These represent differences in the cluster sizes distribution which can be further investigated using the cluster sizes distribution plot.</p>
+<p>Higher Hill Numbers represent a more spread out cluster sizes distribution, while lower values represent more peaked distributions. The order $q$ of the Hill Numbers represent how the cluster sizes proportions $p_i &gt; 0$ are accounted for. At $q = 0$, we have the number of possible cluster sizes in the data. As $q \rightarrow \infty$, the Hill Number tends to the proportion of inventors with the most common cluster size.</p>
+<p>:::</p>
+<p>:::{.column-body-outset}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_entropy_curves</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="cluster-homogeneity">
+<h2>Cluster Homogeneity<a class="headerlink" href="#cluster-homogeneity" title="Permalink to this heading">#</a></h2>
+<p>:::{.callout-tip collapse=”true”}</p>
+</section>
+<section id="id3">
+<h2>Detailed Explanation (click to expand)<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>Cluster homogeneity is the level similarity of among a cluster’s elements. For inventor disambiguation, this is about the variation between the way that an inventor is represented on its patents (e.g., different name spellings).</p>
+<p>Here we look at cluster homogeneity from a binary perspective – whether or not there is variation, within a cluster, in how an inventor’s name is spelled. The proportion of inventors with a unique name (no name variation within its cluster) is our metric of cluster homogeneity called the <strong>homogeneity rate</strong>.</p>
+<p>In the plot below, the homogeneity rate (i.e., clusters with no name variation) is plotted as a function of cluster size. For inventors with a single patent, the proportion of homogeneous clusters is trivially 1. For inventors with two patents, we can read off the proportion of them with no name variation, and so forth.</p>
+<p>When comparing two disambiguation results, look for changes in the homogeneity rate across cluster sizes. A higher homogeneity rate means possibly smaller, more robust clusters. On the other hand, lower homogeneity rates may be associated with an increased error probability.</p>
+<p>:::</p>
+<p>:::{.column-body-outset}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_name_variation_rates</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">full_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="between-cluster-similarity">
+<h2>Between-cluster similarity<a class="headerlink" href="#between-cluster-similarity" title="Permalink to this heading">#</a></h2>
+<p>:::{.callout-tip collapse=”true”}</p>
+</section>
+<section id="id4">
+<h2>Detailed Explanation (click to expand)<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>Between-cluster similarity is the level of similarity between different clusters. For inventor disambiguation, this is about different inventors that have similar representations on some patents, such as having the same names.</p>
+<p>Here we look at between-cluster similarity from a binary perspective – whether or not an inventor’s name is shared with another inventor. The proportion of inventors sharing their name with someone else is our metric of between-cluster similarity which we call the <strong>homonymy rate</strong>.</p>
+<p>In the plot below, the homonymy rate is plotted as a function of cluster sizes.</p>
+<p>:::</p>
+<p>:::{.column-body-outset}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_homonimy_rates</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">full_names</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+<p>:::</p>
+</section>
+</section>
+<section id="benchmark-evaluation">
+<h1>Benchmark Evaluation<a class="headerlink" href="#benchmark-evaluation" title="Permalink to this heading">#</a></h1>
+<p>::: {.panel-tabset}</p>
+<section id="metrics-for-benchmark-datasets-non-representative">
+<h2>Metrics for Benchmark Datasets (Non-Representative)<a class="headerlink" href="#metrics-for-benchmark-datasets-non-representative" title="Permalink to this heading">#</a></h2>
+<p>:::{.callout-tip collapse=”true”}</p>
+</section>
+<section id="id5">
+<h2>Detailed Explanation (click to expand)<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>Performance evaluation metrics compare predicted clusters to a reference clustering from benchmark datasets.</p>
+<p>Note that to compute performance evaluation metrics, predicted clusters are first restricted to mentions which appear in the reference data. Performance evaluation metrics on benchmark datasets are not at all representative of performance on the full data.</p>
+<p>Commonly used metrics are defined below.</p>
+<ul class="simple">
+<li><p><strong>Pairwise precision:</strong> Proportion of predicted links (pairs of mentions in the same predicted cluster) which are also linked under the reference clustering.</p></li>
+<li><p><strong>Pairwise recall:</strong> Proportion of links in the reference clustering (pairs of mentions in the same reference cluster) which are also linked under the predicted clustering.</p></li>
+<li><p><strong>Pairwise f-score:</strong> Harmonic mean between pairwise precision and pairwise recall.</p></li>
+<li><p><strong>Cluster precision:</strong> Proportion of predicted clusters which are entirely contained within a single reference cluster. That is, cluster precision is the proportion of predicted clusters which are not split up in the reference clustering.</p></li>
+<li><p><strong>Cluster recall:</strong> Proportion of reference clusters which are entirely contained within a single predicted cluster. That is, cluster recall is the proportion of reference clusters which are not split up in the predicted clusters.</p></li>
+<li><p><strong>Cluster f-score:</strong> Harmonic mean between pairwise precision and pairwise recall.</p></li>
+</ul>
+<p>:::</p>
+<p>:::{.column-body-outset}</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">inventor_benchmark_plot</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="predicted-cluster-errors">
+<h2>Predicted Cluster Errors<a class="headerlink" href="#predicted-cluster-errors" title="Permalink to this heading">#</a></h2>
+<p>:::{.callout-tip collapse=”true”}</p>
+</section>
+<section id="id6">
+<h2>Detailed Explanation (click to expand)<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>Cluster error tabs (predicted cluster errors and reference cluster errors) allow you to investigate clusters which contain errors.</p>
+<p><strong>Predicted cluster errors</strong> are about predicted clusters which should have been split up in two or more parts, according to the reference data.</p>
+<p>To investigate predicted cluster errors, sort the table by <code class="docutils literal notranslate"><span class="pre">prediction</span></code> id and look for mismatching <code class="docutils literal notranslate"><span class="pre">reference</span></code> ids within predicted clusters.</p>
+<p><strong>Reference cluster errors</strong> are about predicted clusters which should be merged together, according to the reference data.</p>
+<p>To investigate reference cluster errors, sort the table by <code class="docutils literal notranslate"><span class="pre">reference</span></code> id and look for mismatching <code class="docutils literal notranslate"><span class="pre">cluster</span></code> ids within reference clusters.</p>
+<p>:::</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">load_israeli_inventors_benchmark</span><span class="p">,</span>
+    <span class="n">load_patentsview_inventors_benchmark</span><span class="p">,</span>
+    <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">,</span>
+    <span class="n">load_als_inventors_benchmark</span><span class="p">,</span>
+    <span class="n">load_ens_inventors_benchmark</span><span class="p">,</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">,</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">,</span>
+    <span class="n">style_cluster_inspection</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">style_and_display</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">style_cluster_inspection</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">by</span><span class="o">=</span><span class="n">by</span><span class="p">)</span><span class="o">.</span><span class="n">hide_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_html</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>::: {.panel-tabset}</p>
+<section id="id7">
+<h3>disambiguation_20211230.tsv<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<p>::: {.panel-tabset}</p>
+<section id="israeli-inventors">
+<h4>Israeli Inventors<a class="headerlink" href="#israeli-inventors" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_israeli_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="patentsview-inventors">
+<h4>PatentsView Inventors<a class="headerlink" href="#patentsview-inventors" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_patentsview_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="lai-s-benchmark">
+<h4>Lai’s Benchmark<a class="headerlink" href="#lai-s-benchmark" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="als-benchmark">
+<h4>ALS Benchmark<a class="headerlink" href="#als-benchmark" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_als_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ens-benchmark">
+<h4>ENS Benchmark<a class="headerlink" href="#ens-benchmark" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_ens_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+</section>
+<section id="id8">
+<h3>disambiguation_20220630.tsv<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<p>::: {.panel-tabset}</p>
+<section id="id9">
+<h4>Israeli Inventors<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_israeli_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+    <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id10">
+<h4>PatentsView Inventors<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_patentsview_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id11">
+<h4>Lai’s Benchmark<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id12">
+<h4>ALS Benchmark<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_als_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id13">
+<h4>ENS Benchmark<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_split</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_ens_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+<p>:::</p>
+</section>
+</section>
+</section>
+<section id="reference-cluster-errors">
+<h2>Reference Cluster Errors<a class="headerlink" href="#reference-cluster-errors" title="Permalink to this heading">#</a></h2>
+<p>:::{.callout-tip collapse=”true”}</p>
+</section>
+<section id="id14">
+<h2>Detailed Explanation (click to expand)<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h2>
+<p>Cluster error tabs (predicted cluster errors and reference cluster errors) allow you to investigate clusters which contain errors.</p>
+<p><strong>Predicted cluster errors</strong> are about predicted clusters which should have been split up in two or more parts, according to the reference data.</p>
+<p>To investigate predicted cluster errors, sort the table by <code class="docutils literal notranslate"><span class="pre">prediction</span></code> id and look for mismatching <code class="docutils literal notranslate"><span class="pre">reference</span></code> ids within predicted clusters.</p>
+<p><strong>Reference cluster errors</strong> are about predicted clusters which should be merged together, according to the reference data.</p>
+<p>To investigate reference cluster errors, sort the table by <code class="docutils literal notranslate"><span class="pre">reference</span></code> id and look for mismatching <code class="docutils literal notranslate"><span class="pre">cluster</span></code> ids within reference clusters.</p>
+<p>:::</p>
+<p>::: {.panel-tabset}</p>
+<section id="id15">
+<h3>disambiguation_20211230.tsv<a class="headerlink" href="#id15" title="Permalink to this heading">#</a></h3>
+<p>::: {.panel-tabset}</p>
+<section id="id16">
+<h4>Israeli Inventors<a class="headerlink" href="#id16" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_israeli_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id17">
+<h4>PatentsView Inventors<a class="headerlink" href="#id17" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_patentsview_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id18">
+<h4>Lai’s Benchmark<a class="headerlink" href="#id18" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id19">
+<h4>ALS Benchmark<a class="headerlink" href="#id19" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_als_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id20">
+<h4>ENS Benchmark<a class="headerlink" href="#id20" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_ens_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+</section>
+<section id="id21">
+<h3>disambiguation_20220630.tsv<a class="headerlink" href="#id21" title="Permalink to this heading">#</a></h3>
+<p>::: {.panel-tabset}</p>
+<section id="id22">
+<h4>Israeli Inventors<a class="headerlink" href="#id22" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_israeli_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id23">
+<h4>PatentsView Inventors<a class="headerlink" href="#id23" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_patentsview_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id24">
+<h4>Lai’s Benchmark<a class="headerlink" href="#id24" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id25">
+<h4>ALS Benchmark<a class="headerlink" href="#id25" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_als_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id26">
+<h4>ENS Benchmark<a class="headerlink" href="#id26" title="Permalink to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#| column: page</span>
+<span class="n">style_and_display</span><span class="p">(</span>
+    <span class="n">inspect_clusters_to_merge</span><span class="p">(</span>
+        <span class="n">disambiguations</span><span class="p">[</span><span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span> 
+        <span class="n">load_ens_inventors_benchmark</span><span class="p">(),</span>
+        <span class="n">join_with</span><span class="o">=</span><span class="n">inventor_not_disambiguated</span><span class="p">,</span>
+        <span class="n">links</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> 
+        <span class="n">by</span><span class="o">=</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>:::</p>
+<p>:::</p>
+<p>:::</p>
+</section>
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Summary Statistics
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cluster-sizes">
+     Cluster Sizes
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#detailed-explanation-click-to-expand">
+     Detailed Explanation (click to expand)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#top-inventors">
+     Top Inventors
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Detailed Explanation (click to expand)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#disambiguation-20211230-tsv">
+     disambiguation_20211230.tsv
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#disambiguation-20220630-tsv">
+     disambiguation_20220630.tsv
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#entropy-curve">
+     Entropy Curve
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Detailed Explanation (click to expand)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cluster-homogeneity">
+     Cluster Homogeneity
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     Detailed Explanation (click to expand)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#between-cluster-similarity">
+     Between-cluster similarity
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     Detailed Explanation (click to expand)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#benchmark-evaluation">
+   Benchmark Evaluation
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#metrics-for-benchmark-datasets-non-representative">
+     Metrics for Benchmark Datasets (Non-Representative)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     Detailed Explanation (click to expand)
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#predicted-cluster-errors">
+     Predicted Cluster Errors
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     Detailed Explanation (click to expand)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       disambiguation_20211230.tsv
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#israeli-inventors">
+         Israeli Inventors
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#patentsview-inventors">
+         PatentsView Inventors
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#lai-s-benchmark">
+         Lai’s Benchmark
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#als-benchmark">
+         ALS Benchmark
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#ens-benchmark">
+         ENS Benchmark
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       disambiguation_20220630.tsv
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id9">
+         Israeli Inventors
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id10">
+         PatentsView Inventors
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id11">
+         Lai’s Benchmark
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id12">
+         ALS Benchmark
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id13">
+         ENS Benchmark
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reference-cluster-errors">
+     Reference Cluster Errors
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     Detailed Explanation (click to expand)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id15">
+       disambiguation_20211230.tsv
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id16">
+         Israeli Inventors
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id17">
+         PatentsView Inventors
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id18">
+         Lai’s Benchmark
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id19">
+         ALS Benchmark
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id20">
+         ENS Benchmark
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id21">
+       disambiguation_20220630.tsv
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id22">
+         Israeli Inventors
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id23">
+         PatentsView Inventors
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id24">
+         Lai’s Benchmark
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id25">
+         ALS Benchmark
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id26">
+         ENS Benchmark
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../../_sources/examples/templates/index.ipynb.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022, PatentsView.org.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
