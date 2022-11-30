@@ -200,13 +200,3 @@ style_and_display(
 :::
 
 :::
-
-# Representative Performance Estimates
-
-:::{.column-body-outset}
-```{python}
-fig = inventor_estimates_plot(disambiguations)
-fig.update_layout(autosize=False, width=800)
-fig.show()
-```
-:::

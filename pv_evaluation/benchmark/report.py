@@ -41,7 +41,6 @@ DEFAULT_ESTIMATORS = {
 }
 DEFAULT_INVENTORS_SAMPLES_WEIGHTS = {
     # Dataset and parameters to pass to the estimator.
-    "lai-sample": {"sample":load_lai_2011_inventors_benchmark(), "weights": 1 + 0*cluster_sizes(load_lai_2011_inventors_benchmark())},
     "binette-sample": {"sample":load_binette_2022_inventors_benchmark(), "weights":1/cluster_sizes(load_binette_2022_inventors_benchmark())},
 }
 # Default benchmarks to run.
@@ -60,6 +59,9 @@ DEFAULT_METRICS = {
 
 def inventor_estimates_plot(disambiguations, samples_weights=None, estimators=None, facet_col_wrap=2, **kwargs):
     """Plot performance estimates for given cluster samples.
+
+    Note:
+        The timeframe for the disambiguation should match the timeframe considered by the reference sample.
 
     Args:
         disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).

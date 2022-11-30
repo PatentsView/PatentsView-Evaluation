@@ -84,7 +84,7 @@ plot_cluster_sizes(disambiguations)
 ```{python}
 from IPython.core.display import display, HTML
 
-display(HTML(top_inventors(disambiguations["{{ filename }}"], full_names)))
+display(HTML(top_inventors(disambiguations["{{ filename }}"], full_names).to_html()))
 ```
 
 {% endfor %}
