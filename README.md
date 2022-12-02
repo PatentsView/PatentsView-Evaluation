@@ -14,13 +14,14 @@ See the **[project website](https://patentsview.github.io/PatentsView-Evaluation
 
 **pv_evaluation** has the following submodules:
 
-- [**benchmark**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Access to evaluation datasets and standardized comparison benchmarks. The following benchmark datasets are available:
+- [**benchmark.data**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Access to evaluation datasets and standardized comparison benchmarks. The following benchmark datasets are available:
     - Academic Life Sciences (ALS) inventors benchmark.
     - Israeli inventors benchmark.
     - Engineering and Sciences (ENS) inventors benchmark.
     - Lai's 2011 inventors benchmark.
     - PatentsView's 2021 inventors benchmark.
     - Binette et al.'s 2022 inventors benchmark.
+- [**benchmark.report**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Visualization of key monitoring and performance metrics.
 - [**templates**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html): Templated performance summary reports.
 
 ## Installation
@@ -40,14 +41,17 @@ See the examples page for complete reproducible examples. The examples below onl
 
 ### Metrics and Summary Statistics
 
-Generate an html report summarizing properties of the current disambiguation algorithm (uses the `rawinventor.tsv` data file from PatentsView's [downloads page](https://patentsview.org/download/data-download-tables)):
+Generate an html report summarizing properties of the current disambiguation algorithm (see [this example](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/templates/templates.html)):
 ```python
 from pv_evaluation.templates import render_inventor_disambiguation_report
 
-render_inventor_disambiguation_report(".", summary_table_files=["rawinventor.tsv"])
+render_inventor_disambiguation_report(
+    ".", 
+    disambiguation_files=["disambiguation_20211230.tsv", "disambiguation_20220630.tsv"],inventor_not_disambiguated_file="g_inventor_not_disambiguated.tsv"
+)
 ```
 
-### Access Benchmark Datasets
+### Benchmark Datasets
 
 Access PatentsView-Evaluation's large collection of benchmark datasets:
 ```python
@@ -58,9 +62,15 @@ load_israeli_inventors_benchmark()
 load_patentsview_inventors_benchmark()
 load_als_inventors_benchmark()
 load_ens_inventors_benchmark()
+load_binette_2022_inventors_benchmark()
 load_air_umass_assignees_benchmark()
 load_nber_subset_assignees_benchmark()
 ```
+
+### Representative Performance Evaluation
+
+See [this example](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/estimators/binette-2022-benchmark.html) of how representative performance estimates are obtained from Binette's 2022 benchmark dataset.
+
 
 ## Contributing
 
