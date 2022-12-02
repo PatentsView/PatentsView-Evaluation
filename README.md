@@ -26,9 +26,9 @@ See the **[project website](https://patentsview.github.io/PatentsView-Evaluation
 
 ## Installation
 
-Install the released version of **pv_evaluation** from GitHub using
+Install the released version of **pv_evaluation** using
 ```shell
-pip install git+https://github.com/PatentsView/PatentsView-Evaluation.git@release
+pip install pv-evaluation
 ```
 
 Rendering reports requires the installation of quarto from [quarto.org](https://quarto.org/docs/get-started/).

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 from setuptools import setup
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 if __name__ == "__main__":
     setup(
@@ -9,6 +12,8 @@ if __name__ == "__main__":
         author="Olivier Binette, Sarvo Madhavan",
         author_email="olivier.binette@gmail.com",
         description="Tools to evaluate PatentsView's disambiguation algorithms",
+        long_description=long_description,
+        long_description_content_type='text/markdown',
         url="https://github.com/OlivierBinette/PatentsView-Evaluation",
         include_package_data=True,
         packages=["pv_evaluation"],
