@@ -47,7 +47,8 @@ from pv_evaluation.templates import render_inventor_disambiguation_report
 
 render_inventor_disambiguation_report(
     ".", 
-    disambiguation_files=["disambiguation_20211230.tsv", "disambiguation_20220630.tsv"],inventor_not_disambiguated_file="g_inventor_not_disambiguated.tsv"
+    disambiguation_files=["disambiguation_20211230.tsv", "disambiguation_20220630.tsv"],
+    inventor_not_disambiguated_file="g_inventor_not_disambiguated.tsv"
 )
 ```
 
