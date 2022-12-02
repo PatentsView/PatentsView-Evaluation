@@ -14,21 +14,14 @@ See the **[project website](https://patentsview.github.io/PatentsView-Evaluation
 
 **pv_evaluation** has the following submodules:
 
-<<<<<<< HEAD
 - [**benchmark.data**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Access to evaluation datasets and standardized comparison benchmarks. The following benchmark datasets are available:
-=======
-- [**benchmark**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Access to evaluation datasets and standardized comparison benchmarks. The following benchmark datasets are available:
->>>>>>> ed0b93ff189332bbb6f0bb94c8bff9ef73dc3082
     - Academic Life Sciences (ALS) inventors benchmark.
     - Israeli inventors benchmark.
     - Engineering and Sciences (ENS) inventors benchmark.
     - Lai's 2011 inventors benchmark.
     - PatentsView's 2021 inventors benchmark.
     - Binette et al.'s 2022 inventors benchmark.
-<<<<<<< HEAD
 - [**benchmark.report**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html): Visualization of key monitoring and performance metrics.
-=======
->>>>>>> ed0b93ff189332bbb6f0bb94c8bff9ef73dc3082
 - [**templates**](https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html): Templated performance summary reports.
 
 ## Installation
@@ -58,11 +51,7 @@ render_inventor_disambiguation_report(
 )
 ```
 
-<<<<<<< HEAD
 ### Benchmark Datasets
-=======
-### Access Benchmark Datasets
->>>>>>> ed0b93ff189332bbb6f0bb94c8bff9ef73dc3082
 
 Access PatentsView-Evaluation's large collection of benchmark datasets:
 ```python
