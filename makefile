@@ -49,7 +49,7 @@ pv_evaluation/data/assignee/%.csv: scripts/assignee/%.py data-raw/.tag
 
 docs:
 	rm -rf docs/source/examples
-	find examples -name *.ipynb -exec cp --parents {} docs/source \;
+	find examples -name *.ipynb -not -path "**/.jupyter_cache/**" -exec cp --parents {} docs/source \;
 	find examples -name *.html -exec cp --parents {} docs/source \;
 	$(MAKE) html -C docs
 	git add docs/build/*.html -f
