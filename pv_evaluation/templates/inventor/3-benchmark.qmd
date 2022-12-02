@@ -1,37 +1,9 @@
-```{python}
-import pandas as pd
-import os
-
-def read_auto(filename):
-    _, ext = os.path.splitext(filename)
-
-    if ext == ".csv":
-        df = pd.read_csv(filename)
-    elif ext == ".tsv":
-        df = pd.read_csv(filename, sep="\t")
-    elif ext in [".parquet", ".pq", ".parq"]:
-        df = pd.read_parquet(filename)
-    else:
-        raise Exception("Unsupported file type. Should be one of csv, tsv, or parquet.")
-    
-    return df
-
-
-def read_disambiguation(filename):
-    df = read_auto(filename)
-    df.set_index("mention_id", inplace=True)
-    
-    return df["inventor_id"]
-
-disambiguations = {filename: read_disambiguation(filename) for filename in {{ summary_table_files }} }
-dataframes = {filename: read_auto(filename).set_index("mention_id")[["name_first", "name_last"]] for filename in {{ summary_table_files }} }
-```
 
 # Benchmark Evaluation
 
 ::: {.panel-tabset}
 
-## Evaluation Results
+## Metrics for Benchmark Datasets (Non-Representative)
 
 {% include 'inventor/callouts/metrics-tips.qmd' %}
 
@@ -67,9 +39,9 @@ def style_and_display(table, by="prediction"):
 
 ::: {.panel-tabset}
 
-{% for filename in summary_table_files %}
+{% for filename in disambiguation_files %}
 
-### {{filename}}
+### {{ filename }}
 
 ::: {.panel-tabset}
 
@@ -81,7 +53,7 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_israeli_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
     by="prediction")
 ```
@@ -94,7 +66,7 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_patentsview_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="prediction")
 ```
@@ -107,7 +79,7 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_lai_2011_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="prediction")
 ```
@@ -120,7 +92,7 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_als_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="prediction")
 ```
@@ -133,7 +105,7 @@ style_and_display(
     inspect_clusters_to_split(
         disambiguations["{{ filename }}"], 
         load_ens_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="prediction")
 ```
@@ -150,7 +122,7 @@ style_and_display(
 
 ::: {.panel-tabset}
 
-{% for filename in summary_table_files %}
+{% for filename in disambiguation_files %}
 
 ### {{filename}}
 
@@ -164,7 +136,7 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_israeli_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="reference")
 ```
@@ -177,7 +149,7 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_patentsview_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="reference")
 ``` 
@@ -190,7 +162,7 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_lai_2011_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="reference")
 ``` 
@@ -203,7 +175,7 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_als_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="reference")
 ```
@@ -216,7 +188,7 @@ style_and_display(
     inspect_clusters_to_merge(
         disambiguations["{{ filename }}"], 
         load_ens_inventors_benchmark(),
-        join_with=dataframes["{{ filename }}"],
+        join_with=inventor_not_disambiguated,
         links=True), 
         by="reference")
 ```

@@ -1,0 +1,1027 @@
+{
+  "cells": [
+    {
+      "cell_type": "raw",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: Inventor Disambiguation Report\n",
+        "date: today\n",
+        "author: PatentsView-Evaluation\n",
+        "toc: true\n",
+        "toc-location: left\n",
+        "toc-depth: 3\n",
+        "format:\n",
+        "  html:\n",
+        "    self-contained: true\n",
+        "    theme: cosmo\n",
+        "    echo: false\n",
+        "    fig-cap-location: margin\n",
+        "    code-fold: true\n",
+        "    code-tools: true\n",
+        "    code-line-numbers: true\n",
+        "    code-copy: true\n",
+        "    code-block-border-left: '#31BAE9'\n",
+        "    code-link: true\n",
+        "    include-in-header: header.html\n",
+        "    include-after-body: footer.html\n",
+        "execute:\n",
+        "  cache: true\n",
+        "  freeze: auto\n",
+        "  warning: false\n",
+        "  message: false\n",
+        "---"
+      ],
+      "id": "407bfcea"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "This is report has been automatically generated for the following data source(s) at 09:55PM on November 30, 2022:\n",
+        "\n",
+        "\n",
+        "\n",
+        "For more information, please refer to the [PatentsView-Evaluation project homepage](https://github.com/PatentsView/PatentsView-Evaluation/) or to the report [source code](index.qmd).\n"
+      ],
+      "id": "7ce70def"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import os\n",
+        "import pandas as pd\n",
+        "import plotly.io as pio\n",
+        "pio.templates.default = \"plotly_white\" # Set plotly theme\n",
+        "\n",
+        "from er_evaluation.summary import (\n",
+        "    homonimy_rate,\n",
+        "    name_variation_rate,\n",
+        ")\n",
+        "from er_evaluation.plots import (\n",
+        "    compare_plots, \n",
+        "    plot_cluster_sizes_distribution,\n",
+        "    plot_entropy_curve,\n",
+        ")\n",
+        "from pv_evaluation.benchmark import (\n",
+        "    inventor_benchmark_plot,\n",
+        "    inventor_estimates_plot,\n",
+        "    plot_entropy_curves,\n",
+        "    top_inventors,\n",
+        "    plot_cluster_sizes,\n",
+        "    plot_homonimy_rates,\n",
+        "    plot_name_variation_rates,\n",
+        ")"
+      ],
+      "id": "e30ce3a2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Summary Statistics\n"
+      ],
+      "id": "eadc1ed0"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def read_auto(datapath, dtype):\n",
+        "    _, ext = os.path.splitext(datapath)\n",
+        "\n",
+        "    if ext == \".csv\":\n",
+        "        return pd.read_csv(datapath, dtype=dtype)\n",
+        "    elif ext == \".tsv\":\n",
+        "        return pd.read_csv(datapath, sep=\"\\t\", dtype=dtype)\n",
+        "    elif ext in [\".parquet\", \".pq\", \".parq\"]:\n",
+        "        return pd.read_parquet(datapath, dtype=dtype)\n",
+        "    elif ext in [\".xlsx\", \".xls\"]:\n",
+        "        return pd.read_excel(datapath, dtype=dtype)\n",
+        "    else:\n",
+        "        raise Exception(\"Unsupported file type. Should be one of csv, tsv, parquet, or xlsx.\")\n",
+        "\n",
+        "def load_disambiguation(filename):\n",
+        "    data = read_auto(filename, dtype=str)\n",
+        "    data.set_index(\"mention_id\", inplace=True)\n",
+        "    disambiguation = data.iloc[:, 0]\n",
+        "    disambiguation.rename(filename, inplace=True)\n",
+        "\n",
+        "    return disambiguation\n",
+        "\n",
+        "disambiguations = {filename: load_disambiguation(filename) for filename in ['disambiguation_20211230.tsv', 'disambiguation_20220630.tsv']}\n",
+        "\n",
+        "inventor_not_disambiguated = read_auto(\"g_inventor_not_disambiguated.tsv\", dtype=str)\n",
+        "inventor_not_disambiguated[\"mention_id\"] = \"US\" + inventor_not_disambiguated.patent_id + \"-\" + inventor_not_disambiguated.inventor_sequence\n",
+        "inventor_not_disambiguated.set_index(\"mention_id\", inplace=True)\n",
+        "\n",
+        "full_names = inventor_not_disambiguated.raw_inventor_name_first + \" \" + inventor_not_disambiguated.raw_inventor_name_last\n",
+        "full_names = full_names.rename(\"full_name\")"
+      ],
+      "id": "53a84775",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "::: {.panel-tabset}\n",
+        "\n",
+        "## Cluster Sizes\n",
+        "\n",
+        ":::{.callout-tip collapse=\"true\"}\n",
+        "\n",
+        "## Detailed Explanation (click to expand)\n",
+        "\n",
+        "The plot below provides the number of inventors with a given number of (co-)authored patents. \n",
+        "\n",
+        "We can read from the plot the number of inventors with a single authored patent, with exactly two authored patents, and so forth. This distribution of the number of authored patents patents per inventor is called the **cluster sizes distribution** of the disambiguation.\n",
+        "\n",
+        "When comparing disambiguation results, look for shifts in shape of the cluster sizes distribution. Is one of the distribution more skewed to the left than another? This could indicate that one of the disambiguation favors smaller clusters, possibly resulting in higher precision but lower recall.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        ":::{.column-body-outset}"
+      ],
+      "id": "ed1f061e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plot_cluster_sizes(disambiguations)"
+      ],
+      "id": "b2146068",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "## Top Inventors\n",
+        "\n",
+        ":::{.callout-tip collapse=\"true\"}\n",
+        "\n",
+        "## Detailed Explanation (click to expand)\n",
+        "\n",
+        "The table below provides the inventors with the largest number of authored patents. \n",
+        "\n",
+        "Make sure to sort the table by number of patents.\n",
+        "\n",
+        "When comparing disambiguation results, look for large changes in the ranking of inventors. Large changes in the estimated numbers of authored patents may also warrant the need to investigate the behavior of the disambiguation for these prolific inventors. \n",
+        "\n",
+        ":::\n",
+        "\n",
+        "::: {.panel-tabset}\n",
+        "\n",
+        "\n",
+        "\n",
+        "## disambiguation_20211230.tsv\n"
+      ],
+      "id": "748a39e2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from IPython.core.display import display, HTML\n",
+        "\n",
+        "display(HTML(top_inventors(disambiguations[\"disambiguation_20211230.tsv\"], full_names).to_html()))"
+      ],
+      "id": "e25da0b1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## disambiguation_20220630.tsv\n"
+      ],
+      "id": "e6fd8f11"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from IPython.core.display import display, HTML\n",
+        "\n",
+        "display(HTML(top_inventors(disambiguations[\"disambiguation_20220630.tsv\"], full_names).to_html()))"
+      ],
+      "id": "76295779",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "## Entropy Curve\n",
+        "\n",
+        ":::{.callout-tip collapse=\"true\"}\n",
+        "\n",
+        "## Detailed Explanation (click to expand)\n",
+        "\n",
+        "The Hill Numbers entropy curve is a characterization of the cluster sizes distribution.\n",
+        "\n",
+        "It is based on [Hill Numbers](https://en.wikipedia.org/wiki/Diversity_index) of order $q$, which are exponentiated Rényi $q$-entropy. That is, for a given $q > 0$ and for $p_i$ the proportion of inventors with $i$ authored patents, the corresponding Hills Number is defined as \n",
+        "$$\n",
+        "    H_q = \\left ( \\sum_{i=1}^{\\infty} p_i^{q}\\right )^{1/(1-q)}\n",
+        "$$\n",
+        "The Hill Numbers entropy curve is the plot of Hill Numbers as a function of $q > 0$.\n",
+        "\n",
+        "For $q=0$, the Hill Number is defined as the number of indices $i$ such that $p_i > 0$. This is the size of the support of the cluster sizes distribution\n",
+        "$$\n",
+        "    H_0 = \\# \\left\\{ i > 0 \\,:\\, p_i > 0  \\right\\}.\n",
+        "$$\n",
+        "\n",
+        "For $q=1$, the Hill Number is defined as the exponentiated Shannon entropy\n",
+        "$$\n",
+        "    H_1 = \\exp \\left ( - \\sum_{i=1}^{\\infty} p_i \\log p_i \\right ).\n",
+        "$$\n",
+        "\n",
+        "For $q=2$, the Hill number is the inverse of the probability that two randomly sampled inventors have the same number of authored patents:\n",
+        "$$\n",
+        "    H_2 = \\sum_{i=1}^{\\infty} p_i^2.\n",
+        "$$\n",
+        "\n",
+        "When comparing disambiguation results, look for major relative differences between entropy curves. These represent differences in the cluster sizes distribution which can be further investigated using the cluster sizes distribution plot.\n",
+        "\n",
+        "Higher Hill Numbers represent a more spread out cluster sizes distribution, while lower values represent more peaked distributions. The order $q$ of the Hill Numbers represent how the cluster sizes proportions $p_i > 0$ are accounted for. At $q = 0$, we have the number of possible cluster sizes in the data. As $q \\rightarrow \\infty$, the Hill Number tends to the proportion of inventors with the most common cluster size.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        ":::{.column-body-outset}"
+      ],
+      "id": "71611536"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plot_entropy_curves(disambiguations)"
+      ],
+      "id": "7fc2fae3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "## Cluster Homogeneity\n",
+        "\n",
+        ":::{.callout-tip collapse=\"true\"}\n",
+        "\n",
+        "## Detailed Explanation (click to expand)\n",
+        "\n",
+        "Cluster homogeneity is the level similarity of among a cluster's elements. For inventor disambiguation, this is about the variation between the way that an inventor is represented on its patents (e.g., different name spellings).\n",
+        "\n",
+        "Here we look at cluster homogeneity from a binary perspective -- whether or not there is variation, within a cluster, in how an inventor's name is spelled. The proportion of inventors with a unique name (no name variation within its cluster) is our metric of cluster homogeneity called the **homogeneity rate**.\n",
+        "\n",
+        "In the plot below, the homogeneity rate (i.e., clusters with no name variation) is plotted as a function of cluster size. For inventors with a single patent, the proportion of homogeneous clusters is trivially 1. For inventors with two patents, we can read off the proportion of them with no name variation, and so forth.\n",
+        "\n",
+        "When comparing two disambiguation results, look for changes in the homogeneity rate across cluster sizes. A higher homogeneity rate means possibly smaller, more robust clusters. On the other hand, lower homogeneity rates may be associated with an increased error probability.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        ":::{.column-body-outset}"
+      ],
+      "id": "af0ac83c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plot_name_variation_rates(disambiguations, full_names)"
+      ],
+      "id": "5d8e9b3a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "## Between-cluster similarity\n",
+        "\n",
+        ":::{.callout-tip collapse=\"true\"}\n",
+        "\n",
+        "## Detailed Explanation (click to expand)\n",
+        "\n",
+        "Between-cluster similarity is the level of similarity between different clusters. For inventor disambiguation, this is about different inventors that have similar representations on some patents, such as having the same names.\n",
+        "\n",
+        "Here we look at between-cluster similarity from a binary perspective -- whether or not an inventor's name is shared with another inventor. The proportion of inventors sharing their name with someone else is our metric of between-cluster similarity which we call the **homonymy rate**.\n",
+        "\n",
+        "In the plot below, the homonymy rate is plotted as a function of cluster sizes.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        ":::{.column-body-outset}"
+      ],
+      "id": "11a1deb9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "plot_homonimy_rates(disambiguations, full_names)"
+      ],
+      "id": "c2505baa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        ":::\n",
+        "\n",
+        "\n",
+        "# Benchmark Evaluation\n",
+        "\n",
+        "::: {.panel-tabset}\n",
+        "\n",
+        "## Metrics for Benchmark Datasets (Non-Representative)\n",
+        "\n",
+        ":::{.callout-tip collapse=\"true\"}\n",
+        "\n",
+        "## Detailed Explanation (click to expand)\n",
+        "\n",
+        "Performance evaluation metrics compare predicted clusters to a reference clustering from benchmark datasets.\n",
+        "\n",
+        "Note that to compute performance evaluation metrics, predicted clusters are first restricted to mentions which appear in the reference data. Performance evaluation metrics on benchmark datasets are not at all representative of performance on the full data.\n",
+        "\n",
+        "Commonly used metrics are defined below.\n",
+        "\n",
+        "- **Pairwise precision:** Proportion of predicted links (pairs of mentions in the same predicted cluster) which are also linked under the reference clustering.\n",
+        "- **Pairwise recall:** Proportion of links in the reference clustering (pairs of mentions in the same reference cluster) which are also linked under the predicted clustering.\n",
+        "- **Pairwise f-score:** Harmonic mean between pairwise precision and pairwise recall.\n",
+        "- **Cluster precision:** Proportion of predicted clusters which are entirely contained within a single reference cluster. That is, cluster precision is the proportion of predicted clusters which are not split up in the reference clustering.\n",
+        "- **Cluster recall:** Proportion of reference clusters which are entirely contained within a single predicted cluster. That is, cluster recall is the proportion of reference clusters which are not split up in the predicted clusters.\n",
+        "- **Cluster f-score:** Harmonic mean between pairwise precision and pairwise recall.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        ":::{.column-body-outset}"
+      ],
+      "id": "5495707e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig = inventor_benchmark_plot(disambiguations)\n",
+        "fig.update_layout(autosize=False, width=800)\n",
+        "fig.show()"
+      ],
+      "id": "03e66317",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "## Predicted Cluster Errors\n",
+        "\n",
+        ":::{.callout-tip collapse=\"true\"}\n",
+        "\n",
+        "## Detailed Explanation (click to expand)\n",
+        "\n",
+        "Cluster error tabs (predicted cluster errors and reference cluster errors) allow you to investigate clusters which contain errors.\n",
+        "\n",
+        "**Predicted cluster errors** are about predicted clusters which should have been split up in two or more parts, according to the reference data.\n",
+        "\n",
+        "To investigate predicted cluster errors, sort the table by `prediction` id and look for mismatching `reference` ids within predicted clusters.\n",
+        "\n",
+        "**Reference cluster errors** are about predicted clusters which should be merged together, according to the reference data.\n",
+        "\n",
+        "To investigate reference cluster errors, sort the table by `reference` id and look for mismatching `cluster` ids within reference clusters.\n",
+        "\n",
+        ":::\n"
+      ],
+      "id": "598b7560"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from IPython.core.display import display, HTML\n",
+        "\n",
+        "from pv_evaluation.benchmark import (\n",
+        "    load_israeli_inventors_benchmark,\n",
+        "    load_patentsview_inventors_benchmark,\n",
+        "    load_lai_2011_inventors_benchmark,\n",
+        "    load_als_inventors_benchmark,\n",
+        "    load_ens_inventors_benchmark,\n",
+        "    inspect_clusters_to_split,\n",
+        "    inspect_clusters_to_merge,\n",
+        "    style_cluster_inspection,\n",
+        ")\n",
+        "\n",
+        "def style_and_display(table, by=\"prediction\"):\n",
+        "    return display(HTML(style_cluster_inspection(table.reset_index(), by=by).hide_index().to_html()))"
+      ],
+      "id": "8873b358",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "::: {.panel-tabset}\n",
+        "\n",
+        "\n",
+        "\n",
+        "### disambiguation_20211230.tsv\n",
+        "\n",
+        "::: {.panel-tabset}\n",
+        "\n",
+        "#### Israeli Inventors\n"
+      ],
+      "id": "23fdf655"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_israeli_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "    by=\"prediction\")"
+      ],
+      "id": "b608944c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### PatentsView Inventors\n"
+      ],
+      "id": "68d1dd3d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_patentsview_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"prediction\")"
+      ],
+      "id": "9613038c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Lai's Benchmark\n"
+      ],
+      "id": "8a40867c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_lai_2011_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"prediction\")"
+      ],
+      "id": "9e8b2605",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### ALS Benchmark\n"
+      ],
+      "id": "0ebdfefb"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_als_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"prediction\")"
+      ],
+      "id": "5845df11",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### ENS Benchmark\n"
+      ],
+      "id": "78f41c7b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_ens_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"prediction\")"
+      ],
+      "id": "d3686e17",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "\n",
+        "\n",
+        "### disambiguation_20220630.tsv\n",
+        "\n",
+        "::: {.panel-tabset}\n",
+        "\n",
+        "#### Israeli Inventors\n"
+      ],
+      "id": "fd94a423"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_israeli_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "    by=\"prediction\")"
+      ],
+      "id": "c9373994",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### PatentsView Inventors\n"
+      ],
+      "id": "853e8bf2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_patentsview_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"prediction\")"
+      ],
+      "id": "06ff7449",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Lai's Benchmark\n"
+      ],
+      "id": "69f75d7d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_lai_2011_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"prediction\")"
+      ],
+      "id": "3a175db4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### ALS Benchmark\n"
+      ],
+      "id": "cbc94994"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_als_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"prediction\")"
+      ],
+      "id": "d343d306",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### ENS Benchmark\n"
+      ],
+      "id": "3113031f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_split(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_ens_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"prediction\")"
+      ],
+      "id": "23b0d188",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "\n",
+        "\n",
+        ":::\n",
+        "\n",
+        "## Reference Cluster Errors\n",
+        "\n",
+        ":::{.callout-tip collapse=\"true\"}\n",
+        "\n",
+        "## Detailed Explanation (click to expand)\n",
+        "\n",
+        "Cluster error tabs (predicted cluster errors and reference cluster errors) allow you to investigate clusters which contain errors.\n",
+        "\n",
+        "**Predicted cluster errors** are about predicted clusters which should have been split up in two or more parts, according to the reference data.\n",
+        "\n",
+        "To investigate predicted cluster errors, sort the table by `prediction` id and look for mismatching `reference` ids within predicted clusters.\n",
+        "\n",
+        "**Reference cluster errors** are about predicted clusters which should be merged together, according to the reference data.\n",
+        "\n",
+        "To investigate reference cluster errors, sort the table by `reference` id and look for mismatching `cluster` ids within reference clusters.\n",
+        "\n",
+        ":::\n",
+        "\n",
+        "::: {.panel-tabset}\n",
+        "\n",
+        "\n",
+        "\n",
+        "### disambiguation_20211230.tsv\n",
+        "\n",
+        "::: {.panel-tabset}\n",
+        "\n",
+        "#### Israeli Inventors\n"
+      ],
+      "id": "8125367b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_israeli_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "b316b1fa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### PatentsView Inventors\n"
+      ],
+      "id": "a550ff33"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_patentsview_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "836b84a4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Lai's Benchmark\n"
+      ],
+      "id": "fe308138"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_lai_2011_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "39d780b0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### ALS Benchmark\n"
+      ],
+      "id": "d416d892"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_als_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "0ef8a96f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### ENS Benchmark\n"
+      ],
+      "id": "e38896dd"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20211230.tsv\"], \n",
+        "        load_ens_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "2118399a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "\n",
+        "\n",
+        "### disambiguation_20220630.tsv\n",
+        "\n",
+        "::: {.panel-tabset}\n",
+        "\n",
+        "#### Israeli Inventors\n"
+      ],
+      "id": "e7003961"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_israeli_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "c8dc7876",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### PatentsView Inventors\n"
+      ],
+      "id": "75f8fd12"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_patentsview_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "71aa2d0e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Lai's Benchmark\n"
+      ],
+      "id": "5405fbbc"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_lai_2011_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "5018cd26",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### ALS Benchmark\n"
+      ],
+      "id": "59694d2e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_als_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "4a5fa347",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### ENS Benchmark\n"
+      ],
+      "id": "45bc8250"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| column: page\n",
+        "style_and_display(\n",
+        "    inspect_clusters_to_merge(\n",
+        "        disambiguations[\"disambiguation_20220630.tsv\"], \n",
+        "        load_ens_inventors_benchmark(),\n",
+        "        join_with=inventor_not_disambiguated,\n",
+        "        links=True), \n",
+        "        by=\"reference\")"
+      ],
+      "id": "c40080c9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        ":::\n",
+        "\n",
+        "\n",
+        "\n",
+        ":::\n",
+        "\n",
+        ":::"
+      ],
+      "id": "b6082937"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

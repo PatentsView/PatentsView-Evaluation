@@ -13,12 +13,12 @@ def load_full_benchmark(module, filename):
         filename (str): csv filename.
 
     Returns:
-        DataFrame: pandas Dataframe with columns "unique_id", "mention_id", "name_first", and "name_last".
+        DataFrame: pandas Dataframe with columns "unique_id", "mention_id", "raw_inventor_name_first", and "raw_inventor_name_last".
     """
     with resources.open_text(module, filename) as f:
         data = pd.read_csv(f)
 
-    cols = ["unique_id", "mention_id", "name_first", "name_last"]
+    cols = ["unique_id", "mention_id", "raw_inventor_name_first", "raw_inventor_name_last"]
     return data[cols]
 
 
@@ -114,6 +114,28 @@ def load_ens_inventors_benchmark():
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "ens-inventors.csv")
 
+
+def load_binette_2022_inventors_benchmark():
+    """
+    Binette's 2022 inventors benchmark.
+
+    The 2022 Binette inventors benchmark is the hand-disambiguation of inventor mentions on granted patents for a sample of inventors from PatentsView.org.
+
+    Inventors we selected indirectly by sampling inventor mentions uniformly at random. This results in inventor sampled with probability proportional to their number of granted patents.
+
+    The time period considered is from 1976 to December 31, 2021, corresponding to the disambiguation labeled "disamb_inventor_id_20211230" in PatentsView's bulk data downloads ["g_persistent_inventor.tsv" file](https://patentsview.org/download/data-download-tables). That is, the benchmark disambiguation intends to contain all inventor mentions for the sampled inventors from that time period. Note that the benchmark disambiguation contains a few extraneous mentions to patents granted outside of that time period. These should be ignored for evaluation purposes.
+
+    The methodology used for the hand-disambiguation is described in [Binette et al. (2022)](https://arxiv.org/abs/2210.01230). We used one disambiguation of 200 inventors from Binette et al. (2022), as well as an additional disambiguation of 200 inventors provided by an additional staff member. The two disambiguations were reviewed and validated. However, they should be expected to contain errors due to the ambiguous nature of inventor disambiguation. Furthermore, given the use as the December 30, 2021, disambiguation from PatentsView as a starting point of the hand-labeling, a bias towards this disambiguation should be expected.
+
+    Returns:
+        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.
+
+    References:
+        - [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org. arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)
+    """
+    return load_unique_id_series(INVENTOR_DATA_MODULE, "binette-2022-inventors-benchmark.csv")
+
+
 def load_air_umass_assignees_benchmark():
     """AIR-UMASS assigness benchmark.
 
@@ -130,7 +152,7 @@ def load_air_umass_assignees_benchmark():
     evaluate the more difficult-to-disambiguate cases. Annotators attempted to label parent
     companies separately from subsidiaries, but the process was more likely to associate
     similarly named child and parent companies than more distinctive ones.'
-    
+
     Returns:
         Series: pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.
 
@@ -150,7 +172,7 @@ def load_nber_subset_assignees_benchmark():
     coreference decisions produced by string similarity. We grouped the assignee mentions by
     four-letter prefixes and focused on five prefix groups {Moto, Amer, Gene, Solu, Airc} that
     were both common and ambiguous.'
-    
+
     Returns:
         Series: pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.
 

@@ -1,109 +1,67 @@
 import itertools
 import pandas as pd
 import plotly.express as px
+import numpy as np
 
-from pv_evaluation.utils import expand_grid
-
-from pv_evaluation.metrics import (
+from er_evaluation.utils import expand_grid
+from er_evaluation.estimators import estimates_table, pairwise_precision_design_estimate, pairwise_recall_design_estimate
+from er_evaluation.summary import (
+    cluster_sizes,
+    name_variation_rate,
+    homonimy_rate,
+)
+from er_evaluation.metrics import (
+    metrics_table,
     pairwise_precision,
     pairwise_recall,
-    pairwise_fscore,
-    cluster_precision,
-    cluster_recall,
-    cluster_fscore,
-    rand_score,
 )
+from er_evaluation.plots import (
+    compare_plots,
+    plot_entropy_curve,
+    plot_cluster_sizes_distribution,
+)
+
 from pv_evaluation.benchmark import (
     load_israeli_inventors_benchmark,
     load_patentsview_inventors_benchmark,
     load_lai_2011_inventors_benchmark,
     load_als_inventors_benchmark,
     load_ens_inventors_benchmark,
-)
-from pv_evaluation.estimators import (
-    pairwise_precision_estimator,
-    pairwise_precision_std,
-    pairwise_recall_estimator,
-    pairwise_recall_std,
-    cluster_precision_estimator,
-    cluster_precision_std,
-    cluster_recall_estimator,
-    cluster_recall_std,
+    load_binette_2022_inventors_benchmark,
 )
 
 DEFAULT_ESTIMATORS = {
     # Point estimates and standard deviation estimates.
-    "pairwise precision": {"point": pairwise_precision_estimator, "std": pairwise_precision_std},
-    "pairwise recall": {"point": pairwise_recall_estimator, "std": pairwise_recall_std},
-    "cluster precision": {"point": cluster_precision_estimator, "std": cluster_precision_std},
-    "cluster recall": {"point": cluster_recall_estimator, "std": cluster_recall_std},
+    "pairwise precision": pairwise_precision_design_estimate,
+    "pairwise recall": pairwise_recall_design_estimate,
 }
-INVENTORS_SAMPLES = {
+DEFAULT_INVENTORS_SAMPLES_WEIGHTS = {
     # Dataset and parameters to pass to the estimator.
-    "lai-sample": (load_lai_2011_inventors_benchmark, {"sampling_type": "cluster_block", "weights": "uniform"}),
-    "israeli-sample": (load_lai_2011_inventors_benchmark, {"sampling_type": "single_block"}),
+    "binette-sample": {
+        "sample": load_binette_2022_inventors_benchmark(),
+        "weights": 1 / cluster_sizes(load_binette_2022_inventors_benchmark()),
+    },
 }
 # Default benchmarks to run.
 DEFAULT_INVENTORS_BENCHMARKS = {
-    "patentsview-inventors": load_patentsview_inventors_benchmark,
-    "israeli-inventors": load_israeli_inventors_benchmark,
-    "lai-benchmark": load_lai_2011_inventors_benchmark,
-    "als-benchmark": load_als_inventors_benchmark,
-    "ens-benchmark": load_ens_inventors_benchmark,
+    "patentsview-inventors": load_patentsview_inventors_benchmark(),
+    "israeli-inventors": load_israeli_inventors_benchmark(),
+    "lai-benchmark": load_lai_2011_inventors_benchmark(),
+    "als-benchmark": load_als_inventors_benchmark(),
+    "ens-benchmark": load_ens_inventors_benchmark(),
+    "binette-benchmark": load_binette_2022_inventors_benchmark(),
 }
 DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
     "pairwise recall": pairwise_recall,
-    # "pairwise f1": pairwise_fscore,
-    "cluster precision": cluster_precision,
-    "cluster recall": cluster_recall,
-    # "cluster f1": cluster_fscore
-    # "rand index": rand_score,
 }
 
 
-def inventor_estimates_table(disambiguations, samples, estimators=None):
-    """Compute performance estimates for given cluster samples.
-
-    Args:
-        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
-            Note that the disambiguated population should match the population from which `samples` have been drawn. For instance, if using the Israeli benchmark dataset
-            which covers granted patents between granted between 1963 and 1999, then `disambiguations` should be subsetted to the same time period.
-        samples (dict): Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See `INVENTORS_SAMPLES` for an example.
-        estimators (dict, optional): Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.
-
-    Returns:
-        DataFrame of estimated performance metrics for every given disambiguation, sample and estimators.
-    """
-    if estimators is None:
-        estimators = DEFAULT_ESTIMATORS
-
-    def compute(sample, estimator, algorithm, type="point"):
-        """Compute metric on benchmark data for a given disambiguation algorithm.
-
-        Args:
-            benchmark (str): benchmark dataset name.
-            metric (str): performance metric name.
-            algorithm (str): algorithm name.
-            type (str): one of "point" for point estimate or "std" for standard deviation estimate.
-
-        Returns:
-            float: Evaluated metric.
-        """
-        return estimators[estimator][type](disambiguations[algorithm], samples[sample][0](), **samples[sample][1])
-
-    computed_estimates = expand_grid(sample=samples, estimator=estimators, algorithm=disambiguations)
-    computed_estimates["value"] = computed_estimates.apply(
-        lambda x: compute(x["sample"], x["estimator"], x["algorithm"], type="point"), axis=1
-    )
-    computed_estimates["std"] = computed_estimates.apply(
-        lambda x: compute(x["sample"], x["estimator"], x["algorithm"], type="std"), axis=1
-    )
-    return computed_estimates
-
-
-def inventor_estimates_plot(disambiguations, samples, estimators=None, facet_col_wrap=2, **kwargs):
+def inventor_estimates_plot(disambiguations, samples_weights=None, estimators=None, facet_col_wrap=2, **kwargs):
     """Plot performance estimates for given cluster samples.
+
+    Note:
+        The timeframe for the disambiguation should match the timeframe considered by the reference sample.
 
     Args:
         disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
@@ -117,61 +75,24 @@ def inventor_estimates_plot(disambiguations, samples, estimators=None, facet_col
     """
     if estimators is None:
         estimators = DEFAULT_ESTIMATORS
+    if samples_weights is None:
+        samples_weights = DEFAULT_INVENTORS_SAMPLES_WEIGHTS
 
-    computed_metrics = inventor_estimates_table(disambiguations, samples=samples, estimators=estimators)
+    computed_metrics = estimates_table(disambiguations, samples_weights=samples_weights, estimators=estimators)
     return px.bar(
         computed_metrics,
         y="value",
         x="estimator",
         error_y="std",
-        color="algorithm",
-        facet_col="sample",
+        color="prediction",
+        facet_col="sample_weights",
         barmode="group",
         facet_col_wrap=facet_col_wrap,
         **kwargs,
     )
 
 
-def inventor_benchmark_table(disambiguations, metrics=None, benchmarks=None):
-    """Compute performance evaluation metrics on benchmark datasets.
-
-    Args:
-        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
-        metrics (dict, optional): dictionary of metrics (from the metrics submodule) to compute. Defaults to `DEFAULT_METRICS`.
-        benchmarks (dict, optional): benchmark datasets loading functions to use from the benchmark submodule. Defaults to `DEFAULT_BENCHMARK`.
-
-    Returns:
-        DataFrame of computed metrics for every disambiguations and every benchmark dataset.
-    """
-    if metrics is None:
-        metrics = DEFAULT_METRICS
-    if benchmarks is None:
-        benchmarks = DEFAULT_INVENTORS_BENCHMARKS
-
-    def compute(benchmark, metric, algorithm):
-        """Compute metric on benchmark data for a given disambiguation algorithm.
-
-        Args:
-            benchmark (str): benchmark dataset name.
-            metric (str): performance metric name.
-            algorithm (str): algorithm name.
-
-        Returns:
-            float: Evaluated metric.
-        """
-        data = pd.concat(
-            {"prediction": disambiguations[algorithm], "reference": benchmarks[benchmark]()}, axis=1, join="inner"
-        )
-        return metrics[metric](data.prediction, data.reference)
-
-    computed_metrics = expand_grid(benchmark=benchmarks, metric=metrics, algorithm=disambiguations)
-
-    computed_metrics["value"] = computed_metrics.apply(lambda x: compute(x["benchmark"], x["metric"], x["algorithm"]), axis=1)
-
-    return computed_metrics
-
-
-def inventor_benchmark_plot(disambiguations, metrics=None, benchmarks=None, facet_col_wrap=2, **kwargs):
+def inventor_benchmark_plot(predictions, references=None, metrics=None, facet_col_wrap=2, **kwargs):
     """Bar plot of performance evaluation metrics on benchmark datasets.
 
     Args:
@@ -182,18 +103,18 @@ def inventor_benchmark_plot(disambiguations, metrics=None, benchmarks=None, face
     Returns:
         plotly graph object
     """
+    if references is None:
+        references = DEFAULT_INVENTORS_BENCHMARKS
     if metrics is None:
         metrics = DEFAULT_METRICS
-    if benchmarks is None:
-        benchmarks = DEFAULT_INVENTORS_BENCHMARKS
 
-    computed_metrics = inventor_benchmark_table(disambiguations, metrics=metrics, benchmarks=benchmarks)
+    computed_metrics = metrics_table(predictions, references, metrics)
     return px.bar(
         computed_metrics,
         y="value",
         x="metric",
-        color="algorithm",
-        facet_col="benchmark",
+        color="prediction",
+        facet_col="reference",
         barmode="group",
         facet_col_wrap=facet_col_wrap,
         **kwargs,
@@ -224,7 +145,7 @@ def style_cluster_inspection(table, by="prediction"):
 
 
 def add_links(table, type="patentsview"):
-    """Add Google Patents links to table with mention IDs as index. 
+    """Add Google Patents links to table with mention IDs as index.
 
     Args:
         table (DataFrame): pandas DataFrame with mention IDs as an index.
@@ -235,7 +156,10 @@ def add_links(table, type="patentsview"):
 
     if len(table) > 0:
         patent_codes = table.index.str.split("-", expand=True).droplevel(1).str.lstrip("US").values
-        table["link"] = [f"<a class='previewbox-anchor' href='https://datatool.patentsview.org/#detail/patent/{x}'>🔗</a>" for x in patent_codes]
+        table["link"] = [
+            f"<a class='previewbox-anchor' href='https://datatool.patentsview.org/#detail/patent/{x}'>🔗</a>"
+            for x in patent_codes
+        ]
     return table
 
 
@@ -245,7 +169,7 @@ def inspect_clusters_to_split(disambiguation, benchmark, join_with=None, links=F
     Args:
         disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
         benchmark (Series): reference disambiguation Series.
-        join_with (DataFrame, optional): DataFrame to join based on "mention_id". Defaults to None.
+        join_with (DataFrame, optional): DataFrame indexed by "mention_id". Defaults to None.
 
     Returns:
         DataFrame: DataFrame containing erroneous cluster assignments according to the given benchmark.
@@ -276,7 +200,7 @@ def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None, links=F
     Args:
         disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with "mention_id" index and cluster assignment values).
         benchmark (Series): reference disambiguation Series.
-        join_with (DataFrame, optional): DataFrame to join based on "mention_id". Defaults to None.
+        join_with (DataFrame, optional): DataFrame indexed by "mention_id". Defaults to None.
 
     Returns:
         DataFrame: DataFrame containing missing cluster links according to the given benchmark.
@@ -293,3 +217,101 @@ def inspect_clusters_to_merge(disambiguation, benchmark, join_with=None, links=F
         table = add_links(table)
 
     return table
+
+
+def top_inventors(disambiguation, names, n=10):
+    """
+    Table of most prolific inventors
+
+    Args:
+        disambiguation (Series): Membership vector, indexed by mention IDs, representing a given disambiguation.
+        names (Series): Pandas Series indexed by mention IDs and with values corresponding to inventor name.
+        n (int, optional): Number of rows to display. Defaults to 10.
+
+    Returns:
+        DataFrame: Table with top n most prolific inventors.
+    """
+    largest = cluster_sizes(disambiguation).sort_values(ascending=False).head(n)
+    largest_mentions = disambiguation[np.isin(disambiguation.values, largest.index.values)]
+    largest_with_names = pd.merge(largest_mentions, names, how="left", left_index=True, right_index=True)
+
+    return largest_with_names.groupby(disambiguation.name).first()
+
+
+def plot_entropy_curves(disambiguations):
+    """
+    Plot entropy curves for a set of disambiguations
+
+    Args:
+        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations
+
+    Returns:
+        Plotly figure.
+    """
+    fig = compare_plots(*[plot_entropy_curve(d, name=k) for k, d in disambiguations.items()])
+    fig.update_layout(
+        autosize=False, width=800, title="Hill numbers Curve", xaxis_title="q", yaxis_title="Hill number of order q"
+    )
+    fig.update_yaxes(autorange=True)
+    return fig
+
+
+def plot_cluster_sizes(disambiguations):
+    """
+    Plot cluster sizes for a set of disambiguations
+
+    Args:
+        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations.
+
+    Returns:
+        Plotly figure.
+    """
+    fig = compare_plots(*[plot_cluster_sizes_distribution(d, name=k, normalize=True) for k, d in disambiguations.items()])
+    fig.update_layout(
+        autosize=False, width=800, title="Cluster Sizes Distribution", xaxis_title="Cluster size", yaxis_title="Proportion"
+    )
+    fig.update_xaxes(range=(0, 20))
+    fig.update_yaxes(autorange=True)
+    return fig
+
+
+def plot_name_variation_rates(disambiguations, names):
+    """
+    Plot name variation rates for a set of given disambiguations
+
+    Args:
+        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations.
+        names (Series): Pandas Series indexed by mention IDs and with values corresponding to inventor name.
+
+    Returns:
+        Plotly figure.
+    """
+    rates = [name_variation_rate(disambiguations[f], names=names) for f in disambiguations.keys()]
+
+    data = pd.DataFrame({"Name variation rate": rates, "Disambiguation": disambiguations.keys(), "none": ""})
+
+    fig = px.bar(data, x="none", y="Name variation rate", color="Disambiguation", barmode="group")
+    fig.update_layout(title="Name variation rate", xaxis_title="")
+    fig.update_yaxes(range=(0, 1))
+    return fig
+
+
+def plot_homonimy_rates(disambiguations, names):
+    """
+    Plot homonimy rates for a set of given disambiguations
+
+    Args:
+        disambiguations (Dict): Dictionary of membership vectors representing given disambiguations.
+        names (Series): Pandas Series indexed by mention IDs and with values corresponding to inventor name.
+
+    Returns:
+        Plotly figure.
+    """
+
+    rates = [homonimy_rate(disambiguations[f], names=names) for f in disambiguations.keys()]
+    data = pd.DataFrame({"Homonimy rate": rates, "Disambiguation": disambiguations.keys(), "none": ""})
+
+    fig = px.bar(data, x="none", y="Homonimy rate", color="Disambiguation", barmode="group")
+    fig.update_layout(title="Homonimy rate", xaxis_title="")
+    fig.update_yaxes(range=(0, 1))
+    return fig

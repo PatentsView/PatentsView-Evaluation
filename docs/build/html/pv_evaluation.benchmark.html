@@ -7,24 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>pv_evaluation.benchmark &#8212; PatentsView-Evaluation  documentation</title>
-  <script>
+  
+  
+  
+  <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+  <link href="_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
   
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/6.1.2/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -35,7 +35,8 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -55,13 +56,17 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="pv_evaluation.templates" href="pv_evaluation.templates.html" />
-    <link rel="prev" title="pv_evaluation.metrics" href="pv_evaluation.metrics.html" />
+    <link rel="prev" title="API Doc" href="pv_evaluation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
   </head>
   
   
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   
   <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
@@ -124,32 +129,32 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="readme.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="readme.html">
                         README
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="concepts.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="concepts.html">
                         Key Concepts
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="examples.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
                         Examples
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item current active">
-                    <a class="nav-link" href="pv_evaluation.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="pv_evaluation.html">
                         API Doc
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -158,12 +163,14 @@
     </div>
 
     <div id="navbar-end">
-      <div class="navbar-end-item navbar-end__search-button-container">
-        
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-      </div>
+        </div>
+      
       
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
@@ -186,11 +193,13 @@
 
 
   
-  <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-  </div>
+    </div>
+  
 
   
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
@@ -220,32 +229,32 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="readme.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="readme.html">
                         README
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="concepts.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="concepts.html">
                         Key Concepts
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="examples.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="examples.html">
                         Examples
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item current active">
-                    <a class="nav-link" href="pv_evaluation.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="pv_evaluation.html">
                         API Doc
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -286,12 +295,8 @@
   </p>
   <div class="bd-toc-item navbar-nav">
     <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="pv_evaluation.summary.html">pv_evaluation.summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pv_evaluation.metrics.html">pv_evaluation.metrics</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">pv_evaluation.benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pv_evaluation.templates.html">pv_evaluation.templates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pv_evaluation.estimators.html">pv_evaluation.estimators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pv_evaluation.utils.html">pv_evaluation.utils</a></li>
 </ul>
 
   </div>
@@ -306,8 +311,11 @@
     </div>
   </div>
 
+  
+  <div id="rtd-footer-container"></div>
+
       </div>
-      <main class="bd-main">
+      <main id="main-content" class="bd-main">
         
         
         <div class="bd-content">
@@ -335,14 +343,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_benchmark_plot" title="pv_evaluation.benchmark.inventor_benchmark_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_benchmark_plot</span></code></a></p></td>
 <td><p>Bar plot of performance evaluation metrics on benchmark datasets.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_benchmark_table" title="pv_evaluation.benchmark.inventor_benchmark_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_benchmark_table</span></code></a></p></td>
-<td><p>Compute performance evaluation metrics on benchmark datasets.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_estimates_plot" title="pv_evaluation.benchmark.inventor_estimates_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_estimates_plot</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_estimates_plot" title="pv_evaluation.benchmark.inventor_estimates_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_estimates_plot</span></code></a></p></td>
 <td><p>Plot performance estimates for given cluster samples.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_estimates_table" title="pv_evaluation.benchmark.inventor_estimates_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_estimates_table</span></code></a></p></td>
-<td><p>Compute performance estimates for given cluster samples.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark" title="pv_evaluation.benchmark.load_israeli_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_israeli_inventors_benchmark</span></code></a></p></td>
 <td><p>Israeli inventors benchmark dataset.</p></td>
@@ -359,14 +361,32 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_ens_inventors_benchmark" title="pv_evaluation.benchmark.load_ens_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_ens_inventors_benchmark</span></code></a></p></td>
 <td><p>Engineering and Sciences inventors benchmark.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_air_umass_assignees_benchmark" title="pv_evaluation.benchmark.load_air_umass_assignees_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_air_umass_assignees_benchmark</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_binette_2022_inventors_benchmark" title="pv_evaluation.benchmark.load_binette_2022_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_binette_2022_inventors_benchmark</span></code></a></p></td>
+<td><p>Binette's 2022 inventors benchmark.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_air_umass_assignees_benchmark" title="pv_evaluation.benchmark.load_air_umass_assignees_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_air_umass_assignees_benchmark</span></code></a></p></td>
 <td><p>AIR-UMASS assigness benchmark.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_nber_subset_assignees_benchmark" title="pv_evaluation.benchmark.load_nber_subset_assignees_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_nber_subset_assignees_benchmark</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_nber_subset_assignees_benchmark" title="pv_evaluation.benchmark.load_nber_subset_assignees_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_nber_subset_assignees_benchmark</span></code></a></p></td>
 <td><p>AIR-UMASS assigness benchmark.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.style_cluster_inspection" title="pv_evaluation.benchmark.style_cluster_inspection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">style_cluster_inspection</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.style_cluster_inspection" title="pv_evaluation.benchmark.style_cluster_inspection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">style_cluster_inspection</span></code></a></p></td>
 <td><p>Style table to highlight groups with alternating colors.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.top_inventors" title="pv_evaluation.benchmark.top_inventors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">top_inventors</span></code></a></p></td>
+<td><p>Table of most prolific inventors</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.plot_entropy_curves" title="pv_evaluation.benchmark.plot_entropy_curves"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_entropy_curves</span></code></a></p></td>
+<td><p>Plot entropy curves for a set of disambiguations</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.plot_cluster_sizes" title="pv_evaluation.benchmark.plot_cluster_sizes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_cluster_sizes</span></code></a></p></td>
+<td><p>Plot cluster sizes for a set of disambiguations</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.plot_name_variation_rates" title="pv_evaluation.benchmark.plot_name_variation_rates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_name_variation_rates</span></code></a></p></td>
+<td><p>Plot name variation rates for a set of given disambiguations</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.plot_homonimy_rates" title="pv_evaluation.benchmark.plot_homonimy_rates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_homonimy_rates</span></code></a></p></td>
+<td><p>Plot homonimy rates for a set of given disambiguations</p></td>
 </tr>
 </tbody>
 </table>
@@ -383,7 +403,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>disambiguation</strong> (<em>Series</em>) – disambiguation result Series (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).</p></li>
 <li><p><strong>benchmark</strong> (<em>Series</em>) – reference disambiguation Series.</p></li>
-<li><p><strong>join_with</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – DataFrame to join based on “mention_id”. Defaults to None.</p></li>
+<li><p><strong>join_with</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – DataFrame indexed by “mention_id”. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -404,7 +424,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>disambiguation</strong> (<em>Series</em>) – disambiguation result Series (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).</p></li>
 <li><p><strong>benchmark</strong> (<em>Series</em>) – reference disambiguation Series.</p></li>
-<li><p><strong>join_with</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – DataFrame to join based on “mention_id”. Defaults to None.</p></li>
+<li><p><strong>join_with</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – DataFrame indexed by “mention_id”. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -418,7 +438,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_benchmark_plot">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmarks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_col_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_benchmark_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_plot" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">references</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_col_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_benchmark_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_plot" title="Permalink to this definition">#</a></dt>
 <dd><p>Bar plot of performance evaluation metrics on benchmark datasets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -435,27 +455,13 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_benchmark_table">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_benchmark_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">benchmarks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_benchmark_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_benchmark_table" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute performance evaluation metrics on benchmark datasets.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).</p></li>
-<li><p><strong>metrics</strong> (<em>dict</em><em>, </em><em>optional</em>) – dictionary of metrics (from the metrics submodule) to compute. Defaults to <cite>DEFAULT_METRICS</cite>.</p></li>
-<li><p><strong>benchmarks</strong> (<em>dict</em><em>, </em><em>optional</em>) – benchmark datasets loading functions to use from the benchmark submodule. Defaults to <cite>DEFAULT_BENCHMARK</cite>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame of computed metrics for every disambiguations and every benchmark dataset.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_estimates_plot">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_estimates_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_col_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_estimates_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_estimates_plot" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_estimates_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">facet_col_wrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_estimates_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_estimates_plot" title="Permalink to this definition">#</a></dt>
 <dd><p>Plot performance estimates for given cluster samples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The timeframe for the disambiguation should match the timeframe considered by the reference sample.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -468,26 +474,6 @@ which covers granted patents between granted between 1963 and 1999, then <cite>d
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Plotly bar chart</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_estimates_table">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_estimates_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_estimates_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_estimates_table" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute performance estimates for given cluster samples.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>disambiguations</strong> (<em>dict</em>) – dictionary of disambiguation results (disambiguation results are pandas Series with “mention_id” index and cluster assignment values).
-Note that the disambiguated population should match the population from which <cite>samples</cite> have been drawn. For instance, if using the Israeli benchmark dataset
-which covers granted patents between granted between 1963 and 1999, then <cite>disambiguations</cite> should be subsetted to the same time period.</p></li>
-<li><p><strong>samples</strong> (<em>dict</em>) – Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See <cite>INVENTORS_SAMPLES</cite> for an example.</p></li>
-<li><p><strong>estimators</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame of estimated performance metrics for every given disambiguation, sample and estimators.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -536,6 +522,28 @@ Rows with unresolved sequence numbers were removed.</p>
 <dd class="field-even"><p>Series</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.load_binette_2022_inventors_benchmark">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_binette_2022_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_binette_2022_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_binette_2022_inventors_benchmark" title="Permalink to this definition">#</a></dt>
+<dd><p>Binette’s 2022 inventors benchmark.</p>
+<p>The 2022 Binette inventors benchmark is the hand-disambiguation of inventor mentions on granted patents for a sample of inventors from PatentsView.org.</p>
+<p>Inventors we selected indirectly by sampling inventor mentions uniformly at random. This results in inventor sampled with probability proportional to their number of granted patents.</p>
+<p>The time period considered is from 1976 to December 31, 2021, corresponding to the disambiguation labeled “disamb_inventor_id_20211230” in PatentsView’s bulk data downloads [“g_persistent_inventor.tsv” file](<a class="reference external" href="https://patentsview.org/download/data-download-tables">https://patentsview.org/download/data-download-tables</a>). That is, the benchmark disambiguation intends to contain all inventor mentions for the sampled inventors from that time period. Note that the benchmark disambiguation contains a few extraneous mentions to patents granted outside of that time period. These should be ignored for evaluation purposes.</p>
+<p>The methodology used for the hand-disambiguation is described in [Binette et al. (2022)](<a class="reference external" href="https://arxiv.org/abs/2210.01230">https://arxiv.org/abs/2210.01230</a>). We used one disambiguation of 200 inventors from Binette et al. (2022), as well as an additional disambiguation of 200 inventors provided by an additional staff member. The two disambiguations were reviewed and validated. However, they should be expected to contain errors due to the ambiguous nature of inventor disambiguation. Furthermore, given the use as the December 30, 2021, disambiguation from PatentsView as a starting point of the hand-labeling, a bias towards this disambiguation should be expected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Series</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p>[Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org. arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)</p></li>
+</ul>
 </dd></dl>
 
 <dl class="py function">
@@ -643,6 +651,68 @@ were both common and ambiguous.’</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.plot_cluster_sizes">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">plot_cluster_sizes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#plot_cluster_sizes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.plot_cluster_sizes" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot cluster sizes for a set of disambiguations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>disambiguations</strong> (<em>Dict</em>) – Dictionary of membership vectors representing given disambiguations.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Plotly figure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.plot_entropy_curves">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">plot_entropy_curves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#plot_entropy_curves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.plot_entropy_curves" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot entropy curves for a set of disambiguations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>disambiguations</strong> (<em>Dict</em>) – Dictionary of membership vectors representing given disambiguations</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Plotly figure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.plot_homonimy_rates">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">plot_homonimy_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#plot_homonimy_rates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.plot_homonimy_rates" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot homonimy rates for a set of given disambiguations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disambiguations</strong> (<em>Dict</em>) – Dictionary of membership vectors representing given disambiguations.</p></li>
+<li><p><strong>names</strong> (<em>Series</em>) – Pandas Series indexed by mention IDs and with values corresponding to inventor name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Plotly figure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.plot_name_variation_rates">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">plot_name_variation_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#plot_name_variation_rates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.plot_name_variation_rates" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot name variation rates for a set of given disambiguations</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disambiguations</strong> (<em>Dict</em>) – Dictionary of membership vectors representing given disambiguations.</p></li>
+<li><p><strong>names</strong> (<em>Series</em>) – Pandas Series indexed by mention IDs and with values corresponding to inventor name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Plotly figure.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.style_cluster_inspection">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">style_cluster_inspection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prediction'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#style_cluster_inspection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.style_cluster_inspection" title="Permalink to this definition">#</a></dt>
 <dd><p>Style table to highlight groups with alternating colors.</p>
@@ -652,6 +722,27 @@ were both common and ambiguous.’</p>
 <li><p><strong>table</strong> (<em>dataframe</em>) – DataFrame to style.</p></li>
 <li><p><strong>by</strong> (<em>str</em><em>, </em><em>optional</em>) – column to color by. Defaults to “prediction”.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.top_inventors">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">top_inventors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">disambiguation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#top_inventors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.top_inventors" title="Permalink to this definition">#</a></dt>
+<dd><p>Table of most prolific inventors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>disambiguation</strong> (<em>Series</em>) – Membership vector, indexed by mention IDs, representing a given disambiguation.</p></li>
+<li><p><strong>names</strong> (<em>Series</em>) – Pandas Series indexed by mention IDs and with values corresponding to inventor name.</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of rows to display. Defaults to 10.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Table with top n most prolific inventors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -667,11 +758,11 @@ were both common and ambiguous.’</p>
             <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="pv_evaluation.metrics.html" title="previous page">
+  <a class='left-prev' id="prev-link" href="pv_evaluation.html" title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">pv_evaluation.metrics</p>
+          <p class="prev-next-title">API Doc</p>
       </div>
   </a>
   <a class='right-next' id="next-link" href="pv_evaluation.templates.html" title="next page">
@@ -735,28 +826,10 @@ were both common and ambiguous.’</p>
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_benchmark_table">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       inventor_benchmark_table()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_estimates_plot">
      <code class="docutils literal notranslate">
       <span class="pre">
        inventor_estimates_plot()
-      </span>
-     </code>
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_estimates_table">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       inventor_estimates_table()
       </span>
      </code>
     </a>
@@ -775,6 +848,15 @@ were both common and ambiguous.’</p>
      <code class="docutils literal notranslate">
       <span class="pre">
        load_als_inventors_benchmark()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.load_binette_2022_inventors_benchmark">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       load_binette_2022_inventors_benchmark()
       </span>
      </code>
     </a>
@@ -825,10 +907,55 @@ were both common and ambiguous.’</p>
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.plot_cluster_sizes">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       plot_cluster_sizes()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.plot_entropy_curves">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       plot_entropy_curves()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.plot_homonimy_rates">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       plot_homonimy_rates()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.plot_name_variation_rates">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       plot_name_variation_rates()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pv_evaluation.benchmark.style_cluster_inspection">
      <code class="docutils literal notranslate">
       <span class="pre">
        style_cluster_inspection()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.top_inventors">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       top_inventors()
       </span>
      </code>
     </a>
@@ -876,7 +1003,8 @@ were both common and ambiguous.’</p>
   
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+  <script src="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   <footer class="bd-footer"><div class="bd-footer__inner container">
   
@@ -888,6 +1016,16 @@ were both common and ambiguous.’</p>
 
 </p>
 
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
   </div>
   
   <div class="footer-item">
