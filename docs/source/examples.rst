@@ -5,20 +5,14 @@ Estimators
 ----------
 
 .. grid:: 3
-
-    .. grid-item-card:: Introduction
+  
+    .. grid-item-card:: Estimates from Binette's 2022 benchmark dataset
       :text-align: center
-      :link: https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/estimators/introduction.html
-      :link-type: url
-      
-      Introduction to pv_evaluation's representative performance estimators.
-
-    .. grid-item-card:: Estimates from the Israeli benchmark dataset
-      :text-align: center
-      :link: https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/estimators/israeli-data.html
+      :link: https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/estimators/binette-2022-benchmark.html
       :link-type: url
 
-      Example application of representative performance estimators to the Israeli inventors benchmark.
+      Example application of representative performance estimators to Binette's inventors benchmark.
+
 
     .. grid-item-card:: Estimates from Lai's 2011 benchmark dataset
       :text-align: center
@@ -31,20 +25,6 @@ Performance Summaries
 ---------------------
 
 .. grid:: 3
-
-    .. grid-item-card:: Inventor disambiguation summaries
-      :text-align: center
-      :link: https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/summary/inventor.html
-      :link-type: url
-      
-      Descriptive statistics for inventor disambiguation.
-
-    .. grid-item-card:: Benchmark
-      :text-align: center
-      :link: https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/benchmark/report.html
-      :link-type: url
-
-      Benchmarking tools and performance metrics.
 
     .. grid-item-card:: Automated HTML report
       :text-align: center
@@ -70,10 +50,7 @@ Creating Benchmark Datasets by Hand
    :maxdepth: 1
    :hidden:
 
-    ../../examples/estimators/introduction.ipynb
-    ../../examples/estimators/israeli-data.ipynb
     ../../examples/estimators/lai-2011-benchmark.ipynb
-    ../../examples/summary/inventor.ipynb
-    ../../examples/benchmark/report.ipynb
+    ../../examples/estimators/binette-2022-benchmark.ipynb
     ../../examples/templates/templates.ipynb
     ../../examples/hand-disambiguation/creating-inventors-benchmark.ipynb

@@ -1,4 +1,4 @@
-mention_id,unique_id,name_first,name_last
+mention_id,unique_id,raw_inventor_name_first,raw_inventor_name_last
 US6568878-1,0,Felipe,Garcia
 US7597885-1,1,Stephen A.,Cochran
 US7852346-1,2,John Erik,Lindholm

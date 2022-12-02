@@ -6,24 +6,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pv_evaluation.benchmark.data &#8212; PatentsView-Evaluation  documentation</title>
-  <script>
+  
+  
+  
+  <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
   
-  <link rel="stylesheet"
-    href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -34,7 +34,8 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
@@ -61,6 +62,10 @@
   
   
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   
   <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
@@ -123,32 +128,32 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../readme.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../readme.html">
                         README
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../concepts.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../concepts.html">
                         Key Concepts
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../examples.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../examples.html">
                         Examples
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../pv_evaluation.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../pv_evaluation.html">
                         API Doc
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -157,12 +162,14 @@
     </div>
 
     <div id="navbar-end">
-      <div class="navbar-end-item navbar-end__search-button-container">
-        
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-      </div>
+        </div>
+      
       
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
@@ -185,11 +192,13 @@
 
 
   
-  <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-  </div>
+    </div>
+  
 
   
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
@@ -219,32 +228,32 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../readme.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../readme.html">
                         README
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../concepts.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../concepts.html">
                         Key Concepts
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../examples.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../examples.html">
                         Examples
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../../pv_evaluation.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../pv_evaluation.html">
                         API Doc
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -285,8 +294,11 @@
     </div>
   </div>
 
+  
+  <div id="rtd-footer-container"></div>
+
       </div>
-      <main class="bd-main">
+      <main id="main-content" class="bd-main">
         
         
         <div class="bd-content">
@@ -315,12 +327,12 @@
 <span class="sd">        filename (str): csv filename.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        DataFrame: pandas Dataframe with columns &quot;unique_id&quot;, &quot;mention_id&quot;, &quot;name_first&quot;, and &quot;name_last&quot;.</span>
+<span class="sd">        DataFrame: pandas Dataframe with columns &quot;unique_id&quot;, &quot;mention_id&quot;, &quot;raw_inventor_name_first&quot;, and &quot;raw_inventor_name_last&quot;.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="n">resources</span><span class="o">.</span><span class="n">open_text</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;unique_id&quot;</span><span class="p">,</span> <span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="s2">&quot;name_first&quot;</span><span class="p">,</span> <span class="s2">&quot;name_last&quot;</span><span class="p">]</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;unique_id&quot;</span><span class="p">,</span> <span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="s2">&quot;raw_inventor_name_first&quot;</span><span class="p">,</span> <span class="s2">&quot;raw_inventor_name_last&quot;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
 
 
@@ -416,6 +428,28 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">load_unique_id_series</span><span class="p">(</span><span class="n">INVENTOR_DATA_MODULE</span><span class="p">,</span> <span class="s2">&quot;ens-inventors.csv&quot;</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="load_binette_2022_inventors_benchmark"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.load_binette_2022_inventors_benchmark">[docs]</a><span class="k">def</span> <span class="nf">load_binette_2022_inventors_benchmark</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Binette&#39;s 2022 inventors benchmark.</span>
+
+<span class="sd">    The 2022 Binette inventors benchmark is the hand-disambiguation of inventor mentions on granted patents for a sample of inventors from PatentsView.org.</span>
+
+<span class="sd">    Inventors we selected indirectly by sampling inventor mentions uniformly at random. This results in inventor sampled with probability proportional to their number of granted patents.</span>
+
+<span class="sd">    The time period considered is from 1976 to December 31, 2021, corresponding to the disambiguation labeled &quot;disamb_inventor_id_20211230&quot; in PatentsView&#39;s bulk data downloads [&quot;g_persistent_inventor.tsv&quot; file](https://patentsview.org/download/data-download-tables). That is, the benchmark disambiguation intends to contain all inventor mentions for the sampled inventors from that time period. Note that the benchmark disambiguation contains a few extraneous mentions to patents granted outside of that time period. These should be ignored for evaluation purposes.</span>
+
+<span class="sd">    The methodology used for the hand-disambiguation is described in [Binette et al. (2022)](https://arxiv.org/abs/2210.01230). We used one disambiguation of 200 inventors from Binette et al. (2022), as well as an additional disambiguation of 200 inventors provided by an additional staff member. The two disambiguations were reviewed and validated. However, they should be expected to contain errors due to the ambiguous nature of inventor disambiguation. Furthermore, given the use as the December 30, 2021, disambiguation from PatentsView as a starting point of the hand-labeling, a bias towards this disambiguation should be expected.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Series: pandas Series indexed by mention ID and with values corresponding to cluster assignment.</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        - [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org. arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_unique_id_series</span><span class="p">(</span><span class="n">INVENTOR_DATA_MODULE</span><span class="p">,</span> <span class="s2">&quot;binette-2022-inventors-benchmark.csv&quot;</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="load_air_umass_assignees_benchmark"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.load_air_umass_assignees_benchmark">[docs]</a><span class="k">def</span> <span class="nf">load_air_umass_assignees_benchmark</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;AIR-UMASS assigness benchmark.</span>
 
@@ -432,7 +466,7 @@
 <span class="sd">    evaluate the more difficult-to-disambiguate cases. Annotators attempted to label parent</span>
 <span class="sd">    companies separately from subsidiaries, but the process was more likely to associate</span>
 <span class="sd">    similarly named child and parent companies than more distinctive ones.&#39;</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">        Series: pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.</span>
 
@@ -452,7 +486,7 @@
 <span class="sd">    coreference decisions produced by string similarity. We grouped the assignee mentions by</span>
 <span class="sd">    four-letter prefixes and focused on five prefix groups {Moto, Amer, Gene, Solu, Airc} that</span>
 <span class="sd">    were both common and ambiguous.&#39;</span>
-<span class="sd">    </span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">        Series: pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.</span>
 
@@ -508,7 +542,8 @@
   
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   <footer class="bd-footer"><div class="bd-footer__inner container">
   
@@ -520,6 +555,16 @@
 
 </p>
 
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
   </div>
   
   <div class="footer-item">

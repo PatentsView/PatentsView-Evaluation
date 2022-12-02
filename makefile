@@ -32,7 +32,7 @@ data: env\
 	pv_evaluation/data/inventor/als-inventors.csv\
 	pv_evaluation/data/assignee/air-umass-assignees-benchmark.csv\
 	pv_evaluation/data/assignee/nber-subset-assignees-benchmark.csv\
-
+	pv_evaluation/data/inventor/binette-2022-inventors-benchmark.csv\
 
 data-raw.zip:
 	wget $(DATA_RAW_S3_URL)
@@ -48,6 +48,7 @@ pv_evaluation/data/assignee/%.csv: scripts/assignee/%.py data-raw/.tag
 	conda run -n $(ENV) python3 $<
 
 docs:
+	rm -rf docs/source/examples
 	find examples -name *.ipynb -exec cp --parents {} docs/source \;
 	find examples -name *.html -exec cp --parents {} docs/source \;
 	$(MAKE) html -C docs

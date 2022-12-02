@@ -1,17 +1,62 @@
 ```{python}
+import os
 import pandas as pd
 import plotly.io as pio
 pio.templates.default = "plotly_white" # Set plotly theme
 
-from pv_evaluation.utils import compare_plots
-from pv_evaluation.summary import InventorDisambiguationSummary
-from pv_evaluation.benchmark import inventor_benchmark_plot
+from er_evaluation.summary import (
+    homonimy_rate,
+    name_variation_rate,
+)
+from er_evaluation.plots import (
+    compare_plots, 
+    plot_cluster_sizes_distribution,
+    plot_entropy_curve,
+)
+from pv_evaluation.benchmark import (
+    inventor_benchmark_plot,
+    inventor_estimates_plot,
+    plot_entropy_curves,
+    top_inventors,
+    plot_cluster_sizes,
+    plot_homonimy_rates,
+    plot_name_variation_rates,
+)
 ```
 
 # Summary Statistics
 
 ```{python}
-summarizers = {filename: InventorDisambiguationSummary(filename) for filename in {{ summary_table_files }} }
+def read_auto(datapath, dtype):
+    _, ext = os.path.splitext(datapath)
+
+    if ext == ".csv":
+        return pd.read_csv(datapath, dtype=dtype)
+    elif ext == ".tsv":
+        return pd.read_csv(datapath, sep="\t", dtype=dtype)
+    elif ext in [".parquet", ".pq", ".parq"]:
+        return pd.read_parquet(datapath, dtype=dtype)
+    elif ext in [".xlsx", ".xls"]:
+        return pd.read_excel(datapath, dtype=dtype)
+    else:
+        raise Exception("Unsupported file type. Should be one of csv, tsv, parquet, or xlsx.")
+
+def load_disambiguation(filename):
+    data = read_auto(filename, dtype=str)
+    data.set_index("mention_id", inplace=True)
+    disambiguation = data.iloc[:, 0]
+    disambiguation.rename(filename, inplace=True)
+
+    return disambiguation
+
+disambiguations = {filename: load_disambiguation(filename) for filename in {{ disambiguation_files }}}
+
+inventor_not_disambiguated = read_auto("{{ inventor_not_disambiguated_file }}", dtype=str)
+inventor_not_disambiguated["mention_id"] = "US" + inventor_not_disambiguated.patent_id + "-" + inventor_not_disambiguated.inventor_sequence
+inventor_not_disambiguated.set_index("mention_id", inplace=True)
+
+full_names = inventor_not_disambiguated.raw_inventor_name_first + " " + inventor_not_disambiguated.raw_inventor_name_last
+full_names = full_names.rename("full_name")
 ```
 
 ::: {.panel-tabset}
@@ -22,9 +67,7 @@ summarizers = {filename: InventorDisambiguationSummary(filename) for filename in
 
 :::{.column-body-outset}
 ```{python}
-fig = compare_plots(*[s.plot_cluster_size_distribution() for s in summarizers.values()])
-fig.update_layout(autosize=False, width=800)
-fig.show()
+plot_cluster_sizes(disambiguations)
 ```
 :::
 
@@ -34,12 +77,14 @@ fig.show()
 
 ::: {.panel-tabset}
 
-{% for filename in  summary_table_files%}
+{% for filename in  disambiguation_files%}
 
 ## {{ filename }}
 
 ```{python}
-summarizers["{{ filename }}"].get_top_inventors(n=20)
+from IPython.core.display import display, HTML
+
+display(HTML(top_inventors(disambiguations["{{ filename }}"], full_names).to_html()))
 ```
 
 {% endfor %}
@@ -52,9 +97,7 @@ summarizers["{{ filename }}"].get_top_inventors(n=20)
 
 :::{.column-body-outset}
 ```{python}
-fig = compare_plots(*[s.plot_entropy_curve() for s in summarizers.values()])
-fig.update_layout(autosize=False, width=800)
-fig.show()
+plot_entropy_curves(disambiguations)
 ```
 :::
 
@@ -64,9 +107,7 @@ fig.show()
 
 :::{.column-body-outset}
 ```{python}
-fig = compare_plots(*[s.plot_cluster_unique_name_distribution() for s in summarizers.values()])
-fig.update_layout(autosize=False, width=800)
-fig.show()
+plot_name_variation_rates(disambiguations, full_names)
 ```
 :::
 
@@ -76,9 +117,7 @@ fig.show()
 
 :::{.column-body-outset}
 ```{python}
-fig = compare_plots(*[s.plot_homonymy_rate_distribution() for s in summarizers.values()])
-fig.update_layout(autosize=False, width=800)
-fig.show()
+plot_homonimy_rates(disambiguations, full_names)
 ```
 :::
 

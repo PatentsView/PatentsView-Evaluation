@@ -7,24 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>✍️ Creating Inventors Benchmark Datasets by Hand &#8212; PatentsView-Evaluation  documentation</title>
-  <script>
+  
+  
+  
+  <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
   
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
@@ -35,7 +35,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -62,6 +63,10 @@
   
   
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   
   <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
@@ -124,32 +129,32 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="../../readme.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../readme.html">
                         README
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../concepts.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../concepts.html">
                         Key Concepts
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item current active">
-                    <a class="nav-link" href="../../examples.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../examples.html">
                         Examples
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../pv_evaluation.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../pv_evaluation.html">
                         API Doc
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -158,12 +163,14 @@
     </div>
 
     <div id="navbar-end">
-      <div class="navbar-end-item navbar-end__search-button-container">
-        
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-      </div>
+        </div>
+      
       
       <div class="navbar-end-item">
         <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
@@ -186,11 +193,13 @@
 
 
   
-  <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-  </div>
+    </div>
+  
 
   
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
@@ -220,32 +229,32 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="../../readme.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../readme.html">
                         README
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../concepts.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../concepts.html">
                         Key Concepts
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item current active">
-                    <a class="nav-link" href="../../examples.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../examples.html">
                         Examples
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../../pv_evaluation.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../pv_evaluation.html">
                         API Doc
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -286,11 +295,8 @@
   </p>
   <div class="bd-toc-item navbar-nav">
     <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../estimators/introduction.html">🎯 Introduction to Performance Estimators for Entity Resolution Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../estimators/israeli-data.html">🎯 Performance Estimates for the Israeli Inventors Dataset</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../estimators/lai-2011-benchmark.html">🎯 Performance Estimates for Lai’s 2011 Benchmark</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../summary/inventor.html">📑 Inventor Disambiguation Summaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../benchmark/report.html">📊 Performance Benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../estimators/binette-2022-benchmark.html">🎯 Performance Estimates for Lai’s 2011 Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../templates/templates.html">📑 HTML Report Template</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">✍️ Creating Inventors Benchmark Datasets by Hand</a></li>
 </ul>
@@ -307,8 +313,11 @@
     </div>
   </div>
 
+  
+  <div id="rtd-footer-container"></div>
+
       </div>
-      <main class="bd-main">
+      <main id="main-content" class="bd-main">
         
         
         <div class="bd-content">
@@ -987,102 +996,6 @@ optional arguments:
 </div>
 </div>
 </section>
-<section id="makefile-template">
-<h2>Makefile Template<a class="headerlink" href="#makefile-template" title="Permalink to this heading">#</a></h2>
-<p>The following makefile can be used to facilitate the processing of inventors hand-disambiguation files. Simply put the reviewed Excel spreadsheet in a folder called “input” and create an empty “output” folder. Then run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">debug</span></code> to generate debugging sheets and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code> to generate final benchmark csv files.</p>
-<div class="highlight-makefile notranslate"><div class="highlight"><pre><span></span><span class="c">## Process inventors hand-disambiguation data</span>
-<span class="c">##</span>
-<span class="c">## Usage:</span>
-<span class="c">## 		make &lt;target&gt;</span>
-<span class="c">##</span>
-<span class="c">## Targets:</span>
-<span class="c">## 		help:		Show this help message.</span>
-<span class="c">##		debug:		Create debugging spreadsheet for inventors hand-disambiguation</span>
-<span class="c">##		all:		Create benchmark csv files for inventors hand-disambiguation</span>
-<span class="nv">RAWINVENTOR_S3_URL</span><span class="o">=</span>https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip
-<span class="nv">INPUT</span> <span class="o">=</span> <span class="k">$(</span>wildcard input/*.xlsx<span class="k">)</span>
-
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">help</span> <span class="n">env</span> <span class="n">all</span> <span class="n">debug</span>
-
-<span class="nf">debug</span><span class="o">:</span> <span class="k">$(</span><span class="nv">patsubst</span> <span class="nv">input</span>/%<span class="nv">.xlsx</span>,<span class="nv">output</span>/%<span class="nv">-true-clusters.csv.debug.xlsx</span>,<span class="k">$(</span><span class="nv">INPUT</span><span class="k">))</span>
-	<span class="nb">echo</span>
-
-<span class="nf">all</span><span class="o">:</span> <span class="k">$(</span><span class="nv">patsubst</span> <span class="nv">input</span>/%<span class="nv">.xlsx</span>,<span class="nv">output</span>/%<span class="nv">-true-clusters.csv</span>,<span class="k">$(</span><span class="nv">INPUT</span><span class="k">))</span>
-
-<span class="nf">help</span><span class="o">:</span> <span class="n">makefile</span>
-	@sed -n <span class="s2">&quot;s/^##//p&quot;</span> $&lt;
-
-<span class="nf">rawinventor.tsv.zip</span><span class="o">:</span>
-	wget -nc <span class="si">${</span><span class="nv">RAWINVENTOR_S3_URL</span><span class="si">}</span>
-
-<span class="nf">rawinventor.tsv</span><span class="o">:</span> <span class="n">rawinventor</span>.<span class="n">tsv</span>.<span class="n">zip</span>
-	unzip -o rawinventor.tsv.zip
-
-<span class="nf">output/%-true-clusters.csv.debug.xlsx</span><span class="o">:</span> <span class="n">input</span>/%.<span class="n">xlsx</span> <span class="n">rawinventor</span>.<span class="n">tsv</span>
-	mkdir -p <span class="k">$(</span>@D<span class="k">)</span>
-	process-inventors-hand-disambiguation.py --debug $&lt; rawinventor.tsv -o <span class="nv">$@</span>
-
-<span class="nf">output/%-true-clusters.csv</span><span class="o">:</span> <span class="n">input</span>/%.<span class="n">xlsx</span> <span class="n">rawinventor</span>.<span class="n">tsv</span>
-	mkdir -p <span class="k">$(</span>@D<span class="k">)</span>
-	process-inventors-hand-disambiguation.py $&lt; rawinventor.tsv -o <span class="nv">$@</span>
-</pre></div>
-</div>
-</section>
-<section id="template-to-obtain-performance-estimates">
-<h2>Template to obtain performance estimates<a class="headerlink" href="#template-to-obtain-performance-estimates" title="Permalink to this heading">#</a></h2>
-<p>The following Python code can be used to generate performance estimates following the processing of hand-disambiguation data.</p>
-<p>First recover the current disambiguation and subset it to match the timeframe of the hand-disambiguated data:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="kn">import</span> <span class="nn">wget</span>
-<span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">):</span>
-    <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip&quot;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv.zip&quot;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;patent.tsv&quot;</span><span class="p">):</span>
-    <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">&quot;https://s3.amazonaws.com/data.patentsview.org/download/patent.tsv.zip&quot;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s2">&quot;patent.tsv.zip&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_ref</span><span class="p">:</span>
-        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;patent.tsv.zip&quot;</span><span class="p">)</span>
-
-<span class="n">rawinventor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">rawinventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">patent_id</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">patent</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;patent.tsv&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
-<span class="n">rawinventor</span> <span class="o">=</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">patent</span><span class="p">[[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">]],</span> <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;patent_id&quot;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="s2">&quot;many_to_one&quot;</span><span class="p">)</span>
-
-<span class="n">rawinventor</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;date &lt; &#39;2022-01-01&#39;&quot;</span><span class="p">)</span>
-<span class="n">current_disambiguation</span> <span class="o">=</span> <span class="n">rawinventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Then, print out a table and plot with the performance estimates:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">load_israeli_inventors_benchmark</span><span class="p">,</span> <span class="n">load_lai_2011_inventors_benchmark</span>
-<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="n">inventor_estimates_table</span><span class="p">,</span> <span class="n">inventor_estimates_plot</span>
-
-<span class="n">samples</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;staff1&quot;</span><span class="p">:</span> <span class="p">(</span>
-        <span class="k">lambda</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/2022-07-25-Aida-patent-samples-part-2-true-clusters.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">],</span> 
-        <span class="p">{</span><span class="s2">&quot;sampling_type&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">:</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">}</span>
-        <span class="p">),</span>
-    <span class="s2">&quot;staff2&quot;</span><span class="p">:</span> <span class="p">(</span>
-        <span class="k">lambda</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;output/2022-07-25-Emma-patent-samples-part-2-true-clusters.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">)[</span><span class="s2">&quot;inventor_id&quot;</span><span class="p">],</span> 
-        <span class="p">{</span><span class="s2">&quot;sampling_type&quot;</span><span class="p">:</span> <span class="s2">&quot;cluster_block&quot;</span><span class="p">,</span> <span class="s2">&quot;weights&quot;</span><span class="p">:</span><span class="s2">&quot;cluster_size&quot;</span><span class="p">}</span>
-        <span class="p">),</span>
-<span class="p">}</span>
-<span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;current&quot;</span><span class="p">:</span> <span class="n">current_disambiguation</span>
-<span class="p">}</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">inventor_estimates_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples</span><span class="p">))</span>
-<span class="n">inventor_estimates_plot</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 </section>
 
 
@@ -1143,16 +1056,6 @@ optional arguments:
    More Information
   </a>
  </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#makefile-template">
-   Makefile Template
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#template-to-obtain-performance-estimates">
-   Template to obtain performance estimates
-  </a>
- </li>
 </ul>
 
 </nav>
@@ -1194,7 +1097,8 @@ optional arguments:
   
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   <footer class="bd-footer"><div class="bd-footer__inner container">
   
@@ -1206,6 +1110,16 @@ optional arguments:
 
 </p>
 
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
   </div>
   
   <div class="footer-item">
