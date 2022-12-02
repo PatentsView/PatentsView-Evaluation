@@ -12,7 +12,7 @@
 ENV?=pv-evaluation
 DATA_RAW_S3_URL=https://s3.amazonaws.com/data.patentsview.org/PatentsView-Evaluation/data-raw.zip
 
-.PHONY: help env black data docs clean
+.PHONY: help env black data docs build clean
 
 help: makefile
 	@sed -n "s/^##//p" $<
@@ -58,6 +58,8 @@ docs:
 	git add docs/build/*.svg -f
 	git add docs/build/*.doctree -f
 
+build:
+	python3 -m build .
 
 clean:
 	rm -r data-raw

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0 (December 2, 2022)
+
+- BREAKING: Major refactoring of the package. Core evaluation functionality has been moved to the er-evaluation package.
+
 ## 1.0.1 (November 14, 2022)
 
 - FIX: Replace sklearn dependency with scikit-learn. Add scipy dependency.
