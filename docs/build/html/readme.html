@@ -328,7 +328,7 @@
 <h3>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h3>
 <p><strong>pv_evaluation</strong> has the following submodules:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html">**benchmark**</a>: Access to evaluation datasets and standardized comparison benchmarks. The following benchmark datasets are available:</p>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html">**benchmark.data**</a>: Access to evaluation datasets and standardized comparison benchmarks. The following benchmark datasets are available:</p>
 <ul>
 <li><p>Academic Life Sciences (ALS) inventors benchmark.</p></li>
 <li><p>Israeli inventors benchmark.</p></li>
@@ -338,6 +338,7 @@
 <li><p>Binette et al.’s 2022 inventors benchmark.</p></li>
 </ul>
 </li>
+<li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.benchmark.html">**benchmark.report**</a>: Visualization of key monitoring and performance metrics.</p></li>
 <li><p><a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/pv_evaluation.templates.html">**templates**</a>: Templated performance summary reports.</p></li>
 </ul>
 </section>
@@ -356,15 +357,18 @@
 <p>See the examples page for complete reproducible examples. The examples below only provide a quick overview of <strong>pv_evaluation</strong>‘s functionality.</p>
 <section id="metrics-and-summary-statistics">
 <h3>Metrics and Summary Statistics<a class="headerlink" href="#metrics-and-summary-statistics" title="Permalink to this heading">#</a></h3>
-<p>Generate an html report summarizing properties of the current disambiguation algorithm (uses the <code class="docutils literal notranslate"><span class="pre">rawinventor.tsv</span></code> data file from PatentsView’s <a class="reference external" href="https://patentsview.org/download/data-download-tables">downloads page</a>):</p>
+<p>Generate an html report summarizing properties of the current disambiguation algorithm (see <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/templates/templates.html">this example</a>):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.templates</span> <span class="kn">import</span> <span class="n">render_inventor_disambiguation_report</span>
 
-<span class="n">render_inventor_disambiguation_report</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">summary_table_files</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;rawinventor.tsv&quot;</span><span class="p">])</span>
+<span class="n">render_inventor_disambiguation_report</span><span class="p">(</span>
+    <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+    <span class="n">disambiguation_files</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;disambiguation_20211230.tsv&quot;</span><span class="p">,</span> <span class="s2">&quot;disambiguation_20220630.tsv&quot;</span><span class="p">],</span><span class="n">inventor_not_disambiguated_file</span><span class="o">=</span><span class="s2">&quot;g_inventor_not_disambiguated.tsv&quot;</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="access-benchmark-datasets">
-<h3>Access Benchmark Datasets<a class="headerlink" href="#access-benchmark-datasets" title="Permalink to this heading">#</a></h3>
+<section id="benchmark-datasets">
+<h3>Benchmark Datasets<a class="headerlink" href="#benchmark-datasets" title="Permalink to this heading">#</a></h3>
 <p>Access PatentsView-Evaluation’s large collection of benchmark datasets:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -373,10 +377,15 @@
 <span class="n">load_patentsview_inventors_benchmark</span><span class="p">()</span>
 <span class="n">load_als_inventors_benchmark</span><span class="p">()</span>
 <span class="n">load_ens_inventors_benchmark</span><span class="p">()</span>
+<span class="n">load_binette_2022_inventors_benchmark</span><span class="p">()</span>
 <span class="n">load_air_umass_assignees_benchmark</span><span class="p">()</span>
 <span class="n">load_nber_subset_assignees_benchmark</span><span class="p">()</span>
 </pre></div>
 </div>
+</section>
+<section id="representative-performance-evaluation">
+<h3>Representative Performance Evaluation<a class="headerlink" href="#representative-performance-evaluation" title="Permalink to this heading">#</a></h3>
+<p>See <a class="reference external" href="https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/estimators/binette-2022-benchmark.html">this example</a> of how representative performance estimates are obtained from Binette’s 2022 benchmark dataset.</p>
 </section>
 </section>
 <section id="contributing">
@@ -499,8 +508,13 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#access-benchmark-datasets">
-     Access Benchmark Datasets
+    <a class="reference internal nav-link" href="#benchmark-datasets">
+     Benchmark Datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#representative-performance-evaluation">
+     Representative Performance Evaluation
     </a>
    </li>
   </ul>
