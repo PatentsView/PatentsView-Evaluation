@@ -52,7 +52,12 @@ docs:
 	find examples -name *.ipynb -exec cp --parents {} docs/source \;
 	find examples -name *.html -exec cp --parents {} docs/source \;
 	$(MAKE) html -C docs
-	git add docs/build/* -f
+	git add docs/build/*.html -f
+	git add docs/build/*.js -f
+	git add docs/build/*.css -f
+	git add docs/build/*.svg -f
+	git add docs/build/*.doctree -f
+
 
 clean:
 	rm -r data-raw
