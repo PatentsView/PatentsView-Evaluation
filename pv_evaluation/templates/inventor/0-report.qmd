@@ -2,7 +2,7 @@
 
 This is report has been automatically generated for the following data source(s) at {{ datetime }}:
 
-{% for filename in summary_table_files %}
+{% for filename in disambiguation_files %}
 - {{ filename }}
 {% endfor %}
 
