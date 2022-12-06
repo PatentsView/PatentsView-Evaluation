@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from setuptools import setup
+from setuptools import setup, find_packages
 from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
@@ -16,7 +16,7 @@ if __name__ == "__main__":
         long_description_content_type='text/markdown',
         url="https://github.com/OlivierBinette/PatentsView-Evaluation",
         include_package_data=True,
-        packages=["pv_evaluation"],
+        packages=find_packages(),
         install_requires=[
             "pandas",
             "dask",
