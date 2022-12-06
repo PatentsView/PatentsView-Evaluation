@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.1 (December 5, 2022)
+
+- Update setup.py with find_packages()
+
+
 ## 2.0.0 (December 2, 2022)
 
 - BREAKING: Major refactoring of the package. Core evaluation functionality has been moved to the er-evaluation package.
