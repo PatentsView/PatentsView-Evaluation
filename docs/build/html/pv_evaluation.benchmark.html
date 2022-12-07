@@ -346,6 +346,12 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_estimates_plot" title="pv_evaluation.benchmark.inventor_estimates_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_estimates_plot</span></code></a></p></td>
 <td><p>Plot performance estimates for given cluster samples.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_estimates_trend_plot" title="pv_evaluation.benchmark.inventor_estimates_trend_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_estimates_trend_plot</span></code></a></p></td>
+<td><p>Plot performance estimates over time.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.inventor_summary_trend_plot" title="pv_evaluation.benchmark.inventor_summary_trend_plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inventor_summary_trend_plot</span></code></a></p></td>
+<td><p>Plot key performance metrics over time.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark" title="pv_evaluation.benchmark.load_israeli_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_israeli_inventors_benchmark</span></code></a></p></td>
 <td><p>Israeli inventors benchmark dataset.</p></td>
 </tr>
@@ -474,6 +480,45 @@ which covers granted patents between granted between 1963 and 1999, then <cite>d
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Plotly bar chart</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_estimates_trend_plot">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_estimates_trend_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">persistent_inventor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_estimates_trend_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_estimates_trend_plot" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot performance estimates over time.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The timeframe for the disambiguation should match the timeframe considered by the reference sample.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>persisten_inventor</strong> (<em>DataFrame</em>) – String-valued DataFrame in the format of PatentsView’s bulk data download file “g_persistent_inventor.tsv”. This should contain the columns “patent_id”, “sequence”, as well as columns with names of the form “disamb_inventor_id_YYYYMMDD” for inventor IDs corresponding to the given disambiguation date.</p></li>
+<li><p><strong>samples</strong> (<em>dict</em>) – Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See <cite>INVENTORS_SAMPLES</cite> for an example.</p></li>
+<li><p><strong>estimators</strong> (<em>dict</em><em>, </em><em>optional</em>) – Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Plotly scatter plot</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pv_evaluation.benchmark.inventor_summary_trend_plot">
+<span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">inventor_summary_trend_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">persistent_inventor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/report.html#inventor_summary_trend_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.inventor_summary_trend_plot" title="Permalink to this definition">#</a></dt>
+<dd><p>Plot key performance metrics over time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>persisten_inventor</strong> (<em>DataFrame</em>) – String-valued DataFrame in the format of PatentsView’s bulk data download file “g_persistent_inventor.tsv”. This should contain the columns “patent_id”, “sequence”, as well as columns with names of the form “disamb_inventor_id_YYYYMMDD” for inventor IDs corresponding to the given disambiguation date.</p></li>
+<li><p><strong>names</strong> (<em>Series</em>) – pandas Series indexed by mention IDs and with values corresponding to mentioned inventor name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Plotly scatter plot of the matching rate, homonymy rate, and name variation rate.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -830,6 +875,24 @@ were both common and ambiguous.’</p>
      <code class="docutils literal notranslate">
       <span class="pre">
        inventor_estimates_plot()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_estimates_trend_plot">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       inventor_estimates_trend_plot()
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pv_evaluation.benchmark.inventor_summary_trend_plot">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       inventor_summary_trend_plot()
       </span>
      </code>
     </a>

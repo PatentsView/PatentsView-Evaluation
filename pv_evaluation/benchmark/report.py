@@ -1,7 +1,8 @@
-import itertools
 import pandas as pd
 import plotly.express as px
 import numpy as np
+from datetime import datetime
+
 
 from er_evaluation.utils import expand_grid
 from er_evaluation.estimators import estimates_table, pairwise_precision_design_estimate, pairwise_recall_design_estimate
@@ -9,6 +10,7 @@ from er_evaluation.summary import (
     cluster_sizes,
     name_variation_rate,
     homonimy_rate,
+    matching_rate
 )
 from er_evaluation.metrics import (
     metrics_table,
@@ -55,6 +57,85 @@ DEFAULT_METRICS = {
     "pairwise precision": pairwise_precision,
     "pairwise recall": pairwise_recall,
 }
+
+
+def inventor_summary_trend_plot(persistent_inventor, names):
+    """Plot key performance metrics over time.
+
+    Args:
+        persisten_inventor (DataFrame): String-valued DataFrame in the format of PatentsView's bulk data download file "g_persistent_inventor.tsv". This should contain the columns "patent_id", "sequence", as well as columns with names of the form "disamb_inventor_id_YYYYMMDD" for inventor IDs corresponding to the given disambiguation date.
+        names (Series): pandas Series indexed by mention IDs and with values corresponding to mentioned inventor name.
+
+    Returns:
+        Plotly scatter plot of the matching rate, homonymy rate, and name variation rate.
+    """
+    persistent_inventor["mention_id"] = "US" + persistent_inventor.patent_id + "-" + persistent_inventor.sequence
+    persistent_inventor.set_index("mention_id", inplace=True)
+
+    disambiguation_names = [s for s in persistent_inventor.columns.values if s.startswith("disamb")]
+    disambiguations = {s.lstrip("disamb_inventor_id_"):persistent_inventor[s].dropna() for s in disambiguation_names}
+
+    metrics = {
+        "Matching rate": lambda x: matching_rate(x),
+        "Homonimy rate": lambda x: homonimy_rate(x, names),
+        "Name variation rate": lambda x: name_variation_rate(x, names),
+    }
+
+    data = expand_grid(disambiguation=disambiguations, metric=metrics)
+    data["value"] = data.apply(lambda x: metrics[x.metric](disambiguations[x.disambiguation]), axis=1)
+
+    data["date"] = data["date"] = pd.to_datetime([datetime.strptime(d, "%Y%m%d") for d in data["disambiguation"]])
+
+    fig = px.line(
+        data,
+        y="value",
+        x="date",
+        color="metric",
+        symbol="metric",
+        color_discrete_sequence=px.colors.qualitative.Vivid,
+    )
+    fig.update_layout(yaxis_range=(0,1))
+
+    return fig
+
+
+def inventor_estimates_trend_plot(persistent_inventor, samples_weights=None, estimators=None, **kwargs):
+    """Plot performance estimates over time.
+
+    Note:
+        The timeframe for the disambiguation should match the timeframe considered by the reference sample.
+
+    Args:
+        persisten_inventor (DataFrame): String-valued DataFrame in the format of PatentsView's bulk data download file "g_persistent_inventor.tsv". This should contain the columns "patent_id", "sequence", as well as columns with names of the form "disamb_inventor_id_YYYYMMDD" for inventor IDs corresponding to the given disambiguation date.
+        samples (dict): Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See `INVENTORS_SAMPLES` for an example.
+        estimators (dict, optional): Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.
+
+    Returns:
+        Plotly scatter plot
+    """
+    if estimators is None:
+        estimators = DEFAULT_ESTIMATORS
+    if samples_weights is None:
+        samples_weights = DEFAULT_INVENTORS_SAMPLES_WEIGHTS
+
+    persistent_inventor["mention_id"] = "US" +persistent_inventor.patent_id + "-" + persistent_inventor.sequence
+    persistent_inventor.set_index("mention_id", inplace=True)
+
+    disambiguation_names = [s for s in persistent_inventor.columns.values if s.startswith("disamb")]
+    disambiguations = {s.lstrip("disamb_inventor_id_"):persistent_inventor[s].dropna() for s in disambiguation_names}
+
+    computed_metrics = estimates_table(disambiguations, samples_weights=samples_weights, estimators=estimators)
+    computed_metrics["date"] = pd.to_datetime([datetime.strptime(d, "%Y%m%d") for d in computed_metrics["prediction"]])
+
+    return px.line(
+        computed_metrics,
+        y="value",
+        x="date",
+        error_y="std",
+        color="estimator",
+        symbol="estimator",
+        color_discrete_sequence=px.colors.qualitative.Vivid,
+    )
 
 
 def inventor_estimates_plot(disambiguations, samples_weights=None, estimators=None, facet_col_wrap=2, **kwargs):

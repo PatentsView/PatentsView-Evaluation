@@ -59,6 +59,7 @@ docs:
 	git add docs/build/*.doctree -f
 
 build:
+	rm -r dist/*
 	python3 -m build .
 
 clean:
