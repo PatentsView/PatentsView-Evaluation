@@ -14,7 +14,9 @@ from pv_evaluation.benchmark.data import (
 
 from pv_evaluation.benchmark.report import (
     inventor_estimates_plot,
+    inventor_estimates_trend_plot,
     inventor_benchmark_plot,
+    inventor_summary_trend_plot,
     inspect_clusters_to_split,
     inspect_clusters_to_merge,
     style_cluster_inspection,
@@ -36,7 +38,9 @@ __all__ = [
     "load_air_umass_assignees_benchmark",
     "load_nber_subset_assignees_benchmark",
     "inventor_estimates_plot",
+    "inventor_estimates_trend_plot",
     "inventor_benchmark_plot",
+    "inventor_summary_trend_plot",
     "inspect_clusters_to_split",
     "inspect_clusters_to_merge",
     "style_cluster_inspection",

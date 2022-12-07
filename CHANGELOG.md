@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add inventor_summary_trend_plot() and inventor_estimates_trend_plot() functions.
+
 ## 2.0.1 (December 5, 2022)
 
 - Update setup.py with find_packages()
