@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 2.0.2 (December 12, 2022)
 
 - Add inventor_summary_trend_plot() and inventor_estimates_trend_plot() functions.
 
