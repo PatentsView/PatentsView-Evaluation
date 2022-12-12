@@ -34,11 +34,8 @@ dependencies:
     - myst_parser
     - pydata-sphinx-theme
     - m2r2
-    - sphinx-lesson
     - sphinx-design
+    - sphinx_lesson
     - parse
-<<<<<<< HEAD
     - build
     - twine
-=======
->>>>>>> ed0b93ff189332bbb6f0bb94c8bff9ef73dc3082

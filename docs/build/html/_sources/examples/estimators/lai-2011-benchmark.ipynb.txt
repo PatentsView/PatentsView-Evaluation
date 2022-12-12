@@ -1,0 +1,181 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# 🎯 Performance Estimates for Lai's 2011 Benchmark"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This notebook showcases the use of our precision and recall performance estimators in application to Lai's 2011 benchmark dataset.\n",
+    "\n",
+    "Note that Lai's 2011 dataset only covers patents granted before 2010. As such, we can only estimate the performance of the current disambiguation algorithm for this time period.\n",
+    "\n",
+    "The sampling process assumed for Lai's 2011 benchmark is a uniform sample of inventors. This is because inventors from this benchmark were identified from a set of CVs (not from sampling individual patents, which would bias towards large clusters)."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Data Preparation\n",
+    "\n",
+    "First we import required modules and recover the current disambiguation from `rawinventor.tsv`. The current disambiguation is filtered to only contain inventor mentions for granted patents between 1975 and 2010."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import wget\n",
+    "import zipfile\n",
+    "import os\n",
+    "\n",
+    "if not os.path.isfile(\"rawinventor.tsv\"):\n",
+    "    wget.download(\"https://s3.amazonaws.com/data.patentsview.org/download/rawinventor.tsv.zip\")\n",
+    "    with zipfile.ZipFile(\"rawinventor.tsv.zip\", 'r') as zip_ref:\n",
+    "        zip_ref.extractall(\".\")\n",
+    "    os.remove(\"rawinventor.tsv.zip\")\n",
+    "\n",
+    "if not os.path.isfile(\"patent.tsv\"):\n",
+    "    wget.download(\"https://s3.amazonaws.com/data.patentsview.org/download/patent.tsv.zip\")\n",
+    "    with zipfile.ZipFile(\"patent.tsv.zip\", 'r') as zip_ref:\n",
+    "        zip_ref.extractall(\".\")\n",
+    "    os.remove(\"patent.tsv.zip\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "patent = pd.read_csv(\"patent.tsv\", sep=\"\\t\", dtype=str, usecols=[\"id\", \"date\"])\n",
+    "rawinventor = pd.read_csv(\"rawinventor.tsv\", sep=\"\\t\", dtype=str, usecols=[\"patent_id\", \"sequence\", \"inventor_id\"])\n",
+    "\n",
+    "date = pd.DatetimeIndex(patent.date)\n",
+    "patent[\"date\"] = date.year.astype(int)\n",
+    "joined = rawinventor.merge(patent, left_on=\"patent_id\", right_on=\"id\", how=\"left\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "joined[\"mention_id\"] = \"US\" + joined.patent_id + \"-\" + joined.sequence\n",
+    "joined = joined.query('date >= 1975 and date <= 2010')\n",
+    "current_disambiguation = joined.set_index(\"mention_id\")[\"inventor_id\"]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Precision and Recall Estimates\n",
+    "\n",
+    "We can now estimate precision and recall with uniform probability weights."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from er_evaluation.estimators import pairwise_precision_design_estimate, pairwise_recall_design_estimate\n",
+    "from pv_evaluation.benchmark import load_lai_2011_inventors_benchmark"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Precision estimate and standard deviation:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(0.9061700591403344, 0.02694415809739732)"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pairwise_precision_design_estimate(current_disambiguation, load_lai_2011_inventors_benchmark(), weights=pd.Series(1, index=load_lai_2011_inventors_benchmark().unique()))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Recall estimate and standard deviation:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(0.9096034933749487, 0.05017639288406865)"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "pairwise_recall_design_estimate(current_disambiguation, load_lai_2011_inventors_benchmark(), weights=pd.Series(1, index=load_lai_2011_inventors_benchmark().unique()))"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3.7.15 ('pv-evaluation': conda)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.15"
+  },
+  "orig_nbformat": 4,
+  "vscode": {
+   "interpreter": {
+    "hash": "135eb778a123b23717215bebe642ebc480e0ab0e1bc583cf4971f84281f0b229"
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
