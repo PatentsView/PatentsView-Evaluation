@@ -57,6 +57,7 @@ docs:
 	git add docs/build/*.css -f
 	git add docs/build/*.svg -f
 	git add docs/build/*.doctree -f
+	git add docs/build/*.txt -f
 
 build:
 	rm -r dist/*
