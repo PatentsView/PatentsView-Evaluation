@@ -333,35 +333,11 @@
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading">#</a></h2>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.templates.render_inventor_disambiguation_report" title="pv_evaluation.templates.render_inventor_disambiguation_report"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render_inventor_disambiguation_report</span></code></a></p></td>
-<td><p>Create html report based on disambiguation results.</p></td>
-</tr>
 </tbody>
 </table>
 </section>
-<section id="module-pv_evaluation.templates">
-<span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-pv_evaluation.templates" title="Permalink to this heading">#</a></h2>
-<p>HTML report templates.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="pv_evaluation.templates.render_inventor_disambiguation_report">
-<span class="sig-prename descclassname"><span class="pre">pv_evaluation.templates.</span></span><span class="sig-name descname"><span class="pre">render_inventor_disambiguation_report</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disambiguation_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inventor_not_disambiguated_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/templates/render.html#render_inventor_disambiguation_report"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.templates.render_inventor_disambiguation_report" title="Permalink to this definition">#</a></dt>
-<dd><p>Create html report based on disambiguation results.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>outdir</strong> (<em>str</em>) – directory where to output html files.</p></li>
-<li><p><strong>disambiguation_files</strong> (<em>list</em>) – list of string paths to disambiguation files (tables with the two columns “mention_id” and “inventor_id”). Files format can be one of tsv, csv, or parquet.</p></li>
-<li><p><strong>inventor_not_disambiguated</strong> (<em>str</em>) – string path to a file containing the columns “patent_id”, “inventor_sequence”, “raw_inventor_name_first”, and “raw_inventor_name_last”. For granted patents, this should be the file “g_inventor_not_disambiguated.tsv” from PatentsView’s bulk data downloads.</p></li>
-<li><p><strong>cache</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether or not to cache jupyter chunk execution between runs. Defaults to True.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<ul class="simple">
-<li><p>Summary table filenames are used for figure legends. Keep them short.</p></li>
-</ul>
-</dd></dl>
-
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -402,20 +378,9 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#module-pv_evaluation.templates">
+  <a class="reference internal nav-link" href="#documentation">
    Documentation
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#pv_evaluation.templates.render_inventor_disambiguation_report">
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       render_inventor_disambiguation_report()
-      </span>
-     </code>
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
