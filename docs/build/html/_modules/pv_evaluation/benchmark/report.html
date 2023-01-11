@@ -312,11 +312,10 @@
             <article class="bd-article" role="main">
               
   <h1>Source code for pv_evaluation.benchmark.report</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-
 
 <span class="kn">from</span> <span class="nn">er_evaluation.utils</span> <span class="kn">import</span> <span class="n">expand_grid</span>
 <span class="kn">from</span> <span class="nn">er_evaluation.estimators</span> <span class="kn">import</span> <span class="n">estimates_table</span><span class="p">,</span> <span class="n">pairwise_precision_design_estimate</span><span class="p">,</span> <span class="n">pairwise_recall_design_estimate</span>
@@ -324,7 +323,6 @@
     <span class="n">cluster_sizes</span><span class="p">,</span>
     <span class="n">name_variation_rate</span><span class="p">,</span>
     <span class="n">homonimy_rate</span><span class="p">,</span>
-    <span class="n">matching_rate</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">er_evaluation.metrics</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">metrics_table</span><span class="p">,</span>
@@ -371,85 +369,6 @@
     <span class="s2">&quot;pairwise precision&quot;</span><span class="p">:</span> <span class="n">pairwise_precision</span><span class="p">,</span>
     <span class="s2">&quot;pairwise recall&quot;</span><span class="p">:</span> <span class="n">pairwise_recall</span><span class="p">,</span>
 <span class="p">}</span>
-
-
-<div class="viewcode-block" id="inventor_summary_trend_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_summary_trend_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_summary_trend_plot</span><span class="p">(</span><span class="n">persistent_inventor</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot key performance metrics over time.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        persisten_inventor (DataFrame): String-valued DataFrame in the format of PatentsView&#39;s bulk data download file &quot;g_persistent_inventor.tsv&quot;. This should contain the columns &quot;patent_id&quot;, &quot;sequence&quot;, as well as columns with names of the form &quot;disamb_inventor_id_YYYYMMDD&quot; for inventor IDs corresponding to the given disambiguation date.</span>
-<span class="sd">        names (Series): pandas Series indexed by mention IDs and with values corresponding to mentioned inventor name.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Plotly scatter plot of the matching rate, homonymy rate, and name variation rate.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">persistent_inventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">patent_id</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">sequence</span>
-    <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="n">disambiguation_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;disamb&quot;</span><span class="p">)]</span>
-    <span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;disamb_inventor_id_&quot;</span><span class="p">):</span><span class="n">persistent_inventor</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">disambiguation_names</span><span class="p">}</span>
-
-    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;Matching rate&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">matching_rate</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
-        <span class="s2">&quot;Homonimy rate&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">homonimy_rate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">names</span><span class="p">),</span>
-        <span class="s2">&quot;Name variation rate&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">name_variation_rate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">names</span><span class="p">),</span>
-    <span class="p">}</span>
-
-    <span class="n">data</span> <span class="o">=</span> <span class="n">expand_grid</span><span class="p">(</span><span class="n">disambiguation</span><span class="o">=</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">metrics</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">metric</span><span class="p">](</span><span class="n">disambiguations</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">disambiguation</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;disambiguation&quot;</span><span class="p">]])</span>
-
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
-        <span class="n">data</span><span class="p">,</span>
-        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;metric&quot;</span><span class="p">,</span>
-        <span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;metric&quot;</span><span class="p">,</span>
-        <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Vivid</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">fig</span></div>
-
-
-<div class="viewcode-block" id="inventor_estimates_trend_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_estimates_trend_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_estimates_trend_plot</span><span class="p">(</span><span class="n">persistent_inventor</span><span class="p">,</span> <span class="n">samples_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot performance estimates over time.</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        The timeframe for the disambiguation should match the timeframe considered by the reference sample.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        persisten_inventor (DataFrame): String-valued DataFrame in the format of PatentsView&#39;s bulk data download file &quot;g_persistent_inventor.tsv&quot;. This should contain the columns &quot;patent_id&quot;, &quot;sequence&quot;, as well as columns with names of the form &quot;disamb_inventor_id_YYYYMMDD&quot; for inventor IDs corresponding to the given disambiguation date.</span>
-<span class="sd">        samples (dict): Dictionary of tuples (A, B), where A is a function to load a dataset and B is a dictionary of parameters to pass to estimator functions. See `INVENTORS_SAMPLES` for an example.</span>
-<span class="sd">        estimators (dict, optional): Dictionary of tuples (A, B) where A is a point estimator and B is a standard deviation estimator. Defaults to DEFAULT_ESTIMATORS.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Plotly scatter plot</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">estimators</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">estimators</span> <span class="o">=</span> <span class="n">DEFAULT_ESTIMATORS</span>
-    <span class="k">if</span> <span class="n">samples_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">samples_weights</span> <span class="o">=</span> <span class="n">DEFAULT_INVENTORS_SAMPLES_WEIGHTS</span>
-
-    <span class="n">persistent_inventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span><span class="n">persistent_inventor</span><span class="o">.</span><span class="n">patent_id</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">sequence</span>
-    <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="n">disambiguation_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;disamb&quot;</span><span class="p">)]</span>
-    <span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;disamb_inventor_id_&quot;</span><span class="p">):</span><span class="n">persistent_inventor</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">disambiguation_names</span><span class="p">}</span>
-
-    <span class="n">computed_metrics</span> <span class="o">=</span> <span class="n">estimates_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples_weights</span><span class="o">=</span><span class="n">samples_weights</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="n">estimators</span><span class="p">)</span>
-    <span class="n">computed_metrics</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">computed_metrics</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">]])</span>
-
-    <span class="k">return</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
-        <span class="n">computed_metrics</span><span class="p">,</span>
-        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">,</span>
-        <span class="n">error_y</span><span class="o">=</span><span class="s2">&quot;std&quot;</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;estimator&quot;</span><span class="p">,</span>
-        <span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;estimator&quot;</span><span class="p">,</span>
-        <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Vivid</span><span class="p">,</span>
-    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="inventor_estimates_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_estimates_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_estimates_plot</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">facet_col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
