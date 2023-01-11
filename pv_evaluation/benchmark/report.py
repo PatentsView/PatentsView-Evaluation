@@ -1,36 +1,26 @@
-import pandas as pd
-import plotly.express as px
-import numpy as np
 from datetime import datetime
 
-
+import numpy as np
+import pandas as pd
+import plotly.express as px
+from er_evaluation.estimators import (estimates_table,
+                                      pairwise_precision_design_estimate,
+                                      pairwise_recall_design_estimate)
+from er_evaluation.metrics import (metrics_table, pairwise_precision,
+                                   pairwise_recall)
+from er_evaluation.plots import (compare_plots,
+                                 plot_cluster_sizes_distribution,
+                                 plot_entropy_curve)
+from er_evaluation.summary import (cluster_sizes, homonimy_rate, matching_rate,
+                                   name_variation_rate)
 from er_evaluation.utils import expand_grid
-from er_evaluation.estimators import estimates_table, pairwise_precision_design_estimate, pairwise_recall_design_estimate
-from er_evaluation.summary import (
-    cluster_sizes,
-    name_variation_rate,
-    homonimy_rate,
-    matching_rate
-)
-from er_evaluation.metrics import (
-    metrics_table,
-    pairwise_precision,
-    pairwise_recall,
-)
-from er_evaluation.plots import (
-    compare_plots,
-    plot_entropy_curve,
-    plot_cluster_sizes_distribution,
-)
 
-from pv_evaluation.benchmark import (
-    load_israeli_inventors_benchmark,
-    load_patentsview_inventors_benchmark,
-    load_lai_2011_inventors_benchmark,
-    load_als_inventors_benchmark,
-    load_ens_inventors_benchmark,
-    load_binette_2022_inventors_benchmark,
-)
+from pv_evaluation.benchmark import (load_als_inventors_benchmark,
+                                     load_binette_2022_inventors_benchmark,
+                                     load_ens_inventors_benchmark,
+                                     load_israeli_inventors_benchmark,
+                                     load_lai_2011_inventors_benchmark,
+                                     load_patentsview_inventors_benchmark)
 
 DEFAULT_ESTIMATORS = {
     # Point estimates and standard deviation estimates.
@@ -73,7 +63,7 @@ def inventor_summary_trend_plot(persistent_inventor, names):
     persistent_inventor.set_index("mention_id", inplace=True)
 
     disambiguation_names = [s for s in persistent_inventor.columns.values if s.startswith("disamb")]
-    disambiguations = {s.lstrip("disamb_inventor_id_"):persistent_inventor[s].dropna() for s in disambiguation_names}
+    disambiguations = {s.lstrip("disamb_inventor_id_"): persistent_inventor[s].dropna() for s in disambiguation_names}
 
     metrics = {
         "Matching rate": lambda x: matching_rate(x),
@@ -94,7 +84,7 @@ def inventor_summary_trend_plot(persistent_inventor, names):
         symbol="metric",
         color_discrete_sequence=px.colors.qualitative.Vivid,
     )
-    fig.update_layout(yaxis_range=(0,1))
+    fig.update_layout(yaxis_range=(0, 1))
 
     return fig
 
@@ -118,11 +108,11 @@ def inventor_estimates_trend_plot(persistent_inventor, samples_weights=None, est
     if samples_weights is None:
         samples_weights = DEFAULT_INVENTORS_SAMPLES_WEIGHTS
 
-    persistent_inventor["mention_id"] = "US" +persistent_inventor.patent_id + "-" + persistent_inventor.sequence
+    persistent_inventor["mention_id"] = "US" + persistent_inventor.patent_id + "-" + persistent_inventor.sequence
     persistent_inventor.set_index("mention_id", inplace=True)
 
     disambiguation_names = [s for s in persistent_inventor.columns.values if s.startswith("disamb")]
-    disambiguations = {s.lstrip("disamb_inventor_id_"):persistent_inventor[s].dropna() for s in disambiguation_names}
+    disambiguations = {s.lstrip("disamb_inventor_id_"): persistent_inventor[s].dropna() for s in disambiguation_names}
 
     computed_metrics = estimates_table(disambiguations, samples_weights=samples_weights, estimators=estimators)
     computed_metrics["date"] = pd.to_datetime([datetime.strptime(d, "%Y%m%d") for d in computed_metrics["prediction"]])

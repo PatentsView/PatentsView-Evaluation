@@ -1,8 +1,9 @@
 try:
+    import os
+    import zipfile
+
     import pandas as pd
     import wget
-    import zipfile
-    import os
 except:
     raise Exception("Unable to import required dependencies.")
 
