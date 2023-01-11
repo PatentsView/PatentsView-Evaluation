@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased:
+
+- Documentation improvements.
+
 ## 2.0.3 (January 11, 2023)
 
 - FIX: Unavailable function in __all__.
