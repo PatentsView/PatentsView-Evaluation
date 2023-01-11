@@ -34,7 +34,6 @@ __all__ = [
     "load_als_inventors_benchmark",
     "load_ens_inventors_benchmark",
     "load_binette_2022_inventors_benchmark",
-    "load_harvard_inventors_benchmark",
     "load_air_umass_assignees_benchmark",
     "load_nber_subset_assignees_benchmark",
     "inventor_estimates_plot",
