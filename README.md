@@ -72,6 +72,10 @@ load_nber_subset_assignees_benchmark()
 
 See [this example](https://patentsview.github.io/PatentsView-Evaluation/build/html/examples/estimators/binette-2022-benchmark.html) of how representative performance estimates are obtained from Binette's 2022 benchmark dataset.
 
+## Citation
+
+- [Binette, Olivier, Sarvo Madhavan, Jack Butler, Beth Anne Card, Emily Melluso and Christina Jones. (2023). **PatentsView-Evaluation: Evaluation Datasets and Tools to Advance Research on Inventor Name Disambiguation.** arXiv e-prints: arxiv:2301.03591](https://arxiv.org/abs/2301.03591)
+- [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). **Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org.** arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)
 
 ## Contributing
 
@@ -99,8 +103,3 @@ The minimal testing requirement for this package is a check that all code execut
 ### Report bugs and submit feedback
 
 Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Evaluation/issues.
-
-## Citation
-
-- [Binette, Olivier, Sarvo Madhavan, Jack Butler, Beth Anne Card, Emily Melluso and Christina Jones. (2023). **PatentsView-Evaluation: Evaluation Datasets and Tools to Advance Research on Inventor Name Disambiguation.** arXiv e-prints: arxiv:2301.03591](https://arxiv.org/abs/2301.03591)
-- [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). **Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org.** arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)
