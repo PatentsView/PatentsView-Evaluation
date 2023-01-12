@@ -100,20 +100,7 @@ The minimal testing requirement for this package is a check that all code execut
 
 Report bugs and submit feedback at https://github.com/PatentsView/PatentsView-Evaluation/issues.
 
-### Contributors
+## Citation
 
-- Olivier Binette (American Institutes for Research, Duke University)
-- Sarvo Madhavan (American Institutes for Research)
-- Siddharth Engineer (American Institutes for Research)
-
-## References
-
-### Citation
-
-- [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org. arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)
-
-### Datasets
-
-- Trajtenberg, M., & Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development. [[link]](https://econ.tau.ac.il/sites/economy.tau.ac.il/files/media_server/Economics/Sapir/papers/%D7%9E%D7%A0%D7%95%D7%90%D7%9C%20%D7%98%D7%A8%D7%9B%D7%98%D7%A0%D7%91%D7%A8%D7%92%205-08%20%D7%9E%D7%A9%D7%95%D7%9C%D7%91.pdf)
-- Morrison, G. (2017). Harvard Inventors Benchmark(Version1). figshare. [[link]](https://doi.org/10.6084/m9.figshare.3502754.v1)
-- Monath, N., Madhavan, S. & Jones, C. (2021) PatentsView: Disambiguating Inventors, Assignees, and Locations. Technical report. [[link]](https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf)
+- [Binette, Olivier, Sarvo Madhavan, Jack Butler, Beth Anne Card, Emily Melluso and Christina Jones. (2023). **PatentsView-Evaluation: Evaluation Datasets and Tools to Advance Research on Inventor Name Disambiguation.** arXiv e-prints: arxiv:2301.03591](https://arxiv.org/abs/2301.03591)
+- [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). **Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org.** arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)
