@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 if __name__ == "__main__":
     setup(
         name="pv_evaluation",
-        version="2.0.2",
+        version="2.1.0",
         license_files=("LICENSE.txt",),
         author="Olivier Binette, Sarvo Madhavan",
         author_email="olivier.binette@gmail.com",
@@ -31,7 +31,7 @@ if __name__ == "__main__":
             "jinja2",
             "kaleido",
             "openpyxl",
-            "er-evaluation",
+            "er-evaluation>=2.0.0",
         ],
         scripts=["scripts/hand-disambiguation/process-inventors-hand-disambiguation.py"],
     )

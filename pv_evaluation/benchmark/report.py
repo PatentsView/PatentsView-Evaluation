@@ -5,11 +5,15 @@ from datetime import datetime
 
 
 from er_evaluation.utils import expand_grid
-from er_evaluation.estimators import estimates_table, pairwise_precision_design_estimate, pairwise_recall_design_estimate
+from er_evaluation.estimators import (
+    estimates_table, 
+    pairwise_precision_estimator, 
+    pairwise_recall_estimator
+)
 from er_evaluation.summary import (
     cluster_sizes,
     name_variation_rate,
-    homonimy_rate,
+    homonymy_rate,
     matching_rate
 )
 from er_evaluation.metrics import (
@@ -34,8 +38,8 @@ from pv_evaluation.benchmark import (
 
 DEFAULT_ESTIMATORS = {
     # Point estimates and standard deviation estimates.
-    "pairwise precision": pairwise_precision_design_estimate,
-    "pairwise recall": pairwise_recall_design_estimate,
+    "pairwise precision": pairwise_precision_estimator,
+    "pairwise recall": pairwise_recall_estimator,
 }
 DEFAULT_INVENTORS_SAMPLES_WEIGHTS = {
     # Dataset and parameters to pass to the estimator.
@@ -77,7 +81,7 @@ def inventor_summary_trend_plot(persistent_inventor, names):
 
     metrics = {
         "Matching rate": lambda x: matching_rate(x),
-        "Homonimy rate": lambda x: homonimy_rate(x, names),
+        "Homonimy rate": lambda x: homonymy_rate(x, names),
         "Name variation rate": lambda x: name_variation_rate(x, names),
     }
 
@@ -377,7 +381,7 @@ def plot_name_variation_rates(disambiguations, names):
     return fig
 
 
-def plot_homonimy_rates(disambiguations, names):
+def plot_homonymy_rates(disambiguations, names):
     """
     Plot homonimy rates for a set of given disambiguations
 
@@ -389,7 +393,7 @@ def plot_homonimy_rates(disambiguations, names):
         Plotly figure.
     """
 
-    rates = [homonimy_rate(disambiguations[f], names=names) for f in disambiguations.keys()]
+    rates = [homonymy_rate(disambiguations[f], names=names) for f in disambiguations.keys()]
     data = pd.DataFrame({"Homonimy rate": rates, "Disambiguation": disambiguations.keys(), "none": ""})
 
     fig = px.bar(data, x="none", y="Homonimy rate", color="Disambiguation", barmode="group")

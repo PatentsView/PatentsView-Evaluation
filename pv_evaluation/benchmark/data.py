@@ -179,4 +179,6 @@ def load_nber_subset_assignees_benchmark():
     References:
         [1] Monath, N., Jones, C., & Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf
     """
-    return load_unique_id_series(ASSIGNEE_DATA_MODULE, "air-umass-assignees-benchmark.csv")
+    data = load_unique_id_series(ASSIGNEE_DATA_MODULE, "nber-subset-assignees-benchmark.csv")
+
+    return data[~data.index.duplicated()]

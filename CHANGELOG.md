@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0 (March 27, 2023)
+
+- Bug fixes
+- Compatibility with er-evaluation>=2.0.0
+
 ## 2.0.2 (December 12, 2022)
 
 - Add inventor_summary_trend_plot() and inventor_estimates_trend_plot() functions.
