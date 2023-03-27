@@ -5,7 +5,7 @@ import plotly.io as pio
 pio.templates.default = "plotly_white" # Set plotly theme
 
 from er_evaluation.summary import (
-    homonimy_rate,
+    homonymy_rate,
     name_variation_rate,
 )
 from er_evaluation.plots import (
@@ -19,7 +19,7 @@ from pv_evaluation.benchmark import (
     plot_entropy_curves,
     top_inventors,
     plot_cluster_sizes,
-    plot_homonimy_rates,
+    plot_homonymy_rates,
     plot_name_variation_rates,
 )
 ```
@@ -117,7 +117,7 @@ plot_name_variation_rates(disambiguations, full_names)
 
 :::{.column-body-outset}
 ```{python}
-plot_homonimy_rates(disambiguations, full_names)
+plot_homonymy_rates(disambiguations, full_names)
 ```
 :::
 

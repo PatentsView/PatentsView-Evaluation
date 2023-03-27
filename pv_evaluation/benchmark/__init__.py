@@ -24,7 +24,7 @@ from pv_evaluation.benchmark.report import (
     plot_entropy_curves,
     plot_cluster_sizes,
     plot_name_variation_rates,
-    plot_homonimy_rates,
+    plot_homonymy_rates,
 )
 
 __all__ = [
@@ -48,5 +48,5 @@ __all__ = [
     "plot_entropy_curves",
     "plot_cluster_sizes",
     "plot_name_variation_rates",
-    "plot_homonimy_rates",
+    "plot_homonymy_rates",
 ]
