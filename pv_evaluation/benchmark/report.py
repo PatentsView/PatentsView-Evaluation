@@ -3,16 +3,6 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 import plotly.express as px
-from er_evaluation.estimators import (estimates_table,
-                                      pairwise_precision_design_estimate,
-                                      pairwise_recall_design_estimate)
-from er_evaluation.metrics import (metrics_table, pairwise_precision,
-                                   pairwise_recall)
-from er_evaluation.plots import (compare_plots,
-                                 plot_cluster_sizes_distribution,
-                                 plot_entropy_curve)
-from er_evaluation.summary import (cluster_sizes, homonimy_rate, matching_rate,
-                                   name_variation_rate)
 from er_evaluation.utils import expand_grid
 from er_evaluation.estimators import (
     estimates_table, 
