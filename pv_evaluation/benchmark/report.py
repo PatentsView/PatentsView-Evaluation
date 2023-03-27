@@ -42,7 +42,7 @@ DEFAULT_INVENTORS_SAMPLES_WEIGHTS = {
     # Dataset and parameters to pass to the estimator.
     "binette-sample": {
         "sample": load_binette_2022_inventors_benchmark(),
-        "weights": 1 / cluster_sizes(load_binette_2022_inventors_benchmark()),
+        "weights": "cluster_size",
     },
 }
 # Default benchmarks to run.
