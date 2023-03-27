@@ -1,12 +1,11 @@
 API Doc
 =======
 
-.. currentmodule:: pv_evaluation
-
 .. autosummary::
 
-   benchmark
-   templates
+   pv_evaluation.benchmark
+   pv_evaluation.templates
+
 
 .. toctree::
    :maxdepth: 2

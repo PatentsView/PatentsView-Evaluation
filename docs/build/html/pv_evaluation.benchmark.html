@@ -353,22 +353,22 @@
 <td><p>Plot key performance metrics over time.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark" title="pv_evaluation.benchmark.load_israeli_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_israeli_inventors_benchmark</span></code></a></p></td>
-<td><p>Israeli inventors benchmark dataset.</p></td>
+<td><p>Loads the Israeli inventors benchmark dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_patentsview_inventors_benchmark" title="pv_evaluation.benchmark.load_patentsview_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_patentsview_inventors_benchmark</span></code></a></p></td>
-<td><p>PatentsView hand-disambiguated inventors benchmark.</p></td>
+<td><p>Loads the PatentsView hand-disambiguated inventors benchmark dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_lai_2011_inventors_benchmark" title="pv_evaluation.benchmark.load_lai_2011_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_lai_2011_inventors_benchmark</span></code></a></p></td>
-<td><p>Lai's 2011 inventors benchmark dataset (also referred to as as Lai's 2014 inventors benchmark).</p></td>
+<td><p>Loads Lai's 2011 Inventors Benchmark dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_als_inventors_benchmark" title="pv_evaluation.benchmark.load_als_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_als_inventors_benchmark</span></code></a></p></td>
-<td><p>Academic Life Sciences inventors benchmark.</p></td>
+<td><p>Loads the Academic Life Sciences inventors benchmark dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_ens_inventors_benchmark" title="pv_evaluation.benchmark.load_ens_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_ens_inventors_benchmark</span></code></a></p></td>
 <td><p>Engineering and Sciences inventors benchmark.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_binette_2022_inventors_benchmark" title="pv_evaluation.benchmark.load_binette_2022_inventors_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_binette_2022_inventors_benchmark</span></code></a></p></td>
-<td><p>Binette's 2022 inventors benchmark.</p></td>
+<td><p>Loads the Binette's 2022 inventors benchmark dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#pv_evaluation.benchmark.load_air_umass_assignees_benchmark" title="pv_evaluation.benchmark.load_air_umass_assignees_benchmark"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_air_umass_assignees_benchmark</span></code></a></p></td>
 <td><p>AIR-UMASS assigness benchmark.</p></td>
@@ -527,7 +527,7 @@ which covers granted patents between granted between 1963 and 1999, then <cite>d
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_air_umass_assignees_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_air_umass_assignees_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_air_umass_assignees_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_air_umass_assignees_benchmark" title="Permalink to this definition">#</a></dt>
 <dd><p>AIR-UMASS assigness benchmark.</p>
-<p>The dataset is described as follows in [1]:</p>
+<p>The dataset is described as follows in the paper referenced below:</p>
 <p>‘The PatentsView team created a hand-labeled set of disambiguated
 assignee records. The data were created by sampling records of each assignee type
 (universities, federal government entities, private companies, states, and local government
@@ -539,29 +539,36 @@ name varieties of the entities than the NBER dataset, which was important for us
 evaluate the more difficult-to-disambiguate cases. Annotators attempted to label parent
 companies separately from subsidiaries, but the process was more likely to associate
 similarly named child and parent companies than more distinctive ones.’</p>
+<p>The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.</p>
+<dd class="field-odd"><p>pandas Series with the benchmark data as a membership vector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Series</p>
 </dd>
 </dl>
 <p class="rubric">References</p>
-<p>[1] Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p>
+<ul class="simple">
+<li><p>Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p></li>
+</ul>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_als_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_als_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_als_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_als_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Academic Life Sciences inventors benchmark.</p>
-<p>This is a set of disambiguated inventor mentions derived from Pierre Azoulay’s Academic Life Sciences dataset,
-which covers US patents granted between 1970 and 2005. At this time, no further information is available regarding this dataset.</p>
-<p>Note that inventor sequence numbers were obtained using a computer matching procedure which may have introduced errors.
-Rows with unresolved sequence numbers were removed.</p>
+<dd><p>Loads the Academic Life Sciences inventors benchmark dataset.</p>
+<p>This dataset contains a set of disambiguated inventor mentions derived from Pierre Azoulay’s Academic Life Sciences dataset, which covers US patents granted between 1970 and 2005.</p>
+<p>Note that inventor sequence numbers were obtained using a computer matching procedure which may have introduced errors. Rows with unresolved sequence numbers were removed.</p>
+<p>The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the
+value represents the cluster assignment.</p>
+<dl class="simple">
+<dt>See:</dt><dd><p>Azoulay, P., J. S. Graff Zivin, and G. Manso (2011). Incentives and creativity: evidence from the academic life sciences. The RAND Journal of Economics 42(3), 527-554.</p>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
+<dd class="field-odd"><p>pandas Series with the benchmark data as a membership vector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Series</p>
@@ -572,14 +579,13 @@ Rows with unresolved sequence numbers were removed.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_binette_2022_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_binette_2022_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_binette_2022_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_binette_2022_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Binette’s 2022 inventors benchmark.</p>
-<p>The 2022 Binette inventors benchmark is the hand-disambiguation of inventor mentions on granted patents for a sample of inventors from PatentsView.org.</p>
-<p>Inventors we selected indirectly by sampling inventor mentions uniformly at random. This results in inventor sampled with probability proportional to their number of granted patents.</p>
-<p>The time period considered is from 1976 to December 31, 2021, corresponding to the disambiguation labeled “disamb_inventor_id_20211230” in PatentsView’s bulk data downloads [“g_persistent_inventor.tsv” file](<a class="reference external" href="https://patentsview.org/download/data-download-tables">https://patentsview.org/download/data-download-tables</a>). That is, the benchmark disambiguation intends to contain all inventor mentions for the sampled inventors from that time period. Note that the benchmark disambiguation contains a few extraneous mentions to patents granted outside of that time period. These should be ignored for evaluation purposes.</p>
-<p>The methodology used for the hand-disambiguation is described in [Binette et al. (2022)](<a class="reference external" href="https://arxiv.org/abs/2210.01230">https://arxiv.org/abs/2210.01230</a>). We used one disambiguation of 200 inventors from Binette et al. (2022), as well as an additional disambiguation of 200 inventors provided by an additional staff member. The two disambiguations were reviewed and validated. However, they should be expected to contain errors due to the ambiguous nature of inventor disambiguation. Furthermore, given the use as the December 30, 2021, disambiguation from PatentsView as a starting point of the hand-labeling, a bias towards this disambiguation should be expected.</p>
+<dd><p>Loads the Binette’s 2022 inventors benchmark dataset.</p>
+<p>The 2022 Binette inventors benchmark is a hand-disambiguated dataset of inventor mentions on granted patents for a sample of inventors from PatentsView.org. The inventors were selected indirectly by sampling inventor mentions uniformly at random, resulting in inventors sampled with probability proportional to their number of granted patents.</p>
+<p>The time period considered is from 1976 to December 31, 2021. This correspond to the disambiguation labeled “disamb_inventor_id_20211230” in PatentsView’s bulk data downloads [“g_persistent_inventor.tsv” file](<a class="reference external" href="https://patentsview.org/download/data-download-tables">https://patentsview.org/download/data-download-tables</a>)</p>
+<p>The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
+<dd class="field-odd"><p>pandas Series with the benchmark data as a membership vector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Series</p>
@@ -589,21 +595,29 @@ Rows with unresolved sequence numbers were removed.</p>
 <ul class="simple">
 <li><p>[Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org. arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)</p></li>
 </ul>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The methodology used for the hand-disambiguation is described in the reference.</p></li>
+<li><p>The hand-disambiguation process was done by experts, but it should be expected to contain errors due to the ambiguous nature of inventor disambiguation.</p></li>
+<li><p>The benchmark contains a few extraneous mentions of patents granted outside the considered time period, these should be ignored for evaluation purposes.</p></li>
+<li><p>Given the use of the December 30, 2021, disambiguation from PatentsView as a starting point of the hand-labeling, a bias towards this disambiguation should be expected.</p></li>
+</ul>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_ens_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_ens_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_ens_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_ens_inventors_benchmark" title="Permalink to this definition">#</a></dt>
 <dd><p>Engineering and Sciences inventors benchmark.</p>
-<p>This is a set of disambiguated inventor mentions derived from Png’s LinkedIn-Patent Inventors Dataset for the 2015 PatentsView Disambiguation Workshop.
-No further information regarding this dataset is available at this time.</p>
+<p>This is a set of disambiguated inventor mentions derived from Png’s LinkedIn-Patent Inventors Dataset for the 2015 PatentsView Disambiguation Workshop.</p>
+<p>The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the
+value represents the cluster assignment.</p>
 <dl class="simple">
 <dt>See:</dt><dd><p>Ge, Chunmian, Ke-wei Huang, and Ivan P.L. Png, “Engineer/Scientist Careers: Patents, Online Profiles, and Misclassification”, Strategic Management Journal, Vol 37 No 1, January 2016, 232-253.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
+<dd class="field-odd"><p>pandas Series with the benchmark data as a membership vector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Series</p>
@@ -614,15 +628,17 @@ No further information regarding this dataset is available at this time.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_israeli_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_israeli_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_israeli_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_israeli_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Israeli inventors benchmark dataset.</p>
-<p>This is adapted from Trajenberg and Shiff (2008). The data covers U.S. patents granted between 1963 and 1999 for Israeli inventors.</p>
+<dd><p>Loads the Israeli inventors benchmark dataset.</p>
+<p>This benchmark dataset is adapted from Trajenberg and Shiff (2008), which evaluated the U.S. patents granted between 1963 and 1999 for Israeli inventors.</p>
+<p>The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the
+value represents the cluster assignment.</p>
 <dl class="simple">
 <dt>See:</dt><dd><p>Trajtenberg, M., &amp; Shiff, G. (2008). Identification and mobility of Israeli patenting inventors. Pinhas Sapir Center for Development.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
+<dd class="field-odd"><p>pandas Series with the benchmark data as a membership vector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Series</p>
@@ -633,15 +649,18 @@ No further information regarding this dataset is available at this time.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_lai_2011_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_lai_2011_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_lai_2011_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_lai_2011_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>Lai’s 2011 inventors benchmark dataset (also referred to as as Lai’s 2014 inventors benchmark).</p>
-<p>This is adapted from the benchmark dataset reported in Li et al. (2014) to evaluate their disambiguation of the  U.S. Patent Inventor Database (1975-2010).</p>
+<dd><p>Loads Lai’s 2011 Inventors Benchmark dataset.</p>
+<p>This benchmark dataset is adapted from the dataset reported in Li et al. (2014), which was used to evaluate
+the disambiguation of the U.S. Patent Inventor Database (1975-2010).</p>
+<p>The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the
+value represents the cluster assignment.</p>
 <dl class="simple">
 <dt>See:</dt><dd><p>Li, G. C., Lai, R., D’Amour, A., Doolin, D. M., Sun, Y., Torvik, V. I., … &amp; Fleming, L. (2014). Disambiguation and co-authorship networks of the US patent inventor database (1975-2010). Research Policy, 43(6), 941-955.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
+<dd class="field-odd"><p>pandas Series with the benchmark data as a membership vector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Series</p>
@@ -658,36 +677,41 @@ No further information regarding this dataset is available at this time.</p>
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_nber_subset_assignees_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_nber_subset_assignees_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_nber_subset_assignees_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_nber_subset_assignees_benchmark" title="Permalink to this definition">#</a></dt>
 <dd><p>AIR-UMASS assigness benchmark.</p>
-<p>The dataset is described as follows in [1]:</p>
+<p>The dataset is described as follows in the paper referenced below:</p>
 <p>‘The National Bureau of Economic Research provides disambiguated assignee data.
 These data are created semiautomatically with manual correction and labeling of assignee
 coreference decisions produced by string similarity. We grouped the assignee mentions by
 four-letter prefixes and focused on five prefix groups {Moto, Amer, Gene, Solu, Airc} that
 were both common and ambiguous.’</p>
+<p>The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by assignee mention ID and with values corresponding to standardized assignee name.</p>
+<dd class="field-odd"><p>pandas Series with the benchmark data as a membership vector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Series</p>
 </dd>
 </dl>
 <p class="rubric">References</p>
-<p>[1] Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p>
+<ul class="simple">
+<li><p>Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p></li>
+</ul>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pv_evaluation.benchmark.load_patentsview_inventors_benchmark">
 <span class="sig-prename descclassname"><span class="pre">pv_evaluation.benchmark.</span></span><span class="sig-name descname"><span class="pre">load_patentsview_inventors_benchmark</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pv_evaluation/benchmark/data.html#load_patentsview_inventors_benchmark"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pv_evaluation.benchmark.load_patentsview_inventors_benchmark" title="Permalink to this definition">#</a></dt>
-<dd><p>PatentsView hand-disambiguated inventors benchmark.</p>
-<p>This is the hand-disambiguation of a set of particularly ambiguous inventor names.</p>
+<dd><p>Loads the PatentsView hand-disambiguated inventors benchmark dataset.</p>
+<p>This dataset contains the hand-disambiguation of a set of particularly ambiguous inventor names. The disambiguation process was done manually by experts, to be used as a benchmark for evaluating disambiguation algorithms.</p>
+<p>The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the
+value represents the cluster assignment.</p>
 <dl class="simple">
 <dt>See:</dt><dd><p>Monath, N., Jones, C., &amp; Madhavan, S. Disambiguating Patent Inventors, Assignees, and their Locations in PatentsView. <a class="reference external" href="https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf">https://s3.amazonaws.com/data.patentsview.org/documents/PatentsView_Disambiguation_Methods_Documentation.pdf</a></p>
 </dd>
 </dl>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas Series indexed by mention ID and with values corresponding to cluster assignment.</p>
+<dd class="field-odd"><p>pandas Series with the benchmark data as a membership vector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Series</p>

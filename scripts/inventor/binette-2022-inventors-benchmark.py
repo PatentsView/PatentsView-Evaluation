@@ -1,9 +1,10 @@
 try:
-    import pandas as pd
-    import wget
-    import zipfile
     import os
     import subprocess
+    import zipfile
+
+    import pandas as pd
+    import wget
 except:
     raise Exception("Unable to import required dependencies.")
 

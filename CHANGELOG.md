@@ -5,6 +5,10 @@
 - Bug fixes
 - Compatibility with er-evaluation>=2.0.0
 
+## 2.0.3 (January 11, 2023)
+
+- FIX: Unavailable function in __all__.
+
 ## 2.0.2 (December 12, 2022)
 
 - Add inventor_summary_trend_plot() and inventor_estimates_trend_plot() functions.

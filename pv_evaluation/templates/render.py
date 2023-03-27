@@ -1,9 +1,10 @@
 import os
+import shutil
+from datetime import datetime
+
 import quarto
 from jinja2 import Environment, PackageLoader
-import shutil
 from pkg_resources import resource_filename
-from datetime import datetime
 
 
 def render_inventor_disambiguation_report(outdir, disambiguation_files, inventor_not_disambiguated_file, cache=True, **kwargs):

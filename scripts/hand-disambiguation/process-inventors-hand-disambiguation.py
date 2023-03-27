@@ -37,8 +37,9 @@ parser.add_argument(
 args = parser.parse_args()
 
 import os
-import pandas as pd
+
 import numpy as np
+import pandas as pd
 
 
 def read_auto(datapath, dtype):
