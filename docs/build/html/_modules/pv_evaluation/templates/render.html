@@ -313,15 +313,16 @@
               
   <h1>Source code for pv_evaluation.templates.render</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
 <span class="kn">import</span> <span class="nn">quarto</span>
 <span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">PackageLoader</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">resource_filename</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 
 <div class="viewcode-block" id="render_inventor_disambiguation_report"><a class="viewcode-back" href="../../../pv_evaluation.templates.html#pv_evaluation.templates.render_inventor_disambiguation_report">[docs]</a><span class="k">def</span> <span class="nf">render_inventor_disambiguation_report</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="n">disambiguation_files</span><span class="p">,</span> <span class="n">inventor_not_disambiguated_file</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create html report based on disambiguation results.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create html report based on disambiguation results.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        outdir (str): directory where to output html files.</span>

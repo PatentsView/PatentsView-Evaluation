@@ -60,7 +60,6 @@ docs:
 	git add docs/build/*.txt -f
 
 build:
-	rm -r dist/*
 	python3 -m build .
 
 clean:

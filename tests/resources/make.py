@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 try:
+    import os
+    import zipfile
+
     import pandas as pd
     import wget
-    import zipfile
-    import os
 except:
     raise Exception("Unable to load required packages. Please check for missing dependencies.")
 

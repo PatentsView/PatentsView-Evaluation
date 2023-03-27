@@ -312,39 +312,29 @@
             <article class="bd-article" role="main">
               
   <h1>Source code for pv_evaluation.benchmark.report</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-
-
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">er_evaluation.estimators</span> <span class="kn">import</span> <span class="p">(</span><span class="n">estimates_table</span><span class="p">,</span>
+                                      <span class="n">pairwise_precision_design_estimate</span><span class="p">,</span>
+                                      <span class="n">pairwise_recall_design_estimate</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">er_evaluation.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">metrics_table</span><span class="p">,</span> <span class="n">pairwise_precision</span><span class="p">,</span>
+                                   <span class="n">pairwise_recall</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">er_evaluation.plots</span> <span class="kn">import</span> <span class="p">(</span><span class="n">compare_plots</span><span class="p">,</span>
+                                 <span class="n">plot_cluster_sizes_distribution</span><span class="p">,</span>
+                                 <span class="n">plot_entropy_curve</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">er_evaluation.summary</span> <span class="kn">import</span> <span class="p">(</span><span class="n">cluster_sizes</span><span class="p">,</span> <span class="n">homonimy_rate</span><span class="p">,</span> <span class="n">matching_rate</span><span class="p">,</span>
+                                   <span class="n">name_variation_rate</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">er_evaluation.utils</span> <span class="kn">import</span> <span class="n">expand_grid</span>
-<span class="kn">from</span> <span class="nn">er_evaluation.estimators</span> <span class="kn">import</span> <span class="n">estimates_table</span><span class="p">,</span> <span class="n">pairwise_precision_design_estimate</span><span class="p">,</span> <span class="n">pairwise_recall_design_estimate</span>
-<span class="kn">from</span> <span class="nn">er_evaluation.summary</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">cluster_sizes</span><span class="p">,</span>
-    <span class="n">name_variation_rate</span><span class="p">,</span>
-    <span class="n">homonimy_rate</span><span class="p">,</span>
-    <span class="n">matching_rate</span>
-<span class="p">)</span>
-<span class="kn">from</span> <span class="nn">er_evaluation.metrics</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">metrics_table</span><span class="p">,</span>
-    <span class="n">pairwise_precision</span><span class="p">,</span>
-    <span class="n">pairwise_recall</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span> <span class="nn">er_evaluation.plots</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">compare_plots</span><span class="p">,</span>
-    <span class="n">plot_entropy_curve</span><span class="p">,</span>
-    <span class="n">plot_cluster_sizes_distribution</span><span class="p">,</span>
-<span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">load_israeli_inventors_benchmark</span><span class="p">,</span>
-    <span class="n">load_patentsview_inventors_benchmark</span><span class="p">,</span>
-    <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">,</span>
-    <span class="n">load_als_inventors_benchmark</span><span class="p">,</span>
-    <span class="n">load_ens_inventors_benchmark</span><span class="p">,</span>
-    <span class="n">load_binette_2022_inventors_benchmark</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pv_evaluation.benchmark</span> <span class="kn">import</span> <span class="p">(</span><span class="n">load_als_inventors_benchmark</span><span class="p">,</span>
+                                     <span class="n">load_binette_2022_inventors_benchmark</span><span class="p">,</span>
+                                     <span class="n">load_ens_inventors_benchmark</span><span class="p">,</span>
+                                     <span class="n">load_israeli_inventors_benchmark</span><span class="p">,</span>
+                                     <span class="n">load_lai_2011_inventors_benchmark</span><span class="p">,</span>
+                                     <span class="n">load_patentsview_inventors_benchmark</span><span class="p">)</span>
 
 <span class="n">DEFAULT_ESTIMATORS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># Point estimates and standard deviation estimates.</span>
@@ -374,7 +364,7 @@
 
 
 <div class="viewcode-block" id="inventor_summary_trend_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_summary_trend_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_summary_trend_plot</span><span class="p">(</span><span class="n">persistent_inventor</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot key performance metrics over time.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot key performance metrics over time.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        persisten_inventor (DataFrame): String-valued DataFrame in the format of PatentsView&#39;s bulk data download file &quot;g_persistent_inventor.tsv&quot;. This should contain the columns &quot;patent_id&quot;, &quot;sequence&quot;, as well as columns with names of the form &quot;disamb_inventor_id_YYYYMMDD&quot; for inventor IDs corresponding to the given disambiguation date.</span>
@@ -387,7 +377,7 @@
     <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">disambiguation_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;disamb&quot;</span><span class="p">)]</span>
-    <span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;disamb_inventor_id_&quot;</span><span class="p">):</span><span class="n">persistent_inventor</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">disambiguation_names</span><span class="p">}</span>
+    <span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;disamb_inventor_id_&quot;</span><span class="p">):</span> <span class="n">persistent_inventor</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">disambiguation_names</span><span class="p">}</span>
 
     <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;Matching rate&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">matching_rate</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
@@ -408,13 +398,13 @@
         <span class="n">symbol</span><span class="o">=</span><span class="s2">&quot;metric&quot;</span><span class="p">,</span>
         <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Vivid</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">yaxis_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">fig</span></div>
 
 
 <div class="viewcode-block" id="inventor_estimates_trend_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_estimates_trend_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_estimates_trend_plot</span><span class="p">(</span><span class="n">persistent_inventor</span><span class="p">,</span> <span class="n">samples_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot performance estimates over time.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot performance estimates over time.</span>
 
 <span class="sd">    Note:</span>
 <span class="sd">        The timeframe for the disambiguation should match the timeframe considered by the reference sample.</span>
@@ -432,11 +422,11 @@
     <span class="k">if</span> <span class="n">samples_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">samples_weights</span> <span class="o">=</span> <span class="n">DEFAULT_INVENTORS_SAMPLES_WEIGHTS</span>
 
-    <span class="n">persistent_inventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span><span class="n">persistent_inventor</span><span class="o">.</span><span class="n">patent_id</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">sequence</span>
+    <span class="n">persistent_inventor</span><span class="p">[</span><span class="s2">&quot;mention_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;US&quot;</span> <span class="o">+</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">patent_id</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">sequence</span>
     <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;mention_id&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">disambiguation_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">persistent_inventor</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;disamb&quot;</span><span class="p">)]</span>
-    <span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;disamb_inventor_id_&quot;</span><span class="p">):</span><span class="n">persistent_inventor</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">disambiguation_names</span><span class="p">}</span>
+    <span class="n">disambiguations</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;disamb_inventor_id_&quot;</span><span class="p">):</span> <span class="n">persistent_inventor</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">disambiguation_names</span><span class="p">}</span>
 
     <span class="n">computed_metrics</span> <span class="o">=</span> <span class="n">estimates_table</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples_weights</span><span class="o">=</span><span class="n">samples_weights</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="n">estimators</span><span class="p">)</span>
     <span class="n">computed_metrics</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">computed_metrics</span><span class="p">[</span><span class="s2">&quot;prediction&quot;</span><span class="p">]])</span>
@@ -453,7 +443,7 @@
 
 
 <div class="viewcode-block" id="inventor_estimates_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_estimates_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_estimates_plot</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">samples_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">estimators</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">facet_col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Plot performance estimates for given cluster samples.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot performance estimates for given cluster samples.</span>
 
 <span class="sd">    Note:</span>
 <span class="sd">        The timeframe for the disambiguation should match the timeframe considered by the reference sample.</span>
@@ -488,7 +478,7 @@
 
 
 <div class="viewcode-block" id="inventor_benchmark_plot"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inventor_benchmark_plot">[docs]</a><span class="k">def</span> <span class="nf">inventor_benchmark_plot</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">references</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">facet_col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Bar plot of performance evaluation metrics on benchmark datasets.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bar plot of performance evaluation metrics on benchmark datasets.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        disambiguations (dict): dictionary of disambiguation results (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
@@ -517,7 +507,7 @@
 
 
 <div class="viewcode-block" id="style_cluster_inspection"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.style_cluster_inspection">[docs]</a><span class="k">def</span> <span class="nf">style_cluster_inspection</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Style table to highlight groups with alternating colors.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Style table to highlight groups with alternating colors.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        table (dataframe): DataFrame to style.</span>
@@ -540,7 +530,7 @@
 
 
 <span class="k">def</span> <span class="nf">add_links</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;patentsview&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Add Google Patents links to table with mention IDs as index.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add Google Patents links to table with mention IDs as index.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        table (DataFrame): pandas DataFrame with mention IDs as an index.</span>
@@ -559,7 +549,7 @@
 
 
 <div class="viewcode-block" id="inspect_clusters_to_split"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inspect_clusters_to_split">[docs]</a><span class="k">def</span> <span class="nf">inspect_clusters_to_split</span><span class="p">(</span><span class="n">disambiguation</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">join_with</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">links</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get table of cluster assignment errors on the given benchmark.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get table of cluster assignment errors on the given benchmark.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
@@ -590,7 +580,7 @@
 
 
 <div class="viewcode-block" id="inspect_clusters_to_merge"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.inspect_clusters_to_merge">[docs]</a><span class="k">def</span> <span class="nf">inspect_clusters_to_merge</span><span class="p">(</span><span class="n">disambiguation</span><span class="p">,</span> <span class="n">benchmark</span><span class="p">,</span> <span class="n">join_with</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">links</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get table to inspect missing cluster links given a benchmark dataset.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get table to inspect missing cluster links given a benchmark dataset.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        disambiguation (Series): disambiguation result Series (disambiguation results are pandas Series with &quot;mention_id&quot; index and cluster assignment values).</span>
@@ -615,7 +605,7 @@
 
 
 <div class="viewcode-block" id="top_inventors"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.top_inventors">[docs]</a><span class="k">def</span> <span class="nf">top_inventors</span><span class="p">(</span><span class="n">disambiguation</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Table of most prolific inventors</span>
 
 <span class="sd">    Args:</span>
@@ -634,7 +624,7 @@
 
 
 <div class="viewcode-block" id="plot_entropy_curves"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.plot_entropy_curves">[docs]</a><span class="k">def</span> <span class="nf">plot_entropy_curves</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot entropy curves for a set of disambiguations</span>
 
 <span class="sd">    Args:</span>
@@ -652,7 +642,7 @@
 
 
 <div class="viewcode-block" id="plot_cluster_sizes"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.plot_cluster_sizes">[docs]</a><span class="k">def</span> <span class="nf">plot_cluster_sizes</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot cluster sizes for a set of disambiguations</span>
 
 <span class="sd">    Args:</span>
@@ -671,7 +661,7 @@
 
 
 <div class="viewcode-block" id="plot_name_variation_rates"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.plot_name_variation_rates">[docs]</a><span class="k">def</span> <span class="nf">plot_name_variation_rates</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot name variation rates for a set of given disambiguations</span>
 
 <span class="sd">    Args:</span>
@@ -692,7 +682,7 @@
 
 
 <div class="viewcode-block" id="plot_homonimy_rates"><a class="viewcode-back" href="../../../pv_evaluation.benchmark.html#pv_evaluation.benchmark.plot_homonimy_rates">[docs]</a><span class="k">def</span> <span class="nf">plot_homonimy_rates</span><span class="p">(</span><span class="n">disambiguations</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plot homonimy rates for a set of given disambiguations</span>
 
 <span class="sd">    Args:</span>
