@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1 (April 25, 2023)
+
+- Add assignee benchmarks to manifest.in
+
 ## 2.1.0 (March 27, 2023)
 
 - Bug fixes
