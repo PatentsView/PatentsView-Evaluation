@@ -4,34 +4,46 @@ from dotenv import load_dotenv
 from os import listdir
 from os.path import isfile, join
 import pandas as pd
+pd.options.mode.chained_assignment = None
+
 
 load_dotenv()
 
 def get_files():
     home_path = os.environ["home_path"]
     assignee_data_path = home_path + "/pv_evaluation" + "/data/assignee/hand-labels"
-    assignee_label_list = [f for f in listdir(assignee_data_path) if isfile(join(assignee_data_path, f))]
+    assignee_label_list = [f for f in listdir(assignee_data_path) if isfile(join(assignee_data_path, f)) and ".csv" in f and "consolidated" not in f]
     return assignee_data_path, assignee_label_list
 
 def consolidate_labels(assignee_data_path, assignee_label_list):
     appended_data = []
     for file in assignee_label_list:
         temp_data = pd.read_csv(assignee_data_path + "/" + file)
-        try:
-            filtered_temp_data = temp_data[["assignee",'assignee_individual_name_first','assignee_individual_name_last', 'assignee_organization']]
-        except:
-            filtered_temp_data = temp_data[
-                ["assignee", 'assignee_individual_name_first', 'asassignee_individual_name_last',
-                 'assignee_organization']]
+        rename = [i for i in temp_data.columns if "asass" in i]
+        name_replace = rename[0].replace("asass", "ass")
+        temp_data = temp_data.rename(columns={rename[0]: name_replace})
+        filtered_temp_data = temp_data[["assignee",'assignee_individual_name_first','assignee_individual_name_last', 'assignee_organization']]
         mention_id = file.split(".")[0]
         filtered_temp_data["mention_id"] = mention_id
         appended_data.append(filtered_temp_data)
         print(f"added file: {mention_id}")
     final_data = pd.concat(appended_data)
-    final_data.to_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
+    final_data.to_csv(assignee_data_path + "/consolidated_assignee_samples_test.csv")
 
+def eval_consolidated(assignee_data_path):
+    df = pd.read_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
+    df[df["assignee_individual_name_last"].isna()]
+    breakpoint()
+
+# QUESTIONS
+# what to do with duplicate files?
+# did we filter to organizations and exclude assignees that were individuals? Check this
+# how did we time bound the random sample - does it make sense to pull performance metrics on the last few quarters? Check this
+# Do we have an example of where we connect to s3 programmatically? [pv-utilities]
 
 if __name__ == "__main__":
     assignee_data_path, assignee_label_list = get_files()
     consolidate_labels(assignee_data_path, assignee_label_list)
+    # eval_consolidated(assignee_data_path)
+
 

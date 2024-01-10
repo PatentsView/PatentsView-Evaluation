@@ -9,7 +9,6 @@ data-raw/
 .jupyter_cache/
 *.pickle
 *.pkl
-pv_evaluation/data/assignee/hand-labels
 
 index.qmd
 *.html
