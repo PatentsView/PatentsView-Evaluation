@@ -6,6 +6,7 @@ from os.path import isfile, join
 import pandas as pd
 pd.options.mode.chained_assignment = None
 
+
 load_dotenv()
 
 def get_files():
@@ -13,7 +14,6 @@ def get_files():
     assignee_data_path = home_path + "/pv_evaluation" + "/data/assignee/hand-labels"
     assignee_label_list = [f for f in listdir(assignee_data_path) if isfile(join(assignee_data_path, f)) and ".csv" in f and "consolidated" not in f]
     return assignee_data_path, assignee_label_list
-
 
 def consolidate_labels(assignee_data_path, assignee_label_list):
     appended_data = []
@@ -45,4 +45,5 @@ if __name__ == "__main__":
     assignee_data_path, assignee_label_list = get_files()
     consolidate_labels(assignee_data_path, assignee_label_list)
     # eval_consolidated(assignee_data_path)
+
 
