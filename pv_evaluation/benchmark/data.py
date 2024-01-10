@@ -158,6 +158,29 @@ def load_binette_2022_inventors_benchmark():
     """
     return load_unique_id_series(INVENTOR_DATA_MODULE, "binette-2022-inventors-benchmark.csv")
 
+def load_pv_2024_assignee_benchmark():
+    """
+    Loads the Binette's 2022 inventors benchmark dataset.
+
+    The 2022 Binette inventors benchmark is a hand-disambiguated dataset of inventor mentions on granted patents for a sample of inventors from PatentsView.org. The inventors were selected indirectly by sampling inventor mentions uniformly at random, resulting in inventors sampled with probability proportional to their number of granted patents.
+
+    The time period considered is from 1976 to December 31, 2021. This correspond to the disambiguation labeled "disamb_inventor_id_20211230" in PatentsView's bulk data downloads ["g_persistent_inventor.tsv" file](https://patentsview.org/download/data-download-tables)
+
+    The dataset is provided in the form of a pandas Series, where the index represents the mention ID and the
+
+    Returns:
+        Series: pandas Series with the benchmark data as a membership vector.
+
+    References:
+        - [Binette, Olivier, Sokhna A York, Emma Hickerson, Youngsoo Baek, Sarvo Madhavan, Christina Jones. (2022). Estimating the Performance of Entity Resolution Algorithms: Lessons Learned Through PatentsView.org. arXiv e-prints: arxiv:2210.01230](https://arxiv.org/abs/2210.01230)
+
+    Notes:
+        - The methodology used for the hand-disambiguation is described in the reference.
+        - The hand-disambiguation process was done by experts, but it should be expected to contain errors due to the ambiguous nature of inventor disambiguation.
+        - The benchmark contains a few extraneous mentions of patents granted outside the considered time period, these should be ignored for evaluation purposes.
+        - Given the use of the December 30, 2021, disambiguation from PatentsView as a starting point of the hand-labeling, a bias towards this disambiguation should be expected.
+    """
+    return load_unique_id_series(ASSIGNEE_DATA_MODULE, "consolidated_assignee_samples.csv")
 
 def load_air_umass_assignees_benchmark():
     """AIR-UMASS assigness benchmark.
