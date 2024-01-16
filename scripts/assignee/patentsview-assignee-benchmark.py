@@ -11,14 +11,14 @@ load_dotenv()
 
 def get_files():
     home_path = os.environ["home_path"]
-    assignee_data_path = home_path + "/pv_evaluation" + "/data/assignee/hand-labels"
-    assignee_label_list = [f for f in listdir(assignee_data_path) if isfile(join(assignee_data_path, f)) and ".csv" in f and "consolidated" not in f]
+    assignee_data_path = home_path + "/pv_evaluation" + "/data/assignee"
+    assignee_label_list = [f for f in listdir(assignee_data_path + "/hand-labels") if isfile(join(assignee_data_path + "/hand-labels", f)) and ".csv" in f and "consolidated" not in f]
     return assignee_data_path, assignee_label_list
 
 def consolidate_labels(assignee_data_path, assignee_label_list):
     appended_data = []
     for file in assignee_label_list:
-        temp_data = pd.read_csv(assignee_data_path + "/" + file)
+        temp_data = pd.read_csv(assignee_data_path + "/hand-labels/" + file)
         rename = [i for i in temp_data.columns if "asass" in i]
         name_replace = rename[0].replace("asass", "ass")
         temp_data = temp_data.rename(columns={rename[0]: name_replace})
@@ -41,7 +41,6 @@ def consolidate_labels(assignee_data_path, assignee_label_list):
 def eval_consolidated(assignee_data_path):
     df = pd.read_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
     df[df["assignee_individual_name_last"].isna()]
-    breakpoint()
 
 # QUESTIONS
 # what to do with duplicate files?
@@ -52,6 +51,6 @@ def eval_consolidated(assignee_data_path):
 if __name__ == "__main__":
     assignee_data_path, assignee_label_list = get_files()
     consolidate_labels(assignee_data_path, assignee_label_list)
-    # eval_consolidated(assignee_data_path)
+    eval_consolidated(assignee_data_path)
 
 
