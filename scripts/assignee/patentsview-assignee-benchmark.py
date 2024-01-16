@@ -31,6 +31,8 @@ def consolidate_labels(assignee_data_path, assignee_label_list):
         print(f"added file: {file}")
     final_data = pd.concat(appended_data)
     final_data = final_data.rename(columns={'assignee': 'unique_id'})
+    final_data = final_data.drop_duplicates()
+    print(final_data)
     final_data.to_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
 
 def test_for_blank_rows(df, field_to_test):
