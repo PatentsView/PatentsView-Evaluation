@@ -22,9 +22,15 @@ def consolidate_labels(assignee_data_path, assignee_label_list):
         rename = [i for i in temp_data.columns if "asass" in i]
         name_replace = rename[0].replace("asass", "ass")
         temp_data = temp_data.rename(columns={rename[0]: name_replace})
-        filtered_temp_data = temp_data[["assignee",'assignee_individual_name_first','assignee_individual_name_last', 'assignee_organization']]
+        filtered_temp_data = temp_data[["assignee", 'assignee_individual_name_first', 'assignee_individual_name_last', 'assignee_organization']]
         mention_id = file.split(".")[0]
         filtered_temp_data["mention_id"] = mention_id
+        filtered_temp_data = filtered_temp_data.dropna(how='all')
+        # nulls = filtered_temp_data[filtered_temp_data['assignee'].isna() == True]
+        # if nulls.empty:
+        #     continue
+        # else:
+        #     print(f"file has issues: {file}")
         appended_data.append(filtered_temp_data)
         print(f"added file: {mention_id}")
     final_data = pd.concat(appended_data)
@@ -45,8 +51,7 @@ def eval_consolidated(assignee_data_path):
 
 if __name__ == "__main__":
     assignee_data_path, assignee_label_list = get_files()
-    breakpoint()
-    # consolidate_labels(assignee_data_path, assignee_label_list)
+    consolidate_labels(assignee_data_path, assignee_label_list)
     # eval_consolidated(assignee_data_path)
 
 
