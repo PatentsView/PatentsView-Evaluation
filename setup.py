@@ -9,7 +9,7 @@ long_description = (this_directory / "README.md").read_text()
 if __name__ == "__main__":
     setup(
         name="pv_evaluation",
-        version="2.1.2",
+        version="2.1.4",
         license_files=("LICENSE.txt",),
         author="Olivier Binette, Sarvo Madhavan",
         author_email="olivier.binette@gmail.com",
