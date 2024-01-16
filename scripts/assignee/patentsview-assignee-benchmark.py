@@ -28,7 +28,9 @@ def consolidate_labels(assignee_data_path, assignee_label_list):
         appended_data.append(filtered_temp_data)
         print(f"added file: {mention_id}")
     final_data = pd.concat(appended_data)
-    final_data.to_csv(assignee_data_path + "/consolidated_assignee_samples_test.csv")
+    final_data = final_data[['assignee', 'mention_id']]
+    final_data = final_data.rename(columns={'assignee': 'unique_id'})
+    final_data.to_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
 
 def eval_consolidated(assignee_data_path):
     df = pd.read_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
@@ -43,7 +45,8 @@ def eval_consolidated(assignee_data_path):
 
 if __name__ == "__main__":
     assignee_data_path, assignee_label_list = get_files()
-    consolidate_labels(assignee_data_path, assignee_label_list)
+    breakpoint()
+    # consolidate_labels(assignee_data_path, assignee_label_list)
     # eval_consolidated(assignee_data_path)
 
 
