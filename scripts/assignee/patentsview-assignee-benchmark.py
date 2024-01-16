@@ -22,23 +22,20 @@ def consolidate_labels(assignee_data_path, assignee_label_list):
         rename = [i for i in temp_data.columns if "asass" in i]
         name_replace = rename[0].replace("asass", "ass")
         temp_data = temp_data.rename(columns={rename[0]: name_replace})
-        filtered_temp_data = temp_data[["assignee", 'assignee_individual_name_first', 'assignee_individual_name_last', 'assignee_organization']]
-        filtered_temp_data = filtered_temp_data.dropna(how='all')
-        mention_id = file.split(".")[0]
-        filtered_temp_data["mention_id"] = mention_id
+        # filtered_temp_data = temp_data[["assignee", 'assignee_individual_name_first', 'assignee_individual_name_last', 'assignee_organization']]
+        temp_data = temp_data.dropna(how='all')
+        temp_data["mention_id"] = "US" + temp_data.patent_id.astype(str) + "-" + temp_data.assignee_sequence.astype(str)
+        test_for_blank_rows(temp_data, "assignee")
+        filtered_temp_data = temp_data[['assignee', 'mention_id']]
         appended_data.append(filtered_temp_data)
-        print(f"added file: {mention_id}")
+        print(f"added file: {file}")
     final_data = pd.concat(appended_data)
-    test_for_blank_rows(final_data, "assignee")
-    final_data = final_data[['assignee', 'mention_id']]
     final_data = final_data.rename(columns={'assignee': 'unique_id'})
     final_data.to_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
 
 def test_for_blank_rows(df, field_to_test):
     nulls = df[df[field_to_test].isna() == True]
-    if nulls.empty:
-        print(f"file is ok")
-    else:
+    if not nulls.empty:
         Exception("Review File for NA")
 
 def eval_consolidated(assignee_data_path):
