@@ -58,8 +58,10 @@ def consolidate_labels(assignee_data_path, assignee_label_list):
         temp_data = temp_data.dropna(how='all')
         temp_data["mention_id"] = "US" + temp_data.patent_id.astype(str) + "-" + str(temp_data.assignee_sequence.astype(int))
         temp_data["unique_id"] = str(uuid.uuid4())
-        test_for_blank_rows(temp_data, "assignee")
-        filtered_temp_data = temp_data[['unique_id', 'mention_id']]
+        temp_data["file"] = file
+        test_for_blank_rows(temp_data, "unique_id")
+        filtered_temp_data = temp_data[['unique_id', 'mention_id', 'file']]
+        # filtered_temp_data = temp_data[['unique_id', 'mention_id']]
         appended_data.append(filtered_temp_data)
         print(f"added file: {file}")
     final_data = pd.concat(appended_data)
@@ -70,7 +72,12 @@ def consolidate_labels(assignee_data_path, assignee_label_list):
     print("DATA SHAPE AFTER DEDEUP --------------------------------------------------------------")
     print(final_data.shape)
     print("--------------------------------------------------------------------------------------")
-    final_data.to_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
+    breakpoint()
+    # REMOVE CANDIDATES FOR RELABELING FOR NOW
+    rem = ['US4059131-0.csv',	'US7100827-0.csv',	'US7507211-0.csv',	'US8909968-0.csv',	'US8975348-0.csv',	'US9377726-0.csv',	'US9761552-0.csv',	'USD403363-0.csv',	'USD542763-0.csv',	'USD594508-0.csv',	'US7997327-0.csv',	'US4784030-0.csv',	'US4614515-0.csv',	'USD700602-0.csv',	'US6097140-0.csv',	'US9242814-0.csv',	'US9293014-0.csv',	'US8008251-0.csv',	'US11338586-0.csv']
+    df = final_data[~final_data['file'].isin(rem)]
+    df = df[['unique_id', 'mention_id']]
+    df.to_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
     #### QUALITY CHECKS IN TERMINAL
     # grouped_data = final_data.groupby('mention_id').count().sort_values(by="unique_id", ascending=False)
 
@@ -83,6 +90,16 @@ def eval_consolidated(assignee_data_path):
     df = pd.read_csv(assignee_data_path + "/consolidated_assignee_samples.csv")
     df[df["assignee_individual_name_last"].isna()]
 
+def build_histogram_cluster_size(assignee_data_path, assignee_label_list):
+    hist_df = []
+    for file in assignee_label_list:
+        data = pd.read_csv(assignee_data_path + "/hand-labels/" + file)
+        r, c = data.shape
+        hist_df.append([file, r])
+    breakpoint()
+    df = pd.DataFrame(hist_df, columns=['file', 'rows'])
+
+
 # QUESTIONS
 # what to do with duplicate files?
 # did we filter to organizations and exclude assignees that were individuals? Check this
@@ -92,9 +109,10 @@ def eval_consolidated(assignee_data_path):
 if __name__ == "__main__":
     assignee_data_path, assignee_label_list = get_files()
     # export_mention_id_data(assignee_label_list)
-    analyze_samples("mention_id.json")
+    # analyze_samples("mention_id.json")
     # cProfile.run("analyze_samples(assignee_label_list)")
-    # consolidate_labels(assignee_data_path, assignee_label_list)
+    # build_histogram_cluster_size(assignee_data_path, assignee_label_list)
+    consolidate_labels(assignee_data_path, assignee_label_list)
     # eval_consolidated(assignee_data_path)
 
 
