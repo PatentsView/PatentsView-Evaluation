@@ -8,8 +8,11 @@ import uuid
 pd.options.mode.chained_assignment = None
 import cProfile
 import json
+import matplotlib
+import matplotlib.pyplot as plt
 
 load_dotenv()
+matplotlib.use('TkAgg')
 
 def get_files():
     home_path = os.environ["home_path"]
@@ -56,7 +59,7 @@ def consolidate_labels(assignee_data_path, assignee_label_list):
         name_replace = rename[0].replace("asass", "ass")
         temp_data = temp_data.rename(columns={rename[0]: name_replace})
         temp_data = temp_data.dropna(how='all')
-        temp_data["mention_id"] = "US" + temp_data.patent_id.astype(str) + "-" + str(temp_data.assignee_sequence.astype(int))
+        temp_data["mention_id"] = "US" + temp_data.patent_id.astype(str) + "-" + temp_data.assignee_sequence.astype(str)
         temp_data["unique_id"] = str(uuid.uuid4())
         temp_data["file"] = file
         test_for_blank_rows(temp_data, "unique_id")
@@ -96,8 +99,19 @@ def build_histogram_cluster_size(assignee_data_path, assignee_label_list):
         data = pd.read_csv(assignee_data_path + "/hand-labels/" + file)
         r, c = data.shape
         hist_df.append([file, r])
-    breakpoint()
+    # REMOVE CANDIDATES FOR RELABELING FOR NOW
+    rem = ['US4059131-0.csv',	'US7100827-0.csv',	'US7507211-0.csv',	'US8909968-0.csv',	'US8975348-0.csv',	'US9377726-0.csv',	'US9761552-0.csv',	'USD403363-0.csv',	'USD542763-0.csv',	'USD594508-0.csv',	'US7997327-0.csv',	'US4784030-0.csv',	'US4614515-0.csv',	'USD700602-0.csv',	'US6097140-0.csv',	'US9242814-0.csv',	'US9293014-0.csv',	'US8008251-0.csv',	'US11338586-0.csv']
     df = pd.DataFrame(hist_df, columns=['file', 'rows'])
+    df = df[~df['file'].isin(rem)]
+    print(df.shape)
+    record_count = list(df["rows"])
+    plt.hist(record_count, bins=range(min(record_count), max(record_count) + 1), edgecolor='blue')
+    plt.xlabel('Value')
+    plt.ylabel('Frequency')
+    plt.title('Assignee Cluster Size Histogram')
+    plt.show()
+    breakpoint()
+
 
 
 # QUESTIONS
